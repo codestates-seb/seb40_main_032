@@ -46,7 +46,7 @@ public class SecurityConfig {
 
         http
                 .authorizeRequests()
-                .mvcMatchers(HttpMethod.POST, "/account").permitAll()
+                .mvcMatchers(HttpMethod.POST, "/accounts").permitAll()
                 .anyRequest().authenticated();
 
         http

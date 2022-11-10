@@ -9,15 +9,21 @@ v1.0.0, 2022.10.20
 
 ***
 == AccountController
-=== 계정 등록
+=== 회원 생성
 .curl-request
-include::{snippets}/signUp/curl-request.adoc[]
+include::{snippets}/addAccount/curl-request.adoc[]
 
 .http-request
-include::{snippets}/signUp/http-request.adoc[]
+include::{snippets}/addAccount/http-request.adoc[]
 
-.request-fields
-include::{snippets}/signUp/request-fields.adoc[]
+.request-parts
+include::{snippets}/addAccount/request-parts.adoc[]
+
+.request-parameters
+include::{snippets}/addAccount/request-parameters.adoc[]
 
 .http-response
-include::{snippets}/signUp/http-response.adoc[]
+include::{snippets}/addAccount/http-response.adoc[]
+
+.response-fields
+include::{snippets}/addAccount/response-fields.adoc[]
