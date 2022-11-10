@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import travelRepo.domain.account.dto.AccountAddReq;
+import travelRepo.domain.account.dto.AccountDetailsRes;
 import travelRepo.domain.account.dto.AccountModifyReq;
 import travelRepo.global.common.dto.IdDto;
 
@@ -26,5 +27,17 @@ public class AccountController {
 
     @DeleteMapping
     public void accountRemove() {
+    }
+
+    @GetMapping("/{accountId}")
+    public ResponseEntity<AccountDetailsRes> accountDetails(@PathVariable Long accountId) {
+
+        AccountDetailsRes accountDetailsRes = new AccountDetailsRes();
+        accountDetailsRes.setId(1L);
+        accountDetailsRes.setEmail("mock@mock.com");
+        accountDetailsRes.setNickname("mockNickname");
+        accountDetailsRes.setProfile("mock/path");
+
+        return new ResponseEntity<>(accountDetailsRes, HttpStatus.OK);
     }
 }

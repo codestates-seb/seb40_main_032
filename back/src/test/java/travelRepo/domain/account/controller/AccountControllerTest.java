@@ -8,6 +8,7 @@ import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDoc
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -21,11 +22,11 @@ import java.util.List;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.multipart;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static travelRepo.util.ApiDocumentUtils.getRequestPreProcessor;
 import static travelRepo.util.ApiDocumentUtils.getResponsePreProcessor;
@@ -88,7 +89,7 @@ class AccountControllerTest {
                         ),
                         responseFields(
                                 List.of(
-                                        fieldWithPath("id").type(JsonFieldType.NUMBER).description("생성된 Account Id")
+                                        fieldWithPath("id").type(JsonFieldType.NUMBER).description("생성된 Account 식별자")
                                 )
                         )
                 ));
@@ -129,6 +130,9 @@ class AccountControllerTest {
                                         headerWithName("Authorization").description("JWT")
                                 )
                         ),
+                        pathParameters(
+                                parameterWithName("accountId").description("Account 식별자")
+                        ),
                         requestParts(
                                 List.of(
                                         partWithName("profile").description("프로필 이미지")
@@ -142,7 +146,7 @@ class AccountControllerTest {
                         ),
                         responseFields(
                                 List.of(
-                                        fieldWithPath("id").type(JsonFieldType.NUMBER).description("생성된 Account Id")
+                                        fieldWithPath("id").type(JsonFieldType.NUMBER).description("수정된 Account 식별자")
                                 )
                         )
                 ));
@@ -158,7 +162,7 @@ class AccountControllerTest {
 
         //when
         ResultActions actions = mockMvc.perform(
-                delete("/accounts")
+                RestDocumentationRequestBuilders.delete("/accounts")
                         .header("Authorization", jwt)
         );
 
@@ -174,6 +178,40 @@ class AccountControllerTest {
                                         headerWithName("Authorization").description("JWT")
                                 )
                         )
+                ));
+    }
+
+    @Test
+    @DisplayName("회원 단일 조회_성공")
+    public void accountDetails_Success() throws Exception {
+
+        //given
+        Long accountId = 1L;
+
+        //when
+        ResultActions actions = mockMvc.perform(
+                get("/accounts/{accountId}", accountId)
+        );
+
+        //then
+        actions
+                .andExpect(status().isOk())
+                .andDo(document(
+                        "accountDetails",
+                        getRequestPreProcessor(),
+                        getResponsePreProcessor(),
+                        pathParameters(
+                                parameterWithName("accountId").description("Account 식별자")
+                        ),
+                        responseFields(
+                                List.of(
+                                        fieldWithPath("id").type(JsonFieldType.NUMBER).description("Account 식별자"),
+                                        fieldWithPath("email").type(JsonFieldType.STRING).description("이메일"),
+                                        fieldWithPath("nickname").type(JsonFieldType.STRING).description("닉네임"),
+                                        fieldWithPath("profile").type(JsonFieldType.STRING).description("프로필 이미지")
+                                )
+                        )
+
                 ));
     }
 
