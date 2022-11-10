@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class IdResDto {
+public class IdDto {
 
     Long id;
 }

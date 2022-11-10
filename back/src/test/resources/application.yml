@@ -21,14 +21,13 @@ spring:
       hibernate:
         default_batch_fetch_size: 100
     defer-datasource-initialization: true
+  sql:
+    init:
+      data-locations: classpath:static/db/data.sql
+      mode: always
 
 jwt:
   secret-key: ${JWT_SECRET_KEY}
   expiration: ${JWT_EXPIRATION}
   prefix: ${JWT_PREFIX}
   header: ${JWT_HEADER}
-
-#  sql:
-#    init:
-#      data-locations: classpath:static/db/data.sql
-#      mode: always

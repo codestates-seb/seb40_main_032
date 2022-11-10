@@ -1,0 +1,1 @@
+INSERT INTO Account(account_id, createdAt, modifiedAt, email, nickname, password, profile, role) VALUES('1', '2022-10-14 17:13:10', '2022-10-14 17:13:10', 'test1@test.com', 'testNickname1', '$2a$10$VV8asUWpBQ0lIiagxkfcwuG3vLzwsRxLroRBtlH/VVu1TRIfppFfq', 'test/path', 'USER');
