@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:test
+    username: sa
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: create
+#  sql:
+#    init:
+#      data-locations: classpath:static/db/data.sql
+#      mode: always
+
+jwt:
+  secret-key: 28d93268-a80b-4594-918b-5926a79a49ed
+  expiration: 3600000
+  prefix: Bearer
+  header: Authorization
+
+mod: local

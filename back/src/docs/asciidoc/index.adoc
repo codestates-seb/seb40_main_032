@@ -1,0 +1,23 @@
+= stackOverFlow_Clone
+:sectnums:
+:toc: left
+:toclevels: 4
+:toc-title: Table of Contents
+:source-highlighter: prettify
+
+v1.0.0, 2022.10.20
+
+***
+== AccountController
+=== 계정 등록
+.curl-request
+include::{snippets}/signUp/curl-request.adoc[]
+
+.http-request
+include::{snippets}/signUp/http-request.adoc[]
+
+.request-fields
+include::{snippets}/signUp/request-fields.adoc[]
+
+.http-response
+include::{snippets}/signUp/http-response.adoc[]
