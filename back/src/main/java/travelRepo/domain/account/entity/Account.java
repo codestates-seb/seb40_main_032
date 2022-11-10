@@ -13,7 +13,8 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class Account extends BaseTime {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     @Column(name = "account_id")
     private Long id;
 
@@ -21,6 +22,13 @@ public class Account extends BaseTime {
 
     private String password;
 
+    private String nickname;
+
+    private String profile;
+
+    private String intro;
+
+    @Enumerated(EnumType.STRING)
     private Role role;
 
     public Account(String email, String password) {
