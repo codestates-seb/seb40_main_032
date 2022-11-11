@@ -31,3 +31,15 @@ jwt:
   expiration: 3600000
   prefix: Bearer
   header: Authorization
+
+cloud:
+  aws:
+    credentials:
+      accessKey: local
+      secretKey: local
+    s3:
+      bucket: local
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
