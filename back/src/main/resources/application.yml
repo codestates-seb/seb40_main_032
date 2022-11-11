@@ -7,41 +7,15 @@ server:
       force: true
 
 spring:
-  datasource:
-    driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:test
-    username: sa
-    password:
   jpa:
     hibernate:
-      ddl-auto: create
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     properties:
       hibernate:
         default_batch_fetch_size: 100
-    defer-datasource-initialization: true
-  sql:
-    init:
-      data-locations: classpath:static/db/data.sql
-      mode: always
-
-jwt:
-  secret-key: 28d93268-a80b-4594-918b-5926a79a49ed
-  expiration: 3600000
-  prefix: Bearer
-  header: Authorization
-
-cloud:
-  aws:
-    credentials:
-      accessKey: local
-      secretKey: local
-    s3:
-      bucket: local
-    region:
-      static: ap-northeast-2
-    stack:
-      auto: false
-
-dir: local
+  data:
+    web:
+      pageable:
+        default-page-size: 10
+        one-indexed-parameters: true
