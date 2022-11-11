@@ -31,4 +31,6 @@ cloud:
     stack:
       auto: false
 
+dir: local
+
 mod: local

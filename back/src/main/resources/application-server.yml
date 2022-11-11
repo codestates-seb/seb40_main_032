@@ -19,4 +19,18 @@ jwt:
   prefix: ${JWT_PREFIX}
   header: ${JWT_HEADER}
 
+cloud:
+  aws:
+    credentials:
+      accessKey: ${AWS_ACCESS_KEY}
+      secretKey: ${AWS_SECRET_KEY}
+    s3:
+      bucket: ${S3_BUCKET}
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
+
+dir: server
+
 mod: server
