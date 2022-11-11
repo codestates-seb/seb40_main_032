@@ -1,13 +1,13 @@
 package travelRepo.domain.account.dto;
 
 import lombok.Data;
-import travelRepo.domain.board.dto.FollowingBoardDetailsRes;
+import travelRepo.domain.board.dto.FollowBoardDetailsRes;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Data
-public class FollowingAccountDetailsRes {
+public class FollowAccountDetailsRes {
 
     private Long id;
 
@@ -17,5 +17,5 @@ public class FollowingAccountDetailsRes {
 
     private boolean follow = false;
 
-    private List<FollowingBoardDetailsRes> followingBoardDetailsResList = new ArrayList<>();
+    private List<FollowBoardDetailsRes> boards = new ArrayList<>();
 }

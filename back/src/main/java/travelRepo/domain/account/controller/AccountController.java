@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import travelRepo.domain.account.dto.*;
-import travelRepo.domain.board.dto.FollowingBoardDetailsRes;
+import travelRepo.domain.board.dto.FollowBoardDetailsRes;
 import travelRepo.global.common.dto.IdDto;
 import travelRepo.global.common.dto.PageDto;
 
@@ -63,31 +63,32 @@ public class AccountController {
         return new ResponseEntity<>(loginAccountDetailsRes, HttpStatus.OK);
     }
 
-    @GetMapping("/following/{accountId}")
-    public ResponseEntity<PageDto<FollowingAccountDetailsRes>> followingAccountDetails(@PathVariable Long accountId,
-                                                                                       Pageable pageable) {
+    @GetMapping("/follow/{accountId}")
+    public ResponseEntity<PageDto<FollowAccountDetailsRes>> followAccountList(@PathVariable Long accountId,
+                                                                              @RequestParam String status,
+                                                                              Pageable pageable) {
 
-        List<FollowingAccountDetailsRes> followingAccountDetailsResList = new ArrayList<>();
+        List<FollowAccountDetailsRes> followAccountDetailsResList = new ArrayList<>();
 
         for (int i = 0; i < 5; i++) {
-            FollowingAccountDetailsRes followingAccountDetailsRes = new FollowingAccountDetailsRes();
-            followingAccountDetailsRes.setId(1L + i * 6);
-            followingAccountDetailsRes.setNickname("mockNickname" + (1L + i * 6));
-            followingAccountDetailsRes.setProfile("/mock/path" + (1L + i * 6));
+            FollowAccountDetailsRes followAccountDetailsRes = new FollowAccountDetailsRes();
+            followAccountDetailsRes.setId(1L + i * 6);
+            followAccountDetailsRes.setNickname("mockNickname" + (1L + i * 6));
+            followAccountDetailsRes.setProfile("/mock/path" + (1L + i * 6));
 
             for (int j = 0; j < 5; j++) {
-                FollowingBoardDetailsRes followingBoardDetailsRes = new FollowingBoardDetailsRes();
-                followingBoardDetailsRes.setId(2L + j + i * 6);
-                followingBoardDetailsRes.setTitle("mockTitle" + (2L + j + i * 6));
-                followingBoardDetailsRes.setProfile("/mock/path" + (2L + j + i * 6));
+                FollowBoardDetailsRes followBoardDetailsRes = new FollowBoardDetailsRes();
+                followBoardDetailsRes.setId(2L + j + i * 6);
+                followBoardDetailsRes.setTitle("mockTitle" + (2L + j + i * 6));
+                followBoardDetailsRes.setProfile("/mock/path" + (2L + j + i * 6));
 
-                followingAccountDetailsRes.getFollowingBoardDetailsResList().add(followingBoardDetailsRes);
+                followAccountDetailsRes.getBoards().add(followBoardDetailsRes);
             }
 
-            followingAccountDetailsResList.add(followingAccountDetailsRes);
+            followAccountDetailsResList.add(followAccountDetailsRes);
         }
 
-        Page<FollowingAccountDetailsRes> response = new PageImpl<>(followingAccountDetailsResList, pageable, 30);
+        Page<FollowAccountDetailsRes> response = new PageImpl<>(followAccountDetailsResList, pageable, 30);
         return new ResponseEntity<>(new PageDto<>(response), HttpStatus.OK);
     }
 }

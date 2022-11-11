@@ -70,9 +70,6 @@ include::{snippets}/accountDetails/curl-request.adoc[]
 .http-request
 include::{snippets}/accountDetails/http-request.adoc[]
 
-.request-headers
-include::{snippets}/accountDetails/request-headers.adoc[]
-
 .path-parameters
 include::{snippets}/accountDetails/path-parameters.adoc[]
 
@@ -97,3 +94,25 @@ include::{snippets}/accountDetails/http-response.adoc[]
 
 .response-fields
 include::{snippets}/accountDetails/response-fields.adoc[]
+
+=== 팔로우 회원 조회
+.curl-request
+include::{snippets}/followAccountDetails/curl-request.adoc[]
+
+.http-request
+include::{snippets}/followAccountDetails/http-request.adoc[]
+
+.request-headers
+include::{snippets}/followAccountDetails/request-headers.adoc[]
+
+.path-parameters
+include::{snippets}/followAccountDetails/path-parameters.adoc[]
+
+.request-parameters
+include::{snippets}/followAccountDetails/request-parameters.adoc[]
+
+.http-response
+include::{snippets}/followAccountDetails/http-response.adoc[]
+
+.response-fields
+include::{snippets}/followAccountDetails/response-fields.adoc[]
