@@ -3,7 +3,7 @@ package travelRepo.domain.account.dto;
 import lombok.Data;
 
 @Data
-public class AccountDetailsRes {
+public class LoginAccountDetailsRes {
 
     private Long id;
 
