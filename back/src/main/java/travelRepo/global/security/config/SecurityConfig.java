@@ -46,6 +46,7 @@ public class SecurityConfig {
 
         http
                 .authorizeRequests()
+                .mvcMatchers(HttpMethod.GET, "/docs/index.html").permitAll()
                 .mvcMatchers(HttpMethod.GET, "/accounts/**").permitAll()
                 .mvcMatchers(HttpMethod.POST, "/accounts").permitAll()
                 .anyRequest().authenticated();
