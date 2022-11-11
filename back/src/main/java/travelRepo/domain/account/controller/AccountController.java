@@ -1,22 +1,43 @@
 package travelRepo.domain.account.controller;
 
-import travelRepo.domain.account.entity.Account;
-import travelRepo.domain.account.service.AccountService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import travelRepo.domain.account.dto.AccountAddReq;
+import travelRepo.domain.account.dto.AccountDetailsRes;
+import travelRepo.domain.account.dto.AccountModifyReq;
+import travelRepo.global.common.dto.IdDto;
 
 @RestController
-@RequestMapping("/account")
+@RequestMapping("/accounts")
 @RequiredArgsConstructor
 public class AccountController {
 
-    private final AccountService accountService;
-
     @PostMapping
-    public String signUp(@RequestBody Account account) {
+    public ResponseEntity<IdDto> accountAdd(@ModelAttribute AccountAddReq accountAddReq) {
+        return new ResponseEntity<>(new IdDto(1L), HttpStatus.CREATED);
+    }
 
-        accountService.signUp(account);
+    @PostMapping("/{accountId}")
+    public ResponseEntity<IdDto> accountModify(@PathVariable Long accountId,
+                                               @ModelAttribute AccountModifyReq accountModifyReq) {
+        return new ResponseEntity<>(new IdDto(1L), HttpStatus.OK);
+    }
 
-        return "success signUp";
+    @DeleteMapping
+    public void accountRemove() {
+    }
+
+    @GetMapping("/{accountId}")
+    public ResponseEntity<AccountDetailsRes> accountDetails(@PathVariable Long accountId) {
+
+        AccountDetailsRes accountDetailsRes = new AccountDetailsRes();
+        accountDetailsRes.setId(1L);
+        accountDetailsRes.setEmail("mock@mock.com");
+        accountDetailsRes.setNickname("mockNickname");
+        accountDetailsRes.setProfile("mock/path");
+
+        return new ResponseEntity<>(accountDetailsRes, HttpStatus.OK);
     }
 }
