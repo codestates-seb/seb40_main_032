@@ -6,7 +6,7 @@ spring:
     password:
   jpa:
     hibernate:
-      ddl-auto:
+      ddl-auto: create
     defer-datasource-initialization: true
   sql:
     init:
