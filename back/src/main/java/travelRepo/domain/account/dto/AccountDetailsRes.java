@@ -11,6 +11,8 @@ public class AccountDetailsRes {
 
     private String nickname;
 
+    private String intro;
+
     private String profile;
 
     private int following;

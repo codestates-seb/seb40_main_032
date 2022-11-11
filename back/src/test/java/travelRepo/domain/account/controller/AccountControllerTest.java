@@ -208,6 +208,7 @@ class AccountControllerTest {
                                         fieldWithPath("id").type(JsonFieldType.NUMBER).description("Account 식별자"),
                                         fieldWithPath("email").type(JsonFieldType.STRING).description("이메일"),
                                         fieldWithPath("nickname").type(JsonFieldType.STRING).description("닉네임"),
+                                        fieldWithPath("intro").type(JsonFieldType.STRING).description("소개글"),
                                         fieldWithPath("profile").type(JsonFieldType.STRING).description("프로필 이미지"),
                                         fieldWithPath("following").type(JsonFieldType.NUMBER).description("팔로잉 수"),
                                         fieldWithPath("follower").type(JsonFieldType.NUMBER).description("팔로워 수")
