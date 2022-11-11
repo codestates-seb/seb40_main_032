@@ -9,6 +9,22 @@ v1.0.0, 2022.10.20
 
 ***
 == AccountController
+=== 로그인
+.curl-request
+include::{snippets}/login/curl-request.adoc[]
+
+.http-request
+include::{snippets}/login/http-request.adoc[]
+
+.request-fields
+include::{snippets}/login/request-fields.adoc[]
+
+.http-response
+include::{snippets}/login/http-response.adoc[]
+
+.http-response
+include::{snippets}/login/response-headers.adoc[]
+
 === 회원 생성
 .curl-request
 include::{snippets}/accountAdd/curl-request.adoc[]
@@ -116,3 +132,83 @@ include::{snippets}/followAccountDetails/http-response.adoc[]
 
 .response-fields
 include::{snippets}/followAccountDetails/response-fields.adoc[]
+
+***
+== FollowController
+=== 팔로우
+.curl-request
+include::{snippets}/followPost/curl-request.adoc[]
+
+.http-request
+include::{snippets}/followPost/http-request.adoc[]
+
+.request-headers
+include::{snippets}/followPost/request-headers.adoc[]
+
+.path-parameters
+include::{snippets}/followPost/path-parameters.adoc[]
+
+.http-response
+include::{snippets}/followPost/http-response.adoc[]
+
+.response-fields
+include::{snippets}/followPost/response-fields.adoc[]
+
+=== 팔로우 조회
+.curl-request
+include::{snippets}/followCheck/curl-request.adoc[]
+
+.http-request
+include::{snippets}/followCheck/http-request.adoc[]
+
+.request-headers
+include::{snippets}/followCheck/request-headers.adoc[]
+
+.path-parameters
+include::{snippets}/followCheck/path-parameters.adoc[]
+
+.http-response
+include::{snippets}/followCheck/http-response.adoc[]
+
+.response-fields
+include::{snippets}/followCheck/response-fields.adoc[]
+
+***
+== LikesController
+=== 좋아요
+.curl-request
+include::{snippets}/likesPost/curl-request.adoc[]
+
+.http-request
+include::{snippets}/likesPost/http-request.adoc[]
+
+.request-headers
+include::{snippets}/likesPost/request-headers.adoc[]
+
+.path-parameters
+include::{snippets}/likesPost/path-parameters.adoc[]
+
+.http-response
+include::{snippets}/likesPost/http-response.adoc[]
+
+.response-fields
+include::{snippets}/likesPost/response-fields.adoc[]
+
+=== 좋아요 조회
+.curl-request
+include::{snippets}/likesCheck/curl-request.adoc[]
+
+.http-request
+include::{snippets}/likesCheck/http-request.adoc[]
+
+.request-headers
+include::{snippets}/likesCheck/request-headers.adoc[]
+
+.path-parameters
+include::{snippets}/likesCheck/path-parameters.adoc[]
+
+.http-response
+include::{snippets}/likesCheck/http-response.adoc[]
+
+.response-fields
+include::{snippets}/likesCheck/response-fields.adoc[]

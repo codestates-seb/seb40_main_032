@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.restdocs.payload.JsonFieldType;
@@ -19,13 +20,10 @@ import travelRepo.global.security.jwt.JwtProcessor;
 
 import java.util.List;
 
-import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
-import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
+import static org.springframework.restdocs.headers.HeaderDocumentation.*;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.multipart;
-import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
-import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
+import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static travelRepo.util.ApiDocumentUtils.getRequestPreProcessor;
@@ -47,6 +45,48 @@ class AccountControllerTest {
 
     @Autowired
     private JwtProcessor jwtProcessor;
+
+    @Test
+    @DisplayName("로그인_성공")
+    void accountLogin() throws Exception {
+
+        //given
+        String email = "test1@test.com";
+        String password = "12345678";
+
+        Account account = new Account(email, password);
+        String body = gson.toJson(account);
+
+
+        //when
+        ResultActions actions = mockMvc.perform(
+                post("/login")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(body)
+        );
+
+
+        //then
+        actions
+                .andExpect(status().isOk())
+                .andDo(document(
+                        "login",
+                        getRequestPreProcessor(),
+                        getResponsePreProcessor(),
+                        requestFields(
+                                List.of(
+                                        fieldWithPath("email").type(JsonFieldType.STRING).description("이메일"),
+                                        fieldWithPath("password").type(JsonFieldType.STRING).description("비밀번호")
+                                )
+                        ),
+                        responseHeaders(
+                                List.of(
+                                        headerWithName("Authorization").description("JWT")
+                                )
+                        )
+                ));
+    }
 
     @Test
     @DisplayName("회원 생성_성공")

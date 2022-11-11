@@ -1,4 +1,4 @@
-package travelRepo.domain.follow.controller;
+package travelRepo.domain.likes.controller;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,6 +16,7 @@ import travelRepo.global.security.jwt.JwtProcessor;
 
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
@@ -32,7 +33,7 @@ import static travelRepo.util.ApiDocumentUtils.getResponsePreProcessor;
 @SpringBootTest
 @AutoConfigureMockMvc
 @AutoConfigureRestDocs
-class FollowControllerTest {
+class LikesControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -44,17 +45,17 @@ class FollowControllerTest {
     private JwtProcessor jwtProcessor;
 
     @Test
-    @DisplayName("팔로우_성공")
-    public void followPost_Success() throws Exception {
+    @DisplayName("좋아요_성공")
+    public void likesPost_Success() throws Exception {
 
         //given
         Account account = accountRepository.findById(1L).get();
         String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
-        Long accountId = 2L;
+        Long boardId = 101L;
 
         //when
         ResultActions actions = mockMvc.perform(
-                post("/follows/{accountId}", accountId)
+                post("/likes/{boardId}", boardId)
                         .header("Authorization", jwt)
         );
 
@@ -62,7 +63,7 @@ class FollowControllerTest {
         actions
                 .andExpect(status().isOk())
                 .andDo(document(
-                        "followPost",
+                        "likesPost",
                         getRequestPreProcessor(),
                         getResponsePreProcessor(),
                         requestHeaders(
@@ -71,7 +72,7 @@ class FollowControllerTest {
                                 )
                         ),
                         pathParameters(
-                                parameterWithName("accountId").description("Account 식별자")
+                                parameterWithName("boardId").description("Board 식별자")
                         ),
                         responseFields(
                                 List.of(
@@ -82,17 +83,17 @@ class FollowControllerTest {
     }
 
     @Test
-    @DisplayName("팔로우 조회_성공")
+    @DisplayName("좋아요 조회_성공")
     public void followCheck_Success() throws Exception {
 
         //given
         Account account = accountRepository.findById(1L).get();
         String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
-        Long accountId = 2L;
+        Long boardId = 101L;
 
         //when
         ResultActions actions = mockMvc.perform(
-                get("/follows/{accountId}", accountId)
+                get("/likes/{boardId}", boardId)
                         .header("Authorization", jwt)
         );
 
@@ -100,7 +101,7 @@ class FollowControllerTest {
         actions
                 .andExpect(status().isOk())
                 .andDo(document(
-                        "followCheck",
+                        "likesCheck",
                         getRequestPreProcessor(),
                         getResponsePreProcessor(),
                         requestHeaders(
@@ -109,11 +110,11 @@ class FollowControllerTest {
                                 )
                         ),
                         pathParameters(
-                                parameterWithName("accountId").description("Account 식별자")
+                                parameterWithName("boardId").description("Board 식별자")
                         ),
                         responseFields(
                                 List.of(
-                                        fieldWithPath("follow").type(JsonFieldType.BOOLEAN).description("팔로우 여부")
+                                        fieldWithPath("likes").type(JsonFieldType.BOOLEAN).description("좋아요 여부")
                                 )
                         )
                 ));
