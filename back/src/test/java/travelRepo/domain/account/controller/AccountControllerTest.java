@@ -215,4 +215,42 @@ class AccountControllerTest {
                 ));
     }
 
+    @Test
+    @DisplayName("로그인한 회원 조회_성공")
+    public void loginAccountDetails_Success() throws Exception {
+
+        //given
+        Account account = accountRepository.findById(1L).get();
+        String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
+
+        //when
+        ResultActions actions = mockMvc.perform(
+                get("/accounts/login")
+                        .header("Authorization", jwt)
+        );
+
+        //then
+        actions
+                .andExpect(status().isOk())
+                .andDo(document(
+                        "loginAccountDetails",
+                        getRequestPreProcessor(),
+                        getResponsePreProcessor(),
+                        requestHeaders(
+                                List.of(
+                                        headerWithName("Authorization").description("JWT")
+                                )
+                        ),
+                        responseFields(
+                                List.of(
+                                        fieldWithPath("id").type(JsonFieldType.NUMBER).description("Account 식별자"),
+                                        fieldWithPath("email").type(JsonFieldType.STRING).description("이메일"),
+                                        fieldWithPath("nickname").type(JsonFieldType.STRING).description("닉네임"),
+                                        fieldWithPath("profile").type(JsonFieldType.STRING).description("프로필 이미지")
+                                )
+                        )
+
+                ));
+    }
+
 }

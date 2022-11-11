@@ -6,11 +6,12 @@ spring:
     password:
   jpa:
     hibernate:
-      ddl-auto: create
-#  sql:
-#    init:
-#      data-locations: classpath:static/db/data.sql
-#      mode: always
+      ddl-auto:
+    defer-datasource-initialization: true
+  sql:
+    init:
+      data-locations: classpath:static/db/data.sql
+      mode: always
 
 jwt:
   secret-key: 28d93268-a80b-4594-918b-5926a79a49ed

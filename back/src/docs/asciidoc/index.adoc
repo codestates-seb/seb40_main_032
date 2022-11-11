@@ -78,3 +78,19 @@ include::{snippets}/accountDetails/http-response.adoc[]
 
 .response-fields
 include::{snippets}/accountDetails/response-fields.adoc[]
+
+=== 로그인 회원 조회
+.curl-request
+include::{snippets}/loginAccountDetails/curl-request.adoc[]
+
+.http-request
+include::{snippets}/loginAccountDetails/http-request.adoc[]
+
+.request-headers
+include::{snippets}/loginAccountDetails/request-headers.adoc[]
+
+.http-response
+include::{snippets}/accountDetails/http-response.adoc[]
+
+.response-fields
+include::{snippets}/accountDetails/response-fields.adoc[]

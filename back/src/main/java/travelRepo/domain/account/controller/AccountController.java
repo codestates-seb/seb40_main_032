@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import travelRepo.domain.account.dto.AccountAddReq;
 import travelRepo.domain.account.dto.AccountDetailsRes;
 import travelRepo.domain.account.dto.AccountModifyReq;
+import travelRepo.domain.account.dto.LoginAccountDetailsRes;
 import travelRepo.global.common.dto.IdDto;
 
 @RestController
@@ -39,5 +40,17 @@ public class AccountController {
         accountDetailsRes.setProfile("mock/path");
 
         return new ResponseEntity<>(accountDetailsRes, HttpStatus.OK);
+    }
+
+    @GetMapping("/login")
+    public ResponseEntity<LoginAccountDetailsRes> loginAccountDetails() {
+
+        LoginAccountDetailsRes loginAccountDetailsRes = new LoginAccountDetailsRes();
+        loginAccountDetailsRes.setId(1L);
+        loginAccountDetailsRes.setEmail("mock@mock.com");
+        loginAccountDetailsRes.setNickname("mockNickname");
+        loginAccountDetailsRes.setProfile("mock/path");
+
+        return new ResponseEntity<>(loginAccountDetailsRes, HttpStatus.OK);
     }
 }
