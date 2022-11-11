@@ -80,7 +80,7 @@ public class AccountController {
                 FollowBoardDetailsRes followBoardDetailsRes = new FollowBoardDetailsRes();
                 followBoardDetailsRes.setId(2L + j + i * 6);
                 followBoardDetailsRes.setTitle("mockTitle" + (2L + j + i * 6));
-                followBoardDetailsRes.setProfile("/mock/path" + (2L + j + i * 6));
+                followBoardDetailsRes.setThumbnail("/mock/path" + (2L + j + i * 6));
 
                 followAccountDetailsRes.getBoards().add(followBoardDetailsRes);
             }

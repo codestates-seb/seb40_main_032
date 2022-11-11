@@ -7,7 +7,7 @@ public class FollowBoardDetailsRes {
 
     private Long id;
 
-    private String profile;
+    private String thumbnail;
 
     private String title;
 }

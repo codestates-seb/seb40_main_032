@@ -308,7 +308,7 @@ class AccountControllerTest {
                                         fieldWithPath("content[].profile").type(JsonFieldType.STRING).description("프로필 이미지"),
                                         fieldWithPath("content[].follow").type(JsonFieldType.BOOLEAN).description("팔로잉 상태"),
                                         fieldWithPath("content[].boards[].id").type(JsonFieldType.NUMBER).description("Board 식별자"),
-                                        fieldWithPath("content[].boards[].profile").type(JsonFieldType.STRING).description("Board 썸네일"),
+                                        fieldWithPath("content[].boards[].thumbnail").type(JsonFieldType.STRING).description("Board 썸네일"),
                                         fieldWithPath("content[].boards[].title").type(JsonFieldType.STRING).description("Board 제목"),
                                         fieldWithPath("totalPages").type(JsonFieldType.NUMBER).description("총 페이지 수"),
                                         fieldWithPath("totalElements").type(JsonFieldType.NUMBER).description("전체 Question 개수"),
