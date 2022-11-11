@@ -76,8 +76,8 @@ class AccountControllerTest {
                         getResponsePreProcessor(),
                         requestFields(
                                 List.of(
-                                        fieldWithPath("email").type(JsonFieldType.STRING).description("이메일"),
-                                        fieldWithPath("password").type(JsonFieldType.STRING).description("비밀번호")
+                                        fieldWithPath("email").description("이메일"),
+                                        fieldWithPath("password").description("비밀번호")
                                 )
                         ),
                         responseHeaders(
