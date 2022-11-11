@@ -13,5 +13,9 @@ public class AccountDetailsRes {
 
     private String profile;
 
-    private boolean follow;
+    private boolean follow = false;
+
+    private int following;
+
+    private int follower;
 }

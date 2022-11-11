@@ -70,6 +70,9 @@ include::{snippets}/accountDetails/curl-request.adoc[]
 .http-request
 include::{snippets}/accountDetails/http-request.adoc[]
 
+.request-headers
+include::{snippets}/accountDetails/request-headers.adoc[]
+
 .path-parameters
 include::{snippets}/accountDetails/path-parameters.adoc[]
 

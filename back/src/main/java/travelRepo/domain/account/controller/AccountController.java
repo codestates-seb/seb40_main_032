@@ -43,6 +43,8 @@ public class AccountController {
         accountDetailsRes.setEmail("mock@mock.com");
         accountDetailsRes.setNickname("mockNickname");
         accountDetailsRes.setProfile("/mock/path");
+        accountDetailsRes.setFollower(29);
+        accountDetailsRes.setFollowing(53);
 
         return new ResponseEntity<>(accountDetailsRes, HttpStatus.OK);
     }
@@ -55,6 +57,8 @@ public class AccountController {
         loginAccountDetailsRes.setEmail("mock@mock.com");
         loginAccountDetailsRes.setNickname("mockNickname");
         loginAccountDetailsRes.setProfile("/mock/path");
+        loginAccountDetailsRes.setFollower(29);
+        loginAccountDetailsRes.setFollowing(53);
 
         return new ResponseEntity<>(loginAccountDetailsRes, HttpStatus.OK);
     }

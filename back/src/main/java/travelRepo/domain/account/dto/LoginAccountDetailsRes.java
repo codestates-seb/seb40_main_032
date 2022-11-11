@@ -12,4 +12,8 @@ public class LoginAccountDetailsRes {
     private String nickname;
 
     private String profile;
+
+    private int following;
+
+    private int follower;
 }

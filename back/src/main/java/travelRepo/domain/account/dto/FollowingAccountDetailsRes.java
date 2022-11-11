@@ -15,5 +15,7 @@ public class FollowingAccountDetailsRes {
 
     private String profile;
 
+    private boolean follow = false;
+
     private List<FollowingBoardDetailsRes> followingBoardDetailsResList = new ArrayList<>();
 }
