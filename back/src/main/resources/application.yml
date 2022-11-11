@@ -14,3 +14,8 @@ spring:
     properties:
       hibernate:
         default_batch_fetch_size: 100
+  data:
+    web:
+      pageable:
+        default-page-size: 10
+        one-indexed-parameters: true

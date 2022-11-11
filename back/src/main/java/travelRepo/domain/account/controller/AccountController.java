@@ -1,14 +1,19 @@
 package travelRepo.domain.account.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import travelRepo.domain.account.dto.AccountAddReq;
-import travelRepo.domain.account.dto.AccountDetailsRes;
-import travelRepo.domain.account.dto.AccountModifyReq;
-import travelRepo.domain.account.dto.LoginAccountDetailsRes;
+import travelRepo.domain.account.dto.*;
+import travelRepo.domain.board.dto.FollowingBoardDetailsRes;
 import travelRepo.global.common.dto.IdDto;
+import travelRepo.global.common.dto.PageDto;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/accounts")
@@ -37,7 +42,7 @@ public class AccountController {
         accountDetailsRes.setId(1L);
         accountDetailsRes.setEmail("mock@mock.com");
         accountDetailsRes.setNickname("mockNickname");
-        accountDetailsRes.setProfile("mock/path");
+        accountDetailsRes.setProfile("/mock/path");
 
         return new ResponseEntity<>(accountDetailsRes, HttpStatus.OK);
     }
@@ -49,8 +54,36 @@ public class AccountController {
         loginAccountDetailsRes.setId(1L);
         loginAccountDetailsRes.setEmail("mock@mock.com");
         loginAccountDetailsRes.setNickname("mockNickname");
-        loginAccountDetailsRes.setProfile("mock/path");
+        loginAccountDetailsRes.setProfile("/mock/path");
 
         return new ResponseEntity<>(loginAccountDetailsRes, HttpStatus.OK);
+    }
+
+    @GetMapping("/following/{accountId}")
+    public ResponseEntity<PageDto<FollowingAccountDetailsRes>> followingAccountDetails(@PathVariable Long accountId,
+                                                                                       Pageable pageable) {
+
+        List<FollowingAccountDetailsRes> followingAccountDetailsResList = new ArrayList<>();
+
+        for (int i = 0; i < 5; i++) {
+            FollowingAccountDetailsRes followingAccountDetailsRes = new FollowingAccountDetailsRes();
+            followingAccountDetailsRes.setId(1L + i * 6);
+            followingAccountDetailsRes.setNickname("mockNickname" + (1L + i * 6));
+            followingAccountDetailsRes.setProfile("/mock/path" + (1L + i * 6));
+
+            for (int j = 0; j < 5; j++) {
+                FollowingBoardDetailsRes followingBoardDetailsRes = new FollowingBoardDetailsRes();
+                followingBoardDetailsRes.setId(2L + j + i * 6);
+                followingBoardDetailsRes.setTitle("mockTitle" + (2L + j + i * 6));
+                followingBoardDetailsRes.setProfile("/mock/path" + (2L + j + i * 6));
+
+                followingAccountDetailsRes.getFollowingBoardDetailsResList().add(followingBoardDetailsRes);
+            }
+
+            followingAccountDetailsResList.add(followingAccountDetailsRes);
+        }
+
+        Page<FollowingAccountDetailsRes> response = new PageImpl<>(followingAccountDetailsResList, pageable, 30);
+        return new ResponseEntity<>(new PageDto<>(response), HttpStatus.OK);
     }
 }

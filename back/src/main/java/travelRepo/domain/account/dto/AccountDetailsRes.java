@@ -12,4 +12,6 @@ public class AccountDetailsRes {
     private String nickname;
 
     private String profile;
+
+    private boolean follow;
 }
