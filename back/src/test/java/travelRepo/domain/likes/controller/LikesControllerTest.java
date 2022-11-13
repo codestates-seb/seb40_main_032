@@ -17,7 +17,6 @@ import travelRepo.global.security.jwt.JwtProcessor;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
@@ -53,7 +52,7 @@ class LikesControllerTest {
         //given
         Account account = accountRepository.findById(10001L).get();
         String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
-        Long boardId = 1010001L;
+        Long boardId = 10101L;
 
         //when
         ResultActions actions = mockMvc.perform(
@@ -91,7 +90,7 @@ class LikesControllerTest {
         //given
         Account account = accountRepository.findById(10001L).get();
         String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
-        Long boardId = 1010001L;
+        Long boardId = 10101L;
 
         //when
         ResultActions actions = mockMvc.perform(
