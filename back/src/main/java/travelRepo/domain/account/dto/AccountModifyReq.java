@@ -10,5 +10,7 @@ public class AccountModifyReq {
 
     private String nickname;
 
+    private String intro;
+
     private MultipartFile profile;
 }
