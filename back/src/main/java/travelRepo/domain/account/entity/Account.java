@@ -1,15 +1,18 @@
 package travelRepo.domain.account.entity;
 
-import travelRepo.global.auditing.BaseTime;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+import travelRepo.global.auditing.BaseTime;
 
 import javax.persistence.*;
+import java.util.Optional;
 
 @Entity
 @Getter
-@Setter
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
 public class Account extends BaseTime {
 
@@ -34,5 +37,13 @@ public class Account extends BaseTime {
     public Account(String email, String password) {
         this.email = email;
         this.password = password;
+    }
+
+    public void modify(Account account) {
+
+        Optional.ofNullable(account.getPassword()).ifPresent(password -> this.password = password);
+        Optional.ofNullable(account.getNickname()).ifPresent(nickname -> this.nickname = nickname);
+        Optional.ofNullable(account.getProfile()).ifPresent(profile -> this.profile = profile);
+        Optional.ofNullable(account.getIntro()).ifPresent(intro -> this.intro = intro);
     }
 }

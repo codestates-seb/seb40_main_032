@@ -23,6 +23,10 @@ public class S3UploadService implements UploadService{
 
     public String upload(MultipartFile image) throws IOException {
 
+        if (image == null || image.isEmpty()) {
+            return null;
+        }
+
         String s3Filename = createS3Filename(image);
 
         ObjectMetadata objMeta = new ObjectMetadata();
