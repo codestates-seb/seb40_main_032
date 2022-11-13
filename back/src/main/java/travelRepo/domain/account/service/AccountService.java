@@ -38,6 +38,7 @@ public class AccountService {
     }
 
     private void verifyDuplicateEmail(AccountAddReq accountAddReq) {
+
         if (accountRepository.existsByEmail(accountAddReq.getEmail())) {
             throw new BusinessLogicException(ExceptionCode.DUPLICATION_EMAIL);
         }

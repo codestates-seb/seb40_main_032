@@ -7,6 +7,7 @@ import travelRepo.domain.account.entity.Account;
 import travelRepo.domain.account.entity.Role;
 
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
 
 @Data
 public class AccountAddReq {
@@ -20,10 +21,10 @@ public class AccountAddReq {
     @Length(min = 2, max = 20)
     private String nickname;
 
+    @NotNull
     private MultipartFile profile;
 
     public Account toAccount(String encodePassword, String profile) {
-
         return Account.builder()
                 .email(this.email)
                 .password(encodePassword)

@@ -13,8 +13,12 @@ import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.BindException;
 import travelRepo.domain.account.entity.Account;
 import travelRepo.domain.account.repository.AccountRepository;
+import travelRepo.global.exception.BusinessLogicException;
+import travelRepo.global.exception.ExceptionCode;
 import travelRepo.global.security.authentication.UserAccount;
 import travelRepo.global.security.jwt.JwtProcessor;
 
@@ -25,10 +29,12 @@ import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.docu
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static travelRepo.util.ApiDocumentUtils.getRequestPreProcessor;
 import static travelRepo.util.ApiDocumentUtils.getResponsePreProcessor;
 
+@Transactional
 @SpringBootTest
 @AutoConfigureMockMvc
 @AutoConfigureRestDocs
@@ -136,6 +142,92 @@ class AccountControllerTest {
                                 )
                         )
                 ));
+    }
+
+    @Test
+    @DisplayName("회원 생성_중복 Email")
+    public void accountAdd_DuplicateEmail() throws Exception {
+
+        //given
+        String email = "test1@test.com";
+        String password = "12345678";
+        String nickname = "testNickname";
+        MockMultipartFile profile = new MockMultipartFile("profile", "profile.jpeg", "image/jpeg",
+                "(file data)".getBytes());
+
+        //when
+        ResultActions actions = mockMvc.perform(
+                multipart("/accounts")
+                        .file(profile)
+                        .param("email", email)
+                        .param("password", password)
+                        .param("nickname", nickname)
+        );
+
+        //then
+        actions
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.exception").value(BusinessLogicException.class.getSimpleName()))
+                .andExpect(jsonPath("$.message").value(ExceptionCode.DUPLICATION_EMAIL.getMessage()));
+    }
+
+    @Test
+    @DisplayName("회원 생성_ValidationException")
+    public void accountAdd_ValidationException() throws Exception {
+
+        //given
+        String email = "test@test.com";
+        String password = "12345678";
+        String nickname = "testNickname";
+        MockMultipartFile profile = new MockMultipartFile("profile", "profile.jpeg", "image/jpeg",
+                "(file data)".getBytes());
+
+        //when
+        ResultActions emailValidationEx = mockMvc.perform(
+                multipart("/accounts")
+                        .file(profile)
+                        .param("email", "exceptionEmail")
+                        .param("password", password)
+                        .param("nickname", nickname)
+        );
+        ResultActions passwordValidationEx = mockMvc.perform(
+                multipart("/accounts")
+                        .file(profile)
+                        .param("email", email)
+                        .param("password", "1234")
+                        .param("nickname", nickname)
+        );
+        ResultActions nicknameValidationEx = mockMvc.perform(
+                multipart("/accounts")
+                        .file(profile)
+                        .param("email", email)
+                        .param("password", password)
+                        .param("nickname", "e")
+        );
+        ResultActions profileValidationEx = mockMvc.perform(
+                multipart("/accounts")
+                        .param("email", email)
+                        .param("password", password)
+                        .param("nickname", "e")
+        );
+
+        //then
+        emailValidationEx
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.exception").value(BindException.class.getSimpleName()))
+                .andExpect(jsonPath("$.message").value("잘못된 입력값입니다."));
+        passwordValidationEx
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.exception").value(BindException.class.getSimpleName()))
+                .andExpect(jsonPath("$.message").value("잘못된 입력값입니다."));
+        nicknameValidationEx
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.exception").value(BindException.class.getSimpleName()))
+                .andExpect(jsonPath("$.message").value("잘못된 입력값입니다."));
+        profileValidationEx
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.exception").value(BindException.class.getSimpleName()))
+                .andExpect(jsonPath("$.message").value("잘못된 입력값입니다."));
     }
 
     @Test
