@@ -36,7 +36,7 @@ public class AccountController {
     @PostMapping("/{accountId}")
     public ResponseEntity<IdDto> accountModify(@PathVariable Long accountId,
                                                @ModelAttribute AccountModifyReq accountModifyReq) {
-        return new ResponseEntity<>(new IdDto(10001L), HttpStatus.OK);
+        return new ResponseEntity<>(new IdDto(1L), HttpStatus.OK);
     }
 
     @DeleteMapping
@@ -47,7 +47,7 @@ public class AccountController {
     public ResponseEntity<AccountDetailsRes> accountDetails(@PathVariable Long accountId) {
 
         AccountDetailsRes accountDetailsRes = new AccountDetailsRes();
-        accountDetailsRes.setId(10001L);
+        accountDetailsRes.setId(1L);
         accountDetailsRes.setEmail("mock@mock.com");
         accountDetailsRes.setNickname("mockNickname");
         accountDetailsRes.setIntro("mockIntro");
@@ -62,7 +62,7 @@ public class AccountController {
     public ResponseEntity<LoginAccountDetailsRes> loginAccountDetails() {
 
         LoginAccountDetailsRes loginAccountDetailsRes = new LoginAccountDetailsRes();
-        loginAccountDetailsRes.setId(10001L);
+        loginAccountDetailsRes.setId(1L);
         loginAccountDetailsRes.setEmail("mock@mock.com");
         loginAccountDetailsRes.setNickname("mockNickname");
         loginAccountDetailsRes.setProfile("/mock/path");
@@ -81,9 +81,9 @@ public class AccountController {
 
         for (int i = 0; i < 5; i++) {
             FollowAccountDetailsRes followAccountDetailsRes = new FollowAccountDetailsRes();
-            followAccountDetailsRes.setId(10001L + i * 6);
-            followAccountDetailsRes.setNickname("mockNickname" + (10001L + i * 6));
-            followAccountDetailsRes.setProfile("/mock/path" + (10001L + i * 6));
+            followAccountDetailsRes.setId(1L + i * 6);
+            followAccountDetailsRes.setNickname("mockNickname" + (1L + i * 6));
+            followAccountDetailsRes.setProfile("/mock/path" + (1L + i * 6));
 
             for (int j = 0; j < 5; j++) {
                 FollowBoardDetailsRes followBoardDetailsRes = new FollowBoardDetailsRes();
