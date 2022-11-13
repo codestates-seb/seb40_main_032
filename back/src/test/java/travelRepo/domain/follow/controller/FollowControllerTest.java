@@ -48,7 +48,7 @@ class FollowControllerTest {
     public void followPost_Success() throws Exception {
 
         //given
-        Account account = accountRepository.findById(1L).get();
+        Account account = accountRepository.findById(10001L).get();
         String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
         Long accountId = 2L;
 
@@ -86,7 +86,7 @@ class FollowControllerTest {
     public void followCheck_Success() throws Exception {
 
         //given
-        Account account = accountRepository.findById(1L).get();
+        Account account = accountRepository.findById(10001L).get();
         String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
         Long accountId = 2L;
 

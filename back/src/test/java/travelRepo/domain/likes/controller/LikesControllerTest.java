@@ -49,9 +49,9 @@ class LikesControllerTest {
     public void likesPost_Success() throws Exception {
 
         //given
-        Account account = accountRepository.findById(1L).get();
+        Account account = accountRepository.findById(10001L).get();
         String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
-        Long boardId = 101L;
+        Long boardId = 1010001L;
 
         //when
         ResultActions actions = mockMvc.perform(
@@ -87,9 +87,9 @@ class LikesControllerTest {
     public void followCheck_Success() throws Exception {
 
         //given
-        Account account = accountRepository.findById(1L).get();
+        Account account = accountRepository.findById(10001L).get();
         String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
-        Long boardId = 101L;
+        Long boardId = 1010001L;
 
         //when
         ResultActions actions = mockMvc.perform(

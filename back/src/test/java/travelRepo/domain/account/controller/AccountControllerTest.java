@@ -54,7 +54,10 @@ class AccountControllerTest {
         String email = "test1@test.com";
         String password = "12345678";
 
-        Account account = new Account(email, password);
+        Account account = Account.builder()
+                .email(email)
+                .password(password)
+                .build();
         String body = gson.toJson(account);
 
 
@@ -94,7 +97,7 @@ class AccountControllerTest {
 
         //given
         String email = "test@test.com";
-        String password = "123456";
+        String password = "12345678";
         String nickname = "testNickname";
         MockMultipartFile profile = new MockMultipartFile("profile", "profile.jpeg", "image/jpeg",
                 "(file data)".getBytes());
@@ -140,7 +143,7 @@ class AccountControllerTest {
     public void accountModify_Success() throws Exception {
 
         //given
-        Long accountId = 1L;
+        Long accountId = 10001L;
         Account account = accountRepository.findById(accountId).get();
         String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
 
@@ -197,7 +200,7 @@ class AccountControllerTest {
     public void accountRemove_Success() throws Exception {
 
         //given
-        Account account = accountRepository.findById(1L).get();
+        Account account = accountRepository.findById(10001L).get();
         String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
 
         //when
@@ -226,7 +229,7 @@ class AccountControllerTest {
     public void accountDetails_Success() throws Exception {
 
         //given
-        Long accountId = 2L;
+        Long accountId = 10002L;
 
         //when
         ResultActions actions = mockMvc.perform(
@@ -263,7 +266,7 @@ class AccountControllerTest {
     public void loginAccountDetails_Success() throws Exception {
 
         //given
-        Account account = accountRepository.findById(1L).get();
+        Account account = accountRepository.findById(10001L).get();
         String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
 
         //when
@@ -303,9 +306,9 @@ class AccountControllerTest {
     public void followAccountDetails_Success() throws Exception {
 
         //given
-        Account account = accountRepository.findById(1L).get();
+        Account account = accountRepository.findById(10001L).get();
         String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
-        Long accountId = 2L;
+        Long accountId = 10002L;
         String status = "following";
 
         //when

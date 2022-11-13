@@ -8,10 +8,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import travelRepo.domain.account.dto.*;
+import travelRepo.domain.account.service.AccountService;
 import travelRepo.domain.board.dto.FollowBoardDetailsRes;
 import travelRepo.global.common.dto.IdDto;
 import travelRepo.global.common.dto.PageDto;
 
+import javax.validation.Valid;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,15 +23,20 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AccountController {
 
+    private final AccountService accountService;
+
     @PostMapping
-    public ResponseEntity<IdDto> accountAdd(@ModelAttribute AccountAddReq accountAddReq) {
-        return new ResponseEntity<>(new IdDto(1L), HttpStatus.CREATED);
+    public ResponseEntity<IdDto> accountAdd(@Valid @ModelAttribute AccountAddReq accountAddReq) throws IOException {
+
+        IdDto idDto = accountService.addAccount(accountAddReq);
+
+        return new ResponseEntity<>(idDto, HttpStatus.CREATED);
     }
 
     @PostMapping("/{accountId}")
     public ResponseEntity<IdDto> accountModify(@PathVariable Long accountId,
                                                @ModelAttribute AccountModifyReq accountModifyReq) {
-        return new ResponseEntity<>(new IdDto(1L), HttpStatus.OK);
+        return new ResponseEntity<>(new IdDto(10001L), HttpStatus.OK);
     }
 
     @DeleteMapping
@@ -39,7 +47,7 @@ public class AccountController {
     public ResponseEntity<AccountDetailsRes> accountDetails(@PathVariable Long accountId) {
 
         AccountDetailsRes accountDetailsRes = new AccountDetailsRes();
-        accountDetailsRes.setId(1L);
+        accountDetailsRes.setId(10001L);
         accountDetailsRes.setEmail("mock@mock.com");
         accountDetailsRes.setNickname("mockNickname");
         accountDetailsRes.setIntro("mockIntro");
@@ -54,7 +62,7 @@ public class AccountController {
     public ResponseEntity<LoginAccountDetailsRes> loginAccountDetails() {
 
         LoginAccountDetailsRes loginAccountDetailsRes = new LoginAccountDetailsRes();
-        loginAccountDetailsRes.setId(1L);
+        loginAccountDetailsRes.setId(10001L);
         loginAccountDetailsRes.setEmail("mock@mock.com");
         loginAccountDetailsRes.setNickname("mockNickname");
         loginAccountDetailsRes.setProfile("/mock/path");
@@ -73,9 +81,9 @@ public class AccountController {
 
         for (int i = 0; i < 5; i++) {
             FollowAccountDetailsRes followAccountDetailsRes = new FollowAccountDetailsRes();
-            followAccountDetailsRes.setId(1L + i * 6);
-            followAccountDetailsRes.setNickname("mockNickname" + (1L + i * 6));
-            followAccountDetailsRes.setProfile("/mock/path" + (1L + i * 6));
+            followAccountDetailsRes.setId(10001L + i * 6);
+            followAccountDetailsRes.setNickname("mockNickname" + (10001L + i * 6));
+            followAccountDetailsRes.setProfile("/mock/path" + (10001L + i * 6));
 
             for (int j = 0; j < 5; j++) {
                 FollowBoardDetailsRes followBoardDetailsRes = new FollowBoardDetailsRes();
