@@ -1,0 +1,17 @@
+|===
+|Part|Description|Required
+
+{{#requestParts}}
+|{{#tableCellContent}}`+{{name}}+`{{/tableCellContent}}
+|{{#tableCellContent}}{{description}}{{/tableCellContent}}
+|{{#tableCellContent}}
+ifeval::["{{optional}}"=="true"]
+`false`
+endif::[]
+ifeval::["{{optional}}"=="false"]
+`*true*`
+endif::[]
+{{/tableCellContent}}
+
+{{/requestParts}}
+|===

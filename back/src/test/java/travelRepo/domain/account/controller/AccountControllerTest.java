@@ -146,6 +146,7 @@ class AccountControllerTest {
 
         String password = "123456";
         String nickname = "testNickname";
+        String intro = "testIntro";
         MockMultipartFile profile = new MockMultipartFile("profile", "profile.jpeg", "image/jpeg",
                 "(file data)".getBytes());
 
@@ -156,6 +157,7 @@ class AccountControllerTest {
                         .header("Authorization", jwt)
                         .param("password", password)
                         .param("nickname", nickname)
+                        .param("intro", intro)
         );
 
         //then
@@ -175,13 +177,14 @@ class AccountControllerTest {
                         ),
                         requestParts(
                                 List.of(
-                                        partWithName("profile").description("프로필 이미지")
+                                        partWithName("profile").description("프로필 이미지").optional()
                                 )
                         ),
                         requestParameters(
                                 List.of(
-                                        parameterWithName("password").description("비밀 번호"),
-                                        parameterWithName("nickname").description("닉네임")
+                                        parameterWithName("password").description("비밀 번호").optional(),
+                                        parameterWithName("nickname").description("닉네임").optional(),
+                                        parameterWithName("intro").description("소개글").optional()
                                 )
                         ),
                         responseFields(
@@ -327,7 +330,7 @@ class AccountControllerTest {
                         getResponsePreProcessor(),
                         requestHeaders(
                                 List.of(
-                                        headerWithName("Authorization").description("JWT")
+                                        headerWithName("Authorization").description("JWT").optional()
                                 )
                         ),
                         pathParameters(
@@ -335,9 +338,9 @@ class AccountControllerTest {
                         ),
                         requestParameters(
                                 List.of(
-                                        parameterWithName("page").description("페이지 번호(default = 1)"),
-                                        parameterWithName("size").description("페이징 크기(default = 10)"),
-                                        parameterWithName("sort").description("정렬 조건(default = asc)"),
+                                        parameterWithName("page").description("페이지 번호(default = 1)").optional(),
+                                        parameterWithName("size").description("페이징 크기(default = 10)").optional(),
+                                        parameterWithName("sort").description("정렬 조건(default = asc)").optional(),
                                         parameterWithName("status").description("following 또는 follower")
                                 )
                         ),

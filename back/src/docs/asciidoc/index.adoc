@@ -76,6 +76,9 @@ include::{snippets}/accountRemove/curl-request.adoc[]
 .http-request
 include::{snippets}/accountRemove/http-request.adoc[]
 
+.request-headers
+include::{snippets}/accountRemove/request-headers.adoc[]
+
 .http-response
 include::{snippets}/accountRemove/http-response.adoc[]
 
