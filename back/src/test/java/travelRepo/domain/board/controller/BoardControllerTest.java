@@ -66,7 +66,9 @@ class BoardControllerTest {
         String content = "mock board content";
         String location = "mock board location";
         String category = "SPOT";
-        String tag1 = "mock tag1", tag2 = "mock tag2", tag3 = "mock tag3";
+        String tag1 = "mock tag1";
+        String tag2 = "mock tag2";
+        String tag3 = "mock tag3";
 
         //when
         ResultActions actions = mockMvc.perform(
@@ -103,9 +105,9 @@ class BoardControllerTest {
                                 List.of(
                                         parameterWithName("title").description("게시글 제목"),
                                         parameterWithName("content").description("게시글 내용"),
-                                        parameterWithName("location").description("위치"),
+                                        parameterWithName("location").description("위치").optional(),
                                         parameterWithName("category").description("게시글 분류"),
-                                        parameterWithName("tags").description("게시글 태그")
+                                        parameterWithName("tags").description("게시글 태그").optional()
                                 )
                         ),
                         responseFields(
@@ -135,7 +137,9 @@ class BoardControllerTest {
         String content = "modified mock board content";
         String location = "modified mock board location";
         String category = "RESTAURANT";
-        String tag4 = "mock tag4", tag2 = "mock tag2", tag3 = "mock tag3";
+        String tag4 = "mock tag4";
+        String tag2 = "mock tag2";
+        String tag3 = "mock tag3";
 
         //when
         ResultActions actions = mockMvc.perform(
