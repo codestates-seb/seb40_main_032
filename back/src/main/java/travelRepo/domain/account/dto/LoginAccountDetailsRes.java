@@ -1,6 +1,7 @@
 package travelRepo.domain.account.dto;
 
 import lombok.Data;
+import travelRepo.domain.account.entity.Account;
 
 @Data
 public class LoginAccountDetailsRes {
@@ -13,7 +14,15 @@ public class LoginAccountDetailsRes {
 
     private String profile;
 
-    private int following;
+    public static LoginAccountDetailsRes of(Account account) {
 
-    private int follower;
+        LoginAccountDetailsRes loginAccountDetailsRes = new LoginAccountDetailsRes();
+
+        loginAccountDetailsRes.setId(account.getId());
+        loginAccountDetailsRes.setEmail(account.getEmail());
+        loginAccountDetailsRes.setNickname(account.getNickname());
+        loginAccountDetailsRes.setProfile(account.getProfile());
+
+        return loginAccountDetailsRes;
+    }
 }

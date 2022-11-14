@@ -57,15 +57,9 @@ public class AccountController {
     }
 
     @GetMapping("/login")
-    public ResponseEntity<LoginAccountDetailsRes> loginAccountDetails() {
+    public ResponseEntity<LoginAccountDetailsRes> loginAccountDetails(@LoginAccountId Long loginAccountId) {
 
-        LoginAccountDetailsRes loginAccountDetailsRes = new LoginAccountDetailsRes();
-        loginAccountDetailsRes.setId(1L);
-        loginAccountDetailsRes.setEmail("mock@mock.com");
-        loginAccountDetailsRes.setNickname("mockNickname");
-        loginAccountDetailsRes.setProfile("/mock/path");
-        loginAccountDetailsRes.setFollower(29);
-        loginAccountDetailsRes.setFollowing(53);
+        LoginAccountDetailsRes loginAccountDetailsRes = accountService.findLoginAccount(loginAccountId);
 
         return new ResponseEntity<>(loginAccountDetailsRes, HttpStatus.OK);
     }
