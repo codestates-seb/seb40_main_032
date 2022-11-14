@@ -17,6 +17,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindException;
 import travelRepo.domain.account.entity.Account;
 import travelRepo.domain.account.repository.AccountRepository;
+import travelRepo.global.exception.BusinessLogicException;
+import travelRepo.global.exception.ExceptionCode;
 import travelRepo.global.security.authentication.UserAccount;
 import travelRepo.global.security.jwt.JwtProcessor;
 
@@ -58,7 +60,10 @@ class AccountControllerTest {
         String email = "test1@test.com";
         String password = "12345678";
 
-        Account account = new Account(email, password);
+        Account account = Account.builder()
+                .email(email)
+                .password(password)
+                .build();
         String body = gson.toJson(account);
 
 
@@ -98,7 +103,7 @@ class AccountControllerTest {
 
         //given
         String email = "test@test.com";
-        String password = "123456";
+        String password = "12345678";
         String nickname = "testNickname";
         MockMultipartFile profile = new MockMultipartFile("profile", "profile.jpeg", "image/jpeg",
                 "(file data)".getBytes());
@@ -140,11 +145,97 @@ class AccountControllerTest {
     }
 
     @Test
+    @DisplayName("회원 생성_중복 이메일")
+    public void accountAdd_DuplicateEmail() throws Exception {
+
+        //given
+        String email = "test1@test.com";
+        String password = "12345678";
+        String nickname = "testNickname";
+        MockMultipartFile profile = new MockMultipartFile("profile", "profile.jpeg", "image/jpeg",
+                "(file data)".getBytes());
+
+        //when
+        ResultActions actions = mockMvc.perform(
+                multipart("/accounts")
+                        .file(profile)
+                        .param("email", email)
+                        .param("password", password)
+                        .param("nickname", nickname)
+        );
+
+        //then
+        actions
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.exception").value(BusinessLogicException.class.getSimpleName()))
+                .andExpect(jsonPath("$.message").value(ExceptionCode.DUPLICATION_EMAIL.getMessage()));
+    }
+
+    @Test
+    @DisplayName("회원 생성_검증 실패")
+    public void accountAdd_ValidationException() throws Exception {
+
+        //given
+        String email = "test@test.com";
+        String password = "12345678";
+        String nickname = "testNickname";
+        MockMultipartFile profile = new MockMultipartFile("profile", "profile.jpeg", "image/jpeg",
+                "(file data)".getBytes());
+
+        //when
+        ResultActions emailValidationEx = mockMvc.perform(
+                multipart("/accounts")
+                        .file(profile)
+                        .param("email", "exceptionEmail")
+                        .param("password", password)
+                        .param("nickname", nickname)
+        );
+        ResultActions passwordValidationEx = mockMvc.perform(
+                multipart("/accounts")
+                        .file(profile)
+                        .param("email", email)
+                        .param("password", "1234")
+                        .param("nickname", nickname)
+        );
+        ResultActions nicknameValidationEx = mockMvc.perform(
+                multipart("/accounts")
+                        .file(profile)
+                        .param("email", email)
+                        .param("password", password)
+                        .param("nickname", "e")
+        );
+        ResultActions profileValidationEx = mockMvc.perform(
+                multipart("/accounts")
+                        .param("email", email)
+                        .param("password", password)
+                        .param("nickname", "e")
+        );
+
+        //then
+        emailValidationEx
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.exception").value(BindException.class.getSimpleName()))
+                .andExpect(jsonPath("$.message").value("잘못된 입력값입니다."));
+        passwordValidationEx
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.exception").value(BindException.class.getSimpleName()))
+                .andExpect(jsonPath("$.message").value("잘못된 입력값입니다."));
+        nicknameValidationEx
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.exception").value(BindException.class.getSimpleName()))
+                .andExpect(jsonPath("$.message").value("잘못된 입력값입니다."));
+        profileValidationEx
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.exception").value(BindException.class.getSimpleName()))
+                .andExpect(jsonPath("$.message").value("잘못된 입력값입니다."));
+    }
+
+    @Test
     @DisplayName("회원 수정_성공")
     public void accountModify_Success() throws Exception {
 
         //given
-        Long accountId = 1L;
+        Long accountId = 10001L;
         Account account = accountRepository.findById(accountId).get();
         String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
 
@@ -201,7 +292,7 @@ class AccountControllerTest {
     public void accountModify_PartSuccess() throws Exception {
 
         //given
-        Long accountId = 1L;
+        Long accountId = 10001L;
         Account account = accountRepository.findById(accountId).get();
         String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
 
@@ -236,7 +327,7 @@ class AccountControllerTest {
     public void accountModify_ValidationException() throws Exception {
 
         //given
-        Long accountId = 1L;
+        Long accountId = 10001L;
         Account account = accountRepository.findById(accountId).get();
         String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
 
@@ -281,7 +372,7 @@ class AccountControllerTest {
     public void accountRemove_Success() throws Exception {
 
         //given
-        Account account = accountRepository.findById(1L).get();
+        Account account = accountRepository.findById(10001L).get();
         String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
 
         //when
@@ -310,7 +401,7 @@ class AccountControllerTest {
     public void accountDetails_Success() throws Exception {
 
         //given
-        Long accountId = 2L;
+        Long accountId = 10002L;
 
         //when
         ResultActions actions = mockMvc.perform(
@@ -347,7 +438,7 @@ class AccountControllerTest {
     public void loginAccountDetails_Success() throws Exception {
 
         //given
-        Account account = accountRepository.findById(1L).get();
+        Account account = accountRepository.findById(10001L).get();
         String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
 
         //when
@@ -387,9 +478,9 @@ class AccountControllerTest {
     public void followAccountDetails_Success() throws Exception {
 
         //given
-        Account account = accountRepository.findById(1L).get();
+        Account account = accountRepository.findById(10001L).get();
         String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
-        Long accountId = 2L;
+        Long accountId = 10002L;
         String status = "following";
 
         //when

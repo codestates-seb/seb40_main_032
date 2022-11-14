@@ -5,6 +5,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import travelRepo.domain.account.dto.AccountModifyReq;
+import travelRepo.domain.account.dto.AccountAddReq;
 import travelRepo.domain.account.entity.Account;
 import travelRepo.domain.account.repository.AccountRepository;
 import travelRepo.global.common.dto.IdDto;
@@ -24,6 +25,20 @@ public class AccountService {
     private final UploadService uploadService;
 
     @Transactional
+    public IdDto addAccount(AccountAddReq accountAddReq) throws IOException {
+
+        verifyDuplicateEmail(accountAddReq);
+
+        String encodePassword = bCryptPasswordEncoder.encode(accountAddReq.getPassword());
+        String profile = uploadService.upload(accountAddReq.getProfile());
+
+        Account account = accountAddReq.toAccount(encodePassword, profile);
+        Account savedAccount = accountRepository.save(account);
+
+        return new IdDto(savedAccount.getId());
+    }
+
+    @Transactional
     public IdDto modifyAccount(Long loginAccountId, AccountModifyReq accountModifyReq) throws IOException {
 
         Account account = accountRepository.findById(loginAccountId)
@@ -34,5 +49,12 @@ public class AccountService {
         account.modify(modifyAccount);
 
         return new IdDto(account.getId());
+    }
+
+    private void verifyDuplicateEmail(AccountAddReq accountAddReq) {
+
+        if (accountRepository.existsByEmail(accountAddReq.getEmail())) {
+            throw new BusinessLogicException(ExceptionCode.DUPLICATION_EMAIL);
+        }
     }
 }

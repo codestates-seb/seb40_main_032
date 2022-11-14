@@ -1,9 +1,6 @@
 package travelRepo.domain.account.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import travelRepo.global.auditing.BaseTime;
 
 import javax.persistence.*;
@@ -12,8 +9,8 @@ import java.util.Optional;
 @Entity
 @Getter
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class Account extends BaseTime {
 
     @Id
@@ -33,11 +30,6 @@ public class Account extends BaseTime {
 
     @Enumerated(EnumType.STRING)
     private Role role;
-
-    public Account(String email, String password) {
-        this.email = email;
-        this.password = password;
-    }
 
     public void modify(Account account) {
 

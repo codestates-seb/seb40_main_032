@@ -27,8 +27,11 @@ public class AccountController {
     private final AccountService accountService;
 
     @PostMapping
-    public ResponseEntity<IdDto> accountAdd(@ModelAttribute AccountAddReq accountAddReq) {
-        return new ResponseEntity<>(new IdDto(1L), HttpStatus.CREATED);
+    public ResponseEntity<IdDto> accountAdd(@Valid @ModelAttribute AccountAddReq accountAddReq) throws IOException {
+
+        IdDto idDto = accountService.addAccount(accountAddReq);
+
+        return new ResponseEntity<>(idDto, HttpStatus.CREATED);
     }
 
     @PostMapping("/modify")

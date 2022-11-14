@@ -16,7 +16,7 @@ public class ExceptionAdvice {
     @ExceptionHandler
     public ResponseEntity<ErrorResponse> basicExceptionHandler(Exception e) {
 
-        ErrorResponse errorResponse = new ErrorResponse(e.getClass().getSimpleName(), e.getMessage());
+         ErrorResponse errorResponse = new ErrorResponse(e.getClass().getSimpleName(), e.getMessage());
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
