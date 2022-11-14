@@ -44,7 +44,8 @@ public class AccountController {
     }
 
     @DeleteMapping
-    public void accountRemove() {
+    public void accountRemove(@LoginAccountId Long loginAccountId) {
+        accountService.removeAccount(loginAccountId);
     }
 
     @GetMapping("/{accountId}")
