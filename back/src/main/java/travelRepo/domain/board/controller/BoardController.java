@@ -55,6 +55,8 @@ public class BoardController {
         response.setContent("mock board content");
         response.setLocation("mock board location");
         response.setCategory(Category.SPOT);
+        response.setLikeCount(16);
+        response.setViews(256);
         response.setTags(
                 List.of("mock tag1", "mock tag2", "mock tag3")
         );
