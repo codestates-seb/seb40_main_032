@@ -8,11 +8,11 @@ import javax.persistence.*;
 @Entity
 @Getter
 @NoArgsConstructor
-public class Board_Tag {
+public class BoardTag {
 
     @Id
     @GeneratedValue
-    @Column(name = "board_tag_id")
+    @Column(name = "boardTag_id")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)

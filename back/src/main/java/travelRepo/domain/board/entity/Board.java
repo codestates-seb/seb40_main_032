@@ -36,6 +36,6 @@ public class Board extends BaseTime {
     @Enumerated(EnumType.STRING)
     private Category category;
 
-    @ElementCollection
-    private List<String> photos = new ArrayList<>();
+    @OneToMany(mappedBy = "board", cascade = CascadeType.PERSIST)
+    private List<BoardPhoto> boardPhotos = new ArrayList<>();
 }
