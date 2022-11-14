@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.transaction.annotation.Transactional;
 import travelRepo.domain.account.entity.Account;
 import travelRepo.domain.account.repository.AccountRepository;
 import travelRepo.global.security.authentication.UserAccount;
@@ -29,6 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static travelRepo.util.ApiDocumentUtils.getRequestPreProcessor;
 import static travelRepo.util.ApiDocumentUtils.getResponsePreProcessor;
 
+@Transactional
 @SpringBootTest
 @AutoConfigureMockMvc
 @AutoConfigureRestDocs
@@ -48,7 +50,7 @@ class FollowControllerTest {
     public void followPost_Success() throws Exception {
 
         //given
-        Account account = accountRepository.findById(1L).get();
+        Account account = accountRepository.findById(10001L).get();
         String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
         Long accountId = 2L;
 
@@ -86,7 +88,7 @@ class FollowControllerTest {
     public void followCheck_Success() throws Exception {
 
         //given
-        Account account = accountRepository.findById(1L).get();
+        Account account = accountRepository.findById(10001L).get();
         String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
         Long accountId = 2L;
 

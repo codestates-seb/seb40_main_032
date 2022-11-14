@@ -13,8 +13,12 @@ import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.BindException;
 import travelRepo.domain.account.entity.Account;
 import travelRepo.domain.account.repository.AccountRepository;
+import travelRepo.global.exception.BusinessLogicException;
+import travelRepo.global.exception.ExceptionCode;
 import travelRepo.global.security.authentication.UserAccount;
 import travelRepo.global.security.jwt.JwtProcessor;
 
@@ -25,10 +29,12 @@ import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.docu
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static travelRepo.util.ApiDocumentUtils.getRequestPreProcessor;
 import static travelRepo.util.ApiDocumentUtils.getResponsePreProcessor;
 
+@Transactional
 @SpringBootTest
 @AutoConfigureMockMvc
 @AutoConfigureRestDocs
@@ -54,7 +60,10 @@ class AccountControllerTest {
         String email = "test1@test.com";
         String password = "12345678";
 
-        Account account = new Account(email, password);
+        Account account = Account.builder()
+                .email(email)
+                .password(password)
+                .build();
         String body = gson.toJson(account);
 
 
@@ -94,7 +103,7 @@ class AccountControllerTest {
 
         //given
         String email = "test@test.com";
-        String password = "123456";
+        String password = "12345678";
         String nickname = "testNickname";
         MockMultipartFile profile = new MockMultipartFile("profile", "profile.jpeg", "image/jpeg",
                 "(file data)".getBytes());
@@ -136,26 +145,114 @@ class AccountControllerTest {
     }
 
     @Test
-    @DisplayName("회원 수정_성공")
-    public void accountModify_Success() throws Exception {
+    @DisplayName("회원 생성_중복 이메일")
+    public void accountAdd_DuplicateEmail() throws Exception {
 
         //given
-        Long accountId = 1L;
-        Account account = accountRepository.findById(accountId).get();
-        String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
-
-        String password = "123456";
+        String email = "test1@test.com";
+        String password = "12345678";
         String nickname = "testNickname";
         MockMultipartFile profile = new MockMultipartFile("profile", "profile.jpeg", "image/jpeg",
                 "(file data)".getBytes());
 
         //when
         ResultActions actions = mockMvc.perform(
-                multipart("/accounts/{accountId}", accountId)
+                multipart("/accounts")
+                        .file(profile)
+                        .param("email", email)
+                        .param("password", password)
+                        .param("nickname", nickname)
+        );
+
+        //then
+        actions
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.exception").value(BusinessLogicException.class.getSimpleName()))
+                .andExpect(jsonPath("$.message").value(ExceptionCode.DUPLICATION_EMAIL.getMessage()));
+    }
+
+    @Test
+    @DisplayName("회원 생성_검증 실패")
+    public void accountAdd_ValidationException() throws Exception {
+
+        //given
+        String email = "test@test.com";
+        String password = "12345678";
+        String nickname = "testNickname";
+        MockMultipartFile profile = new MockMultipartFile("profile", "profile.jpeg", "image/jpeg",
+                "(file data)".getBytes());
+
+        //when
+        ResultActions emailValidationEx = mockMvc.perform(
+                multipart("/accounts")
+                        .file(profile)
+                        .param("email", "exceptionEmail")
+                        .param("password", password)
+                        .param("nickname", nickname)
+        );
+        ResultActions passwordValidationEx = mockMvc.perform(
+                multipart("/accounts")
+                        .file(profile)
+                        .param("email", email)
+                        .param("password", "1234")
+                        .param("nickname", nickname)
+        );
+        ResultActions nicknameValidationEx = mockMvc.perform(
+                multipart("/accounts")
+                        .file(profile)
+                        .param("email", email)
+                        .param("password", password)
+                        .param("nickname", "e")
+        );
+        ResultActions profileValidationEx = mockMvc.perform(
+                multipart("/accounts")
+                        .param("email", email)
+                        .param("password", password)
+                        .param("nickname", "e")
+        );
+
+        //then
+        emailValidationEx
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.exception").value(BindException.class.getSimpleName()))
+                .andExpect(jsonPath("$.message").value("잘못된 입력값입니다."));
+        passwordValidationEx
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.exception").value(BindException.class.getSimpleName()))
+                .andExpect(jsonPath("$.message").value("잘못된 입력값입니다."));
+        nicknameValidationEx
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.exception").value(BindException.class.getSimpleName()))
+                .andExpect(jsonPath("$.message").value("잘못된 입력값입니다."));
+        profileValidationEx
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.exception").value(BindException.class.getSimpleName()))
+                .andExpect(jsonPath("$.message").value("잘못된 입력값입니다."));
+    }
+
+    @Test
+    @DisplayName("회원 수정_성공")
+    public void accountModify_Success() throws Exception {
+
+        //given
+        Long accountId = 10001L;
+        Account account = accountRepository.findById(accountId).get();
+        String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
+
+        String password = "123456789";
+        String nickname = "modifyTestNickname";
+        String intro = "modifyTestIntro";
+        MockMultipartFile profile = new MockMultipartFile("profile", "profile.jpeg", "image/jpeg",
+                "(file data)".getBytes());
+
+        //when
+        ResultActions actions = mockMvc.perform(
+                multipart("/accounts/modify")
                         .file(profile)
                         .header("Authorization", jwt)
                         .param("password", password)
                         .param("nickname", nickname)
+                        .param("intro", intro)
         );
 
         //then
@@ -170,18 +267,16 @@ class AccountControllerTest {
                                         headerWithName("Authorization").description("JWT")
                                 )
                         ),
-                        pathParameters(
-                                parameterWithName("accountId").description("Account 식별자")
-                        ),
                         requestParts(
                                 List.of(
-                                        partWithName("profile").description("프로필 이미지")
+                                        partWithName("profile").description("프로필 이미지").optional()
                                 )
                         ),
                         requestParameters(
                                 List.of(
-                                        parameterWithName("password").description("비밀 번호"),
-                                        parameterWithName("nickname").description("닉네임")
+                                        parameterWithName("password").description("비밀 번호").optional(),
+                                        parameterWithName("nickname").description("닉네임").optional(),
+                                        parameterWithName("intro").description("소개글").optional()
                                 )
                         ),
                         responseFields(
@@ -193,11 +288,91 @@ class AccountControllerTest {
     }
 
     @Test
+    @DisplayName("회원 수정_부분 성공")
+    public void accountModify_PartSuccess() throws Exception {
+
+        //given
+        Long accountId = 10001L;
+        Account account = accountRepository.findById(accountId).get();
+        String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
+
+        String nickname = "modifyTestNickname";
+        String intro = "modifyTestIntro";
+        MockMultipartFile profile = new MockMultipartFile("profile", "profile.jpeg", "image/jpeg",
+                "".getBytes());
+
+        //when
+        ResultActions actions = mockMvc.perform(
+                multipart("/accounts/modify")
+                        .header("Authorization", jwt)
+                        .param("nickname", nickname)
+                        .param("intro", intro)
+        );
+
+        ResultActions profileNullActions = mockMvc.perform(
+                multipart("/accounts/modify")
+                        .file(profile)
+                        .header("Authorization", jwt)
+                        .param("nickname", nickname)
+                        .param("intro", intro)
+        );
+
+        //then
+        actions
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @DisplayName("회원 수정_검증 실패")
+    public void accountModify_ValidationException() throws Exception {
+
+        //given
+        Long accountId = 10001L;
+        Account account = accountRepository.findById(accountId).get();
+        String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
+
+        String password = "123456789";
+        String nickname = "modifyTestNickname";
+        String intro = "modifyTestIntro";
+        MockMultipartFile profile = new MockMultipartFile("profile", "profile.jpeg", "image/jpeg",
+                "(file data)".getBytes());
+
+        //when
+        ResultActions passwordValidationEx = mockMvc.perform(
+                multipart("/accounts/modify")
+                        .file(profile)
+                        .header("Authorization", jwt)
+                        .param("password", "1234")
+                        .param("nickname", nickname)
+                        .param("intro", intro)
+        );
+        ResultActions nicknameValidationEx = mockMvc.perform(
+                multipart("/accounts/modify")
+                        .file(profile)
+                        .header("Authorization", jwt)
+                        .param("password", password)
+                        .param("nickname", "e")
+                        .param("intro", intro)
+        );
+
+
+        //then
+        passwordValidationEx
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.exception").value(BindException.class.getSimpleName()))
+                .andExpect(jsonPath("$.message").value("잘못된 입력값입니다."));
+        nicknameValidationEx
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.exception").value(BindException.class.getSimpleName()))
+                .andExpect(jsonPath("$.message").value("잘못된 입력값입니다."));
+    }
+
+    @Test
     @DisplayName("회원 삭제_성공")
     public void accountRemove_Success() throws Exception {
 
         //given
-        Account account = accountRepository.findById(1L).get();
+        Account account = accountRepository.findById(10001L).get();
         String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
 
         //when
@@ -226,7 +401,7 @@ class AccountControllerTest {
     public void accountDetails_Success() throws Exception {
 
         //given
-        Long accountId = 2L;
+        Long accountId = 10002L;
 
         //when
         ResultActions actions = mockMvc.perform(
@@ -263,7 +438,7 @@ class AccountControllerTest {
     public void loginAccountDetails_Success() throws Exception {
 
         //given
-        Account account = accountRepository.findById(1L).get();
+        Account account = accountRepository.findById(10001L).get();
         String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
 
         //when
@@ -303,9 +478,9 @@ class AccountControllerTest {
     public void followAccountDetails_Success() throws Exception {
 
         //given
-        Account account = accountRepository.findById(1L).get();
+        Account account = accountRepository.findById(10001L).get();
         String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
-        Long accountId = 2L;
+        Long accountId = 10002L;
         String status = "following";
 
         //when
@@ -327,7 +502,7 @@ class AccountControllerTest {
                         getResponsePreProcessor(),
                         requestHeaders(
                                 List.of(
-                                        headerWithName("Authorization").description("JWT")
+                                        headerWithName("Authorization").description("JWT").optional()
                                 )
                         ),
                         pathParameters(
@@ -335,9 +510,9 @@ class AccountControllerTest {
                         ),
                         requestParameters(
                                 List.of(
-                                        parameterWithName("page").description("페이지 번호(default = 1)"),
-                                        parameterWithName("size").description("페이징 크기(default = 10)"),
-                                        parameterWithName("sort").description("정렬 조건(default = asc)"),
+                                        parameterWithName("page").description("페이지 번호(default = 1)").optional(),
+                                        parameterWithName("size").description("페이징 크기(default = 10)").optional(),
+                                        parameterWithName("sort").description("정렬 조건(default = asc)").optional(),
                                         parameterWithName("status").description("following 또는 follower")
                                 )
                         ),

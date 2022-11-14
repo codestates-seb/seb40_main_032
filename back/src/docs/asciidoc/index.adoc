@@ -54,9 +54,6 @@ include::{snippets}/accountModify/http-request.adoc[]
 .request-headers
 include::{snippets}/accountModify/request-headers.adoc[]
 
-.path-parameters
-include::{snippets}/accountModify/path-parameters.adoc[]
-
 .request-parts
 include::{snippets}/accountModify/request-parts.adoc[]
 
@@ -75,6 +72,9 @@ include::{snippets}/accountRemove/curl-request.adoc[]
 
 .http-request
 include::{snippets}/accountRemove/http-request.adoc[]
+
+.request-headers
+include::{snippets}/accountRemove/request-headers.adoc[]
 
 .http-response
 include::{snippets}/accountRemove/http-response.adoc[]
