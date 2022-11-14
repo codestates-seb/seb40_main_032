@@ -8,10 +8,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import travelRepo.domain.account.dto.*;
+import travelRepo.domain.account.service.AccountService;
 import travelRepo.domain.board.dto.FollowBoardDetailsRes;
 import travelRepo.global.common.dto.IdDto;
 import travelRepo.global.common.dto.PageDto;
 
+import javax.validation.Valid;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,9 +23,14 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AccountController {
 
+    private final AccountService accountService;
+
     @PostMapping
-    public ResponseEntity<IdDto> accountAdd(@ModelAttribute AccountAddReq accountAddReq) {
-        return new ResponseEntity<>(new IdDto(1L), HttpStatus.CREATED);
+    public ResponseEntity<IdDto> accountAdd(@Valid @ModelAttribute AccountAddReq accountAddReq) throws IOException {
+
+        IdDto idDto = accountService.addAccount(accountAddReq);
+
+        return new ResponseEntity<>(idDto, HttpStatus.CREATED);
     }
 
     @PostMapping("/{accountId}")
