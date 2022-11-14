@@ -65,8 +65,8 @@ public class BoardController {
     }
 
     @GetMapping
-    public ResponseEntity<SliceDto<BoardSummaryRes>> boardList(@RequestParam String query,
-                                                               @RequestParam Category category,
+    public ResponseEntity<SliceDto<BoardSummaryRes>> boardList(@RequestParam(required = false) String query,
+                                                               @RequestParam(required = false) Category category,
                                                                Pageable pageable) {
 
         List<BoardSummaryRes> content = new ArrayList<>();
