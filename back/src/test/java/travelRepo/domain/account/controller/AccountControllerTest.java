@@ -401,7 +401,7 @@ class AccountControllerTest {
     public void accountDetails_Success() throws Exception {
 
         //given
-        Long accountId = 10002L;
+        Long accountId = 10001L;
 
         //when
         ResultActions actions = mockMvc.perform(
@@ -411,6 +411,13 @@ class AccountControllerTest {
         //then
         actions
                 .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(accountId))
+                .andExpect(jsonPath("$.email").value( "test1@test.com"))
+                .andExpect(jsonPath("$.nickname").value("testNickname1"))
+                .andExpect(jsonPath("$.intro").value("testIntro"))
+                .andExpect(jsonPath("$.profile").value("https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg"))
+                .andExpect(jsonPath("$.following").value(2))
+                .andExpect(jsonPath("$.follower").value(1))
                 .andDo(document(
                         "accountDetails",
                         getRequestPreProcessor(),

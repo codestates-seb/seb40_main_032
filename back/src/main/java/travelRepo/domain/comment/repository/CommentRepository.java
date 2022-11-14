@@ -1,14 +1,15 @@
-package travelRepo.domain.board.repository;
+package travelRepo.domain.comment.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import travelRepo.domain.board.entity.Board;
+import travelRepo.domain.comment.entity.Comment;
 
-public interface BoardRepository extends JpaRepository<Board, Long> {
+public interface CommentRepository extends JpaRepository<Comment, Long> {
 
     @Modifying(clearAutomatically = true, flushAutomatically = true)
-    @Query("delete from Board board where board.account.id = :accountId")
+    @Query("delete from Comment comment where comment.account.id = :accountId " +
+            "or comment.board in (select board from Board board where board.account.id = :accountId)")
     void deleteByAccountId(@Param("accountId") Long accountId);
 }

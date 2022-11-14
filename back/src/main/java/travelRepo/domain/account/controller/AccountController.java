@@ -44,20 +44,14 @@ public class AccountController {
     }
 
     @DeleteMapping
-    public void accountRemove() {
+    public void accountRemove(@LoginAccountId Long loginAccountId) {
+        accountService.removeAccount(loginAccountId);
     }
 
     @GetMapping("/{accountId}")
     public ResponseEntity<AccountDetailsRes> accountDetails(@PathVariable Long accountId) {
 
-        AccountDetailsRes accountDetailsRes = new AccountDetailsRes();
-        accountDetailsRes.setId(1L);
-        accountDetailsRes.setEmail("mock@mock.com");
-        accountDetailsRes.setNickname("mockNickname");
-        accountDetailsRes.setIntro("mockIntro");
-        accountDetailsRes.setProfile("/mock/path");
-        accountDetailsRes.setFollower(29);
-        accountDetailsRes.setFollowing(53);
+        AccountDetailsRes accountDetailsRes = accountService.findAccount(accountId);
 
         return new ResponseEntity<>(accountDetailsRes, HttpStatus.OK);
     }

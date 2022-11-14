@@ -16,7 +16,7 @@ public class Tag extends BaseTime {
 
     @Id
     @GeneratedValue
-    @Column(name = "board_id")
+    @Column(name = "tag_id")
     private Long id;
 
     private String name;
