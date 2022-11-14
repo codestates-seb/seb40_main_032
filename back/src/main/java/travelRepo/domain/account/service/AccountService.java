@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import travelRepo.domain.account.dto.AccountModifyReq;
 import travelRepo.domain.account.dto.AccountAddReq;
 import travelRepo.domain.account.entity.Account;
 import travelRepo.domain.account.repository.AccountRepository;
@@ -37,11 +38,23 @@ public class AccountService {
         return new IdDto(savedAccount.getId());
     }
 
+    @Transactional
+    public IdDto modifyAccount(Long loginAccountId, AccountModifyReq accountModifyReq) throws IOException {
+
+        Account account = accountRepository.findById(loginAccountId)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_ACCOUNT));
+
+        String profile = uploadService.upload(accountModifyReq.getProfile());
+        Account modifyAccount = accountModifyReq.toAccount(profile);
+        account.modify(modifyAccount);
+
+        return new IdDto(account.getId());
+    }
+
     private void verifyDuplicateEmail(AccountAddReq accountAddReq) {
 
         if (accountRepository.existsByEmail(accountAddReq.getEmail())) {
             throw new BusinessLogicException(ExceptionCode.DUPLICATION_EMAIL);
         }
     }
-
 }

@@ -23,7 +23,7 @@ public class S3UploadService implements UploadService{
 
     public String upload(MultipartFile image) throws IOException {
 
-        if (image.isEmpty()) {
+        if (image == null || image.isEmpty()) {
             return null;
         }
 

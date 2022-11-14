@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import travelRepo.domain.account.dto.*;
 import travelRepo.domain.account.service.AccountService;
 import travelRepo.domain.board.dto.FollowBoardDetailsRes;
+import travelRepo.global.argumentresolver.LoginAccountId;
 import travelRepo.global.common.dto.IdDto;
 import travelRepo.global.common.dto.PageDto;
 
@@ -33,10 +34,13 @@ public class AccountController {
         return new ResponseEntity<>(idDto, HttpStatus.CREATED);
     }
 
-    @PostMapping("/{accountId}")
-    public ResponseEntity<IdDto> accountModify(@PathVariable Long accountId,
-                                               @ModelAttribute AccountModifyReq accountModifyReq) {
-        return new ResponseEntity<>(new IdDto(1L), HttpStatus.OK);
+    @PostMapping("/modify")
+    public ResponseEntity<IdDto> accountModify(@LoginAccountId Long loginAccountId,
+                                               @Valid @ModelAttribute AccountModifyReq accountModifyReq) throws IOException {
+
+        IdDto idDto = accountService.modifyAccount(loginAccountId, accountModifyReq);
+
+        return new ResponseEntity<>(idDto, HttpStatus.OK);
     }
 
     @DeleteMapping

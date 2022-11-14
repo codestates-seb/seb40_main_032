@@ -4,6 +4,7 @@ import lombok.*;
 import travelRepo.global.auditing.BaseTime;
 
 import javax.persistence.*;
+import java.util.Optional;
 
 @Entity
 @Getter
@@ -30,4 +31,11 @@ public class Account extends BaseTime {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    public void modify(Account account) {
+
+        Optional.ofNullable(account.getPassword()).ifPresent(password -> this.password = password);
+        Optional.ofNullable(account.getNickname()).ifPresent(nickname -> this.nickname = nickname);
+        Optional.ofNullable(account.getProfile()).ifPresent(profile -> this.profile = profile);
+        Optional.ofNullable(account.getIntro()).ifPresent(intro -> this.intro = intro);
+    }
 }
