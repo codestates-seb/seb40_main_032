@@ -4,10 +4,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import travelRepo.domain.account.dto.AccountDetailsRes;
 import travelRepo.domain.account.dto.AccountModifyReq;
 import travelRepo.domain.account.dto.AccountAddReq;
 import travelRepo.domain.account.entity.Account;
 import travelRepo.domain.account.repository.AccountRepository;
+import travelRepo.domain.follow.repository.FollowRepository;
 import travelRepo.global.common.dto.IdDto;
 import travelRepo.global.exception.BusinessLogicException;
 import travelRepo.global.exception.ExceptionCode;
@@ -21,6 +23,7 @@ import java.io.IOException;
 public class AccountService {
 
     private final AccountRepository accountRepository;
+    private final FollowRepository followRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final UploadService uploadService;
 
@@ -49,6 +52,17 @@ public class AccountService {
         account.modify(modifyAccount);
 
         return new IdDto(account.getId());
+    }
+
+    public AccountDetailsRes findAccount(Long accountId) {
+
+        Account account = accountRepository.findById(accountId)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_ACCOUNT));
+
+        int following = followRepository.findByFollower(account).size();
+        int follower = followRepository.findByFollowing(account).size();
+
+        return AccountDetailsRes.of(account, following, follower);
     }
 
     private void verifyDuplicateEmail(AccountAddReq accountAddReq) {
