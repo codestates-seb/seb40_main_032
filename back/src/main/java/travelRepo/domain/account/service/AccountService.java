@@ -4,17 +4,16 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import travelRepo.domain.account.dto.AccountDetailsRes;
-import travelRepo.domain.account.dto.AccountModifyReq;
 import travelRepo.domain.account.dto.AccountAddReq;
+import travelRepo.domain.account.dto.AccountDetailsRes;
 import travelRepo.domain.account.dto.AccountModifyReq;
 import travelRepo.domain.account.entity.Account;
 import travelRepo.domain.account.repository.AccountRepository;
-import travelRepo.domain.follow.repository.FollowRepository;
 import travelRepo.domain.board.repository.BoardPhotoRepository;
 import travelRepo.domain.board.repository.BoardRepository;
 import travelRepo.domain.board.repository.BoardTagRepository;
 import travelRepo.domain.comment.repository.CommentRepository;
+import travelRepo.domain.follow.repository.FollowRepository;
 import travelRepo.domain.likes.likesRepository.LikesRepository;
 import travelRepo.global.common.dto.IdDto;
 import travelRepo.global.exception.BusinessLogicException;
@@ -83,8 +82,8 @@ public class AccountService {
         Account account = accountRepository.findById(accountId)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_ACCOUNT));
 
-        int following = followRepository.findByFollower(account).size();
-        int follower = followRepository.findByFollowing(account).size();
+        Long following = followRepository.countByFollower(account);
+        Long follower = followRepository.countByFollowing(account);
 
         return AccountDetailsRes.of(account, following, follower);
     }

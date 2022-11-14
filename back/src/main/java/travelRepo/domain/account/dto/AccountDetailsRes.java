@@ -16,11 +16,11 @@ public class AccountDetailsRes {
 
     private String profile;
 
-    private int following;
+    private Long following;
 
-    private int follower;
+    private Long follower;
 
-    public static AccountDetailsRes of(Account account, int following, int follower) {
+    public static AccountDetailsRes of(Account account, Long following, Long follower) {
 
         AccountDetailsRes accountDetailsRes = new AccountDetailsRes();
 
