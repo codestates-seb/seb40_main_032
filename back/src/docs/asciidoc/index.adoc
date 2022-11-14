@@ -232,19 +232,88 @@ include::{snippets}/boardList/response-fields.adoc[]
 
 === 유저 게시글 조회
 .curl-request
-include::{snippets}/boardModify/curl-request.adoc[]
+include::{snippets}/accountBoardList/curl-request.adoc[]
 
 .http-request
-include::{snippets}/boardModify/http-request.adoc[]
+include::{snippets}/accountBoardList/http-request.adoc[]
 
 .path-parameters
-include::{snippets}/boardModify/path-parameters.adoc[]
+include::{snippets}/accountBoardList/path-parameters.adoc[]
 
 .http-response
-include::{snippets}/boardModify/http-response.adoc[]
+include::{snippets}/accountBoardList/http-response.adoc[]
 
 .response-fields
-include::{snippets}/boardModify/response-fields.adoc[]
+include::{snippets}/accountBoardList/response-fields.adoc[]
+
+***
+== CommentController
+=== 댓글 등록
+.curl-request
+include::{snippets}/commentAdd/curl-request.adoc[]
+
+.http-request
+include::{snippets}/commentAdd/http-request.adoc[]
+
+.request-fields
+include::{snippets}/commentAdd/request-fields.adoc[]
+
+.request-headers
+include::{snippets}/commentAdd/request-headers.adoc[]
+
+.http-response
+include::{snippets}/commentAdd/http-response.adoc[]
+
+=== 댓글 수정
+.curl-request
+include::{snippets}/commentModify/curl-request.adoc[]
+
+.http-request
+include::{snippets}/commentModify/http-request.adoc[]
+
+.path-parameters
+include::{snippets}/commentModify/path-parameters.adoc[]
+
+.request-fields
+include::{snippets}/commentModify/request-fields.adoc[]
+
+.request-headers
+include::{snippets}/commentModify/request-headers.adoc[]
+
+.http-response
+include::{snippets}/commentModify/http-response.adoc[]
+
+=== 댓글 삭제
+.curl-request
+include::{snippets}/commentRemove/curl-request.adoc[]
+
+.http-request
+include::{snippets}/commentRemove/http-request.adoc[]
+
+.path-parameters
+include::{snippets}/commentRemove/path-parameters.adoc[]
+
+.request-headers
+include::{snippets}/commentRemove/request-headers.adoc[]
+
+.http-response
+include::{snippets}/commentRemove/http-response.adoc[]
+
+=== 댓글 조회
+.curl-request
+include::{snippets}/commentList/curl-request.adoc[]
+
+.http-request
+include::{snippets}/commentList/http-request.adoc[]
+
+.path-parameters
+include::{snippets}/commentList/path-parameters.adoc[]
+
+.http-response
+include::{snippets}/commentList/http-response.adoc[]
+
+.response-fields
+include::{snippets}/commentList/response-fields.adoc[]
 
 ***
 == FollowController

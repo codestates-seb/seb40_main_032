@@ -40,7 +40,7 @@ public class CommentController {
 
     @GetMapping("/board/{boardId}")
     public ResponseEntity<SliceDto<CommentDetailsRes>> commentList(@PathVariable Long boardId,
-                                                                  @PageableDefault(size = 5) Pageable pageable) {
+                                                                   @PageableDefault(size = 5, sort = "createdAt,DESC") Pageable pageable) {
 
         List<CommentDetailsRes> content = new ArrayList<>();
 
@@ -54,7 +54,7 @@ public class CommentController {
             commentDetailsRes.setCommentId(0L + i);
             commentDetailsRes.setContent("mock comment content" + i);
             commentDetailsRes.setCreatedAt(LocalDateTime.now());
-            commentDetailsRes.setAccountSummaryRes(accountSummaryRes);
+            commentDetailsRes.setAccount(accountSummaryRes);
 
             content.add(commentDetailsRes);
         }
