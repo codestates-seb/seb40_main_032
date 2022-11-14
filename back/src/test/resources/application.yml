@@ -46,4 +46,4 @@ cloud:
 
 dir:
 
-mod: local
+mod: server

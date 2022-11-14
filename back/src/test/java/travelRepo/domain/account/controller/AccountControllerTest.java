@@ -13,6 +13,8 @@ import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.BindException;
 import travelRepo.domain.account.entity.Account;
 import travelRepo.domain.account.repository.AccountRepository;
 import travelRepo.global.security.authentication.UserAccount;
@@ -25,10 +27,12 @@ import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.docu
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static travelRepo.util.ApiDocumentUtils.getRequestPreProcessor;
 import static travelRepo.util.ApiDocumentUtils.getResponsePreProcessor;
 
+@Transactional
 @SpringBootTest
 @AutoConfigureMockMvc
 @AutoConfigureRestDocs
@@ -144,15 +148,15 @@ class AccountControllerTest {
         Account account = accountRepository.findById(accountId).get();
         String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
 
-        String password = "123456";
-        String nickname = "testNickname";
-        String intro = "testIntro";
+        String password = "123456789";
+        String nickname = "modifyTestNickname";
+        String intro = "modifyTestIntro";
         MockMultipartFile profile = new MockMultipartFile("profile", "profile.jpeg", "image/jpeg",
                 "(file data)".getBytes());
 
         //when
         ResultActions actions = mockMvc.perform(
-                multipart("/accounts/{accountId}", accountId)
+                multipart("/accounts/modify")
                         .file(profile)
                         .header("Authorization", jwt)
                         .param("password", password)
@@ -172,9 +176,6 @@ class AccountControllerTest {
                                         headerWithName("Authorization").description("JWT")
                                 )
                         ),
-                        pathParameters(
-                                parameterWithName("accountId").description("Account 식별자")
-                        ),
                         requestParts(
                                 List.of(
                                         partWithName("profile").description("프로필 이미지").optional()
@@ -193,6 +194,86 @@ class AccountControllerTest {
                                 )
                         )
                 ));
+    }
+
+    @Test
+    @DisplayName("회원 수정_부분 성공")
+    public void accountModify_PartSuccess() throws Exception {
+
+        //given
+        Long accountId = 1L;
+        Account account = accountRepository.findById(accountId).get();
+        String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
+
+        String nickname = "modifyTestNickname";
+        String intro = "modifyTestIntro";
+        MockMultipartFile profile = new MockMultipartFile("profile", "profile.jpeg", "image/jpeg",
+                "".getBytes());
+
+        //when
+        ResultActions actions = mockMvc.perform(
+                multipart("/accounts/modify")
+                        .header("Authorization", jwt)
+                        .param("nickname", nickname)
+                        .param("intro", intro)
+        );
+
+        ResultActions profileNullActions = mockMvc.perform(
+                multipart("/accounts/modify")
+                        .file(profile)
+                        .header("Authorization", jwt)
+                        .param("nickname", nickname)
+                        .param("intro", intro)
+        );
+
+        //then
+        actions
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @DisplayName("회원 수정_검증 실패")
+    public void accountModify_ValidationException() throws Exception {
+
+        //given
+        Long accountId = 1L;
+        Account account = accountRepository.findById(accountId).get();
+        String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
+
+        String password = "123456789";
+        String nickname = "modifyTestNickname";
+        String intro = "modifyTestIntro";
+        MockMultipartFile profile = new MockMultipartFile("profile", "profile.jpeg", "image/jpeg",
+                "(file data)".getBytes());
+
+        //when
+        ResultActions passwordValidationEx = mockMvc.perform(
+                multipart("/accounts/modify")
+                        .file(profile)
+                        .header("Authorization", jwt)
+                        .param("password", "1234")
+                        .param("nickname", nickname)
+                        .param("intro", intro)
+        );
+        ResultActions nicknameValidationEx = mockMvc.perform(
+                multipart("/accounts/modify")
+                        .file(profile)
+                        .header("Authorization", jwt)
+                        .param("password", password)
+                        .param("nickname", "e")
+                        .param("intro", intro)
+        );
+
+
+        //then
+        passwordValidationEx
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.exception").value(BindException.class.getSimpleName()))
+                .andExpect(jsonPath("$.message").value("잘못된 입력값입니다."));
+        nicknameValidationEx
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.exception").value(BindException.class.getSimpleName()))
+                .andExpect(jsonPath("$.message").value("잘못된 입력값입니다."));
     }
 
     @Test
