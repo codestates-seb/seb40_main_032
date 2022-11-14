@@ -12,8 +12,8 @@ import travelRepo.domain.board.dto.BoardDetailsRes;
 import travelRepo.domain.board.dto.BoardModifyReq;
 import travelRepo.domain.board.dto.BoardSummaryRes;
 import travelRepo.domain.board.entity.Category;
-import travelRepo.global.argumentresolver.common.dto.IdDto;
-import travelRepo.global.argumentresolver.common.dto.SliceDto;
+import travelRepo.global.common.dto.IdDto;
+import travelRepo.global.common.dto.SliceDto;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

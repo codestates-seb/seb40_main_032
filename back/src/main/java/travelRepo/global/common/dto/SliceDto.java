@@ -1,4 +1,4 @@
-package travelRepo.global.argumentresolver.common.dto;
+package travelRepo.global.common.dto;
 
 import lombok.Data;
 import org.springframework.data.domain.Page;
