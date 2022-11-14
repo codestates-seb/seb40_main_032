@@ -1,6 +1,7 @@
 package travelRepo.domain.board.dto;
 
 import lombok.Data;
+import travelRepo.domain.account.dto.AccountSummaryRes;
 import travelRepo.domain.board.entity.Category;
 
 import java.time.LocalDateTime;
@@ -27,9 +28,5 @@ public class BoardDetailsRes {
 
     private LocalDateTime createdAt;
 
-    private Long accountId;
-
-    private String accountProfile;
-
-    private String accountNickname;
+    private AccountSummaryRes account;
 }

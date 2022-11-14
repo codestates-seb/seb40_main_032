@@ -7,6 +7,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import travelRepo.domain.account.dto.AccountSummaryRes;
 import travelRepo.domain.board.dto.BoardAddReq;
 import travelRepo.domain.board.dto.BoardDetailsRes;
 import travelRepo.domain.board.dto.BoardModifyReq;
@@ -42,6 +43,11 @@ public class BoardController {
     @GetMapping("/{boardId}")
     public ResponseEntity<BoardDetailsRes> boardDetails(@PathVariable Long boardId) {
 
+        AccountSummaryRes account = new AccountSummaryRes();
+        account.setAccountId(1L);
+        account.setProfile("https://main-image-repo.s3.ap-northeast-2.amazonaws.com/%EC%83%88+%ED%8F%B4%EB%8D%94/1.png");
+        account.setNickname("mockAccount");
+
         BoardDetailsRes response = new BoardDetailsRes();
         response.setMyBoard(false);
         response.setBoardId(boardId);
@@ -58,9 +64,7 @@ public class BoardController {
                         "https://main-image-repo.s3.ap-northeast-2.amazonaws.com/%EC%83%88+%ED%8F%B4%EB%8D%94/3.png")
         );
         response.setCreatedAt(LocalDateTime.now());
-        response.setAccountId(1L);
-        response.setAccountProfile("https://main-image-repo.s3.ap-northeast-2.amazonaws.com/%EC%83%88+%ED%8F%B4%EB%8D%94/1.png");
-        response.setAccountNickname("mockAccount");
+        response.setAccount(account);
 
         return new ResponseEntity(response, HttpStatus.OK);
     }
@@ -73,6 +77,11 @@ public class BoardController {
         List<BoardSummaryRes> content = new ArrayList<>();
 
         for (int i = 1; i < 21; i++) {
+            AccountSummaryRes account = new AccountSummaryRes();
+            account.setAccountId((3L + i)%4 + 1);
+            account.setProfile("https://main-image-repo.s3.ap-northeast-2.amazonaws.com/%EC%83%88+%ED%8F%B4%EB%8D%94/" + ((3+i)%4 + 1) + ".png");
+            account.setNickname("mockAccount" + ((3+i)%4 + 1));
+
             BoardSummaryRes boardSummaryRes = new BoardSummaryRes();
             boardSummaryRes.setBoardId(0L + i);
             boardSummaryRes.setThumbnail("https://main-image-repo.s3.ap-northeast-2.amazonaws.com/%EC%83%88+%ED%8F%B4%EB%8D%94/" + i + ".png");
@@ -81,9 +90,7 @@ public class BoardController {
             boardSummaryRes.setTags(
                     List.of("mock tag" + i%10, "mock tag" + (i+1)%10, "mock tag" + (i+2)%10)
             );
-            boardSummaryRes.setAccountId(((3L + i)%4 + 1));
-            boardSummaryRes.setAccountProfile("https://main-image-repo.s3.ap-northeast-2.amazonaws.com/%EC%83%88+%ED%8F%B4%EB%8D%94/" + ((3+i)%4 + 1) + ".png");
-            boardSummaryRes.setAccountNickname("mockAccount" + ((3+i)%4 + 1));
+            boardSummaryRes.setAccount(account);
 
             content.add(boardSummaryRes);
         }
@@ -97,6 +104,11 @@ public class BoardController {
     public ResponseEntity<SliceDto<BoardSummaryRes>> accountBoardList(@PathVariable Long accountId,
                                                                       @PageableDefault(size = 20) Pageable pageable) {
 
+        AccountSummaryRes account = new AccountSummaryRes();
+        account.setAccountId(1L);
+        account.setProfile("https://main-image-repo.s3.ap-northeast-2.amazonaws.com/%EC%83%88+%ED%8F%B4%EB%8D%94/1.png");
+        account.setNickname("mockAccount");
+
         List<BoardSummaryRes> content = new ArrayList<>();
 
         for (int i = 0; i < 5; i++) {
@@ -107,9 +119,7 @@ public class BoardController {
             boardSummaryRes.setTags(
                     List.of("mock tag" + i, "mock tag" + (i + 1), "mock tag" + (i + 2))
             );
-            boardSummaryRes.setAccountId(accountId);
-            boardSummaryRes.setAccountProfile("https://main-image-repo.s3.ap-northeast-2.amazonaws.com/%EC%83%88+%ED%8F%B4%EB%8D%94/" + accountId + ".png");
-            boardSummaryRes.setAccountNickname("mockAccount" + accountId);
+            boardSummaryRes.setAccount(account);
 
             content.add(boardSummaryRes);
         }

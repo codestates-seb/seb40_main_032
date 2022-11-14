@@ -1,6 +1,7 @@
 package travelRepo.domain.board.dto;
 
 import lombok.Data;
+import travelRepo.domain.account.dto.AccountSummaryRes;
 
 import java.util.List;
 
@@ -17,9 +18,5 @@ public class BoardSummaryRes {
 
     private List<String> tags;
 
-    private Long accountId;
-
-    private String accountProfile;
-
-    private String accountNickname;
+    private AccountSummaryRes account;
 }
