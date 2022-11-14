@@ -3,6 +3,7 @@ package travelRepo.domain.board.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.SliceImpl;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -67,7 +68,7 @@ public class BoardController {
     @GetMapping
     public ResponseEntity<SliceDto<BoardSummaryRes>> boardList(@RequestParam(required = false) String query,
                                                                @RequestParam(required = false) Category category,
-                                                               Pageable pageable) {
+                                                               @PageableDefault(size = 20) Pageable pageable) {
 
         List<BoardSummaryRes> content = new ArrayList<>();
 
@@ -89,12 +90,12 @@ public class BoardController {
 
         SliceImpl<BoardSummaryRes> response = new SliceImpl<>(content, pageable, true);
 
-        return new ResponseEntity(response, HttpStatus.OK);
+        return new ResponseEntity(new SliceDto(response), HttpStatus.OK);
     }
 
     @GetMapping("/account/{accountId}")
     public ResponseEntity<SliceDto<BoardSummaryRes>> accountBoardList(@PathVariable Long accountId,
-                                                                      Pageable pageable) {
+                                                                      @PageableDefault(size = 20) Pageable pageable) {
 
         List<BoardSummaryRes> content = new ArrayList<>();
 
@@ -115,6 +116,6 @@ public class BoardController {
 
         SliceImpl<BoardSummaryRes> response = new SliceImpl<>(content, pageable, false);
 
-        return new ResponseEntity(response, HttpStatus.OK);
+        return new ResponseEntity(new SliceDto(response), HttpStatus.OK);
     }
 }
