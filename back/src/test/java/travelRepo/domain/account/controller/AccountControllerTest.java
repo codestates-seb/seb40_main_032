@@ -145,7 +145,7 @@ class AccountControllerTest {
     }
 
     @Test
-    @DisplayName("회원 생성_중복 Email")
+    @DisplayName("회원 생성_중복 이메일")
     public void accountAdd_DuplicateEmail() throws Exception {
 
         //given
@@ -172,7 +172,7 @@ class AccountControllerTest {
     }
 
     @Test
-    @DisplayName("회원 생성_ValidationException")
+    @DisplayName("회원 생성_검증 실패")
     public void accountAdd_ValidationException() throws Exception {
 
         //given
