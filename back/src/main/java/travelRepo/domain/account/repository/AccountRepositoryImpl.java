@@ -47,6 +47,7 @@ public class AccountRepositoryImpl implements AccountRepositoryCustom {
     }
 
     private static void sort(Pageable pageable, QAccount account, JPAQuery<Account> query) {
+
         if (pageable.getSort().isEmpty()) {
             query.orderBy(follow.createdAt.asc());
             return;
