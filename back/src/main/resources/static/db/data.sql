@@ -4,9 +4,9 @@ INSERT INTO Account(account_id, createdAt, modifiedAt, email, intro, nickname, p
 INSERT INTO Account(account_id, createdAt, modifiedAt, email, intro, nickname, password, profile, role) VALUES('10004', '2022-10-14 10:00:04', '2022-10-14 10:00:04', 'test3@test.com', 'testIntro', 'testNickname3', '$2a$10$.s16a34pwL.M9NksIVSkIOasWPPsBB39blD1lOqinqhzoR7ri84d.', 'https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg', 'USER');
 
 INSERT INTO Follow(follow_id, createdAt, modifiedAt, follower_id, following_id) VALUES('11001', '2022-10-14 11:00:01', '2022-10-14 11:00:01', '10001', '10002');
-INSERT INTO Follow(follow_id, createdAt, modifiedAt, follower_id, following_id) VALUES('11002', '2022-10-14 11:00:01', '2022-10-14 11:00:01', '10001', '10003');
-INSERT INTO Follow(follow_id, createdAt, modifiedAt, follower_id, following_id) VALUES('11003', '2022-10-14 11:00:01', '2022-10-14 11:00:01', '10002', '10001');
-INSERT INTO Follow(follow_id, createdAt, modifiedAt, follower_id, following_id) VALUES('11004', '2022-10-14 11:00:01', '2022-10-14 11:00:01', '10004', '10001');
+INSERT INTO Follow(follow_id, createdAt, modifiedAt, follower_id, following_id) VALUES('11002', '2022-10-14 11:00:02', '2022-10-14 11:00:02', '10001', '10003');
+INSERT INTO Follow(follow_id, createdAt, modifiedAt, follower_id, following_id) VALUES('11003', '2022-10-14 11:00:03', '2022-10-14 11:00:03', '10002', '10001');
+INSERT INTO Follow(follow_id, createdAt, modifiedAt, follower_id, following_id) VALUES('11004', '2022-10-14 11:00:04', '2022-10-14 11:00:04', '10004', '10001');
 
 INSERT INTO Board(board_id, createdAt, modifiedAt, category, content, likeCount, location, title, views, account_id) VALUES('12001', '2022-10-14 12:00:01', '2022-10-14 12:00:01', 'RESTAURANT', 'testContents', '1', 'test-location', 'testTitle', '10', '10001');
 INSERT INTO Board(board_id, createdAt, modifiedAt, category, content, likeCount, location, title, views, account_id) VALUES('12002', '2022-10-14 12:00:02', '2022-10-14 12:00:02', 'SPOT', 'testContents', '3', 'test-location', 'testTitle', '10', '10002');
