@@ -12,6 +12,7 @@ import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.validation.BindException;
 import travelRepo.domain.account.entity.Account;
 import travelRepo.domain.account.repository.AccountRepository;
 import travelRepo.global.security.authentication.UserAccount;
@@ -27,6 +28,7 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWit
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static travelRepo.util.ApiDocumentUtils.getRequestPreProcessor;
 import static travelRepo.util.ApiDocumentUtils.getResponsePreProcessor;
@@ -56,19 +58,18 @@ class BoardControllerTest {
         Account account = accountRepository.findById(10001L).get();
         String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
 
-
         MockMultipartFile image1 = new MockMultipartFile("images", "image1.png", "image/png", "(file data)".getBytes());
         MockMultipartFile image2 = new MockMultipartFile("images", "image2.png", "image/png", "(file data)".getBytes());
         MockMultipartFile image3 = new MockMultipartFile("images", "image3.png", "image/png", "(file data)".getBytes());
 
 
-        String title = "mock board title";
-        String content = "mock board content";
-        String location = "mock board location";
+        String title = "board title";
+        String content = "board content";
+        String location = "board location";
         String category = "SPOT";
-        String tag1 = "mock tag1";
-        String tag2 = "mock tag2";
-        String tag3 = "mock tag3";
+        String tag1 = "tag1";
+        String tag2 = "tag2";
+        String tag3 = "tag3";
 
         //when
         ResultActions actions = mockMvc.perform(
@@ -116,6 +117,96 @@ class BoardControllerTest {
                                 )
                         )
                 ));
+    }
+
+    @Test
+    @DisplayName("게시글 등록_검증 실패")
+    public void boardAdd_ValidationException() throws Exception {
+
+        //given
+        Account account = accountRepository.findById(10001L).get();
+        String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
+
+        MockMultipartFile image1 = new MockMultipartFile("images", "image1.png", "image/png", "(file data)".getBytes());
+        MockMultipartFile image2 = new MockMultipartFile("images", "image2.png", "image/png", "(file data)".getBytes());
+        MockMultipartFile image3 = new MockMultipartFile("images", "image3.png", "image/png", "(file data)".getBytes());
+
+
+        String title = "board title";
+        String content = "board content";
+        String tooLongTitle = "title is too loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong";
+        String tooShortContent = "ctt";
+        String location = "board location";
+        String category = "SPOT";
+        String tag1 = "tag1";
+        String tag2 = "tag2";
+        String tag3 = "tag3";
+
+        //when
+        ResultActions titleValidationEx = mockMvc.perform(
+                multipart("/boards")
+                        .file(image1).file(image2).file(image3)
+                        .param("title", tooLongTitle)
+                        .param("content", content)
+                        .param("location", location)
+                        .param("category", category)
+                        .param("tags", tag1).param("tags", tag2).param("tags", tag3)
+                        .header("Authorization", jwt)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.MULTIPART_FORM_DATA)
+        );
+        ResultActions contentValidationEx = mockMvc.perform(
+                multipart("/boards")
+                        .file(image1).file(image2).file(image3)
+                        .param("title", title)
+                        .param("content", tooShortContent)
+                        .param("location", location)
+                        .param("category", category)
+                        .param("tags", tag1).param("tags", tag2).param("tags", tag3)
+                        .header("Authorization", jwt)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.MULTIPART_FORM_DATA)
+        );
+        ResultActions categoryValidationEx = mockMvc.perform(
+                multipart("/boards")
+                        .file(image1).file(image2).file(image3)
+                        .param("title", tooLongTitle)
+                        .param("content", content)
+                        .param("location", location)
+                        .param("tags", tag1).param("tags", tag2).param("tags", tag3)
+                        .header("Authorization", jwt)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.MULTIPART_FORM_DATA)
+        );
+        ResultActions imageValidationEx = mockMvc.perform(
+                multipart("/boards")
+                        .param("title", tooLongTitle)
+                        .param("content", content)
+                        .param("location", location)
+                        .param("category", category)
+                        .param("tags", tag1).param("tags", tag2).param("tags", tag3)
+                        .header("Authorization", jwt)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.MULTIPART_FORM_DATA)
+        );
+
+        //then
+        titleValidationEx
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.exception").value(BindException.class.getSimpleName()))
+                .andExpect(jsonPath("$.message").value("잘못된 입력값입니다."));
+        contentValidationEx
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.exception").value(BindException.class.getSimpleName()))
+                .andExpect(jsonPath("$.message").value("잘못된 입력값입니다."));
+        categoryValidationEx
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.exception").value(BindException.class.getSimpleName()))
+                .andExpect(jsonPath("$.message").value("잘못된 입력값입니다."));
+        imageValidationEx
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.exception").value(BindException.class.getSimpleName()))
+                .andExpect(jsonPath("$.message").value("잘못된 입력값입니다."));
     }
 
     @Test
