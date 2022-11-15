@@ -39,8 +39,10 @@ public class Board extends BaseTime {
     @OneToMany(mappedBy = "board", cascade = CascadeType.PERSIST)
     private List<BoardPhoto> boardPhotos = new ArrayList<>();
 
-    public void changeAccount(Account account) {
+    public void addAccount(Account account) {
         this.account = account;
-        account.getBoards().add(this);
+        if (!account.getBoards().contains(this)) {
+            account.getBoards().add(this);
+        }
     }
 }
