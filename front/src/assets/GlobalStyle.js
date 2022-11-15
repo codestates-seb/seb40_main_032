@@ -9,10 +9,10 @@ const global = createGlobalStyle`
     html, body {
         width: 100%;
         height: 100%;
-        font-family: 'Noto Sans KR', 'Roboto', sans-serif;
+        font-family: 'Roboto', 'Noto Sans KR', sans-serif;
+        font-size: 10px;
     }
     :root {
-        font-size: 10px;
         --button-theme : hsl(146, 50%, 50%);
         --button-theme-hv : hsl(153, 100%, 30%);
         --button-font-color : hsl(43, 21%, 94%);
@@ -35,6 +35,12 @@ const global = createGlobalStyle`
         --bx-sh-two : rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
         --bx-sh-four : rgba(0, 0, 0, 0.16) 0px 1px 4px;
         --bx-sh-twt : rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+    }
+    ul, ol {
+        list-style: none;
+    }
+    a {
+        text-decoration: none;
     }
 `;
 
