@@ -43,15 +43,22 @@ public class Board extends BaseTime {
     @OneToMany(mappedBy = "board", cascade = CascadeType.PERSIST)
     private final List<BoardTag> boardTags = new ArrayList<>();
 
+    @OneToMany(mappedBy = "board", cascade = CascadeType.PERSIST)
+    private final List<BoardPhoto> boardPhotos = new ArrayList<>();
+
+    public void addAccount(Account account) {
+        this.account = account;
+        if (!account.getBoards().contains(this)) {
+            account.getBoards().add(this);
+        }
+    }
+
     public void addBoardTag(BoardTag boardTag) {
         this.boardTags.add(boardTag);
         if (boardTag.getBoard() == null) {
             boardTag.addBoard(this);
         }
     }
-
-    @OneToMany(mappedBy = "board", cascade = CascadeType.PERSIST)
-    private final List<BoardPhoto> boardPhotos = new ArrayList<>();
 
     public void addBoardPhoto(BoardPhoto boardPhoto) {
         this.boardPhotos.add(boardPhoto);

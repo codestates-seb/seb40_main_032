@@ -7,7 +7,6 @@ import travelRepo.domain.account.entity.Account;
 import travelRepo.domain.board.entity.Board;
 import travelRepo.domain.board.entity.Category;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -31,12 +30,16 @@ public class BoardAddReq {
     private List<MultipartFile> images;
 
     public Board toBoard(Account account) {
-        return Board.builder()
-                .account(account)
+
+        Board board = Board.builder()
                 .title(title)
                 .content(content)
                 .location(location)
                 .category(category)
                 .build();
+
+        board.addAccount(account);
+
+        return board;
     }
 }

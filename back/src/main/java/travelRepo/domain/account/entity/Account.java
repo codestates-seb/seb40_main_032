@@ -1,9 +1,15 @@
 package travelRepo.domain.account.entity;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import travelRepo.domain.board.entity.Board;
 import travelRepo.global.auditing.BaseTime;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Entity
@@ -30,6 +36,9 @@ public class Account extends BaseTime {
 
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    @OneToMany(mappedBy = "account")
+    private final List<Board> boards = new ArrayList<>();
 
     public void modify(Account account) {
 
