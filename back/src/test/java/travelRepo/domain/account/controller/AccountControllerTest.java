@@ -457,6 +457,10 @@ class AccountControllerTest {
         //then
         actions
                 .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(10001))
+                .andExpect(jsonPath("$.email").value( "test1@test.com"))
+                .andExpect(jsonPath("$.nickname").value("testNickname1"))
+                .andExpect(jsonPath("$.profile").value("https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg"))
                 .andDo(document(
                         "loginAccountDetails",
                         getRequestPreProcessor(),
@@ -471,9 +475,7 @@ class AccountControllerTest {
                                         fieldWithPath("id").type(JsonFieldType.NUMBER).description("Account 식별자"),
                                         fieldWithPath("email").type(JsonFieldType.STRING).description("이메일"),
                                         fieldWithPath("nickname").type(JsonFieldType.STRING).description("닉네임"),
-                                        fieldWithPath("profile").type(JsonFieldType.STRING).description("프로필 이미지"),
-                                        fieldWithPath("following").type(JsonFieldType.NUMBER).description("팔로잉 수"),
-                                        fieldWithPath("follower").type(JsonFieldType.NUMBER).description("팔로워 수")
+                                        fieldWithPath("profile").type(JsonFieldType.STRING).description("프로필 이미지")
                                 )
                         )
 

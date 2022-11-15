@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import travelRepo.domain.account.dto.AccountAddReq;
 import travelRepo.domain.account.dto.AccountDetailsRes;
 import travelRepo.domain.account.dto.AccountModifyReq;
+import travelRepo.domain.account.dto.LoginAccountDetailsRes;
 import travelRepo.domain.account.entity.Account;
 import travelRepo.domain.account.repository.AccountRepository;
 import travelRepo.domain.board.repository.BoardPhotoRepository;
@@ -86,6 +87,14 @@ public class AccountService {
         Long follower = followRepository.countByFollowing(account);
 
         return AccountDetailsRes.of(account, following, follower);
+    }
+
+    public LoginAccountDetailsRes findLoginAccount(Long loginAccountId) {
+
+        Account account = accountRepository.findById(loginAccountId)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_ACCOUNT));
+
+        return LoginAccountDetailsRes.of(account);
     }
 
     private void verifyDuplicateEmail(AccountAddReq accountAddReq) {
