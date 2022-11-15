@@ -489,13 +489,13 @@ class AccountControllerTest {
         //given
         Account account = accountRepository.findById(10001L).get();
         String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
-        Long accountId = 10002L;
+        Long accountId = 10001L;
         String status = "following";
 
         //when
         ResultActions actions = mockMvc.perform(
                 get("/accounts/follow/{accountId}", accountId)
-                        .param("page", "2")
+                        .param("page", "1")
                         .param("size", "5")
                         .param("sort", "createdAt,desc")
                         .param("status", status)
@@ -521,7 +521,7 @@ class AccountControllerTest {
                                 List.of(
                                         parameterWithName("page").description("페이지 번호(default = 1)").optional(),
                                         parameterWithName("size").description("페이징 크기(default = 10)").optional(),
-                                        parameterWithName("sort").description("정렬 조건(default = asc)").optional(),
+                                        parameterWithName("sort").description("정렬 조건(default = id,asc)").optional(),
                                         parameterWithName("status").description("following 또는 follower")
                                 )
                         ),
@@ -541,7 +541,7 @@ class AccountControllerTest {
                                         fieldWithPath("last").type(JsonFieldType.BOOLEAN).description("마지막 페이지 여부"),
                                         fieldWithPath("sorted").type(JsonFieldType.BOOLEAN).description("정렬 여부"),
                                         fieldWithPath("size").type(JsonFieldType.NUMBER).description("페이징 size"),
-                                        fieldWithPath("pageNumber").type(JsonFieldType.NUMBER).description("페이지 번호(0부터 시작)"),
+                                        fieldWithPath("pageNumber").type(JsonFieldType.NUMBER).description("페이지 번호(1부터 시작)"),
                                         fieldWithPath("numberOfElements").type(JsonFieldType.NUMBER).description("페이징된 Question 개수")
                                 )
                         )
