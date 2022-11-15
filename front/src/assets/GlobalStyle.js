@@ -9,8 +9,7 @@ const global = createGlobalStyle`
     html, body {
         width: 100%;
         height: 100%;
-        font-family: 'Noto Sans KR', sans-serif;
-        font-family: 'Roboto', sans-serif;
+        font-family: 'Noto Sans KR', 'Roboto', sans-serif;
     }
     :root {
         font-size: 10px;
