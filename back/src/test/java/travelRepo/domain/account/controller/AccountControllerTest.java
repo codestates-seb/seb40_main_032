@@ -521,7 +521,7 @@ class AccountControllerTest {
                                 List.of(
                                         parameterWithName("page").description("페이지 번호(default = 1)").optional(),
                                         parameterWithName("size").description("페이징 크기(default = 10)").optional(),
-                                        parameterWithName("sort").description("정렬 조건(default = id,asc)").optional(),
+                                        parameterWithName("sort").description("정렬 조건(default = follow 생성일자)").optional(),
                                         parameterWithName("status").description("following 또는 follower")
                                 )
                         ),
