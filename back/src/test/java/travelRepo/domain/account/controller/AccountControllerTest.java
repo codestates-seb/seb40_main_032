@@ -20,6 +20,7 @@ import travelRepo.domain.account.repository.AccountRepository;
 import travelRepo.global.exception.BusinessLogicException;
 import travelRepo.global.exception.ExceptionCode;
 import travelRepo.global.security.authentication.UserAccount;
+import travelRepo.global.security.dto.LoginDto;
 import travelRepo.global.security.jwt.JwtProcessor;
 
 import java.util.List;
@@ -60,11 +61,8 @@ class AccountControllerTest {
         String email = "test1@test.com";
         String password = "12345678";
 
-        Account account = Account.builder()
-                .email(email)
-                .password(password)
-                .build();
-        String body = gson.toJson(account);
+        LoginDto loginDto = new LoginDto(email, password);
+        String body = gson.toJson(loginDto);
 
 
         //when

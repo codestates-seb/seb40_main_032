@@ -1,5 +1,7 @@
 package travelRepo.domain.board.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import travelRepo.domain.account.entity.Account;
@@ -11,7 +13,9 @@ import java.util.List;
 
 @Entity
 @Getter
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class Board extends BaseTime {
 
     @Id
@@ -37,12 +41,29 @@ public class Board extends BaseTime {
     private Category category;
 
     @OneToMany(mappedBy = "board", cascade = CascadeType.PERSIST)
-    private List<BoardPhoto> boardPhotos = new ArrayList<>();
+    private final List<BoardTag> boardTags = new ArrayList<>();
+
+    @OneToMany(mappedBy = "board", cascade = CascadeType.PERSIST)
+    private final List<BoardPhoto> boardPhotos = new ArrayList<>();
 
     public void addAccount(Account account) {
         this.account = account;
         if (!account.getBoards().contains(this)) {
             account.getBoards().add(this);
+        }
+    }
+
+    public void addBoardTag(BoardTag boardTag) {
+        this.boardTags.add(boardTag);
+        if (boardTag.getBoard() == null) {
+            boardTag.addBoard(this);
+        }
+    }
+
+    public void addBoardPhoto(BoardPhoto boardPhoto) {
+        this.boardPhotos.add(boardPhoto);
+        if (boardPhoto.getBoard() == null) {
+            boardPhoto.addBoard(this);
         }
     }
 }

@@ -1,5 +1,7 @@
 package travelRepo.domain.board.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -7,7 +9,9 @@ import javax.persistence.*;
 
 @Entity
 @Getter
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class BoardPhoto {
 
     @Id
@@ -20,4 +24,11 @@ public class BoardPhoto {
     private Board board;
 
     private String photo;
+
+    public void addBoard(Board board) {
+        this.board = board;
+        if (!board.getBoardPhotos().contains(this)) {
+            board.addBoardPhoto(this);
+        }
+    }
 }

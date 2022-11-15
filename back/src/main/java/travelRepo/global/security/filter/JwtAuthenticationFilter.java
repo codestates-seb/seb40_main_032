@@ -2,16 +2,16 @@ package travelRepo.global.security.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
-import travelRepo.domain.account.entity.Account;
-import travelRepo.global.exception.dto.ErrorResponse;
-import travelRepo.global.security.authentication.UserAccount;
-import travelRepo.global.security.jwt.JwtProcessor;
 import lombok.SneakyThrows;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import travelRepo.global.exception.dto.ErrorResponse;
+import travelRepo.global.security.authentication.UserAccount;
+import travelRepo.global.security.dto.LoginDto;
+import travelRepo.global.security.jwt.JwtProcessor;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -37,10 +37,10 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                                 HttpServletResponse response) throws AuthenticationException {
 
         ObjectMapper objectMapper = new ObjectMapper();
-        Account account = objectMapper.readValue(request.getInputStream(), Account.class);
+        LoginDto loginDto = objectMapper.readValue(request.getInputStream(), LoginDto.class);
 
         UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(account.getEmail(), account.getPassword());
+                new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword());
 
         Authentication authentication = authenticationManager.authenticate(authenticationToken);
 
