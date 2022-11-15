@@ -15,7 +15,6 @@ import travelRepo.global.common.dto.IdDto;
 import travelRepo.global.common.dto.PageDto;
 
 import javax.validation.Valid;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +26,7 @@ public class AccountController {
     private final AccountService accountService;
 
     @PostMapping
-    public ResponseEntity<IdDto> accountAdd(@Valid @ModelAttribute AccountAddReq accountAddReq) throws IOException {
+    public ResponseEntity<IdDto> accountAdd(@Valid @ModelAttribute AccountAddReq accountAddReq) {
 
         IdDto idDto = accountService.addAccount(accountAddReq);
 
@@ -36,7 +35,7 @@ public class AccountController {
 
     @PostMapping("/modify")
     public ResponseEntity<IdDto> accountModify(@LoginAccountId Long loginAccountId,
-                                               @Valid @ModelAttribute AccountModifyReq accountModifyReq) throws IOException {
+                                               @Valid @ModelAttribute AccountModifyReq accountModifyReq) {
 
         IdDto idDto = accountService.modifyAccount(loginAccountId, accountModifyReq);
 

@@ -17,7 +17,7 @@ public class LocalUploadService implements UploadService{
     private String dir;
 
     @Override
-    public String upload(MultipartFile image) throws IOException {
+    public String uploadWithException(MultipartFile image) throws IOException {
 
         if (image == null || image.isEmpty()) {
             return null;

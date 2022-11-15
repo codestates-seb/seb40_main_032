@@ -21,8 +21,6 @@ import travelRepo.global.exception.BusinessLogicException;
 import travelRepo.global.exception.ExceptionCode;
 import travelRepo.global.upload.service.UploadService;
 
-import java.io.IOException;
-
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -39,7 +37,7 @@ public class AccountService {
     private final UploadService uploadService;
 
     @Transactional
-    public IdDto addAccount(AccountAddReq accountAddReq) throws IOException {
+    public IdDto addAccount(AccountAddReq accountAddReq) {
 
         verifyDuplicateEmail(accountAddReq);
 
@@ -53,7 +51,7 @@ public class AccountService {
     }
 
     @Transactional
-    public IdDto modifyAccount(Long loginAccountId, AccountModifyReq accountModifyReq) throws IOException {
+    public IdDto modifyAccount(Long loginAccountId, AccountModifyReq accountModifyReq) {
 
         Account account = accountRepository.findById(loginAccountId)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_ACCOUNT));

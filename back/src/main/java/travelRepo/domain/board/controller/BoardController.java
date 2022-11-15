@@ -13,9 +13,12 @@ import travelRepo.domain.board.dto.BoardDetailsRes;
 import travelRepo.domain.board.dto.BoardModifyReq;
 import travelRepo.domain.board.dto.BoardSummaryRes;
 import travelRepo.domain.board.entity.Category;
+import travelRepo.domain.board.service.BoardService;
+import travelRepo.global.argumentresolver.LoginAccountId;
 import travelRepo.global.common.dto.IdDto;
 import travelRepo.global.common.dto.SliceDto;
 
+import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,9 +28,15 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BoardController {
 
+    private final BoardService boardService;
+
     @PostMapping
-    public ResponseEntity<IdDto> boardAdd(@ModelAttribute BoardAddReq boardAddReq) {
-        return new ResponseEntity(new IdDto(1L), HttpStatus.CREATED);
+    public ResponseEntity<IdDto> boardAdd(@LoginAccountId Long loginAccountId,
+                                          @Valid @ModelAttribute BoardAddReq boardAddReq) {
+
+        IdDto response = boardService.addBoard(loginAccountId, boardAddReq);
+
+        return new ResponseEntity(response, HttpStatus.CREATED);
     }
 
     @PostMapping("/{boardId}")
