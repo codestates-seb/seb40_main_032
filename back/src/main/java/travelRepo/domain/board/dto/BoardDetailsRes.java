@@ -22,6 +22,10 @@ public class BoardDetailsRes {
 
     private Category category;
 
+    private int likeCount;
+
+    private int views;
+
     private List<String> tags;
 
     private List<String> photos;
