@@ -9,8 +9,10 @@ const global = createGlobalStyle`
     html, body {
         width: 100%;
         height: 100%;
+        font-family: 'Noto Sans KR', 'Roboto', sans-serif;
     }
     :root {
+        font-size: 10px;
         --button-theme : hsl(146, 50%, 50%);
         --button-theme-hv : hsl(153, 100%, 30%);
         --button-font-color : hsl(43, 21%, 94%);
@@ -24,6 +26,7 @@ const global = createGlobalStyle`
         --font-bold : 700;
         --holder-base-color : hsl(0, 0%, 85%);
         --base-white-color : hsl(0, 0%, 100%);
+        --radius-50 : 50px;
         --radius-15 : 15px;
         --radius-10 : 10px;
         --font-20 : 20px;
