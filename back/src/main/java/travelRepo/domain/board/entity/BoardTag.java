@@ -26,4 +26,11 @@ public class BoardTag {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tag_id")
     private Tag tag;
+
+    public void addBoard(Board board) {
+        this.board = board;
+        if (!board.getBoardTags().contains(this)) {
+            board.addBoardTag(this);
+        }
+    }
 }

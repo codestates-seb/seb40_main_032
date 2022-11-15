@@ -39,30 +39,33 @@ public class BoardService {
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_ACCOUNT));
 
         Board board = boardAddReq.toBoard(account);
-
-        List<BoardPhoto> boardPhotos = board.getBoardPhotos();
-        boardAddReq.getImages().stream()
-                .forEach(image -> {
-                    BoardPhoto boardPhoto = BoardPhoto.builder()
-                            .board(board)
-                            .photo(uploadService.upload(image))
-                            .build();
-                    boardPhotos.add(boardPhoto);
-                });
+        addBoardPhotosToBoard(boardAddReq, board);
+        addBoardTagsToBoard(boardAddReq, board);
 
         Board savedBoard = boardRepository.save(board);
 
+        return new IdDto(savedBoard.getId());
+    }
+
+    private void addBoardTagsToBoard(BoardAddReq boardAddReq, Board board) {
         boardAddReq.getTags().stream()
                 .forEach(tagName -> {
                     Tag tag = findTag(tagName);
                     BoardTag boardTag = BoardTag.builder()
-                            .board(board)
                             .tag(tag)
                             .build();
-                    boardTagRepository.save(boardTag);
+                    board.addBoardTag(boardTag);
                 });
+    }
 
-        return new IdDto(savedBoard.getId());
+    private void addBoardPhotosToBoard(BoardAddReq boardAddReq, Board board) {
+        boardAddReq.getImages().stream()
+                .forEach(image -> {
+                    BoardPhoto boardPhoto = BoardPhoto.builder()
+                            .photo(uploadService.upload(image))
+                            .build();
+                    board.addBoardPhoto(boardPhoto);
+                });
     }
 
     @Transactional

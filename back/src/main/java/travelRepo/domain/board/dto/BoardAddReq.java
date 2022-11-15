@@ -33,6 +33,7 @@ public class BoardAddReq {
     public Board toBoard(Account account) {
         return Board.builder()
                 .account(account)
+                .title(title)
                 .content(content)
                 .location(location)
                 .category(category)
