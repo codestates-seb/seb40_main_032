@@ -9,7 +9,7 @@ const HeaderWrapper = styled.header`
   position: fixed;
   top: 0;
   left: 0;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid var(--font-base-black);
   background-color: '#FFFFFF';
 
   .header__container {
@@ -29,20 +29,9 @@ const HeaderWrapper = styled.header`
     flex: 3;
   }
   @media screen and (max-width: 549px) {
-    width: 100%;
-    height: 8rem;
-    position: fixed;
-    top: 0;
-    left: 0;
     .header__container {
-      display: flex;
-      justify-content: space-between;
-      height: 100%;
       padding-inline-start: 2.4rem;
       padding-inline-end: 2.4rem;
-    }
-    .header__search {
-      flex: 3;
     }
     .header__info {
       flex: 0.5;
