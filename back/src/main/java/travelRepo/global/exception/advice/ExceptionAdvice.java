@@ -34,11 +34,4 @@ public class ExceptionAdvice {
         ErrorResponse errorResponse = new ErrorResponse(e.getClass().getSimpleName(), "잘못된 입력값입니다.");
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
-
-    @ExceptionHandler
-    public ResponseEntity<ErrorResponse> methodArgumentNotValidExceptionHandler(MethodArgumentNotValidException e) {
-
-        ErrorResponse errorResponse = new ErrorResponse(e.getClass().getSimpleName(), "잘못된 입력값입니다.");
-        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
-    }
 }
