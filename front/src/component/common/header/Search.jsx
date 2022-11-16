@@ -15,8 +15,6 @@ const SearchWrapper = styled.div`
   @media screen and (max-width: 549px) {
     max-width: 25rem;
     .search__container {
-      position: relative;
-      top: 1.5rem;
       left: 0;
     }
   }
