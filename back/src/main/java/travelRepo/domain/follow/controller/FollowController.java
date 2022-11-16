@@ -20,7 +20,7 @@ public class FollowController {
     public ResponseEntity<FollowPostRes> followPost(@LoginAccountId Long loginAccountId,
                                                     @PathVariable Long accountId) {
 
-        FollowPostRes followPostRes = followService.follow(loginAccountId, accountId);
+        FollowPostRes followPostRes = followService.postFollow(loginAccountId, accountId);
 
         return new ResponseEntity<>(followPostRes, HttpStatus.OK);
     }

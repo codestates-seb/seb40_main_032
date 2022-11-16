@@ -23,7 +23,7 @@ public class FollowService {
     private final FollowRepository followRepository;
 
     @Transactional
-    public FollowPostRes follow(Long loginAccountId, Long accountId) {
+    public FollowPostRes postFollow(Long loginAccountId, Long accountId) {
 
         verifySelfFollow(loginAccountId, accountId);
         Account loginAccount = accountRepository.findById(loginAccountId)
