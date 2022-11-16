@@ -29,8 +29,5 @@ public class BoardTag {
 
     public void addBoard(Board board) {
         this.board = board;
-        if (!board.getBoardTags().contains(this)) {
-            board.addBoardTag(this);
-        }
     }
 }

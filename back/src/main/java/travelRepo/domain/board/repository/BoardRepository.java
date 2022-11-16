@@ -15,7 +15,7 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
     @Query("delete from Board board where board.account.id = :accountId")
     void deleteByAccountId(@Param("accountId") Long accountId);
 
-    @Override
-    @EntityGraph(attributePaths = {"boardTags"})
-    Optional<Board> findById(Long boardId);
+    @EntityGraph(attributePaths = {"boardTags", "account"})
+    @Query("select b from Board b where b.id = :boardId")
+    Optional<Board> findByIdWithBoardTagsAndAccount(@Param("boardId") Long boardId);
 }

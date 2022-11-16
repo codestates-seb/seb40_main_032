@@ -8,7 +8,6 @@ import travelRepo.domain.account.entity.Account;
 import travelRepo.global.auditing.BaseTime;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,10 +42,10 @@ public class Board extends BaseTime {
     private Category category;
 
     @OneToMany(mappedBy = "board", cascade = CascadeType.PERSIST)
-    private final List<BoardTag> boardTags = new ArrayList<>();
+    private List<BoardTag> boardTags;
 
     @OneToMany(mappedBy = "board", cascade = CascadeType.PERSIST)
-    private final List<BoardPhoto> boardPhotos = new ArrayList<>();
+    private List<BoardPhoto> boardPhotos;
 
     public void addAccount(Account account) {
         this.account = account;
@@ -55,16 +54,16 @@ public class Board extends BaseTime {
         }
     }
 
-    public void addBoardTag(BoardTag boardTag) {
-        this.boardTags.add(boardTag);
-        if (boardTag.getBoard() == null) {
+    public void addBoardTags(List<BoardTag> boardTags) {
+        this.boardTags = boardTags;
+        for (BoardTag boardTag : boardTags) {
             boardTag.addBoard(this);
         }
     }
 
-    public void addBoardPhoto(BoardPhoto boardPhoto) {
-        this.boardPhotos.add(boardPhoto);
-        if (boardPhoto.getBoard() == null) {
+    public void addBoardPhotos(List<BoardPhoto> boardPhotos) {
+        this.boardPhotos = boardPhotos;
+        for (BoardPhoto boardPhoto : boardPhotos) {
             boardPhoto.addBoard(this);
         }
     }

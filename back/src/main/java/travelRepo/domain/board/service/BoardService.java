@@ -23,6 +23,7 @@ import travelRepo.global.upload.service.UploadService;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -65,13 +66,11 @@ public class BoardService {
         board.modify(modifyBoard);
 
         Optional.ofNullable(boardModifyReq.getImages()).ifPresent(images -> {
-            board.getBoardPhotos().clear();
             boardPhotoRepository.deleteByBoardId(boardId);
             addBoardPhotosToBoard(images, board);
         });
 
         Optional.ofNullable(boardModifyReq.getTags()).ifPresent(tagNames -> {
-            board.getBoardTags().clear();
             boardTagRepository.deleteByBoardId(boardId);
             addBoardTagsToBoard(boardModifyReq.getTags(), board);
         });
@@ -80,24 +79,31 @@ public class BoardService {
     }
 
     private void addBoardTagsToBoard(List<String> tagNames, Board board) {
-        tagNames
-                .forEach(tagName -> {
+
+        List<BoardTag> boardTags = tagNames.stream()
+                .map((tagName -> {
                     Tag tag = findTag(tagName);
                     BoardTag boardTag = BoardTag.builder()
                             .tag(tag)
                             .build();
-                    board.addBoardTag(boardTag);
-                });
+                    return boardTag;
+                })).collect(Collectors.toList());
+
+        board.addBoardTags(boardTags);
     }
 
     private void addBoardPhotosToBoard(List<MultipartFile> images, Board board) {
-        images
-                .forEach(image -> {
+
+        List<BoardPhoto> boardPhotos = images.stream()
+                .map(image -> {
                     BoardPhoto boardPhoto = BoardPhoto.builder()
                             .photo(uploadService.upload(image))
                             .build();
-                    board.addBoardPhoto(boardPhoto);
-                });
+                    return boardPhoto;
+                })
+                .collect(Collectors.toList());
+
+        board.addBoardPhotos(boardPhotos);
     }
 
     @Transactional
