@@ -18,19 +18,22 @@ const MainContainer = styled.section`
     flex-wrap: wrap;
 
     @media screen and (max-width: 1440px) {
-      .post {
+      .post,
+      .post__skeleton {
         flex-basis: 33.3%;
       }
     }
 
     @media screen and (max-width: 1024px) {
-      .post {
+      .post,
+      .post__skeleton {
         flex-basis: 50%;
       }
     }
 
     @media screen and (max-width: 549px) {
-      .post {
+      .post,
+      .post__skeleton {
         flex-basis: 100%;
       }
     }
