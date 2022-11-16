@@ -50,7 +50,10 @@ public class BoardController {
     }
 
     @DeleteMapping("/{boardId}")
-    public void boardRemove() {
+    public void boardRemove(@LoginAccountId Long loginAccountId,
+                            @PathVariable Long boardId) {
+
+        boardService.removeBoard(loginAccountId, boardId);
     }
 
     @GetMapping("/{boardId}")
