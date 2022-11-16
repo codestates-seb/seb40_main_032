@@ -11,10 +11,13 @@ import org.springframework.http.MediaType;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.validation.BindException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import travelRepo.domain.account.entity.Account;
 import travelRepo.domain.account.repository.AccountRepository;
 import travelRepo.domain.comment.dto.CommentAddReq;
 import travelRepo.domain.comment.dto.CommentModifyReq;
+import travelRepo.global.exception.BusinessLogicException;
 import travelRepo.global.security.authentication.UserAccount;
 import travelRepo.global.security.jwt.JwtProcessor;
 
@@ -28,6 +31,7 @@ import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuild
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static travelRepo.util.ApiDocumentUtils.getRequestPreProcessor;
 import static travelRepo.util.ApiDocumentUtils.getResponsePreProcessor;
@@ -57,8 +61,8 @@ class CommentControllerTest {
         Account account = accountRepository.findById(10001L).get();
         String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
 
-        Long boardId = 1L;
-        String commentContent = "mock board content";
+        Long boardId = 12001L;
+        String commentContent = "testCommentContents";
         CommentAddReq commentAddReq = new CommentAddReq();
         commentAddReq.setBoardId(boardId);
         commentAddReq.setContent(commentContent);
@@ -91,6 +95,66 @@ class CommentControllerTest {
                                 )
                         )
                 ));
+    }
+
+    @Test
+    @DisplayName("댓글 등록_검증 실패")
+    void commentAdd_ValidationException() throws Exception {
+
+        //given
+        Account account = accountRepository.findById(10001L).get();
+        String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
+
+        Long boardId = 12001L;
+        String blankCommentContent = "";
+        CommentAddReq commentAddReq = new CommentAddReq();
+        commentAddReq.setBoardId(boardId);
+        commentAddReq.setContent(blankCommentContent);
+        String content = gson.toJson(commentAddReq);
+
+        //when
+        ResultActions actions = mockMvc.perform(
+                post("/comments")
+                        .header("Authorization", jwt)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(content)
+        );
+
+        //then
+        actions
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.exception").value(MethodArgumentNotValidException.class.getSimpleName()))
+                .andExpect(jsonPath("$.message").value("잘못된 입력값입니다."));
+    }
+
+    @Test
+    @DisplayName("댓글 등록_존재하지 않는 게시글")
+    void commentAdd_NOT_FOUND_BOARD() throws Exception {
+
+        //given
+        Account account = accountRepository.findById(10001L).get();
+        String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
+
+        Long boardId = 12101L;
+        String blankCommentContent = "testCommentContents";
+        CommentAddReq commentAddReq = new CommentAddReq();
+        commentAddReq.setBoardId(boardId);
+        commentAddReq.setContent(blankCommentContent);
+        String content = gson.toJson(commentAddReq);
+
+        //when
+        ResultActions actions = mockMvc.perform(
+                post("/comments")
+                        .header("Authorization", jwt)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(content)
+        );
+
+        //then
+        actions
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.exception").value(BusinessLogicException.class.getSimpleName()))
+                .andExpect(jsonPath("$.message").value("게시글을 찾을 수 없습니다."));
     }
 
     @Test
