@@ -44,9 +44,7 @@ function ConfirmModal({ modalMessage, modalCloser }) {
           <div className="icon__wrapper">
             <CheckIcon />
           </div>
-          <div className="message">
-            회원가입이 완료되었습니다.{modalMessage}
-          </div>
+          <div className="message">{modalMessage}</div>
           <DefaultButton
             width="100%"
             height="4rem"

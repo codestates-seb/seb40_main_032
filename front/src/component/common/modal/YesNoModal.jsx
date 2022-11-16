@@ -49,7 +49,7 @@ function YesNoModal({ modalMessage, modalCloser }) {
           <div className="icon__wrapper">
             <QuestionIcon />
           </div>
-          <div className="message">게시글 작성을 취소할까요?{modalMessage}</div>
+          <div className="message">{modalMessage}</div>
           <div className="button__wrapper">
             <DefaultButton
               width="45%"
