@@ -140,7 +140,7 @@ function LoginModal({ modalCloser }) {
               type="submit"
               margin="1.5rem 0"
             >
-              확인
+              로그인
             </DefaultButton>
           </form>
           <footer className="footer">
