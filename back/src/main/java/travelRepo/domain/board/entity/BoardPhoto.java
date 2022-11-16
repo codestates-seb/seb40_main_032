@@ -27,8 +27,5 @@ public class BoardPhoto {
 
     public void addBoard(Board board) {
         this.board = board;
-        if (!board.getBoardPhotos().contains(this)) {
-            board.addBoardPhoto(this);
-        }
     }
 }

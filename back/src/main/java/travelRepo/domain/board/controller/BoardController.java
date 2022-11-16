@@ -40,9 +40,13 @@ public class BoardController {
     }
 
     @PostMapping("/{boardId}")
-    public ResponseEntity<IdDto> boardModify(@ModelAttribute BoardModifyReq boardModifyReq,
+    public ResponseEntity<IdDto> boardModify(@LoginAccountId Long loginAccountId,
+                                             @Valid @ModelAttribute BoardModifyReq boardModifyReq,
                                              @PathVariable Long boardId) {
-        return new ResponseEntity(new IdDto(1L), HttpStatus.OK);
+
+        IdDto response = boardService.modifyBoard(loginAccountId, boardModifyReq, boardId);
+
+        return new ResponseEntity(response, HttpStatus.OK);
     }
 
     @DeleteMapping("/{boardId}")

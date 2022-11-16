@@ -3,19 +3,27 @@ package travelRepo.domain.board.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 import travelRepo.domain.account.entity.Account;
 import travelRepo.domain.account.repository.AccountRepository;
 import travelRepo.domain.board.dto.BoardAddReq;
+import travelRepo.domain.board.dto.BoardModifyReq;
 import travelRepo.domain.board.entity.Board;
 import travelRepo.domain.board.entity.BoardPhoto;
 import travelRepo.domain.board.entity.BoardTag;
 import travelRepo.domain.board.entity.Tag;
+import travelRepo.domain.board.repository.BoardPhotoRepository;
 import travelRepo.domain.board.repository.BoardRepository;
+import travelRepo.domain.board.repository.BoardTagRepository;
 import travelRepo.domain.board.repository.TagRepository;
 import travelRepo.global.common.dto.IdDto;
 import travelRepo.global.exception.BusinessLogicException;
 import travelRepo.global.exception.ExceptionCode;
 import travelRepo.global.upload.service.UploadService;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -23,6 +31,8 @@ import travelRepo.global.upload.service.UploadService;
 public class BoardService {
 
     private final BoardRepository boardRepository;
+    private final BoardPhotoRepository boardPhotoRepository;
+    private final BoardTagRepository boardTagRepository;
     private final AccountRepository accountRepository;
     private final TagRepository tagRepository;
     private final UploadService uploadService;
@@ -34,33 +44,66 @@ public class BoardService {
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_ACCOUNT));
 
         Board board = boardAddReq.toBoard(account);
-        addBoardPhotosToBoard(boardAddReq, board);
-        addBoardTagsToBoard(boardAddReq, board);
+        addBoardPhotosToBoard(boardAddReq.getImages(), board);
+        addBoardTagsToBoard(boardAddReq.getTags(), board);
 
         Board savedBoard = boardRepository.save(board);
 
         return new IdDto(savedBoard.getId());
     }
 
-    private void addBoardTagsToBoard(BoardAddReq boardAddReq, Board board) {
-        boardAddReq.getTags()
-                .forEach(tagName -> {
+    @Transactional
+    public IdDto modifyBoard(Long loginAccountId, BoardModifyReq boardModifyReq, Long boardId) {
+
+        Board board = boardRepository.findById(boardId)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_BOARD));
+
+        if (!loginAccountId.equals(board.getAccount().getId())) {
+            throw new BusinessLogicException(ExceptionCode.FORBIDDEN);
+        }
+
+        Board modifyBoard = boardModifyReq.toBoard();
+        board.modify(modifyBoard);
+
+        Optional.ofNullable(boardModifyReq.getImages()).ifPresent(images -> {
+            boardPhotoRepository.deleteByBoardId(boardId);
+            addBoardPhotosToBoard(images, board);
+        });
+
+        Optional.ofNullable(boardModifyReq.getTags()).ifPresent(tagNames -> {
+            boardTagRepository.deleteByBoardId(boardId);
+            addBoardTagsToBoard(boardModifyReq.getTags(), board);
+        });
+
+        return new IdDto(boardId);
+    }
+
+    private void addBoardTagsToBoard(List<String> tagNames, Board board) {
+
+        List<BoardTag> boardTags = tagNames.stream()
+                .map((tagName -> {
                     Tag tag = findTag(tagName);
                     BoardTag boardTag = BoardTag.builder()
                             .tag(tag)
                             .build();
-                    board.addBoardTag(boardTag);
-                });
+                    return boardTag;
+                })).collect(Collectors.toList());
+
+        board.addBoardTags(boardTags);
     }
 
-    private void addBoardPhotosToBoard(BoardAddReq boardAddReq, Board board) {
-        boardAddReq.getImages()
-                .forEach(image -> {
+    private void addBoardPhotosToBoard(List<MultipartFile> images, Board board) {
+
+        List<BoardPhoto> boardPhotos = images.stream()
+                .map(image -> {
                     BoardPhoto boardPhoto = BoardPhoto.builder()
                             .photo(uploadService.upload(image))
                             .build();
-                    board.addBoardPhoto(boardPhoto);
-                });
+                    return boardPhoto;
+                })
+                .collect(Collectors.toList());
+
+        board.addBoardPhotos(boardPhotos);
     }
 
     @Transactional
