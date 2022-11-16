@@ -4,6 +4,9 @@ import { BiRestaurant, BiHotel, BiMap } from 'react-icons/bi';
 const MainThemeBar = styled.div`
   width: 100%;
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.16);
+  background: #fff;
+  position: fixed;
+  z-index: 10;
 
   .theme__lists {
     display: flex;
