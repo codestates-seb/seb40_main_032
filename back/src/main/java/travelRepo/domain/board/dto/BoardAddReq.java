@@ -13,9 +13,11 @@ import java.util.List;
 @Data
 public class BoardAddReq {
 
+    @NotNull
     @Length(min = 5, max = 40)
     private String title;
 
+    @NotNull
     @Length(min = 5)
     private String content;
 
