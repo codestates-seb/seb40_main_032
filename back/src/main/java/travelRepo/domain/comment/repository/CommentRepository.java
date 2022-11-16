@@ -8,7 +8,7 @@ import travelRepo.domain.comment.entity.Comment;
 
 public interface CommentRepository extends JpaRepository<Comment, Long> {
 
-    @Modifying(clearAutomatically = true, flushAutomatically = true)
+    @Modifying(flushAutomatically = true)
     @Query("delete from Comment comment where comment.account.id = :accountId " +
             "or comment.board in (select board from Board board where board.account.id = :accountId)")
     void deleteByAccountId(@Param("accountId") Long accountId);

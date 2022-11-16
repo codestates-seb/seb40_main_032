@@ -21,6 +21,7 @@ import travelRepo.global.security.jwt.JwtProcessor;
 
 import java.util.List;
 
+import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
@@ -422,7 +423,7 @@ class BoardControllerTest {
     public void boardDetails_Success() throws Exception {
 
         // given
-        Long boardId = 1L;
+        Long boardId = 12001L;
 
         // when
         ResultActions actions = mockMvc.perform(
@@ -433,6 +434,17 @@ class BoardControllerTest {
         //then
         actions
                 .andExpect(status().isOk())
+                .andExpect(jsonPath("$.boardId").value(boardId))
+                .andExpect(jsonPath("$.title").value("testTitle"))
+                .andExpect(jsonPath("$.content").value("testContents"))
+                .andExpect(jsonPath("$.location").value("test-location"))
+                .andExpect(jsonPath("$.category").value("RESTAURANT"))
+                .andExpect(jsonPath("$.likeCount").value(1))
+                .andExpect(jsonPath("$.views").value(11))
+                .andExpect(jsonPath("$.tags", hasSize(2)))
+                .andExpect(jsonPath("$.photos", hasSize(3)))
+                .andExpect(jsonPath("$.createdAt").value("2022-10-14T12:00:01"))
+                .andExpect(jsonPath("$.account.accountId").value(10001))
                 .andDo(document(
                         "boardDetails",
                         getRequestPreProcessor(),
@@ -442,7 +454,6 @@ class BoardControllerTest {
                         ),
                         responseFields(
                                 List.of(
-                                        fieldWithPath("myBoard").type(JsonFieldType.BOOLEAN).description("로그인한 회원이 쓴 글일지 확인"),
                                         fieldWithPath("boardId").type(JsonFieldType.NUMBER).description("게시글 식별자"),
                                         fieldWithPath("title").type(JsonFieldType.STRING).description("게시글 제목"),
                                         fieldWithPath("content").type(JsonFieldType.STRING).description("게시글 내용"),
@@ -460,6 +471,26 @@ class BoardControllerTest {
                                 )
                         )
                 ));
+    }
+
+    @Test
+    @DisplayName("게시글 단일 조회_존재하지 않는 게시글")
+    public void boardDetails_NOT_FOUND() throws Exception {
+
+        // given
+        Long boardId = 12101L;
+
+        // when
+        ResultActions actions = mockMvc.perform(
+                get("/boards/{boardId}", boardId)
+                        .accept(MediaType.APPLICATION_JSON)
+        );
+
+        //then
+        actions
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.exception").value(BusinessLogicException.class.getSimpleName()))
+                .andExpect(jsonPath("$.message").value("게시글을 찾을 수 없습니다."));
     }
 
     @Test

@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 import travelRepo.domain.account.entity.Account;
 import travelRepo.domain.account.repository.AccountRepository;
 import travelRepo.domain.board.dto.BoardAddReq;
+import travelRepo.domain.board.dto.BoardDetailsRes;
 import travelRepo.domain.board.dto.BoardModifyReq;
 import travelRepo.domain.board.entity.Board;
 import travelRepo.domain.board.entity.BoardPhoto;
@@ -100,6 +101,17 @@ public class BoardService {
         commentRepository.deleteByBoardId(boardId);
         likesRepository.deleteByBoardId(boardId);
         boardRepository.deleteById(boardId);
+    }
+
+    @Transactional
+    public BoardDetailsRes findBoard(Long boardId) {
+
+        Board board = boardRepository.findByIdWithBoardTagsAndAccount(boardId)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_BOARD));
+
+        board.increaseViews();
+
+        return BoardDetailsRes.of(board);
     }
 
     private void addBoardTagsToBoard(List<String> tagNames, Board board) {
