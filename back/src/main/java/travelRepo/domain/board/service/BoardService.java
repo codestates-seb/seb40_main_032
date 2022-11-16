@@ -88,11 +88,11 @@ public class BoardService {
         Board board = boardRepository.findByIdWithBoardTagsAndAccount(boardId)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_BOARD));
 
-        if (!loginAccountId.equals(board.getAccount().getId())) {
+        Account account = board.getAccount();
+
+        if (!loginAccountId.equals(account.getId())) {
             throw new BusinessLogicException(ExceptionCode.FORBIDDEN);
         }
-
-        Account account = board.getAccount();
 
         account.getBoards().remove(board);
         boardTagRepository.deleteByBoardId(boardId);

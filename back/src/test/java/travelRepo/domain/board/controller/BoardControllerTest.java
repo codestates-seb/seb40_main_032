@@ -289,7 +289,7 @@ class BoardControllerTest {
         Account account = accountRepository.findById(10001L).get();
         String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
 
-        Long boardId = 12004L;
+        Long boardId = 12101L;
 
         String title = "modified mock board title";
 
@@ -311,7 +311,7 @@ class BoardControllerTest {
 
     @Test
     @DisplayName("게시글 수정_잘못된 접근")
-    public void boardModify_Forbidden() throws Exception {
+    public void boardModify_FORBIDDEN() throws Exception {
 
         //given
         Account account = accountRepository.findById(10001L).get();
@@ -345,7 +345,7 @@ class BoardControllerTest {
         Account account = accountRepository.findById(10001L).get();
         String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
 
-        Long boardId = 1L;
+        Long boardId = 12004L;
 
         //when
         ResultActions actions = mockMvc.perform(
@@ -371,6 +371,51 @@ class BoardControllerTest {
                 ));
     }
 
+    @Test
+    @DisplayName("게시글 삭제_존재하지 않는 게시글")
+    public void boardRemove_NOT_FOUND() throws Exception {
+
+        //given
+        Account account = accountRepository.findById(10001L).get();
+        String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
+
+        Long boardId = 12101L;
+
+        //when
+        ResultActions actions = mockMvc.perform(
+                delete("/boards/{boardId}", boardId)
+                        .header("Authorization", jwt)
+        );
+
+        // then
+        actions
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.exception").value(BusinessLogicException.class.getSimpleName()))
+                .andExpect(jsonPath("$.message").value("게시글을 찾을 수 없습니다."));
+    }
+
+    @Test
+    @DisplayName("게시글 삭제_잘못된 접근")
+    public void boardRemove_FORBIDDEN() throws Exception {
+
+        //given
+        Account account = accountRepository.findById(10001L).get();
+        String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
+
+        Long boardId = 12002L;
+
+        //when
+        ResultActions actions = mockMvc.perform(
+                delete("/boards/{boardId}", boardId)
+                        .header("Authorization", jwt)
+        );
+
+        // then
+        actions
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.exception").value(BusinessLogicException.class.getSimpleName()))
+                .andExpect(jsonPath("$.message").value("잘못된 접근입니다."));
+    }
 
     @Test
     @DisplayName("게시글 단일 조회_성공")
