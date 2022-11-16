@@ -66,22 +66,31 @@ function SignupModal({ modalCloser }) {
     setPassword(e.target.value);
   };
 
-  // 추후 로그인 axios를 onSubmitHandler 함수에 작성할 것.
+  // 추후 회원가입 axios를 onSubmitHandler 함수에 작성할 것.
   const onSubmitHandler = e => {
     e.preventDefault();
     // 유효성 검사
+    // 닉네임 유효성 검사
     if (nickname.trim().length === 0) {
       setValidationCorrect(prev => {
         return { ...prev, nicknameCorrect: false };
       });
       return;
     }
+    setValidationCorrect(prev => {
+      return { ...prev, nicknameCorrect: true };
+    });
+    // 이메일 유효성 검사
     if (email.trim().length === 0 || !email.includes('@')) {
       setValidationCorrect(prev => {
         return { ...prev, emailCorrect: false };
       });
       return;
     }
+    setValidationCorrect(prev => {
+      return { ...prev, emailCorrect: true };
+    });
+    // 비밀번호 유효성 검사
     if (password.length < 8) {
       setValidationCorrect(prev => {
         return { ...prev, passwordCorrect: false };
@@ -89,16 +98,12 @@ function SignupModal({ modalCloser }) {
       return;
     }
     setValidationCorrect(prev => {
-      return {
-        ...prev,
-        emailCorrect: true,
-        passwordCorrect: true,
-        nicknameCorrect: true,
-      };
+      return { ...prev, passwordCorrect: false };
     });
+
     modalCloser();
   };
-  // console.log(validationCorrect.emailCorrect);
+
   return (
     <Backdrop onClick={modalCloser}>
       <ModalCard
