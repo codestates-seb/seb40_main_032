@@ -51,7 +51,7 @@ public class CommentController {
 
     @GetMapping("/board/{boardId}")
     public ResponseEntity<SliceDto<CommentDetailsRes>> commentList(@PathVariable Long boardId,
-                                                                   @PageableDefault(size = 10, sort = "createdAt") Pageable pageable) {
+                                                                   @PageableDefault(size = 5, sort = "createdAt") Pageable pageable) {
 
         SliceDto<CommentDetailsRes> response = commentService.commentList(boardId, pageable);
 
