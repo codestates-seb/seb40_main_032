@@ -3,7 +3,7 @@ import styled from 'styled-components';
 const FooterWrapper = styled.footer`
   width: 100%;
   height: 5rem;
-  border-top: 1px solid black;
+  border-top: 1px solid var(--font-base-black);
   position: fixed;
   bottom: 0px;
   left: 0px;
