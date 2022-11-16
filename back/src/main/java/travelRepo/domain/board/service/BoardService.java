@@ -16,6 +16,8 @@ import travelRepo.domain.board.repository.BoardPhotoRepository;
 import travelRepo.domain.board.repository.BoardRepository;
 import travelRepo.domain.board.repository.BoardTagRepository;
 import travelRepo.domain.board.repository.TagRepository;
+import travelRepo.domain.comment.repository.CommentRepository;
+import travelRepo.domain.likes.likesRepository.LikesRepository;
 import travelRepo.global.common.dto.IdDto;
 import travelRepo.global.exception.BusinessLogicException;
 import travelRepo.global.exception.ExceptionCode;
@@ -33,8 +35,10 @@ public class BoardService {
     private final BoardRepository boardRepository;
     private final BoardPhotoRepository boardPhotoRepository;
     private final BoardTagRepository boardTagRepository;
-    private final AccountRepository accountRepository;
+    private final CommentRepository commentRepository;
     private final TagRepository tagRepository;
+    private final LikesRepository likesRepository;
+    private final AccountRepository accountRepository;
     private final UploadService uploadService;
 
     @Transactional
@@ -76,6 +80,27 @@ public class BoardService {
         });
 
         return new IdDto(boardId);
+    }
+
+    @Transactional
+    public void removeBoard(Long loginAccountId, Long boardId) {
+
+        Board board = boardRepository.findById(boardId)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_BOARD));
+
+        if (!loginAccountId.equals(board.getAccount().getId())) {
+            throw new BusinessLogicException(ExceptionCode.FORBIDDEN);
+        }
+
+        Account account = accountRepository.findById(loginAccountId)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_ACCOUNT));
+
+        account.getBoards().remove(board);
+        boardTagRepository.deleteByBoardId(boardId);
+        boardPhotoRepository.deleteByBoardId(boardId);
+        commentRepository.deleteByBoardId(boardId);
+        likesRepository.deleteByBoardId(boardId);
+        boardRepository.deleteById(boardId);
     }
 
     private void addBoardTagsToBoard(List<String> tagNames, Board board) {

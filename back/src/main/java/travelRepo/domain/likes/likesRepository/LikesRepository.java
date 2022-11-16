@@ -12,4 +12,8 @@ public interface LikesRepository extends JpaRepository<Likes, Long> {
     @Query("delete from Likes likes where likes.account.id = :accountId " +
             "or likes.board in (select board from Board board where board.account.id = :accountId)")
     void deleteByAccountId(@Param("accountId") Long accountId);
+
+    @Modifying(clearAutomatically = true, flushAutomatically = true)
+    @Query("delete from Likes likes where likes.board.id = :boardId")
+    void deleteByBoardId(@Param("boardId") Long BoardId);
 }
