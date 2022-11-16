@@ -11,6 +11,8 @@ import travelRepo.domain.account.dto.AccountSummaryRes;
 import travelRepo.domain.comment.dto.CommentAddReq;
 import travelRepo.domain.comment.dto.CommentDetailsRes;
 import travelRepo.domain.comment.dto.CommentModifyReq;
+import travelRepo.domain.comment.service.CommentService;
+import travelRepo.global.argumentresolver.LoginAccountId;
 import travelRepo.global.common.dto.SliceDto;
 
 import java.time.LocalDateTime;
@@ -22,9 +24,14 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CommentController {
 
+    private final CommentService commentService;
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void commentAdd(@RequestBody CommentAddReq commentAddReq) {
+    public void commentAdd(@RequestBody CommentAddReq commentAddReq,
+                           @LoginAccountId Long loginAccountId) {
+
+        commentService.addComment(commentAddReq, loginAccountId);
     }
 
     @PatchMapping("/{commentId}")
