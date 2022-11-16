@@ -26,10 +26,10 @@ public class FollowController {
     }
 
     @GetMapping("/{accountId}")
-    public ResponseEntity<FollowCheckRes> followCheck(@PathVariable Long accountId) {
+    public ResponseEntity<FollowCheckRes> followCheck(@LoginAccountId Long loginAccountId,
+                                                      @PathVariable Long accountId) {
 
-        FollowCheckRes followCheckRes = new FollowCheckRes();
-        followCheckRes.setFollow(true);
+        FollowCheckRes followCheckRes = followService.checkFollow(loginAccountId, accountId);
 
         return new ResponseEntity<>(followCheckRes, HttpStatus.OK);
     }
