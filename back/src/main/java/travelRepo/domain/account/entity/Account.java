@@ -38,7 +38,7 @@ public class Account extends BaseTime {
     private Role role;
 
     @OneToMany(mappedBy = "account")
-    private final List<Board> boards = new ArrayList<>();
+    private List<Board> boards = new ArrayList<>();
 
     public void modify(Account account) {
 

@@ -1,5 +1,7 @@
 package travelRepo.domain.follow.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import travelRepo.domain.account.entity.Account;
@@ -9,6 +11,8 @@ import javax.persistence.*;
 
 @Entity
 @Getter
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
 public class Follow extends BaseTime {
 
