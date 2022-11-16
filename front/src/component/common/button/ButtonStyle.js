@@ -8,6 +8,7 @@ const ButtonStyle = css`
   width: ${props => props.width};
   margin: ${props => props.margin};
   padding: ${props => props.padding};
+  font-weight: ${props => props.fontWeight};
   border: none;
   text-align: center;
   border-radius: var(--radius-10);
