@@ -165,9 +165,9 @@ class CommentControllerTest {
         Account account = accountRepository.findById(10001L).get();
         String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
 
-        Long commentId = 1l;
+        Long commentId = 15001l;
 
-        String commentContent = "modified mock board content";
+        String commentContent = "modified testContents";
         CommentModifyReq commentModifyReq = new CommentModifyReq();
         commentModifyReq.setContent(commentContent);
         String content = gson.toJson(commentModifyReq);
@@ -201,6 +201,66 @@ class CommentControllerTest {
                                 )
                         )
                 ));
+    }
+
+    @Test
+    @DisplayName("댓글 수정_존재하지 않는 댓글")
+    void commentModify_NOT_FOUND() throws Exception {
+
+        //given
+        Account account = accountRepository.findById(10001L).get();
+        String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
+
+        Long commentId = 15101l;
+
+        String commentContent = "modified testContents";
+        CommentModifyReq commentModifyReq = new CommentModifyReq();
+        commentModifyReq.setContent(commentContent);
+        String content = gson.toJson(commentModifyReq);
+
+        //when
+        ResultActions actions = mockMvc.perform(
+                patch("/comments/{commentId}", commentId)
+                        .header("Authorization", jwt)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(content)
+        );
+
+        //then
+        actions
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.exception").value(BusinessLogicException.class.getSimpleName()))
+                .andExpect(jsonPath("$.message").value("댓글을 찾을 수 없습니다."));
+    }
+
+    @Test
+    @DisplayName("댓글 수정_잘못된 접근")
+    void commentModify_FORBIDDEN() throws Exception {
+
+        //given
+        Account account = accountRepository.findById(10001L).get();
+        String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
+
+        Long commentId = 15003l;
+
+        String commentContent = "modified testContents";
+        CommentModifyReq commentModifyReq = new CommentModifyReq();
+        commentModifyReq.setContent(commentContent);
+        String content = gson.toJson(commentModifyReq);
+
+        //when
+        ResultActions actions = mockMvc.perform(
+                patch("/comments/{commentId}", commentId)
+                        .header("Authorization", jwt)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(content)
+        );
+
+        //then
+        actions
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.exception").value(BusinessLogicException.class.getSimpleName()))
+                .andExpect(jsonPath("$.message").value("잘못된 접근입니다."));
     }
 
     @Test
