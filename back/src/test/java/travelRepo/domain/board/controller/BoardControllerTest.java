@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.validation.BindException;
 import travelRepo.domain.account.entity.Account;
 import travelRepo.domain.account.repository.AccountRepository;
+import travelRepo.global.exception.BusinessLogicException;
 import travelRepo.global.security.authentication.UserAccount;
 import travelRepo.global.security.jwt.JwtProcessor;
 
@@ -40,9 +41,6 @@ class BoardControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
-
-    @Autowired
-    private Gson gson;
 
     @Autowired
     private AccountRepository accountRepository;
@@ -217,7 +215,7 @@ class BoardControllerTest {
         Account account = accountRepository.findById(10001L).get();
         String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
 
-        Long boardId = 1L;
+        Long boardId = 12001L;
 
         MockMultipartFile image1 = new MockMultipartFile("images", "image1.png", "image/png", "(file data)".getBytes());
         MockMultipartFile image4 = new MockMultipartFile("images", "image4.png", "image/png", "(file data)".getBytes());
@@ -281,6 +279,34 @@ class BoardControllerTest {
                                 )
                         )
                 ));
+    }
+
+    @Test
+    @DisplayName("게시글 수정_잘못된 접근")
+    public void boardModify_Forbidden() throws Exception {
+
+        //given
+        Account account = accountRepository.findById(10001L).get();
+        String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
+
+        Long boardId = 12002L;
+
+        String title = "modified mock board title";
+
+        //when
+        ResultActions actions = mockMvc.perform(
+                multipart("/boards/{boardId}", boardId)
+                        .param("title", title)
+                        .header("Authorization", jwt)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.MULTIPART_FORM_DATA)
+        );
+
+        //then
+        actions
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.exception").value(BusinessLogicException.class.getSimpleName()))
+                .andExpect(jsonPath("$.message").value("잘못된 접근입니다."));
     }
 
     @Test
