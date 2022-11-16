@@ -92,7 +92,7 @@ public class BoardController {
 
         SliceImpl<BoardSummaryRes> response = new SliceImpl<>(content, pageable, true);
 
-        return new ResponseEntity(new SliceDto(response), HttpStatus.OK);
+        return new ResponseEntity(new SliceDto(response, response.getContent()), HttpStatus.OK);
     }
 
     @GetMapping("/account/{accountId}")
@@ -121,6 +121,6 @@ public class BoardController {
 
         SliceImpl<BoardSummaryRes> response = new SliceImpl<>(content, pageable, false);
 
-        return new ResponseEntity(new SliceDto(response), HttpStatus.OK);
+        return new ResponseEntity(new SliceDto(response, response.getContent()), HttpStatus.OK);
     }
 }
