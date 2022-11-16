@@ -8,6 +8,7 @@ import travelRepo.domain.account.repository.AccountRepository;
 import travelRepo.domain.board.entity.Board;
 import travelRepo.domain.board.repository.BoardRepository;
 import travelRepo.domain.comment.dto.CommentAddReq;
+import travelRepo.domain.comment.dto.CommentModifyReq;
 import travelRepo.domain.comment.entity.Comment;
 import travelRepo.domain.comment.repository.CommentRepository;
 import travelRepo.global.exception.BusinessLogicException;
@@ -34,5 +35,18 @@ public class CommentService {
         Comment comment = commentAddReq.toComment(account, board);
 
         commentRepository.save(comment);
+    }
+
+    @Transactional
+    public void modifyComment(CommentModifyReq commentModifyReq, Long commentId, Long loginAccountId) {
+
+        Comment comment = commentRepository.findByIdWithAccount(commentId)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_COMMENT));
+
+        if (!loginAccountId.equals(comment.getAccount().getId())) {
+            throw new BusinessLogicException(ExceptionCode.FORBIDDEN);
+        }
+
+        comment.modify(commentModifyReq.getContent());
     }
 }
