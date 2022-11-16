@@ -13,7 +13,7 @@ public interface FollowRepository extends JpaRepository<Follow, Long> {
 
     Long countByFollower(Account account);
 
-    @Modifying(clearAutomatically = true, flushAutomatically = true)
+    @Modifying(flushAutomatically = true)
     @Query("delete from Follow follow " +
             "where follow.follower.id = :accountId or follow.following.id = :accountId")
     void deleteByAccountId(@Param("accountId") Long accountId);

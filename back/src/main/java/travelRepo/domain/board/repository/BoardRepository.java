@@ -8,7 +8,7 @@ import travelRepo.domain.board.entity.Board;
 
 public interface BoardRepository extends JpaRepository<Board, Long> {
 
-    @Modifying(clearAutomatically = true, flushAutomatically = true)
+    @Modifying(flushAutomatically = true)
     @Query("delete from Board board where board.account.id = :accountId")
     void deleteByAccountId(@Param("accountId") Long accountId);
 }
