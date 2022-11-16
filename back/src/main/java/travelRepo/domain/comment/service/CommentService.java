@@ -49,4 +49,17 @@ public class CommentService {
 
         comment.modify(commentModifyReq.getContent());
     }
+
+    @Transactional
+    public void removeComment(Long commentId, Long loginAccountId) {
+
+        Comment comment = commentRepository.findByIdWithAccount(commentId)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_COMMENT));
+
+        if (!loginAccountId.equals(comment.getAccount().getId())) {
+            throw new BusinessLogicException(ExceptionCode.FORBIDDEN);
+        }
+
+        commentRepository.delete(comment);
+    }
 }
