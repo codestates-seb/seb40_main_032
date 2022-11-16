@@ -17,6 +17,8 @@ import travelRepo.domain.board.repository.BoardPhotoRepository;
 import travelRepo.domain.board.repository.BoardRepository;
 import travelRepo.domain.board.repository.BoardTagRepository;
 import travelRepo.domain.board.repository.TagRepository;
+import travelRepo.domain.comment.repository.CommentRepository;
+import travelRepo.domain.likes.likesRepository.LikesRepository;
 import travelRepo.global.common.dto.IdDto;
 import travelRepo.global.exception.BusinessLogicException;
 import travelRepo.global.exception.ExceptionCode;
@@ -34,8 +36,10 @@ public class BoardService {
     private final BoardRepository boardRepository;
     private final BoardPhotoRepository boardPhotoRepository;
     private final BoardTagRepository boardTagRepository;
-    private final AccountRepository accountRepository;
+    private final CommentRepository commentRepository;
     private final TagRepository tagRepository;
+    private final LikesRepository likesRepository;
+    private final AccountRepository accountRepository;
     private final UploadService uploadService;
 
     @Transactional
@@ -56,7 +60,7 @@ public class BoardService {
     @Transactional
     public IdDto modifyBoard(Long loginAccountId, BoardModifyReq boardModifyReq, Long boardId) {
 
-        Board board = boardRepository.findById(boardId)
+        Board board = boardRepository.findByIdWithBoardTagsAndAccount(boardId)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_BOARD));
 
         if (!loginAccountId.equals(board.getAccount().getId())) {
@@ -77,6 +81,26 @@ public class BoardService {
         });
 
         return new IdDto(boardId);
+    }
+
+    @Transactional
+    public void removeBoard(Long loginAccountId, Long boardId) {
+
+        Board board = boardRepository.findByIdWithBoardTagsAndAccount(boardId)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_BOARD));
+
+        Account account = board.getAccount();
+
+        if (!loginAccountId.equals(account.getId())) {
+            throw new BusinessLogicException(ExceptionCode.FORBIDDEN);
+        }
+
+        account.getBoards().remove(board);
+        boardTagRepository.deleteByBoardId(boardId);
+        boardPhotoRepository.deleteByBoardId(boardId);
+        commentRepository.deleteByBoardId(boardId);
+        likesRepository.deleteByBoardId(boardId);
+        boardRepository.deleteById(boardId);
     }
 
     @Transactional
