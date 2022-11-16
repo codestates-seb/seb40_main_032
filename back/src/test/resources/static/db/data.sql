@@ -26,6 +26,9 @@ INSERT INTO Likes(likes_id, createdAt, modifiedAt, account_id, board_id) VALUES(
 INSERT INTO Comment(comment_id, createdAt, modifiedAt, content, account_id, board_id) VALUES('15001', '2022-10-14 14:00:01', '2022-10-14 14:00:01', 'testContents', '10001', '12002');
 INSERT INTO Comment(comment_id, createdAt, modifiedAt, content, account_id, board_id) VALUES('15002', '2022-10-14 14:00:01', '2022-10-14 14:00:01', 'testContents', '10001', '12003');
 INSERT INTO Comment(comment_id, createdAt, modifiedAt, content, account_id, board_id) VALUES('15003', '2022-10-14 14:00:01', '2022-10-14 14:00:01', 'testContents', '10002', '12001');
+INSERT INTO Comment(comment_id, createdAt, modifiedAt, content, account_id, board_id) VALUES('15004', '2022-10-14 14:00:01', '2022-10-14 14:00:01', 'testContents', '10001', '12001');
+INSERT INTO Comment(comment_id, createdAt, modifiedAt, content, account_id, board_id) VALUES('15005', '2022-10-14 14:00:01', '2022-10-14 14:00:01', 'testContents', '10003', '12001');
+INSERT INTO Comment(comment_id, createdAt, modifiedAt, content, account_id, board_id) VALUES('15100', '2022-10-14 14:00:01', '2022-10-14 14:00:01', 'testContents', '10001', '12001');
 
 INSERT INTO Tag(tag_id, createdAt, modifiedAt, name) VALUES('16001', '2022-10-14 15:00:01', '2022-10-14 14:00:01', 'testName1');
 INSERT INTO Tag(tag_id, createdAt, modifiedAt, name) VALUES('16002', '2022-10-14 15:00:02', '2022-10-14 15:00:02', 'testName2');
