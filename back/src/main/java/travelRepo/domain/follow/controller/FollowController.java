@@ -8,7 +8,6 @@ import travelRepo.domain.follow.dto.FollowCheckRes;
 import travelRepo.domain.follow.dto.FollowPostRes;
 import travelRepo.domain.follow.service.FollowService;
 import travelRepo.global.argumentresolver.LoginAccountId;
-import travelRepo.global.common.enums.Status;
 
 @RestController
 @RequestMapping("/follows")
@@ -18,10 +17,10 @@ public class FollowController {
     private final FollowService followService;
 
     @PostMapping("/{accountId}")
-    public ResponseEntity<FollowPostRes> followPost(@PathVariable Long accountId) {
+    public ResponseEntity<FollowPostRes> followPost(@LoginAccountId Long loginAccountId,
+                                                    @PathVariable Long accountId) {
 
-        FollowPostRes followPostRes = new FollowPostRes();
-        followPostRes.setStatus(Status.SUCCESS);
+        FollowPostRes followPostRes = followService.postFollow(loginAccountId, accountId);
 
         return new ResponseEntity<>(followPostRes, HttpStatus.OK);
     }
