@@ -56,30 +56,7 @@ public class BoardController {
     @GetMapping("/{boardId}")
     public ResponseEntity<BoardDetailsRes> boardDetails(@PathVariable Long boardId) {
 
-        AccountSummaryRes account = new AccountSummaryRes();
-        account.setAccountId(1L);
-        account.setProfile("https://main-image-repo.s3.ap-northeast-2.amazonaws.com/%EC%83%88+%ED%8F%B4%EB%8D%94/1.png");
-        account.setNickname("mockAccount");
-
-        BoardDetailsRes response = new BoardDetailsRes();
-        response.setMyBoard(false);
-        response.setBoardId(boardId);
-        response.setTitle("mock board title");
-        response.setContent("mock board content");
-        response.setLocation("mock board location");
-        response.setCategory(Category.SPOT);
-        response.setLikeCount(16);
-        response.setViews(256);
-        response.setTags(
-                List.of("mock tag1", "mock tag2", "mock tag3")
-        );
-        response.setPhotos(
-                List.of("https://main-image-repo.s3.ap-northeast-2.amazonaws.com/%EC%83%88+%ED%8F%B4%EB%8D%94/1.png",
-                        "https://main-image-repo.s3.ap-northeast-2.amazonaws.com/%EC%83%88+%ED%8F%B4%EB%8D%94/2.png",
-                        "https://main-image-repo.s3.ap-northeast-2.amazonaws.com/%EC%83%88+%ED%8F%B4%EB%8D%94/3.png")
-        );
-        response.setCreatedAt(LocalDateTime.now());
-        response.setAccount(account);
+        BoardDetailsRes response = boardService.findBoard(boardId);
 
         return new ResponseEntity(response, HttpStatus.OK);
     }
