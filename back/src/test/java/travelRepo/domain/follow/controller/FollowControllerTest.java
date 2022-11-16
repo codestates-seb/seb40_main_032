@@ -52,7 +52,7 @@ class FollowControllerTest {
         //given
         Account account = accountRepository.findById(10001L).get();
         String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
-        Long accountId = 2L;
+        Long accountId = 10002L;
 
         //when
         ResultActions actions = mockMvc.perform(
