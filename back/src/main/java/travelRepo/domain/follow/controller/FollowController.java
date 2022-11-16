@@ -6,12 +6,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import travelRepo.domain.follow.dto.FollowCheckRes;
 import travelRepo.domain.follow.dto.FollowPostRes;
+import travelRepo.domain.follow.service.FollowService;
+import travelRepo.global.argumentresolver.LoginAccountId;
 import travelRepo.global.common.enums.Status;
 
 @RestController
 @RequestMapping("/follows")
 @RequiredArgsConstructor
 public class FollowController {
+
+    private final FollowService followService;
 
     @PostMapping("/{accountId}")
     public ResponseEntity<FollowPostRes> followPost(@PathVariable Long accountId) {
@@ -23,10 +27,10 @@ public class FollowController {
     }
 
     @GetMapping("/{accountId}")
-    public ResponseEntity<FollowCheckRes> followCheck(@PathVariable Long accountId) {
+    public ResponseEntity<FollowCheckRes> followCheck(@LoginAccountId Long loginAccountId,
+                                                      @PathVariable Long accountId) {
 
-        FollowCheckRes followCheckRes = new FollowCheckRes();
-        followCheckRes.setFollow(true);
+        FollowCheckRes followCheckRes = followService.checkFollow(loginAccountId, accountId);
 
         return new ResponseEntity<>(followCheckRes, HttpStatus.OK);
     }
