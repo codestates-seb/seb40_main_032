@@ -9,8 +9,9 @@ const HeaderWrapper = styled.header`
   position: fixed;
   top: 0;
   left: 0;
+  z-index: 10;
   border-bottom: 1px solid var(--font-base-black);
-  background-color: '#FFFFFF';
+  background-color: #ffffff;
 
   .header__container {
     display: flex;

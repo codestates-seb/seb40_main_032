@@ -37,8 +37,11 @@ public class CommentController {
 
     @PatchMapping("/{commentId}")
     @ResponseStatus(HttpStatus.OK)
-    public void commentModify(@RequestBody CommentModifyReq commentModifyReq,
-                              @PathVariable Long commentId) {
+    public void commentModify(@Valid @RequestBody CommentModifyReq commentModifyReq,
+                              @PathVariable Long commentId,
+                              @LoginAccountId Long loginAccountId) {
+
+        commentService.modifyComment(commentModifyReq, commentId, loginAccountId);
     }
 
     @DeleteMapping("{commentId}")

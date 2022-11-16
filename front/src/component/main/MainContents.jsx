@@ -4,11 +4,12 @@ import MainSort from './MainSort';
 
 const MainContainer = styled.section`
   width: 100%;
-  padding: 0 calc(10rem - 1.2rem);
+  padding: 5rem calc(10rem - 1.2rem);
   position: relative;
 
   @media screen and (max-width: 549px) {
     padding: 0;
+    padding-top: 5rem;
   }
 
   .main__container {
