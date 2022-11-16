@@ -1,7 +1,6 @@
 package travelRepo.global.exception.advice;
 
 import org.springframework.validation.BindException;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import travelRepo.global.exception.BusinessLogicException;
 import travelRepo.global.exception.dto.ErrorResponse;
 import org.springframework.http.HttpStatus;
