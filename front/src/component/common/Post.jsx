@@ -17,12 +17,12 @@ const PostWrapper = styled.div`
     overflow: hidden;
     background: #fff;
 
-    .post__img {
+    .post__thumb {
       flex: auto;
       overflow: hidden;
       cursor: pointer;
 
-      .post__q {
+      .post__img {
         width: 100%;
         height: 100%;
         transition: all 300ms linear;
@@ -134,10 +134,10 @@ function Post() {
   return (
     <PostWrapper className="post">
       <div className="post__container">
-        <div className="post__img">
+        <div className="post__thumb">
           {/* post Image */}
           <img
-            className="post__q"
+            className="post__img"
             src="https://source.unsplash.com/random/425x300"
             alt="게시글"
           />
