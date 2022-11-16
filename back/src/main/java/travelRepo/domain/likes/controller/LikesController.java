@@ -6,27 +6,28 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import travelRepo.domain.likes.dto.LikesCheckRes;
 import travelRepo.domain.likes.dto.LikesPostRes;
-import travelRepo.global.common.enums.Status;
+import travelRepo.domain.likes.service.LikesService;
+import travelRepo.global.argumentresolver.LoginAccountId;
 
 @RestController
 @RequestMapping("/likes")
 @RequiredArgsConstructor
 public class LikesController {
 
-    @PostMapping("/{boardId}")
-    public ResponseEntity<LikesPostRes> LikesPost(@PathVariable Long boardId) {
+    private final LikesService likesService;
 
-        LikesPostRes likesPostRes = new LikesPostRes();
-        likesPostRes.setStatus(Status.SUCCESS);
+    @PostMapping("/{boardId}")
+    public ResponseEntity<LikesPostRes> LikesPost(@LoginAccountId Long loginAccountId, @PathVariable Long boardId) {
+
+        LikesPostRes likesPostRes = likesService.postLikes(loginAccountId, boardId);
 
         return new ResponseEntity<>(likesPostRes, HttpStatus.OK);
     }
 
     @GetMapping("/{boardId}")
-    public ResponseEntity<LikesCheckRes> LikesCheck(@PathVariable Long boardId) {
+    public ResponseEntity<LikesCheckRes> LikesCheck(@LoginAccountId Long loginAccountId, @PathVariable Long boardId) {
 
-        LikesCheckRes likesCheckRes = new LikesCheckRes();
-        likesCheckRes.setLikes(true);
+        LikesCheckRes likesCheckRes = likesService.checkLikes(loginAccountId, boardId);
 
         return new ResponseEntity<>(likesCheckRes, HttpStatus.OK);
     }
