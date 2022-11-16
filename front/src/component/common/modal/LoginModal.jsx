@@ -58,10 +58,6 @@ const LoginModalStyle = styled.div`
 function LoginModal({ modalCloser }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [validationCorrect, setValidationCorrect] = useState({
-    emailCorrect: true,
-    passwordCorrect: true,
-  });
 
   const onChangeEmail = e => {
     setEmail(e.target.value);
@@ -72,27 +68,12 @@ function LoginModal({ modalCloser }) {
   };
 
   // 추후 로그인 axios를 onSubmitHandler 함수에 작성할 것.
+  // 로그인 유효성 검사는 백엔드에서 받는 응답에 따라 나타나게 할 것.
   const onSubmitHandler = e => {
     e.preventDefault();
-    // 유효성 검사
-    if (email.trim().length === 0 || !email.includes('@')) {
-      setValidationCorrect(prev => {
-        return { ...prev, emailCorrect: false };
-      });
-      return;
-    }
-    if (password.length < 8) {
-      setValidationCorrect(prev => {
-        return { ...prev, passwordCorrect: false };
-      });
-      return;
-    }
-    setValidationCorrect(prev => {
-      return { ...prev, emailCorrect: true, passwordCorrect: true };
-    });
     modalCloser();
   };
-  console.log(validationCorrect.emailCorrect);
+
   return (
     <Backdrop onClick={modalCloser}>
       <ModalCard
@@ -113,11 +94,6 @@ function LoginModal({ modalCloser }) {
               onChange={onChangeEmail}
               value={email}
             />
-            {!validationCorrect.emailCorrect && (
-              <div className="input__validation">
-                아이디는 이메일 형식이여야 합니다.
-              </div>
-            )}
             <label htmlFor="password">비밀번호</label>
             <input
               id="password"
@@ -127,11 +103,6 @@ function LoginModal({ modalCloser }) {
               onChange={onChangePassword}
               value={password}
             />
-            {!validationCorrect.passwordCorrect && (
-              <div className="input__validation">
-                비밀번호는 8자 이상으로 입력해주세요.
-              </div>
-            )}
             <DefaultButton
               width="100%"
               height="4rem"
