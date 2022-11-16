@@ -400,11 +400,11 @@ function PublishForm() {
             </li>
           ))}
           <input
-            className="tag__input-create"
+            className="tag__input--create"
             id="tag"
             type="text"
             value={newTag || ''}
-            maxLength="15"
+            maxLength="6"
             onChange={event => setNewTag(event.target.value)}
             onKeyDown={event => handleTagAdd(event)}
             placeholder="# 태그를 입력하세요"
