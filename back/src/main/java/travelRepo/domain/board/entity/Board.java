@@ -1,17 +1,22 @@
 package travelRepo.domain.board.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import travelRepo.domain.account.entity.Account;
 import travelRepo.global.auditing.BaseTime;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 
 @Entity
 @Getter
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class Board extends BaseTime {
 
     @Id
@@ -37,5 +42,40 @@ public class Board extends BaseTime {
     private Category category;
 
     @OneToMany(mappedBy = "board", cascade = CascadeType.PERSIST)
-    private List<BoardPhoto> boardPhotos = new ArrayList<>();
+    private List<BoardTag> boardTags;
+
+    @OneToMany(mappedBy = "board", cascade = CascadeType.PERSIST)
+    private List<BoardPhoto> boardPhotos;
+
+    public void addAccount(Account account) {
+        this.account = account;
+        if (!account.getBoards().contains(this)) {
+            account.getBoards().add(this);
+        }
+    }
+
+    public void addBoardTags(List<BoardTag> boardTags) {
+        this.boardTags = boardTags;
+        for (BoardTag boardTag : boardTags) {
+            boardTag.addBoard(this);
+        }
+    }
+
+    public void addBoardPhotos(List<BoardPhoto> boardPhotos) {
+        this.boardPhotos = boardPhotos;
+        for (BoardPhoto boardPhoto : boardPhotos) {
+            boardPhoto.addBoard(this);
+        }
+    }
+
+    public void increaseViews() {
+        this.views++;
+    }
+
+    public void modify(Board board) {
+        Optional.ofNullable(board.getTitle()).ifPresent(title -> this.title = title);
+        Optional.ofNullable(board.getContent()).ifPresent(content -> this.content = content);
+        Optional.ofNullable(board.getLocation()).ifPresent(location -> this.location = location);
+        Optional.ofNullable(board.getCategory()).ifPresent(category -> this.category = category);
+    }
 }

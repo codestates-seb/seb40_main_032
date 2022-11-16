@@ -12,6 +12,9 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.transaction.annotation.Transactional;
 import travelRepo.domain.account.entity.Account;
 import travelRepo.domain.account.repository.AccountRepository;
+import travelRepo.global.common.enums.Status;
+import travelRepo.global.exception.BusinessLogicException;
+import travelRepo.global.exception.ExceptionCode;
 import travelRepo.global.security.authentication.UserAccount;
 import travelRepo.global.security.jwt.JwtProcessor;
 
@@ -26,6 +29,7 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWit
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static travelRepo.util.ApiDocumentUtils.getRequestPreProcessor;
 import static travelRepo.util.ApiDocumentUtils.getResponsePreProcessor;
@@ -52,17 +56,26 @@ class FollowControllerTest {
         //given
         Account account = accountRepository.findById(10001L).get();
         String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
-        Long accountId = 2L;
+        Long accountId = 10002L;
 
         //when
-        ResultActions actions = mockMvc.perform(
+        ResultActions cancelActions = mockMvc.perform(
+                post("/follows/{accountId}", accountId)
+                        .header("Authorization", jwt)
+        );
+        ResultActions successActions = mockMvc.perform(
                 post("/follows/{accountId}", accountId)
                         .header("Authorization", jwt)
         );
 
+
         //then
-        actions
+        cancelActions
                 .andExpect(status().isOk())
+                .andExpect(jsonPath("$.status").value(Status.CANCEL.toString()));
+        successActions
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.status").value(Status.SUCCESS.toString()))
                 .andDo(document(
                         "followPost",
                         getRequestPreProcessor(),
@@ -84,13 +97,35 @@ class FollowControllerTest {
     }
 
     @Test
+    @DisplayName("팔로우_자기자신 팔로우")
+    public void followPost_SelfFollow() throws Exception {
+
+        //given
+        Account account = accountRepository.findById(10001L).get();
+        String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
+        Long accountId = 10001L;
+
+        //when
+        ResultActions selfFollowEx = mockMvc.perform(
+                post("/follows/{accountId}", accountId)
+                        .header("Authorization", jwt)
+        );
+
+        //then
+        selfFollowEx
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.exception").value(BusinessLogicException.class.getSimpleName()))
+                .andExpect(jsonPath("$.message").value(ExceptionCode.SELF_FOLLOW.getMessage()));
+    }
+
+    @Test
     @DisplayName("팔로우 조회_성공")
     public void followCheck_Success() throws Exception {
 
         //given
         Account account = accountRepository.findById(10001L).get();
         String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
-        Long accountId = 2L;
+        Long accountId = 10002L;
 
         //when
         ResultActions actions = mockMvc.perform(
@@ -101,6 +136,7 @@ class FollowControllerTest {
         //then
         actions
                 .andExpect(status().isOk())
+                .andExpect(jsonPath("$.follow").value(true))
                 .andDo(document(
                         "followCheck",
                         getRequestPreProcessor(),

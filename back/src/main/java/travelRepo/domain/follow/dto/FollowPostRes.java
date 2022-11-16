@@ -7,4 +7,12 @@ import travelRepo.global.common.enums.Status;
 public class FollowPostRes {
 
     private Status status;
+
+    public static FollowPostRes of(Status status) {
+
+        FollowPostRes followPostRes = new FollowPostRes();
+        followPostRes.setStatus(status);
+
+        return followPostRes;
+    }
 }

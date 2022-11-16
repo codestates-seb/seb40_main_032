@@ -21,7 +21,8 @@ public class S3UploadService implements UploadService{
 
     private final AmazonS3 amazonS3;
 
-    public String upload(MultipartFile image) throws IOException {
+    @Override
+    public String uploadWithException(MultipartFile image) throws IOException {
 
         if (image == null || image.isEmpty()) {
             return null;

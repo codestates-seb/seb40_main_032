@@ -13,9 +13,12 @@ import travelRepo.domain.board.dto.BoardDetailsRes;
 import travelRepo.domain.board.dto.BoardModifyReq;
 import travelRepo.domain.board.dto.BoardSummaryRes;
 import travelRepo.domain.board.entity.Category;
+import travelRepo.domain.board.service.BoardService;
+import travelRepo.global.argumentresolver.LoginAccountId;
 import travelRepo.global.common.dto.IdDto;
 import travelRepo.global.common.dto.SliceDto;
 
+import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,15 +28,25 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BoardController {
 
+    private final BoardService boardService;
+
     @PostMapping
-    public ResponseEntity<IdDto> boardAdd(@ModelAttribute BoardAddReq boardAddReq) {
-        return new ResponseEntity(new IdDto(1L), HttpStatus.CREATED);
+    public ResponseEntity<IdDto> boardAdd(@LoginAccountId Long loginAccountId,
+                                          @Valid @ModelAttribute BoardAddReq boardAddReq) {
+
+        IdDto response = boardService.addBoard(loginAccountId, boardAddReq);
+
+        return new ResponseEntity(response, HttpStatus.CREATED);
     }
 
     @PostMapping("/{boardId}")
-    public ResponseEntity<IdDto> boardModify(@ModelAttribute BoardModifyReq boardModifyReq,
+    public ResponseEntity<IdDto> boardModify(@LoginAccountId Long loginAccountId,
+                                             @Valid @ModelAttribute BoardModifyReq boardModifyReq,
                                              @PathVariable Long boardId) {
-        return new ResponseEntity(new IdDto(1L), HttpStatus.OK);
+
+        IdDto response = boardService.modifyBoard(loginAccountId, boardModifyReq, boardId);
+
+        return new ResponseEntity(response, HttpStatus.OK);
     }
 
     @DeleteMapping("/{boardId}")
@@ -43,30 +56,7 @@ public class BoardController {
     @GetMapping("/{boardId}")
     public ResponseEntity<BoardDetailsRes> boardDetails(@PathVariable Long boardId) {
 
-        AccountSummaryRes account = new AccountSummaryRes();
-        account.setAccountId(1L);
-        account.setProfile("https://main-image-repo.s3.ap-northeast-2.amazonaws.com/%EC%83%88+%ED%8F%B4%EB%8D%94/1.png");
-        account.setNickname("mockAccount");
-
-        BoardDetailsRes response = new BoardDetailsRes();
-        response.setMyBoard(false);
-        response.setBoardId(boardId);
-        response.setTitle("mock board title");
-        response.setContent("mock board content");
-        response.setLocation("mock board location");
-        response.setCategory(Category.SPOT);
-        response.setLikeCount(16);
-        response.setViews(256);
-        response.setTags(
-                List.of("mock tag1", "mock tag2", "mock tag3")
-        );
-        response.setPhotos(
-                List.of("https://main-image-repo.s3.ap-northeast-2.amazonaws.com/%EC%83%88+%ED%8F%B4%EB%8D%94/1.png",
-                        "https://main-image-repo.s3.ap-northeast-2.amazonaws.com/%EC%83%88+%ED%8F%B4%EB%8D%94/2.png",
-                        "https://main-image-repo.s3.ap-northeast-2.amazonaws.com/%EC%83%88+%ED%8F%B4%EB%8D%94/3.png")
-        );
-        response.setCreatedAt(LocalDateTime.now());
-        response.setAccount(account);
+        BoardDetailsRes response = boardService.findBoard(boardId);
 
         return new ResponseEntity(response, HttpStatus.OK);
     }

@@ -12,13 +12,16 @@ import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.validation.BindException;
 import travelRepo.domain.account.entity.Account;
 import travelRepo.domain.account.repository.AccountRepository;
+import travelRepo.global.exception.BusinessLogicException;
 import travelRepo.global.security.authentication.UserAccount;
 import travelRepo.global.security.jwt.JwtProcessor;
 
 import java.util.List;
 
+import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
@@ -27,6 +30,7 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWit
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static travelRepo.util.ApiDocumentUtils.getRequestPreProcessor;
 import static travelRepo.util.ApiDocumentUtils.getResponsePreProcessor;
@@ -38,9 +42,6 @@ class BoardControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
-
-    @Autowired
-    private Gson gson;
 
     @Autowired
     private AccountRepository accountRepository;
@@ -56,19 +57,18 @@ class BoardControllerTest {
         Account account = accountRepository.findById(10001L).get();
         String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
 
-
         MockMultipartFile image1 = new MockMultipartFile("images", "image1.png", "image/png", "(file data)".getBytes());
         MockMultipartFile image2 = new MockMultipartFile("images", "image2.png", "image/png", "(file data)".getBytes());
         MockMultipartFile image3 = new MockMultipartFile("images", "image3.png", "image/png", "(file data)".getBytes());
 
 
-        String title = "mock board title";
-        String content = "mock board content";
-        String location = "mock board location";
+        String title = "board title";
+        String content = "board content";
+        String location = "board location";
         String category = "SPOT";
-        String tag1 = "mock tag1";
-        String tag2 = "mock tag2";
-        String tag3 = "mock tag3";
+        String tag1 = "tag1";
+        String tag2 = "tag2";
+        String tag3 = "tag3";
 
         //when
         ResultActions actions = mockMvc.perform(
@@ -119,6 +119,96 @@ class BoardControllerTest {
     }
 
     @Test
+    @DisplayName("게시글 등록_검증 실패")
+    public void boardAdd_ValidationException() throws Exception {
+
+        //given
+        Account account = accountRepository.findById(10001L).get();
+        String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
+
+        MockMultipartFile image1 = new MockMultipartFile("images", "image1.png", "image/png", "(file data)".getBytes());
+        MockMultipartFile image2 = new MockMultipartFile("images", "image2.png", "image/png", "(file data)".getBytes());
+        MockMultipartFile image3 = new MockMultipartFile("images", "image3.png", "image/png", "(file data)".getBytes());
+
+
+        String title = "board title";
+        String content = "board content";
+        String tooLongTitle = "title is too loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong";
+        String tooShortContent = "ctt";
+        String location = "board location";
+        String category = "SPOT";
+        String tag1 = "tag1";
+        String tag2 = "tag2";
+        String tag3 = "tag3";
+
+        //when
+        ResultActions titleValidationEx = mockMvc.perform(
+                multipart("/boards")
+                        .file(image1).file(image2).file(image3)
+                        .param("title", tooLongTitle)
+                        .param("content", content)
+                        .param("location", location)
+                        .param("category", category)
+                        .param("tags", tag1).param("tags", tag2).param("tags", tag3)
+                        .header("Authorization", jwt)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.MULTIPART_FORM_DATA)
+        );
+        ResultActions contentValidationEx = mockMvc.perform(
+                multipart("/boards")
+                        .file(image1).file(image2).file(image3)
+                        .param("title", title)
+                        .param("content", tooShortContent)
+                        .param("location", location)
+                        .param("category", category)
+                        .param("tags", tag1).param("tags", tag2).param("tags", tag3)
+                        .header("Authorization", jwt)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.MULTIPART_FORM_DATA)
+        );
+        ResultActions categoryValidationEx = mockMvc.perform(
+                multipart("/boards")
+                        .file(image1).file(image2).file(image3)
+                        .param("title", tooLongTitle)
+                        .param("content", content)
+                        .param("location", location)
+                        .param("tags", tag1).param("tags", tag2).param("tags", tag3)
+                        .header("Authorization", jwt)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.MULTIPART_FORM_DATA)
+        );
+        ResultActions imageValidationEx = mockMvc.perform(
+                multipart("/boards")
+                        .param("title", tooLongTitle)
+                        .param("content", content)
+                        .param("location", location)
+                        .param("category", category)
+                        .param("tags", tag1).param("tags", tag2).param("tags", tag3)
+                        .header("Authorization", jwt)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.MULTIPART_FORM_DATA)
+        );
+
+        //then
+        titleValidationEx
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.exception").value(BindException.class.getSimpleName()))
+                .andExpect(jsonPath("$.message").value("잘못된 입력값입니다."));
+        contentValidationEx
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.exception").value(BindException.class.getSimpleName()))
+                .andExpect(jsonPath("$.message").value("잘못된 입력값입니다."));
+        categoryValidationEx
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.exception").value(BindException.class.getSimpleName()))
+                .andExpect(jsonPath("$.message").value("잘못된 입력값입니다."));
+        imageValidationEx
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.exception").value(BindException.class.getSimpleName()))
+                .andExpect(jsonPath("$.message").value("잘못된 입력값입니다."));
+    }
+
+    @Test
     @DisplayName("게시글 수정_성공")
     public void boardModify_Success() throws Exception {
 
@@ -126,7 +216,7 @@ class BoardControllerTest {
         Account account = accountRepository.findById(10001L).get();
         String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
 
-        Long boardId = 1L;
+        Long boardId = 12001L;
 
         MockMultipartFile image1 = new MockMultipartFile("images", "image1.png", "image/png", "(file data)".getBytes());
         MockMultipartFile image4 = new MockMultipartFile("images", "image4.png", "image/png", "(file data)".getBytes());
@@ -193,6 +283,62 @@ class BoardControllerTest {
     }
 
     @Test
+    @DisplayName("게시글 수정_존재하지 않는 게시글")
+    public void boardModify_NOT_FOUND() throws Exception {
+
+        //given
+        Account account = accountRepository.findById(10001L).get();
+        String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
+
+        Long boardId = 12004L;
+
+        String title = "modified mock board title";
+
+        //when
+        ResultActions actions = mockMvc.perform(
+                multipart("/boards/{boardId}", boardId)
+                        .param("title", title)
+                        .header("Authorization", jwt)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.MULTIPART_FORM_DATA)
+        );
+
+        //then
+        actions
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.exception").value(BusinessLogicException.class.getSimpleName()))
+                .andExpect(jsonPath("$.message").value("게시글을 찾을 수 없습니다."));
+    }
+
+    @Test
+    @DisplayName("게시글 수정_잘못된 접근")
+    public void boardModify_Forbidden() throws Exception {
+
+        //given
+        Account account = accountRepository.findById(10001L).get();
+        String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
+
+        Long boardId = 12002L;
+
+        String title = "modified mock board title";
+
+        //when
+        ResultActions actions = mockMvc.perform(
+                multipart("/boards/{boardId}", boardId)
+                        .param("title", title)
+                        .header("Authorization", jwt)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.MULTIPART_FORM_DATA)
+        );
+
+        //then
+        actions
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.exception").value(BusinessLogicException.class.getSimpleName()))
+                .andExpect(jsonPath("$.message").value("잘못된 접근입니다."));
+    }
+
+    @Test
     @DisplayName("게시글 삭제_성공")
     public void boardRemove_Success() throws Exception {
 
@@ -232,7 +378,7 @@ class BoardControllerTest {
     public void boardDetails_Success() throws Exception {
 
         // given
-        Long boardId = 1L;
+        Long boardId = 12001L;
 
         // when
         ResultActions actions = mockMvc.perform(
@@ -243,6 +389,17 @@ class BoardControllerTest {
         //then
         actions
                 .andExpect(status().isOk())
+                .andExpect(jsonPath("$.boardId").value(boardId))
+                .andExpect(jsonPath("$.title").value("testTitle"))
+                .andExpect(jsonPath("$.content").value("testContents"))
+                .andExpect(jsonPath("$.location").value("test-location"))
+                .andExpect(jsonPath("$.category").value("RESTAURANT"))
+                .andExpect(jsonPath("$.likeCount").value(1))
+                .andExpect(jsonPath("$.views").value(11))
+                .andExpect(jsonPath("$.tags", hasSize(2)))
+                .andExpect(jsonPath("$.photos", hasSize(3)))
+                .andExpect(jsonPath("$.createdAt").value("2022-10-14T12:00:01"))
+                .andExpect(jsonPath("$.account.accountId").value(10001))
                 .andDo(document(
                         "boardDetails",
                         getRequestPreProcessor(),
@@ -252,7 +409,6 @@ class BoardControllerTest {
                         ),
                         responseFields(
                                 List.of(
-                                        fieldWithPath("myBoard").type(JsonFieldType.BOOLEAN).description("로그인한 회원이 쓴 글일지 확인"),
                                         fieldWithPath("boardId").type(JsonFieldType.NUMBER).description("게시글 식별자"),
                                         fieldWithPath("title").type(JsonFieldType.STRING).description("게시글 제목"),
                                         fieldWithPath("content").type(JsonFieldType.STRING).description("게시글 내용"),
@@ -270,6 +426,26 @@ class BoardControllerTest {
                                 )
                         )
                 ));
+    }
+
+    @Test
+    @DisplayName("게시글 단일 조회_존재하지 않는 게시글")
+    public void boardDetails_NOT_FOUND() throws Exception {
+
+        // given
+        Long boardId = 12101L;
+
+        // when
+        ResultActions actions = mockMvc.perform(
+                get("/boards/{boardId}", boardId)
+                        .accept(MediaType.APPLICATION_JSON)
+        );
+
+        //then
+        actions
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.exception").value(BusinessLogicException.class.getSimpleName()))
+                .andExpect(jsonPath("$.message").value("게시글을 찾을 수 없습니다."));
     }
 
     @Test
