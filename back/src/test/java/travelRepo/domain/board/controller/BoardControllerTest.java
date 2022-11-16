@@ -282,6 +282,34 @@ class BoardControllerTest {
     }
 
     @Test
+    @DisplayName("게시글 수정_존재하지 않는 게시글")
+    public void boardModify_NOT_FOUND() throws Exception {
+
+        //given
+        Account account = accountRepository.findById(10001L).get();
+        String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
+
+        Long boardId = 12004L;
+
+        String title = "modified mock board title";
+
+        //when
+        ResultActions actions = mockMvc.perform(
+                multipart("/boards/{boardId}", boardId)
+                        .param("title", title)
+                        .header("Authorization", jwt)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.MULTIPART_FORM_DATA)
+        );
+
+        //then
+        actions
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.exception").value(BusinessLogicException.class.getSimpleName()))
+                .andExpect(jsonPath("$.message").value("게시글을 찾을 수 없습니다."));
+    }
+
+    @Test
     @DisplayName("게시글 수정_잘못된 접근")
     public void boardModify_Forbidden() throws Exception {
 
