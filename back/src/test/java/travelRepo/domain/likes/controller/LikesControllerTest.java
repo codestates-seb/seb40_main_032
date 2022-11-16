@@ -52,7 +52,7 @@ class LikesControllerTest {
         //given
         Account account = accountRepository.findById(10001L).get();
         String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
-        Long boardId = 10101L;
+        Long boardId = 12002L;
 
         //when
         ResultActions actions = mockMvc.perform(
@@ -90,7 +90,7 @@ class LikesControllerTest {
         //given
         Account account = accountRepository.findById(10001L).get();
         String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
-        Long boardId = 10101L;
+        Long boardId = 12002L;
 
         //when
         ResultActions actions = mockMvc.perform(
