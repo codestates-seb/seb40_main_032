@@ -43,7 +43,10 @@ public class CommentController {
 
     @DeleteMapping("{commentId}")
     @ResponseStatus(HttpStatus.OK)
-    public void commentRemove(@PathVariable Long commentId) {
+    public void commentRemove(@PathVariable Long commentId,
+                              @LoginAccountId Long loginAccountId) {
+
+        commentService.removeComment(commentId, loginAccountId);
     }
 
     @GetMapping("/board/{boardId}")
