@@ -1,6 +1,7 @@
 package travelRepo.global.exception.advice;
 
 import org.springframework.validation.BindException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import travelRepo.global.exception.BusinessLogicException;
 import travelRepo.global.exception.dto.ErrorResponse;
 import org.springframework.http.HttpStatus;
@@ -29,6 +30,13 @@ public class ExceptionAdvice {
 
     @ExceptionHandler
     public ResponseEntity<ErrorResponse> bindExceptionHandler(BindException e) {
+
+        ErrorResponse errorResponse = new ErrorResponse(e.getClass().getSimpleName(), "잘못된 입력값입니다.");
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<ErrorResponse> methodArgumentNotValidExceptionHandler(MethodArgumentNotValidException e) {
 
         ErrorResponse errorResponse = new ErrorResponse(e.getClass().getSimpleName(), "잘못된 입력값입니다.");
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);

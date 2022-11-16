@@ -15,6 +15,7 @@ import travelRepo.domain.comment.service.CommentService;
 import travelRepo.global.argumentresolver.LoginAccountId;
 import travelRepo.global.common.dto.SliceDto;
 
+import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +29,7 @@ public class CommentController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void commentAdd(@RequestBody CommentAddReq commentAddReq,
+    public void commentAdd(@Valid @RequestBody CommentAddReq commentAddReq,
                            @LoginAccountId Long loginAccountId) {
 
         commentService.addComment(commentAddReq, loginAccountId);
