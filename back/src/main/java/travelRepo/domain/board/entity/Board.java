@@ -10,6 +10,8 @@ import travelRepo.global.auditing.BaseTime;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 
 @Entity
 @Getter
@@ -65,5 +67,12 @@ public class Board extends BaseTime {
         if (boardPhoto.getBoard() == null) {
             boardPhoto.addBoard(this);
         }
+    }
+
+    public void modify(Board board) {
+        Optional.ofNullable(board.getTitle()).ifPresent(title -> this.title = title);
+        Optional.ofNullable(board.getContent()).ifPresent(content -> this.content = content);
+        Optional.ofNullable(board.getLocation()).ifPresent(location -> this.location = location);
+        Optional.ofNullable(board.getCategory()).ifPresent(category -> this.category = category);
     }
 }
