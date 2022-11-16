@@ -59,7 +59,7 @@ public class BoardService {
     @Transactional
     public IdDto modifyBoard(Long loginAccountId, BoardModifyReq boardModifyReq, Long boardId) {
 
-        Board board = boardRepository.findById(boardId)
+        Board board = boardRepository.findByIdWithBoardTagsAndAccount(boardId)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_BOARD));
 
         if (!loginAccountId.equals(board.getAccount().getId())) {
@@ -85,15 +85,14 @@ public class BoardService {
     @Transactional
     public void removeBoard(Long loginAccountId, Long boardId) {
 
-        Board board = boardRepository.findById(boardId)
+        Board board = boardRepository.findByIdWithBoardTagsAndAccount(boardId)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_BOARD));
 
         if (!loginAccountId.equals(board.getAccount().getId())) {
             throw new BusinessLogicException(ExceptionCode.FORBIDDEN);
         }
 
-        Account account = accountRepository.findById(loginAccountId)
-                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_ACCOUNT));
+        Account account = board.getAccount();
 
         account.getBoards().remove(board);
         boardTagRepository.deleteByBoardId(boardId);
