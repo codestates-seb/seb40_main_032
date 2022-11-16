@@ -54,14 +54,13 @@ function SignupModal({ modalCloser }) {
     nicknameCorrect: true,
   });
 
+  // 인풋값 상태 저장 함수
   const onChangeNickname = e => {
     setNickname(e.target.value);
   };
-
   const onChangeEmail = e => {
     setEmail(e.target.value);
   };
-
   const onChangePassword = e => {
     setPassword(e.target.value);
   };
