@@ -8,6 +8,12 @@ const ModalBaseCard = styled.div`
   z-index: 100;
   position: fixed;
   top: 25%;
+
+  @media screen and (max-width: 550px) {
+    width: 90%;
+    display: flex;
+    justify-content: center;
+  }
 `;
 
 const CloseIcon = styled(AiOutlineClose)`
