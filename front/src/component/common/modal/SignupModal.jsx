@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+// import axios from 'axios';
 import styled from 'styled-components';
+import signupApi from '../../../api/signupApi';
 import ModalCard from './ModalCard';
 import Backdrop from './Backdrop';
 import { DefaultButton } from '../button/ButtonStyle';
@@ -78,22 +79,35 @@ function SignupModal({ onSignupModalCloser }) {
     formData.append('email', email);
     formData.append('password', password);
     formData.append('nickname', nickname);
-    try {
-      const res = await axios('/accounts', {
-        method: 'post',
-        headers: { 'Content-Type': 'multipart/form-data;charset=UTF-8' },
-        data: formData,
+    signupApi(formData)
+      .then(res => {
+        setSignupError('');
+        setSuccessSignup(true);
+        console.log(res);
+      })
+      .catch(err => {
+        console.log(err);
+        // 백엔드에서 받은 중복이메일 유효성 검사 표시
+        if (err.response.data.exception === 'BusinessLogicException') {
+          setSignupError(err.response.data.message);
+        }
       });
-      setSignupError('');
-      setSuccessSignup(true);
-      console.log(res);
-    } catch (error) {
-      console.log(error);
-      // 백엔드에서 받은 중복이메일 유효성 검사 표시
-      if (error.response.data.exception === 'BusinessLogicException') {
-        setSignupError(error.response.data.message);
-      }
-    }
+    // try {
+    //   const res = await axios('/accounts', {
+    //     method: 'post',
+    //     headers: { 'Content-Type': 'multipart/form-data;charset=UTF-8' },
+    //     data: formData,
+    //   });
+    //   setSignupError('');
+    //   setSuccessSignup(true);
+    //   console.log(res);
+    // } catch (error) {
+    //   console.log(error);
+    //   // 백엔드에서 받은 중복이메일 유효성 검사 표시
+    //   if (error.response.data.exception === 'BusinessLogicException') {
+    //     setSignupError(error.response.data.message);
+    //   }
+    // }
   }
 
   // 추후 회원가입 axios를 onSubmitHandler 함수에 작성할 것.
