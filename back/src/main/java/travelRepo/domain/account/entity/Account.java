@@ -40,6 +40,8 @@ public class Account extends BaseTime {
 
     private LocalDateTime tempPasswordGeneratedAt;
 
+    private LocalDateTime tempPasswordEmailSendAt;
+
     @Enumerated(EnumType.STRING)
     private Role role;
 
@@ -58,8 +60,10 @@ public class Account extends BaseTime {
 
         String uuid = UUID.randomUUID().toString().substring(0, 15);
         this.tempPassword = uuid.replaceAll("[^ㄱ-ㅎㅏ-ㅣ가-힣a-zA-Z0-9]", "");
+    }
 
-        tempPasswordGeneratedAt = LocalDateTime.now();
+    public void setTempPasswordEmailSendAt() {
+        this.tempPasswordEmailSendAt = LocalDateTime.now();
     }
 
     public boolean canSendTempPassword() {
@@ -69,6 +73,15 @@ public class Account extends BaseTime {
         }
 
         return this.tempPasswordGeneratedAt.isBefore(LocalDateTime.now().minusHours(1));
+    }
+
+    public boolean canSendTempPasswordGuide() {
+
+        if (this.tempPasswordEmailSendAt == null) {
+            return true;
+        }
+
+        return this.tempPasswordEmailSendAt.isBefore(LocalDateTime.now().minusHours(1));
     }
 
 }
