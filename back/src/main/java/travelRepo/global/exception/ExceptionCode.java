@@ -12,7 +12,8 @@ public enum ExceptionCode {
     FORBIDDEN(403, "잘못된 접근입니다."),
     NOT_FOUND_BOARD(404, "게시글을 찾을 수 없습니다."),
     NOT_FOUND_COMMENT(404, "댓글을 찾을 수 없습니다."),
-    UPLOAD_FAILED(500, "이미지를 업로드하는데 실패했습니다.");
+    UPLOAD_FAILED(500, "이미지를 업로드하는데 실패했습니다."),
+    MAIL_SEND_FAILED(500, "이메일 전송이 실패했습니다.");
 
     private int status;
 
