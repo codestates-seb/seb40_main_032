@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import loginApi from '../../../api/loginApi';
 import ModalCard from './ModalCard';
 import Backdrop from './Backdrop';
 import { DefaultButton, TransparentButton } from '../button/ButtonStyle';
@@ -77,10 +78,20 @@ function LoginModal({ modalCloser }) {
     setSignupModalOpened(false);
   };
 
+  // 로그인 요청
+  async function login() {
+    try {
+      const res = await loginApi({ email, password });
+      console.log(res);
+    } catch (err) {
+      console.log(err);
+    }
+  }
   // 추후 로그인 axios를 onSubmitHandler 함수에 작성할 것.
   // 로그인 유효성 검사는 백엔드에서 받는 응답에 따라 나타나게 할 것.
   const onSubmitHandler = e => {
     e.preventDefault();
+    login();
     modalCloser();
   };
 
