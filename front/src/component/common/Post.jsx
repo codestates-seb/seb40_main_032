@@ -37,21 +37,10 @@ const PostWrapper = styled.div`
       flex-direction: column;
       padding: 1rem 1.5rem;
 
-      /* 말줄임 속성 */
-      .post__title,
-      .post__writer {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        display: -webkit-box;
-        -webkit-line-clamp: 1;
-        -webkit-box-orient: vertical;
-        word-break: break-all;
-      }
-
       .post__tl {
         display: flex;
         align-items: center;
-        padding: 5px 0;
+        padding: 5px 0 1rem;
 
         .post__title {
           flex-grow: 2;
@@ -59,6 +48,12 @@ const PostWrapper = styled.div`
           font-weight: bold;
           font-size: 1.6rem;
           cursor: pointer;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 1;
+          -webkit-box-orient: vertical;
+          word-break: break-all;
         }
 
         .post__heart {
@@ -83,33 +78,32 @@ const PostWrapper = styled.div`
 
       .post__tw {
         display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex-wrap: wrap;
-        margin: 1.2rem 0 5px;
+        flex-direction: column;
 
         .post__tags {
           display: flex;
           justify-content: flex-start;
           align-items: center;
-          flex-wrap: wrap;
-          padding: 5px 0;
-          overflow: hidden;
-          white-space: nowrap;
-          text-overflow: ellipsis;
 
           .post__tag {
-            padding-right: 5px;
+            padding-right: 1rem;
             text-align: left;
             color: var(--font-tag-color);
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             cursor: pointer;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            word-break: break-all;
           }
         }
         .post__info {
           display: flex;
+          justify-content: flex-end;
           align-items: center;
-          padding: 5px 0;
+          padding: 1rem 0 5px;
           cursor: pointer;
 
           .post__avatar {
@@ -122,7 +116,7 @@ const PostWrapper = styled.div`
           }
 
           .post__writer {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
           }
         }
       }
