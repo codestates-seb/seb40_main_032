@@ -550,7 +550,7 @@ class BoardControllerTest extends After {
     public void accountBoardList_Success() throws Exception {
 
         //given
-        Long accountId = 1L;
+        Long accountId = 10001L;
 
         //when
         ResultActions actions = mockMvc.perform(

@@ -16,6 +16,7 @@ INSERT INTO BoardPhoto(boardPhoto_id, board_id, photo) VALUES('13002', '12001', 
 INSERT INTO BoardPhoto(boardPhoto_id, board_id, photo) VALUES('13003', '12001', 'https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg');
 INSERT INTO BoardPhoto(boardPhoto_id, board_id, photo) VALUES('13004', '12002', 'https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg');
 INSERT INTO BoardPhoto(boardPhoto_id, board_id, photo) VALUES('13005', '12003', 'https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg');
+INSERT INTO BoardPhoto(boardPhoto_id, board_id, photo) VALUES('13006', '12004', 'https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg');
 
 INSERT INTO Likes(likes_id, createdAt, modifiedAt, account_id, board_id) VALUES('14001', '2022-10-14 13:00:01', '2022-10-14 13:00:01', '10002', '12001');
 INSERT INTO Likes(likes_id, createdAt, modifiedAt, account_id, board_id) VALUES('14002', '2022-10-14 13:00:02', '2022-10-14 13:00:02', '10001', '12002');
