@@ -134,7 +134,9 @@ function LoginModal({ modalCloser }) {
           </LoginModalStyle>
         </ModalCard>
       </Backdrop>
-      {signupModalOpened && <SignupModal modalCloser={signupModalCloser} />}
+      {signupModalOpened && (
+        <SignupModal onSignupModalCloser={signupModalCloser} />
+      )}
     </>
   );
 }
