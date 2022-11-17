@@ -11,7 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.validation.BindException;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import travelRepo.domain.account.entity.Account;
 import travelRepo.domain.account.repository.AccountRepository;
@@ -23,19 +23,20 @@ import travelRepo.global.security.jwt.JwtProcessor;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
-import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static travelRepo.util.ApiDocumentUtils.getRequestPreProcessor;
 import static travelRepo.util.ApiDocumentUtils.getResponsePreProcessor;
 
+@Transactional
 @SpringBootTest
 @AutoConfigureMockMvc
 @AutoConfigureRestDocs
@@ -271,7 +272,7 @@ class CommentControllerTest {
         Account account = accountRepository.findById(10001L).get();
         String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
 
-        Long commentId = 1l;
+        Long commentId = 15100L;
 
         //when
         ResultActions actions = mockMvc.perform(
@@ -298,11 +299,57 @@ class CommentControllerTest {
     }
 
     @Test
+    @DisplayName("댓글 삭제_존재하지 않는 댓글")
+    void commentRemove_NOT_FOUND() throws Exception {
+
+        //given
+        Account account = accountRepository.findById(10001L).get();
+        String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
+
+        Long commentId = 15101L;
+
+        //when
+        ResultActions actions = mockMvc.perform(
+                delete("/comments/{commentId}", commentId)
+                        .header("Authorization", jwt)
+        );
+
+        //then
+        actions
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.exception").value(BusinessLogicException.class.getSimpleName()))
+                .andExpect(jsonPath("$.message").value("댓글을 찾을 수 없습니다."));
+    }
+
+    @Test
+    @DisplayName("댓글 삭제_잘못된 접근")
+    void commentRemove_FORBIDDEN() throws Exception {
+
+        //given
+        Account account = accountRepository.findById(10001L).get();
+        String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
+
+        Long commentId = 15003L;
+
+        //when
+        ResultActions actions = mockMvc.perform(
+                delete("/comments/{commentId}", commentId)
+                        .header("Authorization", jwt)
+        );
+
+        //then
+        actions
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.exception").value(BusinessLogicException.class.getSimpleName()))
+                .andExpect(jsonPath("$.message").value("잘못된 접근입니다."));
+    }
+
+    @Test
     @DisplayName("댓글 조회_성공")
     void commentList_Success() throws Exception {
 
         //given
-        Long boardId = 1l;
+        Long boardId = 12002l;
 
         //when
         ResultActions actions = mockMvc.perform(
@@ -313,6 +360,11 @@ class CommentControllerTest {
         //then
         actions
                 .andExpect(status().isOk())
+                .andExpect(jsonPath("$.content", hasSize(5)))
+                .andExpect(jsonPath("$.sliceNumber").value(1))
+                .andExpect(jsonPath("$.size").value(5))
+                .andExpect(jsonPath("$.hasNext").value("true"))
+                .andExpect(jsonPath("$.numberOfElements").value(5))
                 .andDo(document(
                         "commentList",
                         getRequestPreProcessor(),

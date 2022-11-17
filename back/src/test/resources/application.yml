@@ -40,15 +40,15 @@ jwt:
 cloud:
   aws:
     credentials:
-      accessKey: ${AWS_ACCESS_KEY}
-      secretKey: ${AWS_SECRET_KEY}
+      accessKey: local
+      secretKey: local
     s3:
-      bucket: ${S3_BUCKET}
+      bucket: local
     region:
       static: ap-northeast-2
     stack:
       auto: false
 
-dir:
+dir: ./testImg/
 
-mod: server
+mod: local

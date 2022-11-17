@@ -8,9 +8,11 @@ import travelRepo.domain.board.entity.Board;
 import travelRepo.global.auditing.BaseTime;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Entity
 @Getter
@@ -34,6 +36,12 @@ public class Account extends BaseTime {
 
     private String intro;
 
+    private String tempPassword;
+
+    private LocalDateTime tempPasswordGeneratedAt;
+
+    private LocalDateTime tempPasswordEmailSendAt;
+
     @Enumerated(EnumType.STRING)
     private Role role;
 
@@ -47,4 +55,33 @@ public class Account extends BaseTime {
         Optional.ofNullable(account.getProfile()).ifPresent(profile -> this.profile = profile);
         Optional.ofNullable(account.getIntro()).ifPresent(intro -> this.intro = intro);
     }
+
+    public void createTempPassword() {
+
+        String uuid = UUID.randomUUID().toString().substring(0, 15);
+        this.tempPassword = uuid.replaceAll("[^ㄱ-ㅎㅏ-ㅣ가-힣a-zA-Z0-9]", "");
+    }
+
+    public void setTempPasswordEmailSendAt() {
+        this.tempPasswordEmailSendAt = LocalDateTime.now();
+    }
+
+    public boolean canSendTempPassword() {
+
+        if (this.tempPasswordGeneratedAt == null) {
+            return true;
+        }
+
+        return this.tempPasswordGeneratedAt.isBefore(LocalDateTime.now().minusHours(1));
+    }
+
+    public boolean canSendTempPasswordGuide() {
+
+        if (this.tempPasswordEmailSendAt == null) {
+            return true;
+        }
+
+        return this.tempPasswordEmailSendAt.isBefore(LocalDateTime.now().minusHours(1));
+    }
+
 }
