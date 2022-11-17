@@ -54,27 +54,10 @@ public class CommentController {
 
     @GetMapping("/board/{boardId}")
     public ResponseEntity<SliceDto<CommentDetailsRes>> commentList(@PathVariable Long boardId,
-                                                                   @PageableDefault(size = 5, sort = "createdAt,DESC") Pageable pageable) {
+                                                                   @PageableDefault(size = 5, sort = "createdAt") Pageable pageable) {
 
-        List<CommentDetailsRes> content = new ArrayList<>();
+        SliceDto<CommentDetailsRes> response = commentService.commentList(boardId, pageable);
 
-        for (int i = 1; i < 6; i++) {
-            AccountSummaryRes accountSummaryRes = new AccountSummaryRes();
-            accountSummaryRes.setAccountId(0L + i);
-            accountSummaryRes.setProfile("https://main-image-repo.s3.ap-northeast-2.amazonaws.com/%EC%83%88+%ED%8F%B4%EB%8D%94/" + i + ".png");
-            accountSummaryRes.setNickname("mockAccount" + i);
-
-            CommentDetailsRes commentDetailsRes = new CommentDetailsRes();
-            commentDetailsRes.setCommentId(0L + i);
-            commentDetailsRes.setContent("mock comment content" + i);
-            commentDetailsRes.setCreatedAt(LocalDateTime.now());
-            commentDetailsRes.setAccount(accountSummaryRes);
-
-            content.add(commentDetailsRes);
-        }
-
-        SliceImpl<CommentDetailsRes> response = new SliceImpl(content, pageable, true);
-
-        return new ResponseEntity(new SliceDto(response), HttpStatus.OK);
+        return new ResponseEntity(response, HttpStatus.OK);
     }
 }

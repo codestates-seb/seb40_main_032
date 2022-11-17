@@ -23,6 +23,7 @@ import travelRepo.global.security.jwt.JwtProcessor;
 
 import java.util.List;
 
+import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
@@ -348,7 +349,7 @@ class CommentControllerTest {
     void commentList_Success() throws Exception {
 
         //given
-        Long boardId = 1l;
+        Long boardId = 12002l;
 
         //when
         ResultActions actions = mockMvc.perform(
@@ -359,6 +360,11 @@ class CommentControllerTest {
         //then
         actions
                 .andExpect(status().isOk())
+                .andExpect(jsonPath("$.content", hasSize(5)))
+                .andExpect(jsonPath("$.sliceNumber").value(1))
+                .andExpect(jsonPath("$.size").value(5))
+                .andExpect(jsonPath("$.hasNext").value("true"))
+                .andExpect(jsonPath("$.numberOfElements").value(5))
                 .andDo(document(
                         "commentList",
                         getRequestPreProcessor(),

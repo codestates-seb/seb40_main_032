@@ -21,7 +21,7 @@ public class SliceDto<T> {
 
     public SliceDto(Slice<T> slice) {
         this.content = slice.getContent();
-        this.sliceNumber = slice.getNumber();
+        this.sliceNumber = slice.getNumber() + 1;
         this.size = slice.getSize();
         this.hasNext = slice.hasNext();
         this.numberOfElements = slice.getNumberOfElements();

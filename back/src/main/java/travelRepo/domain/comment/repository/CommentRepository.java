@@ -1,5 +1,7 @@
 package travelRepo.domain.comment.repository;
 
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -23,4 +25,6 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
     @EntityGraph(attributePaths = {"account"})
     @Query("select c from Comment c where c.id = :commentId")
     Optional<Comment> findByIdWithAccount(@Param("commentId") Long commentId);
+
+    Slice<Comment> findAllByBoard_Id(Long boardsId, Pageable pageable);
 }
