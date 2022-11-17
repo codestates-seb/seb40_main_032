@@ -60,10 +60,7 @@ public class CommentService {
     public SliceDto<CommentDetailsRes> commentList(Long boardId, Pageable pageable) {
 
         Slice<Comment> comments = commentRepository.findAllByBoard_Id(boardId, pageable);
-        List<CommentDetailsRes> content = comments.getContent().stream()
-                .map(CommentDetailsRes::of)
-                .collect(Collectors.toList());
 
-        return new SliceDto(comments, content);
+        return new SliceDto(comments.map(CommentDetailsRes::of));
     }
 }

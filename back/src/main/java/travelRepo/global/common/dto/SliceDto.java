@@ -19,8 +19,8 @@ public class SliceDto<T> {
 
     private int numberOfElements;
 
-    public SliceDto(Slice<T> slice, List<T> content) {
-        this.content = content;
+    public SliceDto(Slice<T> slice) {
+        this.content = slice.getContent();
         this.sliceNumber = slice.getNumber() + 1;
         this.size = slice.getSize();
         this.hasNext = slice.hasNext();
