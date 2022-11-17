@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const signupApi = data => {
+const signupPostApi = data => {
   return axios('/accounts', {
     method: 'post',
     headers: { 'Content-Type': 'multipart/form-data;charset=UTF-8' },
@@ -8,4 +8,4 @@ const signupApi = data => {
   });
 };
 
-export default signupApi;
+export default signupPostApi;

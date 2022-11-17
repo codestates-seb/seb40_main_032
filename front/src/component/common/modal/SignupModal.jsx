@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 // import axios from 'axios';
 import styled from 'styled-components';
-import signupApi from '../../../api/signupApi';
+import signupPostApi from '../../../api/signupPostApi';
 import ModalCard from './ModalCard';
 import Backdrop from './Backdrop';
 import { DefaultButton } from '../button/ButtonStyle';
@@ -79,7 +79,7 @@ function SignupModal({ onSignupModalCloser }) {
     formData.append('email', email);
     formData.append('password', password);
     formData.append('nickname', nickname);
-    signupApi(formData)
+    await signupPostApi(formData)
       .then(res => {
         setSignupError('');
         setSuccessSignup(true);
