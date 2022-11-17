@@ -7,19 +7,19 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import travelRepo.domain.account.dto.TempPasswordGuideSendReq;
-import travelRepo.domain.account.service.AccountService;
+import travelRepo.domain.account.service.AccountEmailService;
 
 @Controller
 @RequestMapping("/accounts")
 @RequiredArgsConstructor
 public class AccountEmailController {
 
-    private final AccountService accountService;
+    private final AccountEmailService accountEmailService;
 
     @ResponseBody
     @PostMapping("/tempPasswordGuide")
     public void TempPasswordGuidSend(@RequestBody TempPasswordGuideSendReq tempPasswordGuideSendReq) {
 
-        accountService.sendTempPasswordGuide(tempPasswordGuideSendReq);
+        accountEmailService.sendTempPasswordGuide(tempPasswordGuideSendReq);
     }
 }

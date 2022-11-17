@@ -58,9 +58,16 @@ public class Account extends BaseTime {
 
         String uuid = UUID.randomUUID().toString().substring(0, 15);
         this.tempPassword = uuid.replaceAll("[^ㄱ-ㅎㅏ-ㅣ가-힣a-zA-Z0-9]", "");
+
+        tempPasswordGeneratedAt = LocalDateTime.now();
     }
 
     public boolean canSendTempPassword() {
+
+        if (this.tempPasswordGeneratedAt == null) {
+            return true;
+        }
+
         return this.tempPasswordGeneratedAt.isBefore(LocalDateTime.now().minusHours(1));
     }
 
