@@ -7,6 +7,7 @@ const LikeWrapper = styled.div`
   align-items: center;
   .like__ment {
     font-size: ${props => props.size};
+    color: ${props => props.color};
   }
 `;
 
@@ -16,18 +17,19 @@ const LikeImg = styled(AiFillHeart)`
   color: ${props => (props.color ? props.color : `#FFFFFF`)};
   stroke: ${props => (props.color ? '' : `var(--font-tag-color)`)};
   stroke-width: 60px;
-  margin-right: 10px;
+  margin-right: ${props => props.marginRight};
 `;
 
-function Like({ width, height, color, ment, size }) {
+function Like({ width, height, color, ment, size, marginRight }) {
   return (
-    <LikeWrapper className="like" size={size}>
+    <LikeWrapper className="like" size={size} color={color}>
       <LikeImg
         src={like}
         alt="좋아요"
         width={width}
         height={height}
         color={color}
+        marginRight={marginRight}
       />
       <p className="like__ment">{ment}</p>
     </LikeWrapper>
