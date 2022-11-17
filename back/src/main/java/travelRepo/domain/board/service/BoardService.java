@@ -1,6 +1,8 @@
 package travelRepo.domain.board.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -9,10 +11,8 @@ import travelRepo.domain.account.repository.AccountRepository;
 import travelRepo.domain.board.dto.BoardAddReq;
 import travelRepo.domain.board.dto.BoardDetailsRes;
 import travelRepo.domain.board.dto.BoardModifyReq;
-import travelRepo.domain.board.entity.Board;
-import travelRepo.domain.board.entity.BoardPhoto;
-import travelRepo.domain.board.entity.BoardTag;
-import travelRepo.domain.board.entity.Tag;
+import travelRepo.domain.board.dto.BoardSummaryRes;
+import travelRepo.domain.board.entity.*;
 import travelRepo.domain.board.repository.BoardPhotoRepository;
 import travelRepo.domain.board.repository.BoardRepository;
 import travelRepo.domain.board.repository.BoardTagRepository;
@@ -20,6 +20,7 @@ import travelRepo.domain.board.repository.TagRepository;
 import travelRepo.domain.comment.repository.CommentRepository;
 import travelRepo.domain.likes.likesRepository.LikesRepository;
 import travelRepo.global.common.dto.IdDto;
+import travelRepo.global.common.dto.SliceDto;
 import travelRepo.global.exception.BusinessLogicException;
 import travelRepo.global.exception.ExceptionCode;
 import travelRepo.global.upload.service.UploadService;
@@ -112,6 +113,20 @@ public class BoardService {
         board.increaseViews();
 
         return BoardDetailsRes.of(board);
+    }
+
+    public SliceDto<BoardSummaryRes> findBoards(String query, Category category, Pageable pageable) {
+
+        Slice<Board> boards = boardRepository.findAllWithBoardTagsAndAccount(pageable);
+
+        return new SliceDto(boards.map(BoardSummaryRes::of));
+    }
+
+    public SliceDto<BoardSummaryRes> findBoardsByAccount(Long accountId, Pageable pageable) {
+
+        Slice<Board> boards = boardRepository.findAllByAccountWithBoardTagsAndAccount(accountId, pageable);
+
+        return new SliceDto(boards.map(BoardSummaryRes::of));
     }
 
     private void addBoardTagsToBoard(List<String> tagNames, Board board) {
