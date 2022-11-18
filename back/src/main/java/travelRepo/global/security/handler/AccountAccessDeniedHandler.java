@@ -1,6 +1,7 @@
 package travelRepo.global.security.handler;
 
 import com.google.gson.Gson;
+import travelRepo.global.exception.ExceptionCode;
 import travelRepo.global.exception.dto.ErrorResponse;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
@@ -16,8 +17,9 @@ public class AccountAccessDeniedHandler implements AccessDeniedHandler {
     public void handle(HttpServletRequest request, HttpServletResponse response,
                        AccessDeniedException accessDeniedException) throws IOException, ServletException {
 
+        ExceptionCode forbidden = ExceptionCode.FORBIDDEN;
         ErrorResponse accessException =
-                new ErrorResponse("Forbidden", "접근권한이 없습니다.");
+                new ErrorResponse("Forbidden", forbidden.getMessage(), forbidden.getCode());
 
         String authenticationExJson = new Gson().toJson(accessException);
         response.setStatus(HttpServletResponse.SC_FORBIDDEN);

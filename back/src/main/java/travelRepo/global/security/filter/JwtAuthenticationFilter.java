@@ -8,6 +8,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import travelRepo.global.exception.ExceptionCode;
 import travelRepo.global.exception.dto.ErrorResponse;
 import travelRepo.global.security.authentication.UserAccount;
 import travelRepo.global.security.dto.LoginDto;
@@ -62,8 +63,9 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
                                               AuthenticationException failed) throws IOException, ServletException {
 
+        ExceptionCode failAuthentication = ExceptionCode.FAIL_AUTHENTICATION;
         ErrorResponse authException =
-                new ErrorResponse("FailToAuthentication", "인증에 실패했습니다.");
+                new ErrorResponse("FailToAuthentication", failAuthentication.getMessage(), failAuthentication.getCode());
 
         String authExceptionJson = new Gson().toJson(authException);
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
