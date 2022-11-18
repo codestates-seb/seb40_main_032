@@ -58,7 +58,7 @@ const LoginModalStyle = styled.div`
   }
 `;
 
-function LoginModal({ modalCloser }) {
+function LoginModal({ modalCloser, loginNotify }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [signupModalOpened, setSignupModalOpened] = useState(false);
@@ -88,6 +88,7 @@ function LoginModal({ modalCloser }) {
       // unwrap()을 해줘야만 비동기 처리가 제대로 작동함.
       await dispatch(loginAsync(data)).unwrap();
       setIsValidate(true);
+      loginNotify();
       modalCloser();
     } catch (err) {
       console.log(err.response.data.code);
