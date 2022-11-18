@@ -8,6 +8,11 @@ const reducer = {
 
 const store = configureStore({
   reducer,
+  // 직렬화 오류를 무시하기 위한 미들웨어
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
   devTools: true,
 });
 
