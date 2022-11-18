@@ -17,10 +17,10 @@ const LikeImg = styled(AiFillHeart)`
   color: ${props => (props.color ? props.color : `#FFFFFF`)};
   stroke: ${props => (props.color ? '' : `var(--font-tag-color)`)};
   stroke-width: 60px;
-  margin-right: ${props => props.marginRight};
+  margin-right: ${props => props.marginright};
 `;
 
-function Like({ width, height, color, ment, size, marginRight }) {
+function Like({ width, height, color, ment, size, marginright }) {
   return (
     <LikeWrapper className="like" size={size} color={color}>
       <LikeImg
@@ -29,7 +29,7 @@ function Like({ width, height, color, ment, size, marginRight }) {
         width={width}
         height={height}
         color={color}
-        marginRight={marginRight}
+        marginright={marginright}
       />
       <p className="like__ment">{ment}</p>
     </LikeWrapper>
