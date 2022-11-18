@@ -40,7 +40,8 @@ public class AccountService {
     @Transactional
     public IdDto addAccount(AccountAddReq accountAddReq) {
 
-        verifyDuplicateEmail(accountAddReq);
+        verifyDuplicateEmail(accountAddReq.getEmail());
+        verifyDuplicateEmail(accountAddReq.getNickname());
 
         String encodePassword = bCryptPasswordEncoder.encode(accountAddReq.getPassword());
         String profile = uploadService.upload(accountAddReq.getProfile());
@@ -54,11 +55,17 @@ public class AccountService {
     @Transactional
     public IdDto modifyAccount(Long loginAccountId, AccountModifyReq accountModifyReq) {
 
+        verifyDuplicateNickname(accountModifyReq.getNickname());
+
         Account account = accountRepository.findById(loginAccountId)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_ACCOUNT));
 
         String profile = uploadService.upload(accountModifyReq.getProfile());
-        Account modifyAccount = accountModifyReq.toAccount(profile);
+        String encodePassword = null;
+        if (accountModifyReq.getPassword() != null) {
+            encodePassword = bCryptPasswordEncoder.encode(accountModifyReq.getPassword());
+        }
+        Account modifyAccount = accountModifyReq.toAccount(profile, encodePassword);
         account.modify(modifyAccount);
 
         return new IdDto(account.getId());
@@ -111,10 +118,21 @@ public class AccountService {
         });
     }
 
-    private void verifyDuplicateEmail(AccountAddReq accountAddReq) {
+    private void verifyDuplicateEmail(String email) {
 
-        if (accountRepository.existsByEmail(accountAddReq.getEmail())) {
-            throw new BusinessLogicException(ExceptionCode.DUPLICATION_EMAIL);
+        if (email != null) {
+            if (accountRepository.existsByEmail(email)) {
+                throw new BusinessLogicException(ExceptionCode.DUPLICATION_EMAIL);
+            }
+        }
+    }
+
+    private void verifyDuplicateNickname(String nickname) {
+
+        if (nickname != null) {
+            if (accountRepository.existsByNickname(nickname)) {
+                throw new BusinessLogicException(ExceptionCode.DUPLICATION_NICKNAME);
+            }
         }
     }
 }

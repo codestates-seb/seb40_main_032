@@ -14,6 +14,8 @@ public interface AccountRepository extends JpaRepository<Account, Long>, Account
 
     boolean existsByEmail(String email);
 
+    boolean existsByNickname(String nickname);
+
     @Query("select follow.following from Follow follow " +
             "where follow.follower.id = :accountId")
     List<Account> findByFollowing(@Param("accountId") Long accountId);
