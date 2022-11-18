@@ -3,7 +3,9 @@ import { useState } from 'react';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { RiArrowDownSFill } from 'react-icons/ri';
 import { BiUserCircle } from 'react-icons/bi';
+import { useSelector } from 'react-redux';
 import { DefaultButton } from '../button/ButtonStyle';
+import LoginModal from '../modal/LoginModal';
 
 const HeaderUserWrapper = styled.nav`
   width: 100%;
@@ -59,41 +61,49 @@ const HeaderUserWrapper = styled.nav`
 
 function HeaderUser() {
   const [rorate, setRorate] = useState('');
-  const [isLogin, setIsLogin] = useState(false);
+  const [loginModalOpened, setLoginModalOpened] = useState(false);
+  const isLogin = useSelector(state => state.login.isLogin);
 
-  const loginHandler = () => {
-    setIsLogin(true);
+  const loginModalOpener = () => {
+    setLoginModalOpened(true);
+  };
+
+  const loginModalCloser = () => {
+    setLoginModalOpened(false);
   };
 
   return (
-    <HeaderUserWrapper>
-      <button className="header__write">게시물 작성</button>
-      <div
-        className={`header__box ${isLogin ? `header__box${rorate}` : ''}`}
-        role="button"
-        tabIndex={0}
-        onClick={() => setRorate(prev => (prev !== '' ? '' : '--rorate'))}
-        onKeyDown={() => setRorate(prev => (prev !== '' ? '' : '--rorate'))}
-      >
-        {!isLogin ? (
-          <DefaultButton
-            onClick={() => loginHandler()}
-            fontSize="2rem"
-            width="10rem"
-            height="5rem"
-            fontWeight="700"
-          >
-            로그인
-          </DefaultButton>
-        ) : (
-          <>
-            <BiUserCircle size="4.3rem" />
-            <RiArrowDownSFill size="2.5rem" color="hsl(146, 50%, 50%)" />
-          </>
-        )}
-      </div>
-      <GiHamburgerMenu className="header__burger" size="3.4rem" />
-    </HeaderUserWrapper>
+    <>
+      {loginModalOpened && <LoginModal modalCloser={loginModalCloser} />}
+      <HeaderUserWrapper>
+        <button className="header__write">게시물 작성</button>
+        <div
+          className={`header__box ${isLogin ? `header__box${rorate}` : ''}`}
+          role="button"
+          tabIndex={0}
+          onClick={() => setRorate(prev => (prev !== '' ? '' : '--rorate'))}
+          onKeyDown={() => setRorate(prev => (prev !== '' ? '' : '--rorate'))}
+        >
+          {!isLogin ? (
+            <DefaultButton
+              onClick={loginModalOpener}
+              fontSize="2rem"
+              width="10rem"
+              height="5rem"
+              fontWeight="700"
+            >
+              로그인
+            </DefaultButton>
+          ) : (
+            <>
+              <BiUserCircle size="4.3rem" />
+              <RiArrowDownSFill size="2.5rem" color="hsl(146, 50%, 50%)" />
+            </>
+          )}
+        </div>
+        <GiHamburgerMenu className="header__burger" size="3.4rem" />
+      </HeaderUserWrapper>
+    </>
   );
 }
 
