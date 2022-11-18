@@ -36,7 +36,7 @@ const QuestionIcon = styled(AiFillQuestionCircle)`
   font-size: 5rem;
 `;
 
-function YesNoModal({ modalMessage, modalCloser }) {
+function YesNoModal({ modalMessage, modalActioner, modalCloser }) {
   return (
     <Backdrop onClick={modalCloser}>
       <ModalCard
@@ -55,7 +55,7 @@ function YesNoModal({ modalMessage, modalCloser }) {
               width="45%"
               height="4rem"
               fontSize="1.7rem"
-              onClick={modalCloser}
+              onClick={modalActioner}
             >
               예
             </DefaultButton>
