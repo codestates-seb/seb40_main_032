@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { useDispatch, useSelector } from 'react-redux';
 import ModalCard from './ModalCard';
 import Backdrop from './Backdrop';
 import { DefaultButton, TransparentButton } from '../button/ButtonStyle';
 import SignupModal from './SignupModal';
+import loginAsync from '../../../redux/action/loginAsync';
 
 const LoginModalStyle = styled.div`
   display: flex;
@@ -60,6 +62,8 @@ function LoginModal({ modalCloser }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [signupModalOpened, setSignupModalOpened] = useState(false);
+  const dispatch = useDispatch();
+  const isLogin = useSelector(state => state.login.isLogin);
 
   // 인풋값 상태 저장 함수
   const onChangeEmail = e => {
@@ -77,10 +81,17 @@ function LoginModal({ modalCloser }) {
     setSignupModalOpened(false);
   };
 
-  // 추후 로그인 axios를 onSubmitHandler 함수에 작성할 것.
+  // 로그인 요청
+  function login() {
+    const data = { email, password };
+    dispatch(loginAsync(data));
+  }
+  console.log(isLogin);
+
   // 로그인 유효성 검사는 백엔드에서 받는 응답에 따라 나타나게 할 것.
   const onSubmitHandler = e => {
     e.preventDefault();
+    login();
     modalCloser();
   };
 
