@@ -1,12 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import loginApi from '../../api/loginApi';
 
-const loginAsync = createAsyncThunk(
-  'login/loginAsync',
-  async ({ url, data }) => {
-    const loginData = loginApi(url, data);
+const loginAsync = createAsyncThunk('login/loginAsync', async data => {
+  const loginData = await loginApi(data);
 
-    return loginData;
-  },
-);
+  return loginData;
+});
+
 export default loginAsync;
