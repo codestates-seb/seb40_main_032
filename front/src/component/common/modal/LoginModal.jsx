@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import ModalCard from './ModalCard';
 import Backdrop from './Backdrop';
 import { DefaultButton, TransparentButton } from '../button/ButtonStyle';
@@ -62,8 +62,8 @@ function LoginModal({ modalCloser }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [signupModalOpened, setSignupModalOpened] = useState(false);
+  const [isValidate, setIsValidate] = useState(true);
   const dispatch = useDispatch();
-  const isLogin = useSelector(state => state.login.isLogin);
 
   // 인풋값 상태 저장 함수
   const onChangeEmail = e => {
@@ -81,18 +81,27 @@ function LoginModal({ modalCloser }) {
     setSignupModalOpened(false);
   };
 
-  // 로그인 요청
-  function login() {
+  // 로그인 요청, 모달은 로그인 요청이 성공했을 때에만 닫힘.
+  async function login() {
     const data = { email, password };
-    dispatch(loginAsync(data));
+    try {
+      // unwrap()을 해줘야만 비동기 처리가 제대로 작동함.
+      await dispatch(loginAsync(data)).unwrap();
+      setIsValidate(true);
+      modalCloser();
+    } catch (err) {
+      console.log(err.response.data.code);
+      // 유효성 검사
+      if (err.response.data.code) {
+        setIsValidate(false);
+      }
+    }
   }
-  console.log(isLogin);
 
-  // 로그인 유효성 검사는 백엔드에서 받는 응답에 따라 나타나게 할 것.
+  // submit 버튼 클릭시 작동 함수
   const onSubmitHandler = e => {
     e.preventDefault();
     login();
-    modalCloser();
   };
 
   return (
@@ -125,6 +134,11 @@ function LoginModal({ modalCloser }) {
                 onChange={onChangePassword}
                 value={password}
               />
+              {!isValidate && (
+                <div className="input__validation">
+                  아이디 혹은 비밀번호가 잘못되었습니다.
+                </div>
+              )}
               <DefaultButton
                 width="100%"
                 height="4rem"
