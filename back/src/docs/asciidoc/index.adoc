@@ -22,7 +22,7 @@ include::{snippets}/login/request-fields.adoc[]
 .http-response
 include::{snippets}/login/http-response.adoc[]
 
-.http-response
+response-headers
 include::{snippets}/login/response-headers.adoc[]
 
 === 회원 생성
@@ -132,6 +132,19 @@ include::{snippets}/followAccountDetails/http-response.adoc[]
 
 .response-fields
 include::{snippets}/followAccountDetails/response-fields.adoc[]
+
+=== 임시 비밀번호 안내 메일 발송
+.curl-request
+include::{snippets}/tempPasswordGuideSend/curl-request.adoc[]
+
+.http-request
+include::{snippets}/tempPasswordGuideSend/http-request.adoc[]
+
+.request-fields
+include::{snippets}/tempPasswordGuideSend/request-fields.adoc[]
+
+.http-response
+include::{snippets}/tempPasswordGuideSend/http-response.adoc[]
 
 ***
 == BoardController

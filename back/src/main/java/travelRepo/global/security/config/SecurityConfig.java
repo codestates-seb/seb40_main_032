@@ -51,7 +51,7 @@ public class SecurityConfig {
                 .mvcMatchers(HttpMethod.GET, "/boards/**").permitAll()
                 .mvcMatchers(HttpMethod.GET, "/comments/**").permitAll()
                 .mvcMatchers(HttpMethod.GET, "/file/**").permitAll()
-                .mvcMatchers(HttpMethod.POST, "/accounts/tempPasswordGuide").permitAll()
+                .mvcMatchers(HttpMethod.POST, "/accounts/tempPassword/**").permitAll()
                 .mvcMatchers(HttpMethod.POST, "/accounts").permitAll()
                 .anyRequest().authenticated();
 

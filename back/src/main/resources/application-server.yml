@@ -19,11 +19,6 @@ spring:
           starttls:
             enable: true
 
-decorator:
-  datasource:
-    p6spy:
-      enable-logging: true
-
 jwt:
   secret-key: ${JWT_SECRET_KEY}
   expiration: ${JWT_EXPIRATION}

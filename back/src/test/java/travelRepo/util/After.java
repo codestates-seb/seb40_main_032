@@ -17,6 +17,9 @@ public class After {
         }
 
         for (File file : files) {
+            if (file.getName().equals(".gitkeep")) {
+                continue;
+            }
             file.delete();
         }
     }
