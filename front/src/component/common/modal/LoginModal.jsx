@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import loginApi from '../../../api/loginApi';
-import { setCookie } from '../../../util/cookie';
+import { useDispatch, useSelector } from 'react-redux';
 import ModalCard from './ModalCard';
 import Backdrop from './Backdrop';
 import { DefaultButton, TransparentButton } from '../button/ButtonStyle';
 import SignupModal from './SignupModal';
+import loginAsync from '../../../redux/action/loginAsync';
 
 const LoginModalStyle = styled.div`
   display: flex;
@@ -62,6 +62,8 @@ function LoginModal({ modalCloser }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [signupModalOpened, setSignupModalOpened] = useState(false);
+  const dispatch = useDispatch();
+  const isLogin = useSelector(state => state.login.isLogin);
 
   // 인풋값 상태 저장 함수
   const onChangeEmail = e => {
@@ -80,24 +82,11 @@ function LoginModal({ modalCloser }) {
   };
 
   // 로그인 요청
-  async function login() {
-    try {
-      const res = await loginApi({ email, password });
-      console.log(res);
-      console.log(res.headers.authorization);
-      // 쿠키의 domain 옵션은 로컬호스트나 ip주소같은 url에선 작동하지 않음.
-      // chrome 정책에 의해 .com과 같은 일반적인 도메인 주소에서만 사용 가능.
-      // httpOnly 옵션을 설정할 경우 클라이언트측에서 쿠키를 저장, 사용할 수 없음.
-      // sameSite 옵션은 서버와 클라이언트의 주소가 다르므로 None으로 설정했음.
-      setCookie('accessToken', res.headers.authorization, {
-        path: '/',
-        sameSite: 'None',
-        secure: 'false',
-      });
-    } catch (err) {
-      console.log(err);
-    }
+  function login() {
+    const data = { email, password };
+    dispatch(loginAsync(data));
   }
+  console.log(isLogin);
 
   // 로그인 유효성 검사는 백엔드에서 받는 응답에 따라 나타나게 할 것.
   const onSubmitHandler = e => {
