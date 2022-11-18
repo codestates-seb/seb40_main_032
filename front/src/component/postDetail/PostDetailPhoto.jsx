@@ -3,9 +3,9 @@ import styled from 'styled-components';
 import PostMockData from './PostMockData';
 
 const Container = styled.div`
-  width: 42vw;
+  width: 100%;
   height: 70vh;
-  object-fit: cover;
+  flex: 2;
   @media screen and (max-width: 549px) {
     width: 88vw;
     height: 32rem;
