@@ -4,6 +4,7 @@ import PostMockData from './PostMockData';
 import Like from '../common/like/Like';
 
 const Container = styled.div`
+  flex: 1;
   color: var(--font-base-black);
   display: flex;
   flex-direction: column;
@@ -14,7 +15,6 @@ const Container = styled.div`
   border: 1px solid var(--holder-base-color);
   font-size: var(--font-15);
   .post__category {
-    height: 2%;
     color: var(--font-base-grey);
   }
   @media screen and (max-width: 549px) {
@@ -198,7 +198,7 @@ function PostDetailArticle() {
                 color="var(--font-tag-color)"
                 size="1.5rem"
                 ment={mockData.likeCount}
-                marginRight="2px"
+                marginright="2px"
                 className="footer__likes"
               />
             </div>
