@@ -1,6 +1,7 @@
 package travelRepo.global.security.handler;
 
 import com.google.gson.Gson;
+import travelRepo.global.exception.ExceptionCode;
 import travelRepo.global.exception.dto.ErrorResponse;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
@@ -16,8 +17,9 @@ public class AccountAuthenticationEntryPoint implements AuthenticationEntryPoint
     public void commence(HttpServletRequest request, HttpServletResponse response,
                          AuthenticationException authException) throws IOException, ServletException {
 
+        ExceptionCode unAuthentication = ExceptionCode.UN_AUTHENTICATION;
         ErrorResponse unAuthException =
-                new ErrorResponse("UnAuthentication", "인증되지 않았습니다.");
+                new ErrorResponse("UnAuthentication", unAuthentication.getMessage(), unAuthentication.getCode());
 
         String authenticationExJson = new Gson().toJson(unAuthException);
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
