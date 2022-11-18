@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import loginApi from '../../../api/loginApi';
+import { setCookie } from '../../../util/cookie';
 import ModalCard from './ModalCard';
 import Backdrop from './Backdrop';
 import { DefaultButton, TransparentButton } from '../button/ButtonStyle';
@@ -83,11 +84,21 @@ function LoginModal({ modalCloser }) {
     try {
       const res = await loginApi({ email, password });
       console.log(res);
+      console.log(res.headers.authorization);
+      // 쿠키의 domain 옵션은 로컬호스트나 ip주소같은 url에선 작동하지 않음.
+      // chrome 정책에 의해 .com과 같은 일반적인 도메인 주소에서만 사용 가능.
+      // httpOnly 옵션을 설정할 경우 클라이언트측에서 쿠키를 저장, 사용할 수 없음.
+      // sameSite 옵션은 서버와 클라이언트의 주소가 다르므로 None으로 설정했음.
+      setCookie('accessToken', res.headers.authorization, {
+        path: '/',
+        sameSite: 'None',
+        secure: 'false',
+      });
     } catch (err) {
       console.log(err);
     }
   }
-  // 추후 로그인 axios를 onSubmitHandler 함수에 작성할 것.
+
   // 로그인 유효성 검사는 백엔드에서 받는 응답에 따라 나타나게 할 것.
   const onSubmitHandler = e => {
     e.preventDefault();
