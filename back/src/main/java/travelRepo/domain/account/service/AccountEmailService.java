@@ -1,6 +1,7 @@
 package travelRepo.domain.account.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.TemplateEngine;
@@ -21,6 +22,7 @@ public class AccountEmailService {
     private final AccountRepository accountRepository;
     private final EmailService emailService;
     private final TemplateEngine templateEngine;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Transactional
     public void sendTempPasswordGuide(TempPasswordGuideSendReq tempPasswordGuideSendReq) {
@@ -35,7 +37,8 @@ public class AccountEmailService {
         account.createTempPassword();
 
         Context context = new Context();
-        context.setVariable("link", "/accounts/tempPassword/" + account.getTempPassword());
+        context.setVariable("link", "/accounts/tempPassword/" + account.getId() +
+                "?tempPassword=" + account.getTempPassword());
         context.setVariable("nickname", account.getNickname());
         context.setVariable("linkName", "임시 비밀번호 발급");
         context.setVariable("message", "임시 비밀번호로 변경하려면 링크를 클릭하세요");
@@ -52,6 +55,24 @@ public class AccountEmailService {
 
         emailService.sendEmail(emailMessageDto);
         account.setTempPasswordEmailSendAt();
+    }
+
+    @Transactional
+    public void applyTempPassword(Long accountId, String tempPassword) {
+
+        Account account = accountRepository.findById(accountId)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_ACCOUNT));
+
+        if (!account.canApplyTempPassword()) {
+            throw new BusinessLogicException(ExceptionCode.TEMP_PASSWORD_DELAY);
+        }
+
+        if (!account.verifyTempPassword(tempPassword)) {
+            throw new BusinessLogicException(ExceptionCode.IlLEGAL_PARAMETER);
+        }
+
+        String encodeTempPassword = bCryptPasswordEncoder.encode(tempPassword);
+        account.applyTempPassword(encodeTempPassword);
     }
 
 }
