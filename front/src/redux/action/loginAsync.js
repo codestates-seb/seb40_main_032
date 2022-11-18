@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import loginApi from '../api/loginApi';
+import loginApi from '../../api/loginApi';
 
 const loginAsync = createAsyncThunk(
   'login/loginAsync',

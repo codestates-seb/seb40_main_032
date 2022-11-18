@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import loginAsync from '../action/loginAsync';
+import loginAsync from './action/loginAsync';
 import { getCookie } from '../util/cookie';
 
 const accessToken = getCookie('accessToken');
