@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { RiArrowDownSFill } from 'react-icons/ri';
 import { BiUserCircle } from 'react-icons/bi';
+import { useSelector } from 'react-redux';
 import { DefaultButton } from '../button/ButtonStyle';
 
 const HeaderUserWrapper = styled.nav`
@@ -57,13 +58,9 @@ const HeaderUserWrapper = styled.nav`
   }
 `;
 
-function HeaderUser() {
+function HeaderUser({ loginModalOpener }) {
   const [rorate, setRorate] = useState('');
-  const [isLogin, setIsLogin] = useState(false);
-
-  const loginHandler = () => {
-    setIsLogin(true);
-  };
+  const isLogin = useSelector(state => state.login.isLogin);
 
   return (
     <HeaderUserWrapper>
@@ -77,7 +74,7 @@ function HeaderUser() {
       >
         {!isLogin ? (
           <DefaultButton
-            onClick={() => loginHandler()}
+            onClick={loginModalOpener}
             fontSize="2rem"
             width="10rem"
             height="5rem"
