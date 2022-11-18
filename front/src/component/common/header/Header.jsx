@@ -19,6 +19,8 @@ const HeaderWrapper = styled.header`
     height: 100%;
     padding-inline-start: 10rem;
     padding-inline-end: 10rem;
+    max-width: 172rem;
+    margin: 0 auto;
   }
 
   .header__logo {
