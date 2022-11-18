@@ -18,9 +18,7 @@ const loginSlice = createSlice({
     },
   },
   extraReducers: {
-    [loginAsync.pending]: (state, action) => {
-      console.log(state, action);
-    },
+    [loginAsync.pending]: () => {},
     [loginAsync.fulfilled]: (state, action) => {
       state.isLogin = true;
       // state.accessToken = action.payload.headers.authorization;
@@ -33,11 +31,8 @@ const loginSlice = createSlice({
         sameSite: 'None',
         secure: 'false',
       });
-      console.log(state, action);
     },
-    [loginAsync.rejected]: (state, action) => {
-      console.log(state, action);
-    },
+    [loginAsync.rejected]: () => {},
   },
 });
 
