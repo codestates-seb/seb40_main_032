@@ -144,7 +144,7 @@ class AccountControllerTest extends After {
     }
 
     @Test
-    @DisplayName("회원 생성_중복 이메일")
+    @DisplayName("회원 생성_이메일 중복")
     public void accountAdd_DuplicateEmail() throws Exception {
 
         //given
@@ -364,6 +364,38 @@ class AccountControllerTest extends After {
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.exception").value(BindException.class.getSimpleName()))
                 .andExpect(jsonPath("$.message").value("잘못된 입력값입니다."));
+    }
+
+    @Test
+    @DisplayName("회원 수정_닉네임 중복")
+    public void accountModify_DuplicateNickname() throws Exception {
+
+        //given
+        Long accountId = 10001L;
+        Account account = accountRepository.findById(accountId).get();
+        String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
+
+        String password = "123456789";
+        String nickname = "testNickname1";
+        String intro = "modifyTestIntro";
+        MockMultipartFile profile = new MockMultipartFile("profile", "profile.jpeg", "image/jpeg",
+                "(file data)".getBytes());
+
+        //when
+        ResultActions actions = mockMvc.perform(
+                multipart("/accounts/modify")
+                        .file(profile)
+                        .header("Authorization", jwt)
+                        .param("password", password)
+                        .param("nickname", nickname)
+                        .param("intro", intro)
+        );
+
+        //then
+        actions
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.exception").value(BusinessLogicException.class.getSimpleName()))
+                .andExpect(jsonPath("$.message").value(ExceptionCode.DUPLICATION_NICKNAME.getMessage()));
     }
 
     @Test

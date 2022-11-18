@@ -38,7 +38,7 @@ public class Account extends BaseTime {
 
     private String tempPassword;
 
-    private LocalDateTime tempPasswordGeneratedAt;
+    private LocalDateTime tempPasswordAppliedAt;
 
     private LocalDateTime tempPasswordEmailSendAt;
 
@@ -66,13 +66,24 @@ public class Account extends BaseTime {
         this.tempPasswordEmailSendAt = LocalDateTime.now();
     }
 
-    public boolean canSendTempPassword() {
+    public boolean verifyTempPassword(String tempPassword) {
+        return this.tempPassword.equals(tempPassword);
+    }
 
-        if (this.tempPasswordGeneratedAt == null) {
+    public void applyTempPassword(String tempPassword) {
+
+        this.password = tempPassword;
+        this.tempPasswordAppliedAt = LocalDateTime.now();
+        this.tempPassword = null;
+    }
+
+    public boolean canApplyTempPassword() {
+
+        if (this.tempPasswordAppliedAt == null) {
             return true;
         }
 
-        return this.tempPasswordGeneratedAt.isBefore(LocalDateTime.now().minusHours(1));
+        return this.tempPasswordAppliedAt.isBefore(LocalDateTime.now().minusHours(1));
     }
 
     public boolean canSendTempPasswordGuide() {
