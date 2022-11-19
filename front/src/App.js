@@ -1,7 +1,9 @@
 import './App.css';
-import React, { useState, Suspense } from 'react';
+import React, { Suspense } from 'react';
 import { Route, Routes, BrowserRouter as Router } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
+import { loginModalActions } from './redux/loginModalSlice';
 import Loading from './component/common/Loading';
 import Header from './component/common/header/Header';
 import LoginModal from './component/common/modal/LoginModal';
@@ -12,14 +14,17 @@ const PublishPage = React.lazy(() => import('./pages/PublishPage'));
 const PostDetailPage = React.lazy(() => import('./pages/PostDetailPage'));
 
 function App() {
-  const [loginModalOpened, setLoginModalOpened] = useState(false);
+  const dispatch = useDispatch();
+  const loginModalOpened = useSelector(
+    state => state.loginModal.loginModalOpened,
+  );
 
   // 로그인 모달 여닫는 함수
   const loginModalOpener = () => {
-    setLoginModalOpened(true);
+    dispatch(loginModalActions.openLoginModal());
   };
   const loginModalCloser = () => {
-    setLoginModalOpened(false);
+    dispatch(loginModalActions.closeLoginModal());
   };
 
   // 로그인 성공 시, toastify 함수
