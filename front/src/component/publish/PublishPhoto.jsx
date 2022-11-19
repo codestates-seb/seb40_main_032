@@ -46,6 +46,19 @@ const Container = styled.section`
     border: 2px dashed var(--holder-base-color);
     border-radius: 10px;
   }
+
+  @media screen and (max-width: 549px) {
+    width: 100%;
+    justify-content: space-between;
+    .uploader__default,
+    .upload__button--wrapper {
+      width: 10rem;
+      height: 10rem;
+    }
+    .uploader__preview {
+      margin-right: 0;
+    }
+  }
 `;
 
 const CameraIcon = styled(BsCamera)`
