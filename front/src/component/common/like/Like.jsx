@@ -18,6 +18,7 @@ const LikeImg = styled(AiFillHeart)`
   stroke: ${props => (props.color ? '' : `var(--font-tag-color)`)};
   stroke-width: 60px;
   margin-right: ${props => props.marginright};
+  cursor: pointer;
 `;
 
 function Like({ width, height, color, ment, size, marginright }) {
