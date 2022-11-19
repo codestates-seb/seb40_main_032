@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { BsCamera } from 'react-icons/bs';
+import { AiOutlineDelete } from 'react-icons/ai';
 
 const Container = styled.section`
   display: flex;
@@ -79,6 +80,11 @@ function PublishPhoto() {
     setPhotos(uploaded);
   };
 
+  // 미리보기 사진 삭제
+  const deletePhotos = async () => {
+    setPhotos([]);
+  };
+
   // 메모리 누수 방지
   useEffect(() => {
     return () => {
@@ -120,6 +126,7 @@ function PublishPhoto() {
         <span className="footer">
           업로드 가능한 파일 포맷은 jpg, jpeg, png입니다.
         </span>
+        <AiOutlineDelete className="delete__button" onClick={deletePhotos} />
       </div>
     </Container>
   );
