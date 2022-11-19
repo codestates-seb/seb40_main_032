@@ -5,7 +5,7 @@ import ModalCard from './ModalCard';
 import Backdrop from './Backdrop';
 import { DefaultButton } from '../button/ButtonStyle';
 import ConfirmModal from './ConfirmModal';
-import defaultUserImg from '../../../assets/defaultUserImg.jpeg';
+import defaultUserImgArr from '../../../assets/defaultUserImg';
 
 const SignupModalStyle = styled.div`
   display: flex;
@@ -70,6 +70,9 @@ function SignupModal({ onSignupModalCloser }) {
     setPassword(e.target.value);
   };
 
+  // 랜덤 숫자 생성 함수 - 랜덤이미지 선택에 사용
+  const ramdomNumber = Math.floor(Math.random() * 10);
+
   // 이미지 포멧
   const dataURLtoFile = (dataurl, fileName) => {
     const arr = dataurl.split(',');
@@ -86,8 +89,8 @@ function SignupModal({ onSignupModalCloser }) {
     return new File([u8arr], fileName, { type: mime });
   };
   const getImage = async () => {
-    const b64data = defaultUserImg;
-    const imagefile = dataURLtoFile(b64data, 'profileImage.jpeg');
+    const b64data = defaultUserImgArr[ramdomNumber];
+    const imagefile = dataURLtoFile(b64data, 'profileImage.png');
     return imagefile;
   };
 
