@@ -19,7 +19,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/images")
+@RequestMapping("/image-files")
 public class ImageController {
 
     @Value("${dir}")
