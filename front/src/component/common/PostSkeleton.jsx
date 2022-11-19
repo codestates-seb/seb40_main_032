@@ -9,6 +9,7 @@ const SkeletonWrapper = styled.div`
   padding: 4rem 1.2rem 0;
 
   .skeleton__container {
+    width: 100%;
     display: flex;
     flex-direction: column;
   }
