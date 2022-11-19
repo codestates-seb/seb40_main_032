@@ -88,7 +88,7 @@ function MainContents() {
     if (target.current && extraPage) {
       io.observe(target.current);
     }
-    return () => io.unobserve(target.current);
+    return () => io.disconnect();
   }, [extraPage]);
 
   return (
