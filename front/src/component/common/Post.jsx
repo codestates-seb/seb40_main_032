@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import uuid from 'react-uuid';
 import { GoHeart } from 'react-icons/go';
+import { Link } from 'react-router-dom';
 
 const PostWrapper = styled.div`
   display: flex;
@@ -139,12 +140,16 @@ function Post({ post }) {
       <div className="post__container">
         <div className="post__thumb">
           {/* post Image */}
-          <img className="post__img" src={post.thumbnail} alt="게시글" />
+          <Link to={`/postDetail/${post.boardId}`}>
+            <img className="post__img" src={post.thumbnail} alt="게시글" />
+          </Link>
         </div>
         <div className="post__card">
           <div className="post__tl">
             {/* title && like */}
-            <p className="post__title">{post.title}</p>
+            <p className="post__title">
+              <Link to={`/postDetail/${post.boardId}`}>{post.title}</Link>
+            </p>
             <p className="post__heart">
               <GoHeart className="heart__icon" />
               <span className="heart__count">{post.likeCount}</span>
