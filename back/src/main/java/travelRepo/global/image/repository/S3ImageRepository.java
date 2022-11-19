@@ -24,7 +24,7 @@ public class S3ImageRepository implements ImageRepository{
     @Override
     public String save(MultipartFile image, String path) throws IOException {
 
-        String s3Filename = createS3Filename(image);
+        String s3Filename = path + createS3Filename(image);
 
         ObjectMetadata objMeta = new ObjectMetadata();
         objMeta.setContentType(image.getContentType());
