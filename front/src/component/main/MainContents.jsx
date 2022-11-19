@@ -1,5 +1,4 @@
-import axios from 'axios';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import uuid from 'react-uuid';
 import Post from '../common/Post';
@@ -44,32 +43,8 @@ const MainContainer = styled.section`
   }
 `;
 
-function MainContents() {
-  const [posts, setPosts] = useState([]);
-  const [isPending, setIsPending] = useState(true);
-  const [extraPage, setExtraPage] = useState(true);
-  const page = useRef(1);
+function MainContents({ axiosData, isPending, extraPage, posts }) {
   const target = useRef(null);
-
-  const axiosData = useCallback(async quantity => {
-    try {
-      setIsPending(true);
-      const { data } = await axios(
-        `http://13.125.238.70:8080/boards?category=RESTAURANT&size=${quantity}&page=${page.current}`,
-      );
-      // console.log(data.content);
-      setPosts(prev => [...prev, ...data.content]);
-      setIsPending(false);
-      setExtraPage(data.hasNext);
-      // console.log(data.content.length);
-      if (data.content.length) {
-        page.current += 1;
-      }
-      // console.log(page);
-    } catch (err) {
-      console.log(err.message);
-    }
-  }, []);
 
   // isPending 상태 확인용
   useEffect(() => {
