@@ -55,18 +55,17 @@ function MainContents() {
     try {
       setIsPending(true);
       const { data } = await axios(
-        // `https://api.unsplash.com/photos/?client_id=GiKynm7A3qve_jpekSliuAsSg0sxXHBn3ebc6NNdAic&page=${page.current}&per_page=12`,
-        `http://localhost:3001/posts?_limit=${quantity}&_page=${page.current}`,
+        `http://13.125.238.70:8080/boards?category=RESTAURANT&size=${quantity}&page=${page.current}`,
       );
-      console.log(data);
-      setPosts(prev => [...prev, ...data]);
+      // console.log(data.content);
+      setPosts(prev => [...prev, ...data.content]);
       setIsPending(false);
-      setExtraPage(data.length === quantity);
-      console.log(data.length);
-      if (data.length) {
+      setExtraPage(data.hasNext);
+      // console.log(data.content.length);
+      if (data.content.length) {
         page.current += 1;
       }
-      console.log(page);
+      // console.log(page);
     } catch (err) {
       console.log(err.message);
     }

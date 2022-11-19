@@ -139,11 +139,7 @@ function Post({ post }) {
       <div className="post__container">
         <div className="post__thumb">
           {/* post Image */}
-          <img
-            className="post__img"
-            src="https://source.unsplash.com/random"
-            alt="게시글"
-          />
+          <img className="post__img" src={post.thumbnail} alt="게시글" />
         </div>
         <div className="post__card">
           <div className="post__tl">
@@ -151,34 +147,27 @@ function Post({ post }) {
             <p className="post__title">{post.title}</p>
             <p className="post__heart">
               <GoHeart className="heart__icon" />
-              <span className="heart__count">5</span>
+              <span className="heart__count">{post.likeCount}</span>
             </p>
           </div>
           <div className="post__tw">
             {/* tag && user */}
             <ul className="post__tags">
-              {/* tag.map(el => {
-            <li key={uuid()} className="post__tag">el</li>
-          }) */}
-              <li key={uuid()} className="post__tag">
-                #태그는6글자
-              </li>
-              <li key={uuid()} className="post__tag">
-                #이하로만가능
-              </li>
-              <li key={uuid()} className="post__tag">
-                #하도록해야지
-              </li>
+              {post.tags.map(tag => (
+                <li key={uuid()} className="post__tag">
+                  #{tag}
+                </li>
+              ))}
             </ul>
             <div className="post__info">
               <span className="post__avatar">
                 <img
                   className="post__user"
-                  src="https://source.unsplash.com/random/20x20/"
+                  src={post.account.profile}
                   alt="유저"
                 />
               </span>
-              <p className="post__writer">안녕나는유저야</p>
+              <p className="post__writer">{post.account.nickname}</p>
             </div>
           </div>
         </div>
