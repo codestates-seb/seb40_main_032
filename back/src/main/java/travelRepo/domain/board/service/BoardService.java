@@ -152,7 +152,7 @@ public class BoardService {
         List<BoardPhoto> boardPhotos = images.stream()
                 .map(image -> {
                     BoardPhoto boardPhoto = BoardPhoto.builder()
-                            .photo(imageService.upload(image, path))
+                            .photo(imageService.uploadImage(image, path))
                             .build();
                     return boardPhoto;
                 })

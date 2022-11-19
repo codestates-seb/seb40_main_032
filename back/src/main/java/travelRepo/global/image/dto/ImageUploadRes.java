@@ -9,4 +9,12 @@ import java.util.List;
 public class ImageUploadRes {
 
     List<String> imagePaths = new ArrayList<>();
+
+    public static ImageUploadRes of(List<String> imagePaths) {
+
+        ImageUploadRes imageUploadRes = new ImageUploadRes();
+        imageUploadRes.setImagePaths(imagePaths);
+
+        return imageUploadRes;
+    }
 }

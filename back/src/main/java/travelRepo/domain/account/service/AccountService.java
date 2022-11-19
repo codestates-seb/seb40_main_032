@@ -48,7 +48,7 @@ public class AccountService {
         verifyDuplicateNickname(accountAddReq.getNickname());
 
         String encodePassword = bCryptPasswordEncoder.encode(accountAddReq.getPassword());
-        String profile = imageService.upload(accountAddReq.getProfile(), path);
+        String profile = imageService.uploadImage(accountAddReq.getProfile(), path);
 
         Account account = accountAddReq.toAccount(encodePassword, profile);
         Account savedAccount = accountRepository.save(account);
@@ -64,7 +64,7 @@ public class AccountService {
         Account account = accountRepository.findById(loginAccountId)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_ACCOUNT));
 
-        String profile = imageService.upload(accountModifyReq.getProfile(), path);
+        String profile = imageService.uploadImage(accountModifyReq.getProfile(), path);
         String encodePassword = null;
         if (accountModifyReq.getPassword() != null) {
             encodePassword = bCryptPasswordEncoder.encode(accountModifyReq.getPassword());

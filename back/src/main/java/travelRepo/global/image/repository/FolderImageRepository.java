@@ -21,7 +21,7 @@ public class FolderImageRepository implements ImageRepository {
 
         image.transferTo(new File(fullPath));
 
-        return "http://localhost:8080/files/" + localFilename;
+        return "http://localhost:8080/images/" + localFilename;
     }
 
     private String createLocalFilename(MultipartFile image) {

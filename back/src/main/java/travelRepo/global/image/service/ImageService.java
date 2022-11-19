@@ -17,7 +17,7 @@ public class ImageService {
 
     private final ImageRepository imageRepository;
 
-    public String upload(MultipartFile image, String path) {
+    public String uploadImage(MultipartFile image, String path) {
 
         try {
             if (image == null || image.isEmpty()) {
@@ -29,10 +29,10 @@ public class ImageService {
         }
     }
 
-    public List<String> upload(List<MultipartFile> images, String path) {
+    public List<String> uploadImage(List<MultipartFile> images, String path) {
 
         return images.stream()
-                .map(image -> upload(image, path))
+                .map(image -> uploadImage(image, path))
                 .collect(Collectors.toList());
     }
 }
