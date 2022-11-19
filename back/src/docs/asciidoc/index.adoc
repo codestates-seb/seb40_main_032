@@ -407,3 +407,24 @@ include::{snippets}/likesCheck/http-response.adoc[]
 
 .response-fields
 include::{snippets}/likesCheck/response-fields.adoc[]
+
+***
+== ImageController
+=== 이미지 저장
+.curl-request
+include::{snippets}/imageUpload/curl-request.adoc[]
+
+.http-request
+include::{snippets}/imageUpload/http-request.adoc[]
+
+.request-headers
+include::{snippets}/imageUpload/request-headers.adoc[]
+
+.request-parts
+include::{snippets}/imageUpload/request-parts.adoc[]
+
+.http-response
+include::{snippets}/imageUpload/http-response.adoc[]
+
+.response-fields
+include::{snippets}/imageUpload/response-fields.adoc[]
