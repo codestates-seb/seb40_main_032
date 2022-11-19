@@ -11,7 +11,7 @@ import travelRepo.domain.board.entity.Board;
 
 import java.util.Optional;
 
-public interface BoardRepository extends JpaRepository<Board, Long> {
+public interface BoardRepository extends JpaRepository<Board, Long>, BoardRepositoryCustom {
 
     @EntityGraph(attributePaths = {"boardTags", "account"})
     @Query("select b from Board b")

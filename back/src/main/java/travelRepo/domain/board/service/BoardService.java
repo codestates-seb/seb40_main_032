@@ -117,7 +117,13 @@ public class BoardService {
 
     public SliceDto<BoardSummaryRes> findBoards(String query, Category category, Pageable pageable) {
 
-        Slice<Board> boards = boardRepository.findAllWithBoardTagsAndAccount(pageable);
+        if (query == null) {
+            query = "";
+        }
+
+        String[] queries = query.strip().split("\\s+");
+
+        Slice<Board> boards = boardRepository.findAllByQueries(queries, category, pageable);
 
         return new SliceDto(boards.map(BoardSummaryRes::of));
     }
