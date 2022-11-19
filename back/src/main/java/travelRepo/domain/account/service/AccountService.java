@@ -1,6 +1,7 @@
 package travelRepo.domain.account.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -18,7 +19,7 @@ import travelRepo.domain.likes.likesRepository.LikesRepository;
 import travelRepo.global.common.dto.IdDto;
 import travelRepo.global.exception.BusinessLogicException;
 import travelRepo.global.exception.ExceptionCode;
-import travelRepo.global.upload.service.UploadService;
+import travelRepo.global.image.service.ImageService;
 
 import java.util.List;
 
@@ -35,16 +36,19 @@ public class AccountService {
     private final BoardPhotoRepository boardPhotoRepository;
     private final LikesRepository likesRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
-    private final UploadService uploadService;
+    private final ImageService imageService;
+
+    @Value("${dir}")
+    private String path;
 
     @Transactional
     public IdDto addAccount(AccountAddReq accountAddReq) {
 
         verifyDuplicateEmail(accountAddReq.getEmail());
-        verifyDuplicateEmail(accountAddReq.getNickname());
+        verifyDuplicateNickname(accountAddReq.getNickname());
 
         String encodePassword = bCryptPasswordEncoder.encode(accountAddReq.getPassword());
-        String profile = uploadService.upload(accountAddReq.getProfile());
+        String profile = imageService.upload(accountAddReq.getProfile(), path);
 
         Account account = accountAddReq.toAccount(encodePassword, profile);
         Account savedAccount = accountRepository.save(account);
@@ -60,7 +64,7 @@ public class AccountService {
         Account account = accountRepository.findById(loginAccountId)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_ACCOUNT));
 
-        String profile = uploadService.upload(accountModifyReq.getProfile());
+        String profile = imageService.upload(accountModifyReq.getProfile(), path);
         String encodePassword = null;
         if (accountModifyReq.getPassword() != null) {
             encodePassword = bCryptPasswordEncoder.encode(accountModifyReq.getPassword());

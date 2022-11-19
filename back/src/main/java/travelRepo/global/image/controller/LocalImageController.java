@@ -1,4 +1,4 @@
-package travelRepo.global.upload.controller;
+package travelRepo.global.image.controller;
 
 
 import lombok.RequiredArgsConstructor;
@@ -18,12 +18,12 @@ import java.net.MalformedURLException;
 @RestController
 @RequiredArgsConstructor
 @ConditionalOnProperty(value = "mod", havingValue = "local")
-public class UploadController {
+public class LocalImageController {
 
     @Value("${dir}")
     private String dir;
 
-    @GetMapping("/file/{filename}")
+    @GetMapping("/files/{filename}")
     public ResponseEntity<Resource> fileDetails(@PathVariable String filename) throws MalformedURLException {
 
         UrlResource urlResource = new UrlResource("file:" + dir + filename);
@@ -32,4 +32,6 @@ public class UploadController {
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.IMAGE_PNG_VALUE)
                 .body(urlResource);
     }
+
+
 }
