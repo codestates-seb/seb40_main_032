@@ -3,7 +3,9 @@ import { useState } from 'react';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { RiArrowDownSFill } from 'react-icons/ri';
 import { BiUserCircle } from 'react-icons/bi';
+import { useSelector } from 'react-redux';
 import { DefaultButton } from '../button/ButtonStyle';
+import { removeCookie } from '../../../util/cookie';
 
 const HeaderUserWrapper = styled.nav`
   width: 100%;
@@ -57,12 +59,16 @@ const HeaderUserWrapper = styled.nav`
   }
 `;
 
-function HeaderUser() {
+function HeaderUser({ loginModalOpener }) {
   const [rorate, setRorate] = useState('');
-  const [isLogin, setIsLogin] = useState(false);
+  const isLogin = useSelector(state => state.login.isLogin);
 
-  const loginHandler = () => {
-    setIsLogin(true);
+  // 로그아웃 핸들러
+  const logoutHandler = () => {
+    removeCookie('accessToken');
+    localStorage.removeItem('id');
+    localStorage.removeItem('profile');
+    window.location.href = '/';
   };
 
   return (
@@ -77,7 +83,7 @@ function HeaderUser() {
       >
         {!isLogin ? (
           <DefaultButton
-            onClick={() => loginHandler()}
+            onClick={loginModalOpener}
             fontSize="2rem"
             width="10rem"
             height="5rem"
@@ -87,6 +93,8 @@ function HeaderUser() {
           </DefaultButton>
         ) : (
           <>
+            {/* 임시 로그아웃 버튼 */}
+            <button onClick={logoutHandler}>로그아웃</button>
             <BiUserCircle size="4.3rem" />
             <RiArrowDownSFill size="2.5rem" color="hsl(146, 50%, 50%)" />
           </>

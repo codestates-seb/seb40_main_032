@@ -18,10 +18,10 @@ public class AccountModifyReq {
 
     private MultipartFile profile;
 
-    public Account toAccount(String profile) {
+    public Account toAccount(String profile, String password) {
 
         return Account.builder()
-                .password(this.password)
+                .password(password)
                 .nickname(this.nickname)
                 .intro(this.intro)
                 .profile(profile)
