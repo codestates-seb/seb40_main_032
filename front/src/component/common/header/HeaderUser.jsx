@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { RiArrowDownSFill } from 'react-icons/ri';
 import { BiUserCircle } from 'react-icons/bi';
@@ -27,6 +27,10 @@ const HeaderUserWrapper = styled.nav`
     display: flex;
     align-items: center;
     cursor: pointer;
+    .profile__image {
+      width: 3.5rem;
+      border-radius: var(--radius-50);
+    }
     > :last-child {
       transition: transform 300ms;
       transform: rotate(360deg);
@@ -61,7 +65,15 @@ const HeaderUserWrapper = styled.nav`
 
 function HeaderUser({ loginModalOpener }) {
   const [rorate, setRorate] = useState('');
+  const [profileImg, setProfileImg] = useState('');
   const isLogin = useSelector(state => state.login.isLogin);
+
+  // 프로필 이미지 가져오기
+  useEffect(() => {
+    if (localStorage.getItem('profile')) {
+      setProfileImg(localStorage.getItem('profile'));
+    }
+  }, [profileImg]);
 
   // 로그아웃 핸들러
   const logoutHandler = () => {
@@ -95,7 +107,15 @@ function HeaderUser({ loginModalOpener }) {
           <>
             {/* 임시 로그아웃 버튼 */}
             <button onClick={logoutHandler}>로그아웃</button>
-            <BiUserCircle size="4.3rem" />
+            {profileImg ? (
+              <img
+                className="profile__image"
+                src={profileImg}
+                alt="프로필 이미지"
+              />
+            ) : (
+              <BiUserCircle size="4.3rem" />
+            )}
             <RiArrowDownSFill size="2.5rem" color="hsl(146, 50%, 50%)" />
           </>
         )}
