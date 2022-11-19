@@ -11,6 +11,7 @@ const PostWrapper = styled.div`
 
   .post__container {
     display: flex;
+    width: 100%;
     flex-direction: column;
     box-shadow: 0 0 6px rgba(0, 0, 0, 0.16);
     border-radius: var(--radius-10);
@@ -18,11 +19,18 @@ const PostWrapper = styled.div`
     background: #fff;
 
     .post__thumb {
-      flex: auto;
+      /* flex: auto; */
       overflow: hidden;
       cursor: pointer;
+      position: relative;
+      width: 100%;
+      height: 0;
+      padding-top: calc(313 / 425 * 100%);
 
       .post__img {
+        position: absolute;
+        top: 0;
+        left: 0;
         width: 100%;
         height: 100%;
         transition: all 300ms linear;
@@ -39,11 +47,12 @@ const PostWrapper = styled.div`
 
       .post__tl {
         display: flex;
+        justify-content: space-between;
         align-items: center;
         padding: 5px 0 1rem;
 
         .post__title {
-          flex-grow: 2;
+          /* flex-grow: 2; */
           text-align: left;
           font-weight: bold;
           font-size: 1.6rem;
@@ -124,7 +133,7 @@ const PostWrapper = styled.div`
   }
 `;
 // { image, title, like, tag, user }
-function Post() {
+function Post({ post }) {
   return (
     <PostWrapper className="post">
       <div className="post__container">
@@ -132,16 +141,14 @@ function Post() {
           {/* post Image */}
           <img
             className="post__img"
-            src="https://source.unsplash.com/random/425x300"
+            src="https://source.unsplash.com/random"
             alt="게시글"
           />
         </div>
         <div className="post__card">
           <div className="post__tl">
             {/* title && like */}
-            <p className="post__title">
-              안녕 나는 제목이야 안녕 나는 제목이야 안녕 나는 제목이야
-            </p>
+            <p className="post__title">{post.title}</p>
             <p className="post__heart">
               <GoHeart className="heart__icon" />
               <span className="heart__count">5</span>
