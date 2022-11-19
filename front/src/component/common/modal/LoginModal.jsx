@@ -6,6 +6,7 @@ import Backdrop from './Backdrop';
 import { DefaultButton, TransparentButton } from '../button/ButtonStyle';
 import SignupModal from './SignupModal';
 import loginAsync from '../../../redux/action/loginAsync';
+import loginUserApi from '../../../api/loginUserApi';
 
 const LoginModalStyle = styled.div`
   display: flex;
@@ -88,6 +89,7 @@ function LoginModal({ modalCloser, loginNotify }) {
       // unwrap()을 해줘야만 비동기 처리가 제대로 작동함.
       await dispatch(loginAsync(data)).unwrap();
       setIsValidate(true);
+      loginUserApi();
       loginNotify();
       modalCloser();
     } catch (err) {

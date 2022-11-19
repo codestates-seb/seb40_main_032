@@ -66,6 +66,8 @@ function HeaderUser({ loginModalOpener }) {
   // 로그아웃 핸들러
   const logoutHandler = () => {
     removeCookie('accessToken');
+    localStorage.removeItem('id');
+    localStorage.removeItem('profile');
     window.location.href = '/';
   };
 
