@@ -30,6 +30,9 @@ const Container = styled.main`
     .detail__body {
       flex-direction: column;
       align-items: center;
+      > div {
+        width: 100%;
+      }
     }
   }
 `;
