@@ -82,6 +82,7 @@ function PublishPhoto() {
 
   // 미리보기 사진 삭제
   const deletePhotos = async () => {
+    URL.revokeObjectURL(photos);
     setPhotos([]);
   };
 
