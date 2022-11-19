@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-// import axios from 'axios';
 import styled from 'styled-components';
 import signupPostApi from '../../../api/signupPostApi';
 import ModalCard from './ModalCard';
@@ -71,11 +70,32 @@ function SignupModal({ onSignupModalCloser }) {
     setPassword(e.target.value);
   };
 
+  // 이미지 포멧
+  const dataURLtoFile = (dataurl, fileName) => {
+    const arr = dataurl.split(',');
+    const mime = arr[0].match(/:(.*?);/)[1];
+    const bstr = atob(arr[1]);
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
+
+    while (n >= 0) {
+      u8arr[n] = bstr.charCodeAt(n);
+      n -= 1;
+    }
+
+    return new File([u8arr], fileName, { type: mime });
+  };
+  const getImage = async () => {
+    const b64data = defaultUserImg;
+    const imagefile = dataURLtoFile(b64data, 'profileImage.jpeg');
+    return imagefile;
+  };
+
   // 회원가입 axios 요청
   async function postSingup() {
     const formData = new FormData();
-    const blob = new Blob([defaultUserImg], { type: 'image/jpeg' });
-    formData.append('profile', blob, 'profile.jpeg');
+    const profileImg = await getImage();
+    formData.append('profile', profileImg);
     formData.append('email', email);
     formData.append('password', password);
     formData.append('nickname', nickname);
@@ -92,28 +112,10 @@ function SignupModal({ onSignupModalCloser }) {
           setSignupError(err.response.data.message);
         }
       });
-    // try {
-    //   const res = await axios('/accounts', {
-    //     method: 'post',
-    //     headers: { 'Content-Type': 'multipart/form-data;charset=UTF-8' },
-    //     data: formData,
-    //   });
-    //   setSignupError('');
-    //   setSuccessSignup(true);
-    //   console.log(res);
-    // } catch (error) {
-    //   console.log(error);
-    //   // 백엔드에서 받은 중복이메일 유효성 검사 표시
-    //   if (error.response.data.exception === 'BusinessLogicException') {
-    //     setSignupError(error.response.data.message);
-    //   }
-    // }
   }
 
-  // 추후 회원가입 axios를 onSubmitHandler 함수에 작성할 것.
   const onSubmitHandler = e => {
     e.preventDefault();
-    // 유효성 검사
     // 닉네임 유효성 검사
     if (nickname.trim().length === 0) {
       setValidationCorrect(prev => {
