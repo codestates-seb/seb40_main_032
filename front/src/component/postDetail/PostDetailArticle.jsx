@@ -1,7 +1,17 @@
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 import styled from 'styled-components';
-import PostMockData from './PostMockData';
+import { useNavigate } from 'react-router-dom';
+import uuid from 'react-uuid';
+import {
+  postDetailDeleteApi,
+  postDetailFollowApi,
+  postDetailLikeApi,
+} from '../../api/postDetailApi';
 import Like from '../common/like/Like';
+import LoginModal from '../common/modal/LoginModal';
+import YesNoModal from '../common/modal/YesNoModal';
 
 const Container = styled.div`
   flex: 1;
@@ -43,9 +53,11 @@ const Header = styled.div`
     border-radius: 100rem;
     border: 2px solid black;
     margin-right: 1.5rem;
+    cursor: pointer;
   }
   .writer__name {
     font-size: var(--font-20);
+    cursor: pointer;
   }
   .follow__button {
     display: flex;
@@ -58,6 +70,7 @@ const Header = styled.div`
     font-weight: var(--font-semi-bold);
     color: var(--button-theme);
     background-color: var(--button-font-color);
+    cursor: pointer;
   }
 `;
 
@@ -97,6 +110,13 @@ const Body = styled.div`
         font-weight: var(--font-semi-bold);
         width: 65%;
       }
+      .tags__list {
+        display: flex;
+        flex-wrap: wrap;
+        > li {
+          cursor: pointer;
+        }
+      }
       .viewlike__wrapper {
         width: 35%;
         display: flex;
@@ -125,7 +145,12 @@ const Body = styled.div`
       }
     }
   }
-
+  .button__edit {
+    cursor: pointer;
+  }
+  .button__delete {
+    cursor: pointer;
+  }
   @media screen and (max-width: 549px) {
     .viewlike__wrapper {
       flex-direction: column;
@@ -152,67 +177,237 @@ const Body = styled.div`
   }
 `;
 
-function PostDetailArticle() {
-  const mockData = PostMockData;
-  const [follow, setFollow] = useState('');
+function PostDetailArticle({ post, userLike, userFollow, self, board }) {
+  const {
+    title,
+    content,
+    location,
+    category,
+    likeCount,
+    views,
+    tags,
+    createdAt,
+    account,
+  } = post;
+  const date = new Date(createdAt).toISOString().split('T')[0];
+  const [follow, setFollow] = useState(
+    userFollow.follow !== '' ? userFollow.follow : false,
+  );
+  const [like, setLike] = useState(
+    userLike.likes !== '' ? userLike.likes : false,
+  );
+  const [loginModal, setLoginModal] = useState(false);
+  const [deleteModal, setDeleteModal] = useState(false);
+  const [likeCountState, setLikeCountState] = useState(likeCount);
+  const login = useSelector(state => state.login.isLogin);
+
+  const navigate = useNavigate();
+  // 해당회원 정보창으로 이동
+  const userMovePageHandler = () => {
+    console.log('');
+  };
+
+  // 로그인 여부 체크
+  const loginCheck = () => {
+    if (!login) {
+      setLoginModal(true);
+      return false;
+    }
+    return true;
+  };
+  // login modal close
+  const modalClose = () => {
+    setLoginModal(false);
+  };
+
+  // 좋아요 및 좋아요 취소 핸들러
+  const likeHandler = () => {
+    if (loginCheck()) {
+      postDetailLikeApi(board)
+        .then(res => {
+          if (res === 'SUCCESS') {
+            setLike(true);
+            setLikeCountState(prev => prev + 1);
+          } else {
+            setLike(false);
+            setLikeCountState(prev => prev - 1);
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
+  };
+  // 팔로우 및 팔로우 취소 핸들러
+  const followHandler = () => {
+    if (loginCheck()) {
+      postDetailFollowApi(account.accountId)
+        .then(res => {
+          if (res === 'SUCCESS') {
+            setFollow(true);
+          } else {
+            setFollow(false);
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
+  };
+  // deleteModal open Handler
+  const openDeleteModal = () => {
+    setDeleteModal(true);
+  };
+  // deleteModal close Handler
+  const closeDeleteModal = () => {
+    setDeleteModal(false);
+  };
+  // post delete Handler
+  const postDeleteHandler = () => {
+    postDetailDeleteApi(board).then(() => {
+      toast('삭제 되었습니다.', {
+        position: 'top-center',
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+      });
+      navigate('/');
+    });
+  };
+  const postModifyHandler = () => {
+    navigate('/publish', { replace: false, state: { post } });
+  };
+
+  // tab시 keydown 이벤트 Enter 제어 핸들러
+  const keyDownHandler = (e, handler) => {
+    if (e.key === 'Enter') {
+      handler();
+    }
+  };
+  // login modal notify
+  const loginNotify = () =>
+    toast('로그인 성공!', {
+      position: 'top-center',
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      progress: undefined,
+      theme: 'light',
+    });
 
   return (
     <Container>
-      <div className="post__category">{mockData.category}</div>
+      {loginModal && (
+        <LoginModal modalCloser={modalClose} loginNotify={loginNotify} />
+      )}
+      {deleteModal && (
+        <YesNoModal
+          modalMessage="게시글을 정말 삭제하시겠습니까?"
+          modalActioner={postDeleteHandler}
+          modalCloser={closeDeleteModal}
+        />
+      )}
+      <div className="post__category">{category}</div>
       <Header>
-        <div className="writer__info">
-          <img
-            className="writer__avatar"
-            src={`${mockData.account.profile}`}
-            alt="avatar"
-          />
-          <div className="writer__name">{mockData.account.nickname}</div>
-        </div>
-        <button
-          className="follow__button"
-          onClick={() => {
-            setFollow(!follow);
+        <div
+          className="writer__info"
+          role="button"
+          tabIndex={0}
+          onClick={userMovePageHandler}
+          onKeyDown={() => {
+            keyDownHandler(userMovePageHandler);
           }}
         >
-          {follow ? '팔로우' : '팔로잉중'}
+          <img
+            className="writer__avatar"
+            src={`${account.profile}`}
+            alt="avatar"
+          />
+          <div className="writer__name">{account.nickname}</div>
+        </div>
+        <button className="follow__button" onClick={followHandler}>
+          {follow ? '팔로잉중' : '팔로우'}
         </button>
       </Header>
       <Body>
-        <div className="article__header">{mockData.title}</div>
-        <div className="article__content">{mockData.content}</div>
-        {mockData.location ? (
-          <div className="article__location"> 위치 : {mockData.location}</div>
+        <div className="article__header">{title}</div>
+        <div className="article__content">{content}</div>
+        {location ? (
+          <div className="article__location"> 위치 : {location}</div>
         ) : null}
         <div className="article__footer">
           <div className="footer__first">
             <div className="footer__tags">
-              {mockData.tags.map(el => ` #${el}`)}
+              <ul className="tags__list">
+                {tags.map(el => {
+                  return <li key={uuid()}>#${el}</li>;
+                })}
+              </ul>
             </div>
             <div className="viewlike__wrapper">
               <div className="footer__views">
-                <p>조회수 {mockData.views}</p>
+                <p>조회수 {views}</p>
               </div>
-              <Like
-                width="1.5rem"
-                height="1.5rem"
-                color="var(--font-tag-color)"
-                size="1.5rem"
-                ment={mockData.likeCount}
-                marginright="2px"
-                className="footer__likes"
-              />
+              {like ? (
+                <div
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={() => {
+                    keyDownHandler(likeHandler);
+                  }}
+                  onClick={likeHandler}
+                >
+                  <Like
+                    width="1.5rem"
+                    height="1.5rem"
+                    color="var(--font-tag-color)"
+                    size="1.5rem"
+                    ment={likeCountState}
+                    marginright="2px"
+                    className="footer__likes"
+                  />
+                </div>
+              ) : (
+                <div
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={() => {
+                    keyDownHandler(likeHandler);
+                  }}
+                  onClick={likeHandler}
+                >
+                  <Like
+                    width="1.5rem"
+                    height="1.5rem"
+                    size="1.5rem"
+                    ment={likeCountState}
+                    marginright="2px"
+                    className="footer__likes"
+                  />
+                </div>
+              )}
             </div>
           </div>
           <div className="footer__second">
-            {mockData.myBoard ? (
+            {self ? (
               <div className="button__area">
-                <button className="button__edit">수정</button>
-                <button className="button__delete">삭제</button>
+                <button className="button__edit" onClick={postModifyHandler}>
+                  수정
+                </button>
+                <button className="button__delete" onClick={openDeleteModal}>
+                  삭제
+                </button>
               </div>
             ) : (
               <div />
             )}
-            <div className="article__date">{mockData.createdAt}</div>
+            <div className="article__date">{date}</div>
           </div>
         </div>
       </Body>
