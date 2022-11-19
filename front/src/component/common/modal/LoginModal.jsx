@@ -92,6 +92,7 @@ function LoginModal({ modalCloser, loginNotify }) {
       loginUserApi();
       loginNotify();
       modalCloser();
+      window.location.reload();
     } catch (err) {
       console.log(err.response.data.code);
       // 유효성 검사
