@@ -78,4 +78,12 @@ public class Board extends BaseTime {
         Optional.ofNullable(board.getLocation()).ifPresent(location -> this.location = location);
         Optional.ofNullable(board.getCategory()).ifPresent(category -> this.category = category);
     }
+
+    public void downLikeCount() {
+        this.likeCount--;
+    }
+
+    public void upLikeCount() {
+        this.likeCount++;
+    }
 }
