@@ -5,6 +5,7 @@ import { RiArrowDownSFill } from 'react-icons/ri';
 import { BiUserCircle } from 'react-icons/bi';
 import { useSelector } from 'react-redux';
 import { DefaultButton } from '../button/ButtonStyle';
+import { removeCookie } from '../../../util/cookie';
 
 const HeaderUserWrapper = styled.nav`
   width: 100%;
@@ -62,6 +63,14 @@ function HeaderUser({ loginModalOpener }) {
   const [rorate, setRorate] = useState('');
   const isLogin = useSelector(state => state.login.isLogin);
 
+  // 로그아웃 핸들러
+  const logoutHandler = () => {
+    removeCookie('accessToken');
+    localStorage.removeItem('id');
+    localStorage.removeItem('profile');
+    window.location.href = '/';
+  };
+
   return (
     <HeaderUserWrapper>
       <button className="header__write">게시물 작성</button>
@@ -84,6 +93,8 @@ function HeaderUser({ loginModalOpener }) {
           </DefaultButton>
         ) : (
           <>
+            {/* 임시 로그아웃 버튼 */}
+            <button onClick={logoutHandler}>로그아웃</button>
             <BiUserCircle size="4.3rem" />
             <RiArrowDownSFill size="2.5rem" color="hsl(146, 50%, 50%)" />
           </>
