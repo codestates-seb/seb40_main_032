@@ -20,9 +20,7 @@ const PostWrapper = styled.div`
     background: #fff;
 
     .post__thumb {
-      /* flex: auto; */
       overflow: hidden;
-      cursor: pointer;
       position: relative;
       width: 100%;
       height: 0;
@@ -53,17 +51,18 @@ const PostWrapper = styled.div`
         padding: 5px 0 1rem;
 
         .post__title {
-          /* flex-grow: 2; */
           text-align: left;
           font-weight: bold;
           font-size: 1.6rem;
-          cursor: pointer;
           overflow: hidden;
           text-overflow: ellipsis;
           display: -webkit-box;
           -webkit-line-clamp: 1;
           -webkit-box-orient: vertical;
           word-break: break-all;
+          > a {
+            color: #333;
+          }
         }
 
         .post__heart {
@@ -100,7 +99,6 @@ const PostWrapper = styled.div`
             text-align: left;
             color: var(--font-tag-color);
             font-size: 1.3rem;
-            cursor: pointer;
             overflow: hidden;
             text-overflow: ellipsis;
             display: -webkit-box;
@@ -114,7 +112,6 @@ const PostWrapper = styled.div`
           justify-content: flex-end;
           align-items: center;
           padding: 1rem 0 5px;
-          cursor: pointer;
 
           .post__avatar {
             display: block;
@@ -123,6 +120,10 @@ const PostWrapper = styled.div`
             margin-right: 5px;
             border-radius: 50%;
             overflow: hidden;
+
+            .post__user {
+              width: 100%;
+            }
           }
 
           .post__writer {
