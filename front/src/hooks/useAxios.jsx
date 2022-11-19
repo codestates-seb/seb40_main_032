@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
-import hookeAxios from '../api/hookApi';
+import hookAxios from '../api/hookApi';
 
 const useAxios = url => {
   const [data, setData] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    hookeAxios(url)
+    hookAxios(url)
       .then(res => {
         setData(res.data);
         setLoading(false);
