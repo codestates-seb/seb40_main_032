@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { BsCamera } from 'react-icons/bs';
 
@@ -65,6 +65,14 @@ function PublishPhoto() {
     });
     setPhotos(uploaded);
   };
+
+  // 메모리 누수 방지
+  useEffect(() => {
+    return () => {
+      return URL.revokeObjectURL(photos);
+      // 페이지 전환시 URL이 메모리에 남지 않도록 전부 폐기
+    };
+  }, []);
 
   return (
     <Container>
