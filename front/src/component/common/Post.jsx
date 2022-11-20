@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import uuid from 'react-uuid';
 import { GoHeart } from 'react-icons/go';
+import { Link } from 'react-router-dom';
 
 const PostWrapper = styled.div`
   display: flex;
@@ -11,6 +12,7 @@ const PostWrapper = styled.div`
 
   .post__container {
     display: flex;
+    width: 100%;
     flex-direction: column;
     box-shadow: 0 0 6px rgba(0, 0, 0, 0.16);
     border-radius: var(--radius-10);
@@ -18,11 +20,16 @@ const PostWrapper = styled.div`
     background: #fff;
 
     .post__thumb {
-      flex: auto;
       overflow: hidden;
-      cursor: pointer;
+      position: relative;
+      width: 100%;
+      height: 0;
+      padding-top: calc(313 / 425 * 100%);
 
       .post__img {
+        position: absolute;
+        top: 0;
+        left: 0;
         width: 100%;
         height: 100%;
         transition: all 300ms linear;
@@ -39,21 +46,23 @@ const PostWrapper = styled.div`
 
       .post__tl {
         display: flex;
+        justify-content: space-between;
         align-items: center;
         padding: 5px 0 1rem;
 
         .post__title {
-          flex-grow: 2;
           text-align: left;
           font-weight: bold;
           font-size: 1.6rem;
-          cursor: pointer;
           overflow: hidden;
           text-overflow: ellipsis;
           display: -webkit-box;
           -webkit-line-clamp: 1;
           -webkit-box-orient: vertical;
           word-break: break-all;
+          > a {
+            color: #333;
+          }
         }
 
         .post__heart {
@@ -90,7 +99,6 @@ const PostWrapper = styled.div`
             text-align: left;
             color: var(--font-tag-color);
             font-size: 1.3rem;
-            cursor: pointer;
             overflow: hidden;
             text-overflow: ellipsis;
             display: -webkit-box;
@@ -104,7 +112,6 @@ const PostWrapper = styled.div`
           justify-content: flex-end;
           align-items: center;
           padding: 1rem 0 5px;
-          cursor: pointer;
 
           .post__avatar {
             display: block;
@@ -113,6 +120,10 @@ const PostWrapper = styled.div`
             margin-right: 5px;
             border-radius: 50%;
             overflow: hidden;
+
+            .post__user {
+              width: 100%;
+            }
           }
 
           .post__writer {
@@ -124,54 +135,45 @@ const PostWrapper = styled.div`
   }
 `;
 // { image, title, like, tag, user }
-function Post() {
+function Post({ post }) {
   return (
     <PostWrapper className="post">
       <div className="post__container">
         <div className="post__thumb">
           {/* post Image */}
-          <img
-            className="post__img"
-            src="https://source.unsplash.com/random/425x300"
-            alt="게시글"
-          />
+          <Link to={`/postDetail/${post.boardId}`}>
+            <img className="post__img" src={post.thumbnail} alt="게시글" />
+          </Link>
         </div>
         <div className="post__card">
           <div className="post__tl">
             {/* title && like */}
             <p className="post__title">
-              안녕 나는 제목이야 안녕 나는 제목이야 안녕 나는 제목이야
+              <Link to={`/postDetail/${post.boardId}`}>{post.title}</Link>
             </p>
             <p className="post__heart">
               <GoHeart className="heart__icon" />
-              <span className="heart__count">5</span>
+              <span className="heart__count">{post.likeCount}</span>
             </p>
           </div>
           <div className="post__tw">
             {/* tag && user */}
             <ul className="post__tags">
-              {/* tag.map(el => {
-            <li key={uuid()} className="post__tag">el</li>
-          }) */}
-              <li key={uuid()} className="post__tag">
-                #태그는6글자
-              </li>
-              <li key={uuid()} className="post__tag">
-                #이하로만가능
-              </li>
-              <li key={uuid()} className="post__tag">
-                #하도록해야지
-              </li>
+              {post.tags.map(tag => (
+                <li key={uuid()} className="post__tag">
+                  #{tag}
+                </li>
+              ))}
             </ul>
             <div className="post__info">
               <span className="post__avatar">
                 <img
                   className="post__user"
-                  src="https://source.unsplash.com/random/20x20/"
+                  src={post.account.profile}
                   alt="유저"
                 />
               </span>
-              <p className="post__writer">안녕나는유저야</p>
+              <p className="post__writer">{post.account.nickname}</p>
             </div>
           </div>
         </div>
