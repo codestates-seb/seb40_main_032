@@ -29,8 +29,7 @@ import static org.springframework.restdocs.headers.HeaderDocumentation.requestHe
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
-import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
-import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
+import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static travelRepo.util.ApiDocumentUtils.getRequestPreProcessor;
@@ -59,10 +58,10 @@ class CommentControllerTest {
     void commentAdd_Success() throws Exception {
 
         //given
-        Account account = accountRepository.findById(10001L).get();
+        Account account = accountRepository.findById(20001L).get();
         String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
 
-        Long boardId = 12001L;
+        Long boardId = 21001L;
         String commentContent = "testCommentContents";
         CommentAddReq commentAddReq = new CommentAddReq();
         commentAddReq.setBoardId(boardId);
@@ -103,10 +102,10 @@ class CommentControllerTest {
     void commentAdd_ValidationException() throws Exception {
 
         //given
-        Account account = accountRepository.findById(10001L).get();
+        Account account = accountRepository.findById(20001L).get();
         String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
 
-        Long boardId = 12001L;
+        Long boardId = 21001L;
         String blankCommentContent = "";
         CommentAddReq commentAddReq = new CommentAddReq();
         commentAddReq.setBoardId(boardId);
@@ -136,7 +135,7 @@ class CommentControllerTest {
         Account account = accountRepository.findById(10001L).get();
         String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
 
-        Long boardId = 12101L;
+        Long boardId = 41001L;
         String blankCommentContent = "testCommentContents";
         CommentAddReq commentAddReq = new CommentAddReq();
         commentAddReq.setBoardId(boardId);
@@ -163,10 +162,10 @@ class CommentControllerTest {
     void commentModify_Success() throws Exception {
 
         //given
-        Account account = accountRepository.findById(10001L).get();
+        Account account = accountRepository.findById(20001L).get();
         String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
 
-        Long commentId = 15001l;
+        Long commentId = 25001l;
 
         String commentContent = "modified testContents";
         CommentModifyReq commentModifyReq = new CommentModifyReq();
@@ -209,10 +208,10 @@ class CommentControllerTest {
     void commentModify_NOT_FOUND() throws Exception {
 
         //given
-        Account account = accountRepository.findById(10001L).get();
+        Account account = accountRepository.findById(20001L).get();
         String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
 
-        Long commentId = 15101l;
+        Long commentId = 45001L;
 
         String commentContent = "modified testContents";
         CommentModifyReq commentModifyReq = new CommentModifyReq();
@@ -239,10 +238,10 @@ class CommentControllerTest {
     void commentModify_FORBIDDEN() throws Exception {
 
         //given
-        Account account = accountRepository.findById(10001L).get();
+        Account account = accountRepository.findById(20001L).get();
         String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
 
-        Long commentId = 15003l;
+        Long commentId = 25002L;
 
         String commentContent = "modified testContents";
         CommentModifyReq commentModifyReq = new CommentModifyReq();
@@ -269,10 +268,10 @@ class CommentControllerTest {
     void commentRemove_Success() throws Exception {
 
         //given
-        Account account = accountRepository.findById(10001L).get();
+        Account account = accountRepository.findById(20001L).get();
         String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
 
-        Long commentId = 15100L;
+        Long commentId = 35001L;
 
         //when
         ResultActions actions = mockMvc.perform(
@@ -306,7 +305,7 @@ class CommentControllerTest {
         Account account = accountRepository.findById(10001L).get();
         String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
 
-        Long commentId = 15101L;
+        Long commentId = 45001L;
 
         //when
         ResultActions actions = mockMvc.perform(
@@ -326,10 +325,10 @@ class CommentControllerTest {
     void commentRemove_FORBIDDEN() throws Exception {
 
         //given
-        Account account = accountRepository.findById(10001L).get();
+        Account account = accountRepository.findById(20001L).get();
         String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
 
-        Long commentId = 15003L;
+        Long commentId = 25002L;
 
         //when
         ResultActions actions = mockMvc.perform(
@@ -349,11 +348,15 @@ class CommentControllerTest {
     void commentList_Success() throws Exception {
 
         //given
-        Long boardId = 12002l;
+        Long boardId = 21001L;
+        int page = 1;
+        int size = 5;
 
         //when
         ResultActions actions = mockMvc.perform(
                 get("/comments/board/{boardId}", boardId)
+                        .param("page", String.valueOf(page))
+                        .param("size", String.valueOf(size))
                         .accept(MediaType.APPLICATION_JSON)
         );
 
@@ -371,6 +374,12 @@ class CommentControllerTest {
                         getResponsePreProcessor(),
                         pathParameters(
                                 parameterWithName("boardId").description("게시글 식별자")
+                        ),
+                        requestParameters(
+                                List.of(
+                                        parameterWithName("page").description("페이지").optional(),
+                                        parameterWithName("size").description("페이지 사이즈").optional()
+                                )
                         ),
                         responseFields(
                                 List.of(
