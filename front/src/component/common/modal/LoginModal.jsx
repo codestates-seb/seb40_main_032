@@ -63,7 +63,11 @@ function LoginModal({ modalCloser, loginNotify }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [signupModalOpened, setSignupModalOpened] = useState(false);
-  const [isValidate, setIsValidate] = useState(true);
+  const [loginError, setLoginError] = useState(false);
+  const [validationCorrect, setValidationCorrect] = useState({
+    emailCorrect: true,
+    passwordCorrect: true,
+  });
   const dispatch = useDispatch();
 
   // 인풋값 상태 저장 함수
@@ -88,7 +92,7 @@ function LoginModal({ modalCloser, loginNotify }) {
     try {
       // unwrap()을 해줘야만 비동기 처리가 제대로 작동함.
       await dispatch(loginAsync(data)).unwrap();
-      setIsValidate(true);
+      setLoginError(false);
       loginUserApi();
       loginNotify();
       modalCloser();
@@ -96,8 +100,8 @@ function LoginModal({ modalCloser, loginNotify }) {
     } catch (err) {
       console.log(err.response.data.code);
       // 유효성 검사
-      if (err.response.data.code) {
-        setIsValidate(false);
+      if (err.response.data.code === '002') {
+        setLoginError(true);
       }
     }
   }
@@ -105,6 +109,27 @@ function LoginModal({ modalCloser, loginNotify }) {
   // submit 버튼 클릭시 작동 함수
   const onSubmitHandler = e => {
     e.preventDefault();
+    // 이메일 유효성 검사
+    if (email.trim().length === 0 || !email.includes('@')) {
+      setValidationCorrect(prev => {
+        return { ...prev, emailCorrect: false };
+      });
+      return;
+    }
+    setValidationCorrect(prev => {
+      return { ...prev, emailCorrect: true };
+    });
+    // 비밀번호 유효성 검사
+    if (password.trim().length === 0) {
+      setValidationCorrect(prev => {
+        return { ...prev, passwordCorrect: false };
+      });
+      setLoginError(false);
+      return;
+    }
+    setValidationCorrect(prev => {
+      return { ...prev, passwordCorrect: true };
+    });
     login();
   };
 
@@ -129,6 +154,11 @@ function LoginModal({ modalCloser, loginNotify }) {
                 onChange={onChangeEmail}
                 value={email}
               />
+              {!validationCorrect.emailCorrect && (
+                <div className="input__validation">
+                  아이디는 이메일 형식이여야 합니다.
+                </div>
+              )}
               <label htmlFor="password">비밀번호</label>
               <input
                 id="password"
@@ -138,7 +168,12 @@ function LoginModal({ modalCloser, loginNotify }) {
                 onChange={onChangePassword}
                 value={password}
               />
-              {!isValidate && (
+              {!validationCorrect.passwordCorrect && (
+                <div className="input__validation">
+                  비밀번호를 입력해주세요.
+                </div>
+              )}
+              {loginError && (
                 <div className="input__validation">
                   아이디 혹은 비밀번호가 잘못되었습니다.
                 </div>
