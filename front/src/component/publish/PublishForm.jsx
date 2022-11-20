@@ -1,11 +1,284 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import categoryData from './categoryData';
 import { DefaultButton, TransparentButton } from '../common/button/ButtonStyle';
 import PublishPhoto from './PublishPhoto';
 import ConfirmModal from '../common/modal/ConfirmModal';
 import YesNoModal from '../common/modal/YesNoModal';
+import publishPostApi from '../../api/publishPostApi';
+import { loginModalActions } from '../../redux/loginModalSlice';
+
+function PublishForm() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const login = useSelector(state => state.login.isLogin);
+
+  const [formData, setFormData] = useState({
+    title: '',
+    content: '',
+    location: '',
+    category: '',
+    tags: [],
+    isValid: true,
+  });
+
+  const [categorySelected, setCategorySelected] = useState('');
+  const [tags, setTags] = useState([]);
+  const [newTag, setNewTag] = useState();
+
+  const [confirmModalOpened, setConfirmModalOpened] = useState(false);
+  const [yesNoModalOpened, setYesNoModalOpened] = useState(false);
+  const [publishSuccess, setPublishSuccess] = useState(false);
+
+  const { title, content, location } = formData;
+
+  // 입력값 저장 함수
+  const onChange = event =>
+    setFormData({ ...formData, [event.target.name]: event.target.value });
+
+  // 테마 선택 함수
+  const onClick = index => {
+    setCategorySelected(index);
+    const { category } = categoryData[index];
+    setFormData({ ...formData, category });
+  };
+
+  // 해쉬태그 추가
+  const handleTagAdd = async event => {
+    const { value } = event.target;
+    const regex = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|]+$/;
+    const filtered = tags.filter(el => el === value);
+
+    if (event.key === 'Enter' || event.key === ',') {
+      if (!regex.test(value)) return;
+      if (regex.test(value) && value !== '' && filtered.indexOf(value) === -1) {
+        setTags([...tags, value]);
+        setFormData({ ...formData, tags: [...tags, value] });
+        setTimeout(() => {
+          setNewTag('');
+        }, 0);
+      }
+    }
+  };
+
+  // 해쉬태그 삭제
+  const handleTagRemove = indexRemove => {
+    setTags([...tags.filter((_, index) => index !== indexRemove)]);
+  };
+
+  // 게시글 등록 요청
+  const publishRequest = async () => {
+    publishPostApi(formData)
+      .then(res => {
+        if (res.status === 200) {
+          console.log(res);
+          setPublishSuccess(true);
+          navigate('/');
+        }
+      })
+      .catch(error => console.log(error.response.data.message));
+  };
+
+  // 등록 버튼 모달 연결
+  const confirmModalOpener = event => {
+    event.preventDefault();
+    publishRequest();
+    if (publishSuccess) setConfirmModalOpened(true);
+  };
+
+  const confirmModalCloser = () => {
+    setConfirmModalOpened(false);
+    navigate(-1);
+  };
+
+  // 취소 버튼 모달 연결
+  const yesNoModalOpener = event => {
+    event.preventDefault();
+    setYesNoModalOpened(true);
+  };
+
+  const yesNoModalActioner = () => {
+    navigate(-1);
+  };
+
+  const yesNoModalCloser = () => {
+    setYesNoModalOpened(false);
+  };
+
+  const loginModalOpener = () => {
+    dispatch(loginModalActions.openLoginModal());
+  };
+
+  // 등록 버튼 타이머 설정
+  useEffect(() => {
+    let timer;
+    if (confirmModalOpened) {
+      timer = setTimeout(() => {
+        confirmModalCloser();
+      }, 1500);
+    }
+    return () => clearTimeout(timer);
+  }, [confirmModalOpened]);
+
+  // (비로그인) url입력 접근시 로그인창으로 redirect
+  useEffect(() => {
+    if (!login) {
+      alert('로그인 해주세요');
+      navigate('/main');
+      loginModalOpener();
+    }
+    return () => {};
+  }, []);
+
+  return (
+    <Container>
+      <h1>
+        새 게시물
+        <button
+          onClick={() => {
+            console.log(formData);
+          }}
+        >
+          123213
+        </button>
+      </h1>
+      <PublishPhoto />
+      <TitleContainer>
+        <div className="title__label">
+          <label htmlFor="title">제목</label>
+        </div>
+        <input
+          className="title__input"
+          type="text"
+          id="title"
+          name="title"
+          value={title || ''}
+          maxLength="40"
+          onChange={event => {
+            onChange(event);
+          }}
+          placeholder="제목을 입력하세요"
+          required
+        />
+      </TitleContainer>
+      <ContentContainer>
+        <div className="content__label">
+          <label htmlFor="content">스토리 공유</label>
+        </div>
+        <textarea
+          className="content__textarea"
+          type="text"
+          id="content"
+          name="content"
+          value={content || ''}
+          rows="7"
+          onChange={event => {
+            onChange(event);
+          }}
+          placeholder="이야기를 공유해주세요"
+          required
+        />
+      </ContentContainer>
+      <LocationCategoryRow>
+        <LocationContainer>
+          <label className="location__label" htmlFor="location">
+            위치
+          </label>
+          <input
+            className="location__input"
+            type="text"
+            id="location"
+            name="location"
+            value={location || ''}
+            onChange={event => onChange(event)}
+            maxLength="20"
+            placeholder="위치를 남겨주세요"
+          />
+        </LocationContainer>
+        <CategoryContainer>
+          <label htmlFor="category">테마</label>
+          <div id="categories">
+            {categoryData.map((item, index) => {
+              return (
+                <Category
+                  theme={item.theme}
+                  onClick={() => {
+                    onClick(index);
+                  }}
+                  className={
+                    categorySelected === index ? 'categorySelected' : null
+                  }
+                  key={item.id}
+                >
+                  {item.text}
+                </Category>
+              );
+            })}
+          </div>
+        </CategoryContainer>
+      </LocationCategoryRow>
+      <TagContainer>
+        <label htmlFor="tag">태그</label>
+        <ul className="tag__wrapper">
+          {tags.map((tag, index) => (
+            <li className="tag" key={tag}>
+              <span className="tag__name">#{tag}</span>
+              <button onClick={() => handleTagRemove(index)}>❌</button>
+            </li>
+          ))}
+          <input
+            className="tag__input--create"
+            id="tag"
+            type="text"
+            value={newTag || ''}
+            maxLength="6"
+            onChange={event => setNewTag(event.target.value)}
+            onKeyDown={event => handleTagAdd(event)}
+            placeholder="# 태그를 입력하세요"
+          />
+        </ul>
+      </TagContainer>
+      <ButtonContainer>
+        <PublishButton
+          width="8vw"
+          height="4vh"
+          fontSize="var(--font-15)"
+          fontWeight="var(--font-bold)"
+          onClick={confirmModalOpener}
+        >
+          <span>등록</span>
+        </PublishButton>
+        <CancelButton
+          width="8vw"
+          fontSize="var(—font-15)"
+          fontWeight="var(—font-bold)"
+          onClick={yesNoModalOpener}
+        >
+          <span>취소</span>
+        </CancelButton>
+      </ButtonContainer>
+      <>
+        {confirmModalOpened ? (
+          <ConfirmModal
+            modalMessage="게시글 등록이 완료되었습니다."
+            modalCloser={confirmModalCloser}
+          />
+        ) : null}
+        {yesNoModalOpened ? (
+          <YesNoModal
+            modalMessage="게시글 작성을 취소할까요?"
+            modalActioner={yesNoModalActioner}
+            modalCloser={yesNoModalCloser}
+          />
+        ) : null}
+      </>
+    </Container>
+  );
+}
+
+export default PublishForm;
 
 // 전체 컨테이너
 const Container = styled.div`
@@ -207,242 +480,3 @@ const CancelButton = styled(TransparentButton)`
     height: 4vh;
   }
 `;
-
-function PublishForm() {
-  const navigate = useNavigate();
-
-  // formData 생성하기
-  const [formData, setFormData] = useState({
-    title: '',
-    content: '',
-    location: '',
-    category: '',
-    tags: [],
-  });
-
-  const [categorySelected, setCategorySelected] = useState('');
-  const [tags, setTags] = useState([]);
-  const [newTag, setNewTag] = useState();
-
-  const [confirmModalOpened, setConfirmModalOpened] = useState(false);
-  const [yesNoModalOpened, setYesNoModalOpened] = useState(false);
-
-  const { title, content, location } = formData;
-
-  // 입력값 저장 함수
-  const onChange = event =>
-    setFormData({ ...formData, [event.target.name]: event.target.value });
-
-  // 테마 선택 함수
-  const onClick = index => {
-    setCategorySelected(index);
-    const { category } = categoryData[index];
-    setFormData({ ...formData, category });
-  };
-
-  // 해쉬태그 추가
-  const handleTagAdd = async event => {
-    const { value } = event.target;
-    const regex = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|]+$/;
-    const filtered = tags.filter(el => el === value);
-
-    if (event.key === 'Enter' || event.key === ',') {
-      if (!regex.test(value)) return;
-      if (regex.test(value) && value !== '' && filtered.indexOf(value) === -1) {
-        setTags([...tags, value]);
-        setFormData({ ...formData, tags: [...tags, value] });
-        setTimeout(() => {
-          setNewTag('');
-        }, 0);
-      }
-    }
-  };
-
-  // 해쉬태그 삭제
-  const handleTagRemove = indexRemove => {
-    setTags([...tags.filter((_, index) => index !== indexRemove)]);
-  };
-
-  // 등록 버튼 모달 연결
-  const confirmModalOpener = event => {
-    event.preventDefault();
-    setConfirmModalOpened(true);
-  };
-
-  const confirmModalCloser = () => {
-    setConfirmModalOpened(false);
-    navigate(-1);
-  };
-
-  // 취소 버튼 모달 연결
-  const yesNoModalOpener = event => {
-    event.preventDefault();
-    setYesNoModalOpened(true);
-  };
-
-  const yesNoModalActioner = () => {
-    navigate(-1);
-  };
-
-  const yesNoModalCloser = () => {
-    setYesNoModalOpened(false);
-  };
-
-  // 등록 버튼 타이머 설정
-  useEffect(() => {
-    let timer;
-    if (confirmModalOpened) {
-      timer = setTimeout(() => {
-        confirmModalCloser();
-      }, 1500);
-    }
-    return () => clearTimeout(timer);
-  }, [confirmModalOpened]);
-
-  return (
-    <Container>
-      <h1>
-        새 게시물
-        <button
-          onClick={() => {
-            console.log(formData);
-          }}
-        >
-          123213
-        </button>
-      </h1>
-      <PublishPhoto />
-      <TitleContainer>
-        <div className="title__label">
-          <label htmlFor="title">제목</label>
-        </div>
-        <input
-          className="title__input"
-          type="text"
-          id="title"
-          name="title"
-          value={title || ''}
-          maxLength="40"
-          onChange={event => {
-            onChange(event);
-          }}
-          placeholder="제목을 입력하세요"
-          required
-        />
-      </TitleContainer>
-      <ContentContainer>
-        <div className="content__label">
-          <label htmlFor="content">스토리 공유</label>
-        </div>
-        <textarea
-          className="content__textarea"
-          type="text"
-          id="content"
-          name="content"
-          value={content || ''}
-          rows="7"
-          onChange={event => {
-            onChange(event);
-          }}
-          placeholder="이야기를 공유해주세요"
-          required
-        />
-      </ContentContainer>
-      <LocationCategoryRow>
-        <LocationContainer>
-          <label className="location__label" htmlFor="location">
-            위치
-          </label>
-          <input
-            className="location__input"
-            type="text"
-            id="location"
-            name="location"
-            value={location || ''}
-            onChange={event => onChange(event)}
-            maxLength="20"
-            placeholder="위치를 남겨주세요"
-          />
-        </LocationContainer>
-        <CategoryContainer>
-          <label htmlFor="category">테마</label>
-          <div id="categories">
-            {categoryData.map((item, index) => {
-              return (
-                <Category
-                  theme={item.theme}
-                  onClick={() => {
-                    onClick(index);
-                  }}
-                  className={
-                    categorySelected === index ? 'categorySelected' : null
-                  }
-                  key={item.id}
-                >
-                  {item.text}
-                </Category>
-              );
-            })}
-          </div>
-        </CategoryContainer>
-      </LocationCategoryRow>
-      <TagContainer>
-        <label htmlFor="tag">태그</label>
-        <ul className="tag__wrapper">
-          {tags.map((tag, index) => (
-            <li className="tag" key={tag}>
-              <span className="tag__name">#{tag}</span>
-              <button onClick={() => handleTagRemove(index)}>❌</button>
-            </li>
-          ))}
-          <input
-            className="tag__input--create"
-            id="tag"
-            type="text"
-            value={newTag || ''}
-            maxLength="6"
-            onChange={event => setNewTag(event.target.value)}
-            onKeyDown={event => handleTagAdd(event)}
-            placeholder="# 태그를 입력하세요"
-          />
-        </ul>
-      </TagContainer>
-      <ButtonContainer>
-        <PublishButton
-          width="8vw"
-          height="4vh"
-          fontSize="var(--font-15)"
-          fontWeight="var(--font-bold)"
-          onClick={confirmModalOpener}
-        >
-          <span>등록</span>
-        </PublishButton>
-        <CancelButton
-          width="8vw"
-          fontSize="var(—font-15)"
-          fontWeight="var(—font-bold)"
-          onClick={yesNoModalOpener}
-        >
-          <span>취소</span>
-        </CancelButton>
-      </ButtonContainer>
-      <>
-        {confirmModalOpened ? (
-          <ConfirmModal
-            modalMessage="게시글 등록이 완료되었습니다."
-            modalCloser={confirmModalCloser}
-          />
-        ) : null}
-        {yesNoModalOpened ? (
-          <YesNoModal
-            modalMessage="게시글 작성을 취소할까요?"
-            modalActioner={yesNoModalActioner}
-            modalCloser={yesNoModalCloser}
-          />
-        ) : null}
-      </>
-    </Container>
-  );
-}
-
-export default PublishForm;
