@@ -1,6 +1,5 @@
 import { useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import uuid from 'react-uuid';
 import Post from '../common/Post';
 import MainSort from './MainSort';
 // import PostSkeleton from '../common/PostSkeleton';
@@ -71,7 +70,7 @@ function MainContents({ axiosData, isPending, extraPage, posts }) {
       <MainSort />
       <div className="main__container">
         {posts.map(post => {
-          return <Post key={uuid()} post={post} />;
+          return <Post key={post.boardId} post={post} />;
         })}
         <div ref={target} className="target" />
       </div>
