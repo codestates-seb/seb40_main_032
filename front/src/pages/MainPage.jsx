@@ -18,7 +18,7 @@ function MainPage() {
     try {
       setIsPending(true);
       const { data } = await axios(
-        `http://13.125.238.70:8080/boards?category=RESTAURANT&size=${quantity}&page=${page.current}`,
+        `/boards?category=RESTAURANT&size=${quantity}&page=${page.current}`,
       );
       // console.log(data.content);
       setPosts(prev => [...prev, ...data.content]);
