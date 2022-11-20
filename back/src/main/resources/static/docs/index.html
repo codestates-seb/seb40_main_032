@@ -527,7 +527,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <pre class="prettyprint highlight nowrap"><code data-lang="http">POST /login HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Accept: application/json
-Content-Length: 59
+Content-Length: 62
 Host: localhost:8080
 
 {
@@ -570,7 +570,7 @@ Host: localhost:8080
 Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2Njg4MzUxNDcsImV4cCI6MTY2ODgzODc0N30.vCRZaQ5AZ9zw5T7eeaYNTlMfOYoL6ZZSB9j988KCDYQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2Njg5MzU2OTYsImV4cCI6MTY2ODkzOTI5Nn0.4FISwXFu8DmmaQDsY6OJf5UMKtOdktUqxpiMoULtjmY
 X-Content-Type-Options: nosniff
 X-XSS-Protection: 1; mode=block
 Cache-Control: no-cache, no-store, max-age=0, must-revalidate
@@ -712,7 +712,7 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 14
+Content-Length: 16
 
 {
   "id" : 1
@@ -749,7 +749,7 @@ Content-Length: 14
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="bash">$ curl 'http://localhost:8080/accounts/modify' -i -X POST \
     -H 'Content-Type: multipart/form-data;charset=UTF-8' \
-    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2Njg4MzUxNDcsImV4cCI6MTY2ODgzODc0N30.vCRZaQ5AZ9zw5T7eeaYNTlMfOYoL6ZZSB9j988KCDYQ' \
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2Njg5MzU2OTYsImV4cCI6MTY2ODkzOTI5Nn0.4FISwXFu8DmmaQDsY6OJf5UMKtOdktUqxpiMoULtjmY' \
     -F 'profile=@profile.jpeg;type=image/jpeg' \
     -F 'password=123456789' \
     -F 'nickname=modifyTestNickname' \
@@ -761,7 +761,7 @@ Content-Length: 14
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">POST /accounts/modify HTTP/1.1
 Content-Type: multipart/form-data;charset=UTF-8; boundary=6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2Njg4MzUxNDcsImV4cCI6MTY2ODgzODc0N30.vCRZaQ5AZ9zw5T7eeaYNTlMfOYoL6ZZSB9j988KCDYQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2Njg5MzU2OTYsImV4cCI6MTY2ODkzOTI5Nn0.4FISwXFu8DmmaQDsY6OJf5UMKtOdktUqxpiMoULtjmY
 Host: localhost:8080
 
 --6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
@@ -874,7 +874,7 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 18
+Content-Length: 20
 
 {
   "id" : 10001
@@ -910,14 +910,14 @@ Content-Length: 18
 <div class="title">curl-request</div>
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="bash">$ curl 'http://localhost:8080/accounts' -i -X DELETE \
-    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2Njg4MzUxNDYsImV4cCI6MTY2ODgzODc0Nn0.cHMSDdS1KC2xwuyVmj4xGPngBVExZPUhqqXypY_DzEY'</code></pre>
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2Njg5MzU2OTQsImV4cCI6MTY2ODkzOTI5NH0.CP2XPxYAVsA8CDoSn01AkYAMQw4qUw4z8851WWGlwb8'</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">http-request</div>
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">DELETE /accounts HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2Njg4MzUxNDYsImV4cCI6MTY2ODgzODc0Nn0.cHMSDdS1KC2xwuyVmj4xGPngBVExZPUhqqXypY_DzEY
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2Njg5MzU2OTQsImV4cCI6MTY2ODkzOTI5NH0.CP2XPxYAVsA8CDoSn01AkYAMQw4qUw4z8851WWGlwb8
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -1010,7 +1010,7 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 257
+Content-Length: 265
 
 {
   "id" : 10001,
@@ -1082,14 +1082,14 @@ Content-Length: 257
 <div class="title">curl-request</div>
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="bash">$ curl 'http://localhost:8080/accounts/login' -i -X GET \
-    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2Njg4MzUxNDcsImV4cCI6MTY2ODgzODc0N30.vCRZaQ5AZ9zw5T7eeaYNTlMfOYoL6ZZSB9j988KCDYQ'</code></pre>
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2Njg5MzU2OTYsImV4cCI6MTY2ODkzOTI5Nn0.4FISwXFu8DmmaQDsY6OJf5UMKtOdktUqxpiMoULtjmY'</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">http-request</div>
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">GET /accounts/login HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2Njg4MzUxNDcsImV4cCI6MTY2ODgzODc0N30.vCRZaQ5AZ9zw5T7eeaYNTlMfOYoL6ZZSB9j988KCDYQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2Njg5MzU2OTYsImV4cCI6MTY2ODkzOTI5Nn0.4FISwXFu8DmmaQDsY6OJf5UMKtOdktUqxpiMoULtjmY
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -1129,7 +1129,7 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 257
+Content-Length: 265
 
 {
   "id" : 10001,
@@ -1201,14 +1201,14 @@ Content-Length: 257
 <div class="title">curl-request</div>
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="bash">$ curl 'http://localhost:8080/accounts/follow/10001?page=1&amp;size=5&amp;sort=createdAt%2Cdesc&amp;status=following' -i -X GET \
-    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2Njg4MzUxNDcsImV4cCI6MTY2ODgzODc0N30.vCRZaQ5AZ9zw5T7eeaYNTlMfOYoL6ZZSB9j988KCDYQ'</code></pre>
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2Njg5MzU2OTUsImV4cCI6MTY2ODkzOTI5NX0.734-Tt234-DrZFMhOsJsvIVhI0PWBSO3KLY9G6Suyf4'</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">http-request</div>
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">GET /accounts/follow/10001?page=1&amp;size=5&amp;sort=createdAt%2Cdesc&amp;status=following HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2Njg4MzUxNDcsImV4cCI6MTY2ODgzODc0N30.vCRZaQ5AZ9zw5T7eeaYNTlMfOYoL6ZZSB9j988KCDYQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2Njg5MzU2OTUsImV4cCI6MTY2ODkzOTI5NX0.734-Tt234-DrZFMhOsJsvIVhI0PWBSO3KLY9G6Suyf4
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -1307,7 +1307,7 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 963
+Content-Length: 993
 
 {
   "content" : [ {
@@ -1459,7 +1459,7 @@ Content-Length: 963
 <pre class="prettyprint highlight nowrap"><code data-lang="http">POST /accounts/tempPassword/email HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Accept: application/json
-Content-Length: 32
+Content-Length: 34
 Host: localhost:8080
 
 {
@@ -1518,7 +1518,7 @@ X-Frame-Options: DENY</code></pre>
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="bash">$ curl 'http://localhost:8080/boards' -i -X POST \
     -H 'Content-Type: multipart/form-data;charset=UTF-8' \
-    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2Njg4MzUxNDgsImV4cCI6MTY2ODgzODc0OH0.24BPtE-36XlQgwt-dDe0c_GVk6n3ZMbzG5T9dX_dwxE' \
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InVzZXJBQHRlc3QuY29tIiwic3ViIjoiMjAwMDEiLCJpYXQiOjE2Njg5MzU2OTcsImV4cCI6MTY2ODkzOTI5N30.4Mw8FxQsg9bvjcdfFQ2jKuP7HilwTndwDtmTm7PnLLE' \
     -H 'Accept: application/json' \
     -F 'images=@image1.png;type=image/png' \
     -F 'images=@image2.png;type=image/png' \
@@ -1537,7 +1537,7 @@ X-Frame-Options: DENY</code></pre>
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">POST /boards HTTP/1.1
 Content-Type: multipart/form-data;charset=UTF-8; boundary=6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2Njg4MzUxNDgsImV4cCI6MTY2ODgzODc0OH0.24BPtE-36XlQgwt-dDe0c_GVk6n3ZMbzG5T9dX_dwxE
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InVzZXJBQHRlc3QuY29tIiwic3ViIjoiMjAwMDEiLCJpYXQiOjE2Njg5MzU2OTcsImV4cCI6MTY2ODkzOTI5N30.4Mw8FxQsg9bvjcdfFQ2jKuP7HilwTndwDtmTm7PnLLE
 Accept: application/json
 Host: localhost:8080
 
@@ -1687,10 +1687,10 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 14
+Content-Length: 16
 
 {
-  "id" : 5
+  "id" : 3
 }</code></pre>
 </div>
 </div>
@@ -1722,13 +1722,13 @@ Content-Length: 14
 <div class="listingblock">
 <div class="title">curl-request</div>
 <div class="content">
-<pre class="prettyprint highlight"><code data-lang="bash">$ curl 'http://localhost:8080/boards/12001' -i -X POST \
+<pre class="prettyprint highlight"><code data-lang="bash">$ curl 'http://localhost:8080/boards/31001' -i -X POST \
     -H 'Content-Type: multipart/form-data;charset=UTF-8' \
-    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2Njg4MzUxNDgsImV4cCI6MTY2ODgzODc0OH0.24BPtE-36XlQgwt-dDe0c_GVk6n3ZMbzG5T9dX_dwxE' \
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InVzZXJBQHRlc3QuY29tIiwic3ViIjoiMjAwMDEiLCJpYXQiOjE2Njg5MzU2OTcsImV4cCI6MTY2ODkzOTI5N30.4Mw8FxQsg9bvjcdfFQ2jKuP7HilwTndwDtmTm7PnLLE' \
     -H 'Accept: application/json' \
     -F 'images=@image1.png;type=image/png' \
-    -F 'images=@image4.png;type=image/png' \
-    -F 'images=@image5.png;type=image/png' \
+    -F 'images=@image2.png;type=image/png' \
+    -F 'images=@image3.png;type=image/png' \
     -F 'title=modified mock board title' \
     -F 'content=modified mock board content' \
     -F 'location=modified mock board location' \
@@ -1741,9 +1741,9 @@ Content-Length: 14
 <div class="listingblock">
 <div class="title">http-request</div>
 <div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">POST /boards/12001 HTTP/1.1
+<pre class="prettyprint highlight nowrap"><code data-lang="http">POST /boards/31001 HTTP/1.1
 Content-Type: multipart/form-data;charset=UTF-8; boundary=6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2Njg4MzUxNDgsImV4cCI6MTY2ODgzODc0OH0.24BPtE-36XlQgwt-dDe0c_GVk6n3ZMbzG5T9dX_dwxE
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InVzZXJBQHRlc3QuY29tIiwic3ViIjoiMjAwMDEiLCJpYXQiOjE2Njg5MzU2OTcsImV4cCI6MTY2ODkzOTI5N30.4Mw8FxQsg9bvjcdfFQ2jKuP7HilwTndwDtmTm7PnLLE
 Accept: application/json
 Host: localhost:8080
 
@@ -1781,12 +1781,12 @@ Content-Type: image/png
 
 (file data)
 --6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
-Content-Disposition: form-data; name=images; filename=image4.png
+Content-Disposition: form-data; name=images; filename=image2.png
 Content-Type: image/png
 
 (file data)
 --6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
-Content-Disposition: form-data; name=images; filename=image5.png
+Content-Disposition: form-data; name=images; filename=image3.png
 Content-Type: image/png
 
 (file data)
@@ -1915,10 +1915,10 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 18
+Content-Length: 20
 
 {
-  "id" : 12001
+  "id" : 31001
 }</code></pre>
 </div>
 </div>
@@ -1950,15 +1950,15 @@ Content-Length: 18
 <div class="listingblock">
 <div class="title">curl-request</div>
 <div class="content">
-<pre class="prettyprint highlight"><code data-lang="bash">$ curl 'http://localhost:8080/boards/12004' -i -X DELETE \
-    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2Njg4MzUxNDgsImV4cCI6MTY2ODgzODc0OH0.24BPtE-36XlQgwt-dDe0c_GVk6n3ZMbzG5T9dX_dwxE'</code></pre>
+<pre class="prettyprint highlight"><code data-lang="bash">$ curl 'http://localhost:8080/boards/31002' -i -X DELETE \
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InVzZXJBQHRlc3QuY29tIiwic3ViIjoiMjAwMDEiLCJpYXQiOjE2Njg5MzU2OTcsImV4cCI6MTY2ODkzOTI5N30.4Mw8FxQsg9bvjcdfFQ2jKuP7HilwTndwDtmTm7PnLLE'</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">http-request</div>
 <div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">DELETE /boards/12004 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2Njg4MzUxNDgsImV4cCI6MTY2ODgzODc0OH0.24BPtE-36XlQgwt-dDe0c_GVk6n3ZMbzG5T9dX_dwxE
+<pre class="prettyprint highlight nowrap"><code data-lang="http">DELETE /boards/31002 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InVzZXJBQHRlc3QuY29tIiwic3ViIjoiMjAwMDEiLCJpYXQiOjE2Njg5MzU2OTcsImV4cCI6MTY2ODkzOTI5N30.4Mw8FxQsg9bvjcdfFQ2jKuP7HilwTndwDtmTm7PnLLE
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -2027,14 +2027,14 @@ X-Frame-Options: DENY</code></pre>
 <div class="listingblock">
 <div class="title">curl-request</div>
 <div class="content">
-<pre class="prettyprint highlight"><code data-lang="bash">$ curl 'http://localhost:8080/boards/12001' -i -X GET \
+<pre class="prettyprint highlight"><code data-lang="bash">$ curl 'http://localhost:8080/boards/21001' -i -X GET \
     -H 'Accept: application/json'</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">http-request</div>
 <div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">GET /boards/12001 HTTP/1.1
+<pre class="prettyprint highlight nowrap"><code data-lang="http">GET /boards/21001 HTTP/1.1
 Accept: application/json
 Host: localhost:8080</code></pre>
 </div>
@@ -2075,23 +2075,23 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 770
+Content-Length: 567
 
 {
-  "boardId" : 12001,
+  "boardId" : 21001,
   "title" : "testTitle",
   "content" : "testContents",
   "location" : "test-location",
   "category" : "RESTAURANT",
   "likeCount" : 1,
-  "views" : 11,
-  "tags" : [ "testName1", "testName2" ],
-  "photos" : [ "https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg", "https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg", "https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg" ],
-  "createdAt" : "2022-10-14T12:00:01",
+  "views" : 102,
+  "tags" : [ "tag1", "tag2" ],
+  "photos" : [ "https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg" ],
+  "createdAt" : "2022-11-14T12:00:01",
   "account" : {
-    "accountId" : 10001,
+    "accountId" : 20001,
     "profile" : "https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg",
-    "nickname" : "testNickname1"
+    "nickname" : "userA"
   }
 }</code></pre>
 </div>
@@ -2189,14 +2189,14 @@ Content-Length: 770
 <div class="listingblock">
 <div class="title">curl-request</div>
 <div class="content">
-<pre class="prettyprint highlight"><code data-lang="bash">$ curl 'http://localhost:8080/boards?query=&amp;category=' -i -X GET \
+<pre class="prettyprint highlight"><code data-lang="bash">$ curl 'http://localhost:8080/boards?query=&amp;category=&amp;page=1&amp;size=20&amp;sort=createdAt%2CDESC&amp;query=&amp;category=' -i -X GET \
     -H 'Accept: application/json'</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">http-request</div>
 <div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">GET /boards?query=&amp;category= HTTP/1.1
+<pre class="prettyprint highlight nowrap"><code data-lang="http">GET /boards?query=&amp;category=&amp;page=1&amp;size=20&amp;sort=createdAt%2CDESC&amp;query=&amp;category= HTTP/1.1
 Accept: application/json
 Host: localhost:8080</code></pre>
 </div>
@@ -2226,6 +2226,21 @@ Host: localhost:8080</code></pre>
 <td class="tableblock halign-left valign-top"><p class="tableblock">게시글 분류</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>false</code></p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>page</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">페이지</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>false</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>size</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">페이지 사이즈</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>false</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>sort</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">정렬 기준</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>false</code></p></td>
+</tr>
 </tbody>
 </table>
 <div class="listingblock">
@@ -2242,58 +2257,234 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 1808
+Content-Length: 8779
 
 {
   "content" : [ {
-    "boardId" : 12004,
+    "boardId" : 21021,
     "thumbnail" : "https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg",
     "title" : "testTitle",
     "likeCount" : 1,
     "tags" : [ ],
     "account" : {
-      "accountId" : 10001,
+      "accountId" : 20003,
       "profile" : "https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg",
-      "nickname" : "testNickname1"
+      "nickname" : "userC"
     }
   }, {
-    "boardId" : 12003,
+    "boardId" : 21020,
+    "thumbnail" : "https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg",
+    "title" : "testTitleContainsQuery",
+    "likeCount" : 0,
+    "tags" : [ "testContainsQuery" ],
+    "account" : {
+      "accountId" : 20002,
+      "profile" : "https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg",
+      "nickname" : "userB"
+    }
+  }, {
+    "boardId" : 21019,
     "thumbnail" : "https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg",
     "title" : "testTitle",
-    "likeCount" : 1,
+    "likeCount" : 9,
     "tags" : [ ],
     "account" : {
-      "accountId" : 10003,
+      "accountId" : 20001,
       "profile" : "https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg",
-      "nickname" : "testNickname3"
+      "nickname" : "userA"
     }
   }, {
-    "boardId" : 12002,
+    "boardId" : 21018,
+    "thumbnail" : "https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg",
+    "title" : "testTitleContainsQuery",
+    "likeCount" : 8,
+    "tags" : [ ],
+    "account" : {
+      "accountId" : 20003,
+      "profile" : "https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg",
+      "nickname" : "userC"
+    }
+  }, {
+    "boardId" : 21017,
+    "thumbnail" : "https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg",
+    "title" : "testTitle",
+    "likeCount" : 7,
+    "tags" : [ ],
+    "account" : {
+      "accountId" : 20002,
+      "profile" : "https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg",
+      "nickname" : "userB"
+    }
+  }, {
+    "boardId" : 21016,
+    "thumbnail" : "https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg",
+    "title" : "testTitleContainsQuery",
+    "likeCount" : 6,
+    "tags" : [ ],
+    "account" : {
+      "accountId" : 20001,
+      "profile" : "https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg",
+      "nickname" : "userA"
+    }
+  }, {
+    "boardId" : 21015,
+    "thumbnail" : "https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg",
+    "title" : "testTitle",
+    "likeCount" : 5,
+    "tags" : [ "testContainsQuery" ],
+    "account" : {
+      "accountId" : 20003,
+      "profile" : "https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg",
+      "nickname" : "userC"
+    }
+  }, {
+    "boardId" : 21014,
+    "thumbnail" : "https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg",
+    "title" : "testTitleContainsQuery",
+    "likeCount" : 4,
+    "tags" : [ ],
+    "account" : {
+      "accountId" : 20002,
+      "profile" : "https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg",
+      "nickname" : "userB"
+    }
+  }, {
+    "boardId" : 21013,
     "thumbnail" : "https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg",
     "title" : "testTitle",
     "likeCount" : 3,
     "tags" : [ ],
     "account" : {
-      "accountId" : 10002,
+      "accountId" : 20001,
       "profile" : "https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg",
-      "nickname" : "testNickname2"
+      "nickname" : "userA"
     }
   }, {
-    "boardId" : 12001,
+    "boardId" : 21012,
+    "thumbnail" : "https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg",
+    "title" : "testTitleContainsQuery",
+    "likeCount" : 2,
+    "tags" : [ ],
+    "account" : {
+      "accountId" : 20003,
+      "profile" : "https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg",
+      "nickname" : "userC"
+    }
+  }, {
+    "boardId" : 21011,
     "thumbnail" : "https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg",
     "title" : "testTitle",
     "likeCount" : 1,
-    "tags" : [ "testName1", "testName2" ],
+    "tags" : [ ],
     "account" : {
-      "accountId" : 10001,
+      "accountId" : 20002,
       "profile" : "https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg",
-      "nickname" : "testNickname1"
+      "nickname" : "userB"
+    }
+  }, {
+    "boardId" : 21010,
+    "thumbnail" : "https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg",
+    "title" : "testTitleContainsQuery",
+    "likeCount" : 0,
+    "tags" : [ "testContainsQuery" ],
+    "account" : {
+      "accountId" : 20001,
+      "profile" : "https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg",
+      "nickname" : "userA"
+    }
+  }, {
+    "boardId" : 21009,
+    "thumbnail" : "https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg",
+    "title" : "testTitle",
+    "likeCount" : 9,
+    "tags" : [ ],
+    "account" : {
+      "accountId" : 20003,
+      "profile" : "https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg",
+      "nickname" : "userC"
+    }
+  }, {
+    "boardId" : 21008,
+    "thumbnail" : "https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg",
+    "title" : "testTitleContainsQuery",
+    "likeCount" : 8,
+    "tags" : [ ],
+    "account" : {
+      "accountId" : 20002,
+      "profile" : "https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg",
+      "nickname" : "userB"
+    }
+  }, {
+    "boardId" : 21007,
+    "thumbnail" : "https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg",
+    "title" : "testTitle",
+    "likeCount" : 7,
+    "tags" : [ ],
+    "account" : {
+      "accountId" : 20001,
+      "profile" : "https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg",
+      "nickname" : "userA"
+    }
+  }, {
+    "boardId" : 21006,
+    "thumbnail" : "https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg",
+    "title" : "testTitleContainsQuery",
+    "likeCount" : 6,
+    "tags" : [ ],
+    "account" : {
+      "accountId" : 20003,
+      "profile" : "https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg",
+      "nickname" : "userC"
+    }
+  }, {
+    "boardId" : 21005,
+    "thumbnail" : "https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg",
+    "title" : "testTitle",
+    "likeCount" : 5,
+    "tags" : [ "testContainsQuery" ],
+    "account" : {
+      "accountId" : 20002,
+      "profile" : "https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg",
+      "nickname" : "userB"
+    }
+  }, {
+    "boardId" : 21004,
+    "thumbnail" : "https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg",
+    "title" : "testTitleContainsQuery",
+    "likeCount" : 4,
+    "tags" : [ ],
+    "account" : {
+      "accountId" : 20001,
+      "profile" : "https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg",
+      "nickname" : "userA"
+    }
+  }, {
+    "boardId" : 21003,
+    "thumbnail" : "https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg",
+    "title" : "testTitle",
+    "likeCount" : 3,
+    "tags" : [ ],
+    "account" : {
+      "accountId" : 20003,
+      "profile" : "https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg",
+      "nickname" : "userC"
+    }
+  }, {
+    "boardId" : 21002,
+    "thumbnail" : "https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg",
+    "title" : "testTitleContainsQuery",
+    "likeCount" : 2,
+    "tags" : [ ],
+    "account" : {
+      "accountId" : 20002,
+      "profile" : "https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg",
+      "nickname" : "userB"
     }
   } ],
   "sliceNumber" : 1,
   "size" : 20,
-  "hasNext" : false,
-  "numberOfElements" : 4
+  "hasNext" : true,
+  "numberOfElements" : 20
 }</code></pre>
 </div>
 </div>
@@ -2390,14 +2581,14 @@ Content-Length: 1808
 <div class="listingblock">
 <div class="title">curl-request</div>
 <div class="content">
-<pre class="prettyprint highlight"><code data-lang="bash">$ curl 'http://localhost:8080/boards/account/10001' -i -X GET \
+<pre class="prettyprint highlight"><code data-lang="bash">$ curl 'http://localhost:8080/boards/account/20002' -i -X GET \
     -H 'Accept: application/json'</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">http-request</div>
 <div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">GET /boards/account/10001 HTTP/1.1
+<pre class="prettyprint highlight nowrap"><code data-lang="http">GET /boards/account/20002 HTTP/1.1
 Accept: application/json
 Host: localhost:8080</code></pre>
 </div>
@@ -2438,36 +2629,91 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 968
+Content-Length: 3162
 
 {
   "content" : [ {
-    "boardId" : 12004,
+    "boardId" : 21020,
+    "thumbnail" : "https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg",
+    "title" : "testTitleContainsQuery",
+    "likeCount" : 0,
+    "tags" : [ "testContainsQuery" ],
+    "account" : {
+      "accountId" : 20002,
+      "profile" : "https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg",
+      "nickname" : "userB"
+    }
+  }, {
+    "boardId" : 21017,
+    "thumbnail" : "https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg",
+    "title" : "testTitle",
+    "likeCount" : 7,
+    "tags" : [ ],
+    "account" : {
+      "accountId" : 20002,
+      "profile" : "https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg",
+      "nickname" : "userB"
+    }
+  }, {
+    "boardId" : 21014,
+    "thumbnail" : "https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg",
+    "title" : "testTitleContainsQuery",
+    "likeCount" : 4,
+    "tags" : [ ],
+    "account" : {
+      "accountId" : 20002,
+      "profile" : "https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg",
+      "nickname" : "userB"
+    }
+  }, {
+    "boardId" : 21011,
     "thumbnail" : "https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg",
     "title" : "testTitle",
     "likeCount" : 1,
     "tags" : [ ],
     "account" : {
-      "accountId" : 10001,
+      "accountId" : 20002,
       "profile" : "https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg",
-      "nickname" : "testNickname1"
+      "nickname" : "userB"
     }
   }, {
-    "boardId" : 12001,
+    "boardId" : 21008,
+    "thumbnail" : "https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg",
+    "title" : "testTitleContainsQuery",
+    "likeCount" : 8,
+    "tags" : [ ],
+    "account" : {
+      "accountId" : 20002,
+      "profile" : "https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg",
+      "nickname" : "userB"
+    }
+  }, {
+    "boardId" : 21005,
     "thumbnail" : "https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg",
     "title" : "testTitle",
-    "likeCount" : 1,
-    "tags" : [ "testName1", "testName2" ],
+    "likeCount" : 5,
+    "tags" : [ "testContainsQuery" ],
     "account" : {
-      "accountId" : 10001,
+      "accountId" : 20002,
       "profile" : "https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg",
-      "nickname" : "testNickname1"
+      "nickname" : "userB"
+    }
+  }, {
+    "boardId" : 21002,
+    "thumbnail" : "https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg",
+    "title" : "testTitleContainsQuery",
+    "likeCount" : 2,
+    "tags" : [ ],
+    "account" : {
+      "accountId" : 20002,
+      "profile" : "https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg",
+      "nickname" : "userB"
     }
   } ],
   "sliceNumber" : 1,
   "size" : 20,
   "hasNext" : false,
-  "numberOfElements" : 2
+  "numberOfElements" : 7
 }</code></pre>
 </div>
 </div>
@@ -2572,9 +2818,9 @@ Content-Length: 968
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="bash">$ curl 'http://localhost:8080/comments' -i -X POST \
     -H 'Content-Type: application/json;charset=UTF-8' \
-    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2Njg4MzUxNDgsImV4cCI6MTY2ODgzODc0OH0.24BPtE-36XlQgwt-dDe0c_GVk6n3ZMbzG5T9dX_dwxE' \
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InVzZXJBQHRlc3QuY29tIiwic3ViIjoiMjAwMDEiLCJpYXQiOjE2Njg5MzU2OTgsImV4cCI6MTY2ODkzOTI5OH0.g1V3PcvsoMRWNL5FEaXQAasawqtYusrxxGW2ONO-76o' \
     -d '{
-  "boardId" : 12001,
+  "boardId" : 21001,
   "content" : "testCommentContents"
 }'</code></pre>
 </div>
@@ -2584,12 +2830,12 @@ Content-Length: 968
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">POST /comments HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2Njg4MzUxNDgsImV4cCI6MTY2ODgzODc0OH0.24BPtE-36XlQgwt-dDe0c_GVk6n3ZMbzG5T9dX_dwxE
-Content-Length: 60
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InVzZXJBQHRlc3QuY29tIiwic3ViIjoiMjAwMDEiLCJpYXQiOjE2Njg5MzU2OTgsImV4cCI6MTY2ODkzOTI5OH0.g1V3PcvsoMRWNL5FEaXQAasawqtYusrxxGW2ONO-76o
+Content-Length: 63
 Host: localhost:8080
 
 {
-  "boardId" : 12001,
+  "boardId" : 21001,
   "content" : "testCommentContents"
 }</code></pre>
 </div>
@@ -2664,9 +2910,9 @@ X-Frame-Options: DENY</code></pre>
 <div class="listingblock">
 <div class="title">curl-request</div>
 <div class="content">
-<pre class="prettyprint highlight"><code data-lang="bash">$ curl 'http://localhost:8080/comments/15001' -i -X PATCH \
+<pre class="prettyprint highlight"><code data-lang="bash">$ curl 'http://localhost:8080/comments/25001' -i -X PATCH \
     -H 'Content-Type: application/json;charset=UTF-8' \
-    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2Njg4MzUxNDgsImV4cCI6MTY2ODgzODc0OH0.24BPtE-36XlQgwt-dDe0c_GVk6n3ZMbzG5T9dX_dwxE' \
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InVzZXJBQHRlc3QuY29tIiwic3ViIjoiMjAwMDEiLCJpYXQiOjE2Njg5MzU2OTgsImV4cCI6MTY2ODkzOTI5OH0.g1V3PcvsoMRWNL5FEaXQAasawqtYusrxxGW2ONO-76o' \
     -d '{
   "content" : "modified testContents"
 }'</code></pre>
@@ -2675,10 +2921,10 @@ X-Frame-Options: DENY</code></pre>
 <div class="listingblock">
 <div class="title">http-request</div>
 <div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">PATCH /comments/15001 HTTP/1.1
+<pre class="prettyprint highlight nowrap"><code data-lang="http">PATCH /comments/25001 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2Njg4MzUxNDgsImV4cCI6MTY2ODgzODc0OH0.24BPtE-36XlQgwt-dDe0c_GVk6n3ZMbzG5T9dX_dwxE
-Content-Length: 41
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InVzZXJBQHRlc3QuY29tIiwic3ViIjoiMjAwMDEiLCJpYXQiOjE2Njg5MzU2OTgsImV4cCI6MTY2ODkzOTI5OH0.g1V3PcvsoMRWNL5FEaXQAasawqtYusrxxGW2ONO-76o
+Content-Length: 43
 Host: localhost:8080
 
 {
@@ -2773,15 +3019,15 @@ X-Frame-Options: DENY</code></pre>
 <div class="listingblock">
 <div class="title">curl-request</div>
 <div class="content">
-<pre class="prettyprint highlight"><code data-lang="bash">$ curl 'http://localhost:8080/comments/15100' -i -X DELETE \
-    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2Njg4MzUxNDgsImV4cCI6MTY2ODgzODc0OH0.24BPtE-36XlQgwt-dDe0c_GVk6n3ZMbzG5T9dX_dwxE'</code></pre>
+<pre class="prettyprint highlight"><code data-lang="bash">$ curl 'http://localhost:8080/comments/35001' -i -X DELETE \
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InVzZXJBQHRlc3QuY29tIiwic3ViIjoiMjAwMDEiLCJpYXQiOjE2Njg5MzU2OTcsImV4cCI6MTY2ODkzOTI5N30.4Mw8FxQsg9bvjcdfFQ2jKuP7HilwTndwDtmTm7PnLLE'</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">http-request</div>
 <div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">DELETE /comments/15100 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2Njg4MzUxNDgsImV4cCI6MTY2ODgzODc0OH0.24BPtE-36XlQgwt-dDe0c_GVk6n3ZMbzG5T9dX_dwxE
+<pre class="prettyprint highlight nowrap"><code data-lang="http">DELETE /comments/35001 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InVzZXJBQHRlc3QuY29tIiwic3ViIjoiMjAwMDEiLCJpYXQiOjE2Njg5MzU2OTcsImV4cCI6MTY2ODkzOTI5N30.4Mw8FxQsg9bvjcdfFQ2jKuP7HilwTndwDtmTm7PnLLE
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -2850,14 +3096,14 @@ X-Frame-Options: DENY</code></pre>
 <div class="listingblock">
 <div class="title">curl-request</div>
 <div class="content">
-<pre class="prettyprint highlight"><code data-lang="bash">$ curl 'http://localhost:8080/comments/board/12002' -i -X GET \
+<pre class="prettyprint highlight"><code data-lang="bash">$ curl 'http://localhost:8080/comments/board/21001?page=1&amp;size=5' -i -X GET \
     -H 'Accept: application/json'</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">http-request</div>
 <div class="content">
-<pre class="prettyprint highlight nowrap"><code data-lang="http">GET /comments/board/12002 HTTP/1.1
+<pre class="prettyprint highlight nowrap"><code data-lang="http">GET /comments/board/21001?page=1&amp;size=5 HTTP/1.1
 Accept: application/json
 Host: localhost:8080</code></pre>
 </div>
@@ -2884,6 +3130,33 @@ Host: localhost:8080</code></pre>
 </tr>
 </tbody>
 </table>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 44. request-parameters</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>page</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">페이지</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>false</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>size</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">페이지 사이즈</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>false</code></p></td>
+</tr>
+</tbody>
+</table>
 <div class="listingblock">
 <div class="title">http-response</div>
 <div class="content">
@@ -2898,53 +3171,53 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 1651
+Content-Length: 1657
 
 {
   "content" : [ {
-    "commentId" : 15001,
-    "content" : "testContents",
+    "commentId" : 25004,
+    "content" : "testComment",
     "createdAt" : "2022-10-14T14:00:01",
     "account" : {
-      "accountId" : 10001,
+      "accountId" : 20001,
       "profile" : "https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg",
-      "nickname" : "testNickname1"
+      "nickname" : "userA"
     }
   }, {
-    "commentId" : 15006,
-    "content" : "testContents",
-    "createdAt" : "2022-10-14T14:00:02",
+    "commentId" : 25005,
+    "content" : "testComment",
+    "createdAt" : "2022-10-14T14:00:01",
     "account" : {
-      "accountId" : 10002,
+      "accountId" : 20002,
       "profile" : "https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg",
-      "nickname" : "testNickname2"
+      "nickname" : "userB"
     }
   }, {
-    "commentId" : 15007,
-    "content" : "testContents",
-    "createdAt" : "2022-10-14T14:00:03",
+    "commentId" : 25006,
+    "content" : "testComment",
+    "createdAt" : "2022-10-14T14:00:01",
     "account" : {
-      "accountId" : 10003,
+      "accountId" : 20003,
       "profile" : "https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg",
-      "nickname" : "testNickname3"
+      "nickname" : "userC"
     }
   }, {
-    "commentId" : 15008,
-    "content" : "testContents",
-    "createdAt" : "2022-10-14T14:00:04",
+    "commentId" : 25003,
+    "content" : "testComment",
+    "createdAt" : "2022-10-14T14:00:01",
     "account" : {
-      "accountId" : 10001,
+      "accountId" : 20003,
       "profile" : "https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg",
-      "nickname" : "testNickname1"
+      "nickname" : "userC"
     }
   }, {
-    "commentId" : 15009,
-    "content" : "testContents",
-    "createdAt" : "2022-10-14T14:00:05",
+    "commentId" : 25002,
+    "content" : "testComment",
+    "createdAt" : "2022-10-14T14:00:01",
     "account" : {
-      "accountId" : 10002,
+      "accountId" : 20002,
       "profile" : "https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg",
-      "nickname" : "testNickname2"
+      "nickname" : "userB"
     }
   } ],
   "sliceNumber" : 1,
@@ -2955,7 +3228,7 @@ Content-Length: 1651
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 44. response-fields</caption>
+<caption class="title">Table 45. response-fields</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -3044,19 +3317,19 @@ Content-Length: 1651
 <div class="title">curl-request</div>
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="bash">$ curl 'http://localhost:8080/follows/10002' -i -X POST \
-    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2Njg4MzUxNDgsImV4cCI6MTY2ODgzODc0OH0.24BPtE-36XlQgwt-dDe0c_GVk6n3ZMbzG5T9dX_dwxE'</code></pre>
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2Njg5MzU2OTgsImV4cCI6MTY2ODkzOTI5OH0.Q6mqpKG3G5PxNTZ7YbBPuu5-CmAKHKjKMRKhRLRDEGI'</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">http-request</div>
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">POST /follows/10002 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2Njg4MzUxNDgsImV4cCI6MTY2ODgzODc0OH0.24BPtE-36XlQgwt-dDe0c_GVk6n3ZMbzG5T9dX_dwxE
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2Njg5MzU2OTgsImV4cCI6MTY2ODkzOTI5OH0.Q6mqpKG3G5PxNTZ7YbBPuu5-CmAKHKjKMRKhRLRDEGI
 Host: localhost:8080</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 45. request-headers</caption>
+<caption class="title">Table 46. request-headers</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -3078,7 +3351,7 @@ Host: localhost:8080</code></pre>
 </tbody>
 </table>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 46. /follows/{accountId}</caption>
+<caption class="title">Table 47. /follows/{accountId}</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -3113,7 +3386,7 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 26
+Content-Length: 28
 
 {
   "status" : "SUCCESS"
@@ -3121,7 +3394,7 @@ Content-Length: 26
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 47. response-fields</caption>
+<caption class="title">Table 48. response-fields</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -3149,19 +3422,19 @@ Content-Length: 26
 <div class="title">curl-request</div>
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="bash">$ curl 'http://localhost:8080/follows/10002' -i -X GET \
-    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2Njg4MzUxNDgsImV4cCI6MTY2ODgzODc0OH0.24BPtE-36XlQgwt-dDe0c_GVk6n3ZMbzG5T9dX_dwxE'</code></pre>
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2Njg5MzU2OTgsImV4cCI6MTY2ODkzOTI5OH0.Q6mqpKG3G5PxNTZ7YbBPuu5-CmAKHKjKMRKhRLRDEGI'</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">http-request</div>
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">GET /follows/10002 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2Njg4MzUxNDgsImV4cCI6MTY2ODgzODc0OH0.24BPtE-36XlQgwt-dDe0c_GVk6n3ZMbzG5T9dX_dwxE
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2Njg5MzU2OTgsImV4cCI6MTY2ODkzOTI5OH0.Q6mqpKG3G5PxNTZ7YbBPuu5-CmAKHKjKMRKhRLRDEGI
 Host: localhost:8080</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 48. request-headers</caption>
+<caption class="title">Table 49. request-headers</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -3183,7 +3456,7 @@ Host: localhost:8080</code></pre>
 </tbody>
 </table>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 49. /follows/{accountId}</caption>
+<caption class="title">Table 50. /follows/{accountId}</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -3218,7 +3491,7 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 21
+Content-Length: 23
 
 {
   "follow" : true
@@ -3226,7 +3499,7 @@ Content-Length: 21
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 50. response-fields</caption>
+<caption class="title">Table 51. response-fields</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -3260,19 +3533,19 @@ Content-Length: 21
 <div class="title">curl-request</div>
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="bash">$ curl 'http://localhost:8080/likes/12002' -i -X POST \
-    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2Njg4MzUxNDgsImV4cCI6MTY2ODgzODc0OH0.24BPtE-36XlQgwt-dDe0c_GVk6n3ZMbzG5T9dX_dwxE'</code></pre>
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2Njg5MzU2OTgsImV4cCI6MTY2ODkzOTI5OH0.Q6mqpKG3G5PxNTZ7YbBPuu5-CmAKHKjKMRKhRLRDEGI'</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">http-request</div>
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">POST /likes/12002 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2Njg4MzUxNDgsImV4cCI6MTY2ODgzODc0OH0.24BPtE-36XlQgwt-dDe0c_GVk6n3ZMbzG5T9dX_dwxE
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2Njg5MzU2OTgsImV4cCI6MTY2ODkzOTI5OH0.Q6mqpKG3G5PxNTZ7YbBPuu5-CmAKHKjKMRKhRLRDEGI
 Host: localhost:8080</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 51. request-headers</caption>
+<caption class="title">Table 52. request-headers</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -3294,7 +3567,7 @@ Host: localhost:8080</code></pre>
 </tbody>
 </table>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 52. /likes/{boardId}</caption>
+<caption class="title">Table 53. /likes/{boardId}</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -3329,7 +3602,7 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 26
+Content-Length: 28
 
 {
   "status" : "SUCCESS"
@@ -3337,7 +3610,7 @@ Content-Length: 26
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 53. response-fields</caption>
+<caption class="title">Table 54. response-fields</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -3365,19 +3638,19 @@ Content-Length: 26
 <div class="title">curl-request</div>
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="bash">$ curl 'http://localhost:8080/likes/12002' -i -X GET \
-    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2Njg4MzUxNDgsImV4cCI6MTY2ODgzODc0OH0.24BPtE-36XlQgwt-dDe0c_GVk6n3ZMbzG5T9dX_dwxE'</code></pre>
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2Njg5MzU2OTgsImV4cCI6MTY2ODkzOTI5OH0.Q6mqpKG3G5PxNTZ7YbBPuu5-CmAKHKjKMRKhRLRDEGI'</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">http-request</div>
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">GET /likes/12002 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2Njg4MzUxNDgsImV4cCI6MTY2ODgzODc0OH0.24BPtE-36XlQgwt-dDe0c_GVk6n3ZMbzG5T9dX_dwxE
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2Njg5MzU2OTgsImV4cCI6MTY2ODkzOTI5OH0.Q6mqpKG3G5PxNTZ7YbBPuu5-CmAKHKjKMRKhRLRDEGI
 Host: localhost:8080</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 54. request-headers</caption>
+<caption class="title">Table 55. request-headers</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -3399,7 +3672,7 @@ Host: localhost:8080</code></pre>
 </tbody>
 </table>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 55. /likes/{boardId}</caption>
+<caption class="title">Table 56. /likes/{boardId}</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -3434,7 +3707,7 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 20
+Content-Length: 22
 
 {
   "likes" : true
@@ -3442,7 +3715,7 @@ Content-Length: 20
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 56. response-fields</caption>
+<caption class="title">Table 57. response-fields</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -3603,7 +3876,7 @@ Content-Length: 260
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2022-11-19 14:18:55 +0900
+Last updated 2022-11-20 18:14:30 +0900
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css">

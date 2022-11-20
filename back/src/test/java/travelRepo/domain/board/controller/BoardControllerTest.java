@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindException;
 import travelRepo.domain.account.entity.Account;
 import travelRepo.domain.account.repository.AccountRepository;
+import travelRepo.domain.board.entity.Category;
 import travelRepo.global.exception.BusinessLogicException;
 import travelRepo.global.security.authentication.UserAccount;
 import travelRepo.global.security.jwt.JwtProcessor;
@@ -55,7 +56,7 @@ class BoardControllerTest extends After {
     public void boardAdd_Success() throws Exception {
 
         //given
-        Account account = accountRepository.findById(10001L).get();
+        Account account = accountRepository.findById(20001L).get();
         String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
 
         MockMultipartFile image1 = new MockMultipartFile("images", "image1.png", "image/png", "(file data)".getBytes());
@@ -124,7 +125,7 @@ class BoardControllerTest extends After {
     public void boardAdd_ValidationException() throws Exception {
 
         //given
-        Account account = accountRepository.findById(10001L).get();
+        Account account = accountRepository.findById(20001L).get();
         String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
 
         MockMultipartFile image1 = new MockMultipartFile("images", "image1.png", "image/png", "(file data)".getBytes());
@@ -214,14 +215,14 @@ class BoardControllerTest extends After {
     public void boardModify_Success() throws Exception {
 
         //given
-        Account account = accountRepository.findById(10001L).get();
+        Account account = accountRepository.findById(20001L).get();
         String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
 
-        Long boardId = 12001L;
+        Long boardId = 31001L;
 
         MockMultipartFile image1 = new MockMultipartFile("images", "image1.png", "image/png", "(file data)".getBytes());
-        MockMultipartFile image4 = new MockMultipartFile("images", "image4.png", "image/png", "(file data)".getBytes());
-        MockMultipartFile image5 = new MockMultipartFile("images", "image5.png", "image/png", "(file data)".getBytes());
+        MockMultipartFile image2 = new MockMultipartFile("images", "image2.png", "image/png", "(file data)".getBytes());
+        MockMultipartFile image3 = new MockMultipartFile("images", "image3.png", "image/png", "(file data)".getBytes());
 
 
         String title = "modified mock board title";
@@ -235,7 +236,7 @@ class BoardControllerTest extends After {
         //when
         ResultActions actions = mockMvc.perform(
                 multipart("/boards/{boardId}", boardId)
-                        .file(image1).file(image4).file(image5)
+                        .file(image1).file(image2).file(image3)
                         .param("title", title)
                         .param("content", content)
                         .param("location", location)
@@ -288,10 +289,10 @@ class BoardControllerTest extends After {
     public void boardModify_NOT_FOUND() throws Exception {
 
         //given
-        Account account = accountRepository.findById(10001L).get();
+        Account account = accountRepository.findById(20001L).get();
         String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
 
-        Long boardId = 12101L;
+        Long boardId = 41001L;
 
         String title = "modified mock board title";
 
@@ -316,10 +317,10 @@ class BoardControllerTest extends After {
     public void boardModify_FORBIDDEN() throws Exception {
 
         //given
-        Account account = accountRepository.findById(10001L).get();
+        Account account = accountRepository.findById(20001L).get();
         String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
 
-        Long boardId = 12002L;
+        Long boardId = 21002L;
 
         String title = "modified mock board title";
 
@@ -344,10 +345,10 @@ class BoardControllerTest extends After {
     public void boardRemove_Success() throws Exception {
 
         //given
-        Account account = accountRepository.findById(10001L).get();
+        Account account = accountRepository.findById(20001L).get();
         String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
 
-        Long boardId = 12004L;
+        Long boardId = 31002L;
 
         //when
         ResultActions actions = mockMvc.perform(
@@ -378,10 +379,10 @@ class BoardControllerTest extends After {
     public void boardRemove_NOT_FOUND() throws Exception {
 
         //given
-        Account account = accountRepository.findById(10001L).get();
+        Account account = accountRepository.findById(20001L).get();
         String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
 
-        Long boardId = 12101L;
+        Long boardId = 41001L;
 
         //when
         ResultActions actions = mockMvc.perform(
@@ -401,10 +402,10 @@ class BoardControllerTest extends After {
     public void boardRemove_FORBIDDEN() throws Exception {
 
         //given
-        Account account = accountRepository.findById(10001L).get();
+        Account account = accountRepository.findById(20001L).get();
         String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
 
-        Long boardId = 12002L;
+        Long boardId = 21002L;
 
         //when
         ResultActions actions = mockMvc.perform(
@@ -424,7 +425,7 @@ class BoardControllerTest extends After {
     public void boardDetails_Success() throws Exception {
 
         // given
-        Long boardId = 12001L;
+        Long boardId = 21001L;
 
         // when
         ResultActions actions = mockMvc.perform(
@@ -441,11 +442,11 @@ class BoardControllerTest extends After {
                 .andExpect(jsonPath("$.location").value("test-location"))
                 .andExpect(jsonPath("$.category").value("RESTAURANT"))
                 .andExpect(jsonPath("$.likeCount").value(1))
-                .andExpect(jsonPath("$.views").value(11))
+                .andExpect(jsonPath("$.views").value(102))
                 .andExpect(jsonPath("$.tags", hasSize(2)))
-                .andExpect(jsonPath("$.photos", hasSize(3)))
-                .andExpect(jsonPath("$.createdAt").value("2022-10-14T12:00:01"))
-                .andExpect(jsonPath("$.account.accountId").value(10001))
+                .andExpect(jsonPath("$.photos", hasSize(1)))
+                .andExpect(jsonPath("$.createdAt").value("2022-11-14T12:00:01"))
+                .andExpect(jsonPath("$.account.accountId").value(20001))
                 .andDo(document(
                         "boardDetails",
                         getRequestPreProcessor(),
@@ -479,7 +480,7 @@ class BoardControllerTest extends After {
     public void boardDetails_NOT_FOUND() throws Exception {
 
         // given
-        Long boardId = 12101L;
+        Long boardId = 41001L;
 
         // when
         ResultActions actions = mockMvc.perform(
@@ -499,21 +500,30 @@ class BoardControllerTest extends After {
     public void boardList_Success() throws Exception {
 
         //given
-        String query = "";
-        String category = "";
-
+        String query = null;
+        String category = null;
+        int page = 1;
+        int size = 20;
+        String sort = "createdAt,DESC";
 
         //when
         ResultActions actions = mockMvc.perform(
                 get("/boards")
                         .param("query", query)
                         .param("category", category)
+                        .param("page", String.valueOf(page))
+                        .param("size", String.valueOf(size))
+                        .param("sort", sort)
                         .accept(MediaType.APPLICATION_JSON)
         );
 
         //then
         actions
                 .andExpect(status().isOk())
+                .andExpect(jsonPath("$.sliceNumber").value(1))
+                .andExpect(jsonPath("$.size").value(20))
+                .andExpect(jsonPath("$.hasNext").value(true))
+                .andExpect(jsonPath("$.numberOfElements").value(20))
                 .andDo(document(
                         "boardList",
                         getRequestPreProcessor(),
@@ -521,7 +531,10 @@ class BoardControllerTest extends After {
                         requestParameters(
                                 List.of(
                                         parameterWithName("query").description("검색어").optional(),
-                                        parameterWithName("category").description("게시글 분류").optional()
+                                        parameterWithName("category").description("게시글 분류").optional(),
+                                        parameterWithName("page").description("페이지").optional(),
+                                        parameterWithName("size").description("페이지 사이즈").optional(),
+                                        parameterWithName("sort").description("정렬 기준").optional()
                                 )
                         ),
                         responseFields(
@@ -546,11 +559,57 @@ class BoardControllerTest extends After {
     }
 
     @Test
+    @DisplayName("게시글 전체 조회_검색")
+    public void boardList_Search() throws Exception {
+
+        //given
+        String query = "Query";
+
+        //when
+        ResultActions actions = mockMvc.perform(
+                get("/boards")
+                        .param("query", query)
+                        .accept(MediaType.APPLICATION_JSON)
+        );
+
+        //then
+        actions
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.sliceNumber").value(1))
+                .andExpect(jsonPath("$.size").value(20))
+                .andExpect(jsonPath("$.hasNext").value(false))
+                .andExpect(jsonPath("$.numberOfElements").value(15));
+    }
+
+    @Test
+    @DisplayName("게시글 전체 조회_필터")
+    public void boardList_Filter() throws Exception {
+
+        //given
+        Category category = Category.SPOT;
+
+        //when
+        ResultActions actions = mockMvc.perform(
+                get("/boards")
+                        .param("category", "SPOT")
+                        .accept(MediaType.APPLICATION_JSON)
+        );
+
+        //then
+        actions
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.sliceNumber").value(1))
+                .andExpect(jsonPath("$.size").value(20))
+                .andExpect(jsonPath("$.hasNext").value(false))
+                .andExpect(jsonPath("$.numberOfElements").value(7));
+    }
+
+    @Test
     @DisplayName("유저 게시글 조회_성공")
     public void accountBoardList_Success() throws Exception {
 
         //given
-        Long accountId = 10001L;
+        Long accountId = 20002L;
 
         //when
         ResultActions actions = mockMvc.perform(
