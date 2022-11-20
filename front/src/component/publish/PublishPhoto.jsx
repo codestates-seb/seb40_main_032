@@ -38,6 +38,12 @@ const Container = styled.section`
     display: flex;
     justify-content: center;
     align-items: center;
+    > div {
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
   }
 
   #upload__button {
