@@ -49,12 +49,10 @@ function PublishForm() {
   // 해쉬태그 추가
   const handleTagAdd = async event => {
     const { value } = event.target;
-    const regex = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|]+$/;
     const filtered = tags.filter(el => el === value);
 
     if (event.key === 'Enter' || event.key === ',') {
-      if (!regex.test(value)) return;
-      if (regex.test(value) && value !== '' && filtered.indexOf(value) === -1) {
+      if (value !== '' && filtered.indexOf(value) === -1 && value.length <= 6) {
         setTags([...tags, value]);
         setFormData({ ...formData, tags: [...tags, value] });
         setTimeout(() => {
