@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import UserInfoTabNav from './UserInfoTab';
+import UserInfoTab from './UserInfoTab';
 import UserInfoCard from './UserInfoCard';
 
 const Wrapper = styled.div`
@@ -21,7 +21,7 @@ function UserInfo() {
     <Wrapper>
       <Container>
         <UserInfoCard />
-        <UserInfoTabNav />
+        <UserInfoTab />
       </Container>
     </Wrapper>
   );
