@@ -64,12 +64,11 @@ public class AccountService {
         Account account = accountRepository.findById(loginAccountId)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_ACCOUNT));
 
-        String profile = imageService.uploadImage(accountModifyReq.getProfile(), path);
         String encodePassword = null;
         if (accountModifyReq.getPassword() != null) {
             encodePassword = bCryptPasswordEncoder.encode(accountModifyReq.getPassword());
         }
-        Account modifyAccount = accountModifyReq.toAccount(profile, encodePassword);
+        Account modifyAccount = accountModifyReq.toAccount(encodePassword);
         account.modify(modifyAccount);
 
         return new IdDto(account.getId());
