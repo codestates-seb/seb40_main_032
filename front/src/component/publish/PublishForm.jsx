@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import categoryData from './categoryData';
 import { DefaultButton, TransparentButton } from '../common/button/ButtonStyle';
+import PublishPhoto from './PublishPhoto';
 
 // 컨테이너
 const Container = styled.div`
@@ -42,30 +43,6 @@ const Container = styled.div`
       color: var(--font-base-black);
       font-size: var(--font-15);
       font-weight: var(--font-semi-bold);
-    }
-  }
-`;
-
-// 사진 - 미구현(임시)
-const PhotoContainer = styled.section`
-  display: flex;
-  flex-wrap: nowrap;
-  gap: 2vw;
-  @media screen and (max-width: 549px) {
-    width: 100%;
-    justify-content: space-between;
-  }
-  .mock-photo {
-    display: flex;
-    width: 10rem;
-    height: 10rem;
-    border: 2px dashed burlywood;
-    border-radius: 10px;
-    margin-bottom: 2px;
-    @media screen and (max-width: 549px) {
-      width: 30vh;
-      height: 25vw;
-      flex-basis: 30%;
     }
   }
 `;
@@ -204,7 +181,7 @@ const TagWrapper = styled.ul`
       }
     }
   }
-  .tag__input-create {
+  .tag__input--create {
     border: none;
     flex: 1;
   }
@@ -297,15 +274,7 @@ function PublishForm() {
   return (
     <Container>
       <h1>새 게시물</h1>
-      <div className="temporary">
-        <PhotoContainer>
-          <div className="mock-photo" />
-          <div className="mock-photo" />
-          <div className="mock-photo" />
-        </PhotoContainer>
-        <small>*(임시) 업로드 가능한 파일 포맷은 jpg, png입니다.</small>
-      </div>
-
+      <PublishPhoto />
       <TitleContainer>
         <div className="title__label">
           <label htmlFor="title">제목</label>

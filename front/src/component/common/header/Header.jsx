@@ -19,6 +19,8 @@ const HeaderWrapper = styled.header`
     height: 100%;
     padding-inline-start: 10rem;
     padding-inline-end: 10rem;
+    max-width: 172rem;
+    margin: 0 auto;
   }
 
   .header__logo {
@@ -40,7 +42,7 @@ const HeaderWrapper = styled.header`
   }
 `;
 
-function Header() {
+function Header({ loginModalOpener }) {
   return (
     <HeaderWrapper className="header">
       <section className="header__container">
@@ -56,7 +58,7 @@ function Header() {
         </div>
         {/* post write / user login & user join / user info & user logout */}
         <div className="header__info">
-          <HeaderUser />
+          <HeaderUser loginModalOpener={loginModalOpener} />
         </div>
       </section>
     </HeaderWrapper>

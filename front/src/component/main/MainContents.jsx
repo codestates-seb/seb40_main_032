@@ -1,6 +1,8 @@
+import { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import Post from '../common/Post';
 import MainSort from './MainSort';
+// import PostSkeleton from '../common/PostSkeleton';
 
 const MainContainer = styled.section`
   width: 100%;
@@ -40,19 +42,37 @@ const MainContainer = styled.section`
   }
 `;
 
-function MainContents() {
+function MainContents({ axiosData, isPending, extraPage, posts }) {
+  const target = useRef(null);
+
+  // isPending 상태 확인용
+  useEffect(() => {
+    console.log(isPending);
+  }, [isPending]);
+
+  useEffect(() => {
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          axiosData(20); // 데이터 요청
+        }
+      },
+      { threshold: 1 },
+    );
+    if (target.current && extraPage) {
+      io.observe(target.current);
+    }
+    return () => io.disconnect();
+  }, [extraPage]);
+
   return (
     <MainContainer>
       <MainSort />
       <div className="main__container">
-        <Post />
-        <Post />
-        <Post />
-        <Post />
-        <Post />
-        <Post />
-        <Post />
-        <Post />
+        {posts.map(post => {
+          return <Post key={post.boardId} post={post} />;
+        })}
+        <div ref={target} className="target" />
       </div>
     </MainContainer>
   );

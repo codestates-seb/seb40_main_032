@@ -1,4 +1,4 @@
-package travelRepo.global.upload.service;
+package travelRepo.global.image.repository;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
@@ -14,7 +14,7 @@ import java.util.UUID;
 @Service
 @ConditionalOnProperty(value = "mod", havingValue = "server")
 @RequiredArgsConstructor
-public class S3UploadService implements UploadService{
+public class S3ImageRepository implements ImageRepository{
 
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
@@ -22,13 +22,9 @@ public class S3UploadService implements UploadService{
     private final AmazonS3 amazonS3;
 
     @Override
-    public String uploadWithException(MultipartFile image) throws IOException {
+    public String save(MultipartFile image, String path) throws IOException {
 
-        if (image == null || image.isEmpty()) {
-            return null;
-        }
-
-        String s3Filename = createS3Filename(image);
+        String s3Filename = path + createS3Filename(image);
 
         ObjectMetadata objMeta = new ObjectMetadata();
         objMeta.setContentType(image.getContentType());

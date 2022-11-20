@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { useDispatch } from 'react-redux';
 import ModalCard from './ModalCard';
 import Backdrop from './Backdrop';
 import { DefaultButton, TransparentButton } from '../button/ButtonStyle';
 import SignupModal from './SignupModal';
+import loginAsync from '../../../redux/action/loginAsync';
+import loginUserApi from '../../../api/loginUserApi';
 
 const LoginModalStyle = styled.div`
   display: flex;
@@ -56,10 +59,12 @@ const LoginModalStyle = styled.div`
   }
 `;
 
-function LoginModal({ modalCloser }) {
+function LoginModal({ modalCloser, loginNotify }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [signupModalOpened, setSignupModalOpened] = useState(false);
+  const [isValidate, setIsValidate] = useState(true);
+  const dispatch = useDispatch();
 
   // 인풋값 상태 저장 함수
   const onChangeEmail = e => {
@@ -77,11 +82,30 @@ function LoginModal({ modalCloser }) {
     setSignupModalOpened(false);
   };
 
-  // 추후 로그인 axios를 onSubmitHandler 함수에 작성할 것.
-  // 로그인 유효성 검사는 백엔드에서 받는 응답에 따라 나타나게 할 것.
+  // 로그인 요청, 모달은 로그인 요청이 성공했을 때에만 닫힘.
+  async function login() {
+    const data = { email, password };
+    try {
+      // unwrap()을 해줘야만 비동기 처리가 제대로 작동함.
+      await dispatch(loginAsync(data)).unwrap();
+      setIsValidate(true);
+      loginUserApi();
+      loginNotify();
+      modalCloser();
+      window.location.reload();
+    } catch (err) {
+      console.log(err.response.data.code);
+      // 유효성 검사
+      if (err.response.data.code) {
+        setIsValidate(false);
+      }
+    }
+  }
+
+  // submit 버튼 클릭시 작동 함수
   const onSubmitHandler = e => {
     e.preventDefault();
-    modalCloser();
+    login();
   };
 
   return (
@@ -114,6 +138,11 @@ function LoginModal({ modalCloser }) {
                 onChange={onChangePassword}
                 value={password}
               />
+              {!isValidate && (
+                <div className="input__validation">
+                  아이디 혹은 비밀번호가 잘못되었습니다.
+                </div>
+              )}
               <DefaultButton
                 width="100%"
                 height="4rem"
