@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import categoryData from './categoryData';
 import { DefaultButton, TransparentButton } from '../common/button/ButtonStyle';
@@ -13,6 +13,7 @@ import { loginModalActions } from '../../redux/loginModalSlice';
 function PublishForm() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const locationEdit = useLocation();
   const login = useSelector(state => state.login.isLogin);
 
   const [formData, setFormData] = useState({
@@ -131,6 +132,11 @@ function PublishForm() {
     }
     return () => {};
   }, []);
+
+  // 상세 페이지에서 수정 클릭시 정보 받아올 준비
+  useEffect(() => {
+    console.log(locationEdit);
+  }, [locationEdit]);
 
   return (
     <Container>
