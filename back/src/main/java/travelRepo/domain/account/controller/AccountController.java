@@ -33,7 +33,7 @@ public class AccountController {
 
     @PostMapping("/modify")
     public ResponseEntity<IdDto> accountModify(@LoginAccountId Long loginAccountId,
-                                               @Valid @ModelAttribute AccountModifyReq accountModifyReq) {
+                                               @Valid @RequestBody AccountModifyReq accountModifyReq) {
 
         IdDto idDto = accountService.modifyAccount(loginAccountId, accountModifyReq);
 
