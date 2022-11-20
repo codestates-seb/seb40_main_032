@@ -7,7 +7,7 @@ import { DefaultButton, TransparentButton } from '../common/button/ButtonStyle';
 import PublishPhoto from './PublishPhoto';
 import ConfirmModal from '../common/modal/ConfirmModal';
 import YesNoModal from '../common/modal/YesNoModal';
-import publishPostApi from '../../api/publishPostApi';
+import publishApi from '../../api/publishApi';
 import { loginModalActions } from '../../redux/loginModalSlice';
 
 function PublishForm() {
@@ -22,7 +22,6 @@ function PublishForm() {
     location: '',
     category: '',
     tags: [],
-    isValid: true,
   });
 
   const [categorySelected, setCategorySelected] = useState('');
@@ -69,9 +68,9 @@ function PublishForm() {
 
   // 게시글 등록 요청
   const publishRequest = async () => {
-    publishPostApi(formData)
+    await publishApi(formData)
       .then(res => {
-        if (res.status === 200) {
+        if (res.status === 201) {
           console.log(res);
           setPublishSuccess(true);
           navigate('/');

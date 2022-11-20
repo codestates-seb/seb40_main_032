@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { getCookie } from '../util/cookie';
 
-const publishPostApi = async formData => {
+const publishApi = formData => {
   const jwt = getCookie('accessToken');
 
   return axios.post('/boards', formData, {
@@ -12,4 +12,4 @@ const publishPostApi = async formData => {
   });
 };
 
-export default publishPostApi;
+export default publishApi;
