@@ -37,6 +37,6 @@ cloud:
     stack:
       auto: false
 
-dir: server
+dir:
 
 mod: server

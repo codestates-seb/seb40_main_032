@@ -1,6 +1,7 @@
 package travelRepo.domain.board.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
@@ -23,7 +24,7 @@ import travelRepo.global.common.dto.IdDto;
 import travelRepo.global.common.dto.SliceDto;
 import travelRepo.global.exception.BusinessLogicException;
 import travelRepo.global.exception.ExceptionCode;
-import travelRepo.global.upload.service.UploadService;
+import travelRepo.global.image.service.ImageService;
 
 import java.util.List;
 import java.util.Optional;
@@ -41,7 +42,10 @@ public class BoardService {
     private final TagRepository tagRepository;
     private final LikesRepository likesRepository;
     private final AccountRepository accountRepository;
-    private final UploadService uploadService;
+    private final ImageService imageService;
+
+    @Value("${dir}")
+    private String path;
 
     @Transactional
     public IdDto addBoard(Long loginAccountId, BoardAddReq boardAddReq) {
@@ -148,7 +152,7 @@ public class BoardService {
         List<BoardPhoto> boardPhotos = images.stream()
                 .map(image -> {
                     BoardPhoto boardPhoto = BoardPhoto.builder()
-                            .photo(uploadService.upload(image))
+                            .photo(imageService.uploadImage(image, path))
                             .build();
                     return boardPhoto;
                 })

@@ -1,4 +1,4 @@
-package travelRepo.global.upload.service;
+package travelRepo.global.image.repository;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -11,24 +11,17 @@ import java.util.UUID;
 
 @Service
 @ConditionalOnProperty(value = "mod", havingValue = "local")
-public class LocalUploadService implements UploadService{
-
-    @Value("${dir}")
-    private String dir;
+public class FolderImageRepository implements ImageRepository {
 
     @Override
-    public String uploadWithException(MultipartFile image) throws IOException {
-
-        if (image == null || image.isEmpty()) {
-            return null;
-        }
+    public String save(MultipartFile image, String path) throws IOException {
 
         String localFilename = createLocalFilename(image);
-        String path = dir + localFilename;
+        String fullPath = path + localFilename;
 
-        image.transferTo(new File(path));
+        image.transferTo(new File(fullPath));
 
-        return "http://localhost:8080/file/" + localFilename;
+        return "http://localhost:8080/image-files/" + localFilename;
     }
 
     private String createLocalFilename(MultipartFile image) {
@@ -36,4 +29,6 @@ public class LocalUploadService implements UploadService{
         int pos = image.getOriginalFilename().lastIndexOf(".");
         return UUID.randomUUID().toString() + image.getOriginalFilename().substring(pos);
     }
+
 }
+
