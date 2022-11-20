@@ -322,6 +322,9 @@ include::{snippets}/commentList/http-request.adoc[]
 .path-parameters
 include::{snippets}/commentList/path-parameters.adoc[]
 
+.request-parameters
+include::{snippets}/commentList/request-parameters.adoc[]
+
 .http-response
 include::{snippets}/commentList/http-response.adoc[]
 
