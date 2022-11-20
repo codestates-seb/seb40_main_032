@@ -112,8 +112,9 @@ function LoginModal({ modalCloser, loginNotify }) {
     // 이메일 유효성 검사
     if (email.trim().length === 0 || !email.includes('@')) {
       setValidationCorrect(prev => {
-        return { ...prev, emailCorrect: false };
+        return { ...prev, emailCorrect: false, passwordCorrect: true };
       });
+      setLoginError(false);
       return;
     }
     setValidationCorrect(prev => {
