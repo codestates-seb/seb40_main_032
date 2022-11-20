@@ -52,7 +52,10 @@ function SignupModal({ onSignupModalCloser }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [successSignup, setSuccessSignup] = useState(false);
-  const [signupError, setSignupError] = useState('');
+  const [signupError, setSignupError] = useState({
+    nicknameError: false,
+    emailError: false,
+  });
   const [validationCorrect, setValidationCorrect] = useState({
     emailCorrect: true,
     passwordCorrect: true,
@@ -111,8 +114,16 @@ function SignupModal({ onSignupModalCloser }) {
       .catch(err => {
         console.log(err);
         // 백엔드에서 받은 중복이메일 유효성 검사 표시
-        if (err.response.data.exception === 'BusinessLogicException') {
-          setSignupError(err.response.data.message);
+        if (err.response.data.code === '005') {
+          setSignupError(prev => {
+            return { ...prev, emailError: true, nicknameError: false };
+          });
+        }
+        // 백엔드에서 받은 중복닉네임 유효성 검사 표시
+        if (err.response.data.code === '014') {
+          setSignupError(prev => {
+            return { ...prev, emailError: false, nicknameError: true };
+          });
         }
       });
   }
@@ -187,6 +198,9 @@ function SignupModal({ onSignupModalCloser }) {
                   닉네임은 반드시 입력해야 합니다.
                 </div>
               )}
+              {signupError.nicknameError && (
+                <div className="input__validation">중복 닉네임 입니다.</div>
+              )}
               <label htmlFor="email">아이디</label>
               <input
                 id="email"
@@ -201,8 +215,8 @@ function SignupModal({ onSignupModalCloser }) {
                   아이디는 이메일 형식이여야 합니다.
                 </div>
               )}
-              {signupError && (
-                <div className="input__validation">{signupError}</div>
+              {signupError.emailError && (
+                <div className="input__validation">중복 이메일 입니다.</div>
               )}
               <label htmlFor="password">비밀번호</label>
               <input
