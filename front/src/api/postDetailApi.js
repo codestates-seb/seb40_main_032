@@ -42,26 +42,25 @@ export const postDetailUserApi = async (boardId, accountId) => {
 };
 // 게시물 삭제 Api
 export const postDetailDeleteApi = async boardId => {
-  const data = await axios.delete(`/boards${boardId}`, {}, authHeader);
+  const data = await axios.delete(`/boards/${boardId}`, {}, authHeader);
 
   return data;
 };
 
 // 게시글 댓글 조회
-export const postDetailCommentApi = async boardId => {
-  const comment = await axios.get(`/comments/board/${boardId}`);
-
-  console.log(comment);
-  return comment;
+export const postDetailCommentApi = async (boardId, page = 1, size = 5) => {
+  const comment = await axios.get(
+    `/comments/board/${boardId}?page=${page}&size=${size}`,
+  );
+  return comment.data;
 };
 // 게시글 상세화면 댓글 입력
 export const postDetailCommentSubmitApi = async (boardId, comment) => {
-  const status = await axios.post(
+  const { status } = await axios.post(
     '/comments',
     { boardId, content: comment },
     authHeader,
   );
-  console.log(status);
   return status;
 };
 // 댓글 수정 Api
@@ -76,7 +75,7 @@ export const postDetailCommentModifyApi = async (commentId, content) => {
 };
 // 댓글 삭제 Api
 export const postDetaulCommentDeleteApi = async commentId => {
-  const status = await axios.delete(`/comments${commentId}`, authHeader);
+  const status = await axios.delete(`/comments/${commentId}`, authHeader);
   console.log(status);
   return status;
 };
