@@ -9,10 +9,13 @@ const MainThemeBar = styled.div`
   background: #fff;
   position: fixed;
   z-index: 10;
+  display: flex;
+  justify-content: center;
 
   .theme__lists {
     display: flex;
     justify-content: center;
+    position: relative;
     > li {
       margin: 0 2rem;
       color: var(--font-base-grey);
@@ -40,12 +43,35 @@ const MainThemeBar = styled.div`
         }
       }
 
-      &.active {
-        border-bottom: 2px solid var(--font-base-black);
-        > button > a {
-          color: var(--font-base-black);
-        }
+      &.active > button > a {
+        color: var(--font-base-black);
       }
+    }
+
+    .bar {
+      position: absolute;
+      bottom: 0;
+      width: 8rem;
+      height: 3px;
+      margin: 0;
+      background: var(--button-theme);
+      opacity: 0;
+      transition: all 0.5s;
+    }
+
+    .theme__restarant.active ~ .bar {
+      left: 9px;
+      opacity: 1;
+    }
+
+    .theme__hotel.active ~ .bar {
+      left: 10.3rem;
+      opacity: 1;
+    }
+
+    .theme__trip.active ~ .bar {
+      left: 20.4rem;
+      opacity: 1;
     }
   }
 `;
@@ -116,6 +142,7 @@ function MainTheme() {
             </Link>
           </button>
         </li>
+        <li className="bar" />
       </ul>
     </MainThemeBar>
   );
