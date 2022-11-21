@@ -161,9 +161,6 @@ include::{snippets}/boardAdd/request-fields.adoc[]
 .request-headers
 include::{snippets}/boardAdd/request-headers.adoc[]
 
-.request-parts
-include::{snippets}/boardAdd/request-parts.adoc[]
-
 .http-response
 include::{snippets}/boardAdd/http-response.adoc[]
 
