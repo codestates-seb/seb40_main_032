@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { BsCamera } from 'react-icons/bs';
 import { AiOutlineDelete } from 'react-icons/ai';
+import uuid from 'react-uuid';
+import postPhotoApi from '../../api/postPhotoApi';
 
 const Container = styled.section`
   display: flex;
@@ -75,22 +77,39 @@ const CameraIcon = styled(BsCamera)`
 
 function PublishPhoto() {
   const [photos, setPhotos] = useState([]);
+  const [blobPhotos, setBlobPhotos] = useState();
 
   // 미리보기 사진 띄우기 - 클라이언트 메모리로 처리
   const uploadPhotos = async event => {
     const uploaded = [...photos];
+    console.log(event.target.files);
+    setBlobPhotos(...event.target.files);
     const targetFiles = [...event.target.files]; // 등록 사진
     targetFiles.map(obj => {
       return uploaded.push(URL.createObjectURL(obj)); // Blob 객체를 URL로 바꾸어 img src로 mapping
     });
     setPhotos(uploaded);
   };
-
   // 미리보기 사진 삭제
   const deletePhotos = async () => {
     URL.revokeObjectURL(photos);
     setPhotos([]);
   };
+
+  // blob에 사진 추가 시 사진 post 요청
+  console.log(blobPhotos);
+  useEffect(() => {
+    const formData = new FormData();
+    if (blobPhotos) {
+      formData.append(`images`, blobPhotos, `${blobPhotos.name}`);
+      console.log(formData.get('images'));
+    }
+    try {
+      postPhotoApi(formData).then(res => console.log(res));
+    } catch (err) {
+      console.log(err);
+    }
+  }, [blobPhotos]);
 
   // 메모리 누수 방지
   useEffect(() => {
@@ -108,7 +127,12 @@ function PublishPhoto() {
         ) : (
           <div>
             {photos.map(url => (
-              <img src={url} alt="photos" className="uploader__preview" />
+              <img
+                src={url}
+                alt="photos"
+                className="uploader__preview"
+                key={uuid()}
+              />
             ))}
           </div>
         )}
