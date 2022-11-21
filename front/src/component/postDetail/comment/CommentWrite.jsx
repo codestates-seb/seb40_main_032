@@ -94,7 +94,6 @@ function CommentWrite() {
   }, []);
   // 무한 스크롤 useEffect
   useEffect(() => {
-    // commentListGetHandler(boardId.id);
     const observer = new IntersectionObserver(obsHandler, {
       root: document.getElementsByClassName('comment')[0],
       rootMargin: '0px',
@@ -111,9 +110,6 @@ function CommentWrite() {
     if (page !== 0) {
       commentListGetHandler(boardId.id, page);
     }
-    // if (commentList.length !== 0 && page !== 1 && hasNext) {
-    //   console.log(`here rquest ${page}`);
-    // }
   }, [page]);
 
   // 댓글 삭제 및 수정 wather핸들러
