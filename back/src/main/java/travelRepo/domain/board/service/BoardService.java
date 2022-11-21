@@ -76,7 +76,6 @@ public class BoardService {
         board.modify(modifyBoard);
 
         Optional.ofNullable(boardModifyReq.getImages()).ifPresent(images -> {
-            boardPhotoRepository.deleteByBoardId(boardId);
             addBoardPhotosToBoard(images, board);
         });
 
@@ -143,17 +142,13 @@ public class BoardService {
         List<BoardTag> boardTags = tagNames.stream()
                 .map((tagName -> {
 
-                    BoardTag boardTag = null;
                     Tag tag = findTag(tagName);
-                    Optional<BoardTag> optionalBoardTag = boardTagRepository.findByBoardIdAndTagId(board.getId(), tag.getId());
-
-                    if (optionalBoardTag.isEmpty()) {
-                        boardTag = BoardTag.builder()
-                                .tag(tag)
-                                .build();
-                    } else {
-                        boardTag = optionalBoardTag.get();
-                    }
+                    BoardTag boardTag = boardTagRepository.findByBoardIdAndTagId(board.getId(), tag.getId())
+                            .orElseGet(() -> {
+                                return BoardTag.builder()
+                                        .tag(tag)
+                                        .build();
+                            });
 
                     boardTag.setOrders(tagNames.indexOf(tagName));
                     return boardTag;
@@ -163,14 +158,20 @@ public class BoardService {
         board.addBoardTags(boardTags);
     }
 
-    private void addBoardPhotosToBoard(List<MultipartFile> images, Board board) {
+    private void addBoardPhotosToBoard(List<String> images, Board board) {
 
         List<BoardPhoto> boardPhotos = images.stream()
                 .map(image -> {
-                    BoardPhoto boardPhoto = BoardPhoto.builder()
-                            .photo(imageService.uploadImage(image, path))
-                            .build();
+
+                    BoardPhoto boardPhoto = boardPhotoRepository.findByBoardIdAndPhoto(board.getId(), image)
+                            .orElseGet(() -> {
+                                return BoardPhoto.builder()
+                                        .photo(image)
+                                        .build();
+                            });
+                    boardPhoto.setOrders(images.indexOf(image));
                     return boardPhoto;
+
                 })
                 .collect(Collectors.toList());
 

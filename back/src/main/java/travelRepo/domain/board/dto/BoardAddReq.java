@@ -29,7 +29,7 @@ public class BoardAddReq {
     private List<String> tags;
 
     @NotNull
-    private List<MultipartFile> images;
+    private List<String> images;
 
     public Board toBoard(Account account) {
 
@@ -37,6 +37,7 @@ public class BoardAddReq {
                 .title(title)
                 .content(content)
                 .location(location)
+                .thumbnail(images.get(0))
                 .category(category)
                 .build();
 

@@ -28,7 +28,7 @@ public class BoardSummaryRes {
 
         BoardSummaryRes boardSummaryRes = new BoardSummaryRes();
         boardSummaryRes.setBoardId(board.getId());
-        boardSummaryRes.setThumbnail(board.getBoardPhotos().get(0).getPhoto());
+        boardSummaryRes.setThumbnail(board.getThumbnail());
         boardSummaryRes.setTitle(board.getTitle());
         boardSummaryRes.setLikeCount(board.getLikeCount());
         boardSummaryRes.setTags(

@@ -3,6 +3,7 @@ package travelRepo.domain.board.dto;
 import lombok.Data;
 import travelRepo.domain.account.dto.AccountSummaryRes;
 import travelRepo.domain.board.entity.Board;
+import travelRepo.domain.board.entity.BoardPhoto;
 import travelRepo.domain.board.entity.BoardTag;
 import travelRepo.domain.board.entity.Category;
 
@@ -54,6 +55,7 @@ public class BoardDetailsRes {
         );
         boardDetailsRes.setPhotos(
                 board.getBoardPhotos().stream()
+                        .sorted(Comparator.comparing(BoardPhoto::getOrders))
                         .map(boardPhoto -> boardPhoto.getPhoto())
                         .collect(Collectors.toList())
         );

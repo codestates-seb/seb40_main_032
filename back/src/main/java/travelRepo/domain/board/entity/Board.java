@@ -35,6 +35,8 @@ public class Board extends BaseTime {
 
     private String location;
 
+    private String thumbnail;
+
     private int likeCount;
 
     private int views;
@@ -45,8 +47,8 @@ public class Board extends BaseTime {
     @OneToMany(mappedBy = "board", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private final List<BoardTag> boardTags = new ArrayList<>();
 
-    @OneToMany(mappedBy = "board", cascade = CascadeType.PERSIST)
-    private List<BoardPhoto> boardPhotos;
+    @OneToMany(mappedBy = "board", cascade = CascadeType.PERSIST, orphanRemoval = true)
+    private  final List<BoardPhoto> boardPhotos = new ArrayList<>();
 
     public void addAccount(Account account) {
         this.account = account;
@@ -64,7 +66,8 @@ public class Board extends BaseTime {
     }
 
     public void addBoardPhotos(List<BoardPhoto> boardPhotos) {
-        this.boardPhotos = boardPhotos;
+        this.boardPhotos.clear();
+        this.boardPhotos.addAll(boardPhotos);
         for (BoardPhoto boardPhoto : boardPhotos) {
             boardPhoto.addBoard(this);
         }
@@ -78,6 +81,7 @@ public class Board extends BaseTime {
         Optional.ofNullable(board.getTitle()).ifPresent(title -> this.title = title);
         Optional.ofNullable(board.getContent()).ifPresent(content -> this.content = content);
         Optional.ofNullable(board.getLocation()).ifPresent(location -> this.location = location);
+        Optional.ofNullable(board.getThumbnail()).ifPresent(thumbnail -> this.thumbnail = thumbnail);
         Optional.ofNullable(board.getCategory()).ifPresent(category -> this.category = category);
     }
 
