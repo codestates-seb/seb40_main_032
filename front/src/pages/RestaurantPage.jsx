@@ -1,8 +1,8 @@
 import { useEffect, useRef, useCallback, useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
-import Post from '../common/Post';
-import MainSort from './MainSort';
+import Post from '../component/common/Post';
+import MainSort from '../component/main/MainSort';
 // import PostSkeleton from '../common/PostSkeleton';
 
 const MainContainer = styled.section`
@@ -43,7 +43,7 @@ const MainContainer = styled.section`
   }
 `;
 
-function MainContents() {
+function RestaurantPage() {
   const target = useRef(null);
   const [isPending, setIsPending] = useState(true);
   const [extraPage, setExtraPage] = useState(true);
@@ -103,4 +103,4 @@ function MainContents() {
   );
 }
 
-export default MainContents;
+export default RestaurantPage;
