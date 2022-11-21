@@ -50,13 +50,13 @@ function MainContents() {
   const [posts, setPosts] = useState([]);
   const page = useRef(1);
 
-  const axiosData = useCallback(async quantity => {
+  const getRestaurantData = useCallback(async quantity => {
     try {
       setIsPending(true);
       const { data } = await axios(
         `/boards?category=RESTAURANT&size=${quantity}&page=${page.current}`,
       );
-      // console.log(data.content);
+      console.log(data.content);
       setPosts(prev => [...prev, ...data.content]);
       setIsPending(false);
       setExtraPage(data.hasNext);
@@ -79,7 +79,7 @@ function MainContents() {
     const io = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          axiosData(20); // 데이터 요청
+          getRestaurantData(20); // 데이터 요청
         }
       },
       { threshold: 1 },
