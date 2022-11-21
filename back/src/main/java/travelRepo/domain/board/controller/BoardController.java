@@ -28,7 +28,7 @@ public class BoardController {
 
     @PostMapping
     public ResponseEntity<IdDto> boardAdd(@LoginAccountId Long loginAccountId,
-                                          @Valid @ModelAttribute BoardAddReq boardAddReq) {
+                                          @Valid @RequestBody BoardAddReq boardAddReq) {
 
         IdDto response = boardService.addBoard(loginAccountId, boardAddReq);
 
@@ -37,7 +37,7 @@ public class BoardController {
 
     @PostMapping("/{boardId}")
     public ResponseEntity<IdDto> boardModify(@LoginAccountId Long loginAccountId,
-                                             @Valid @ModelAttribute BoardModifyReq boardModifyReq,
+                                             @Valid @RequestBody BoardModifyReq boardModifyReq,
                                              @PathVariable Long boardId) {
 
         IdDto response = boardService.modifyBoard(loginAccountId, boardModifyReq, boardId);
