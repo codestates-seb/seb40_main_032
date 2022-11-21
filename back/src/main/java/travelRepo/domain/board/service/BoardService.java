@@ -143,7 +143,9 @@ public class BoardService {
                 .map((tagName -> {
 
                     Tag tag = findTag(tagName);
-                    BoardTag boardTag = boardTagRepository.findByBoardIdAndTagId(board.getId(), tag.getId())
+                    BoardTag boardTag = board.getBoardTags().stream()
+                            .filter(bt -> bt.getTag().getName().equals(tagName))
+                            .findAny()
                             .orElseGet(() -> {
                                 return BoardTag.builder()
                                         .tag(tag)
@@ -163,7 +165,9 @@ public class BoardService {
         List<BoardPhoto> boardPhotos = images.stream()
                 .map(image -> {
 
-                    BoardPhoto boardPhoto = boardPhotoRepository.findByBoardIdAndPhoto(board.getId(), image)
+                    BoardPhoto boardPhoto = board.getBoardPhotos().stream()
+                            .filter(bp -> bp.getPhoto().equals(image))
+                            .findAny()
                             .orElseGet(() -> {
                                 return BoardPhoto.builder()
                                         .photo(image)
