@@ -1,5 +1,5 @@
+import { Outlet } from 'react-router-dom';
 import styled from 'styled-components';
-import MainContents from '../component/main/MainContents';
 import MainTheme from '../component/main/MainTheme';
 
 const Main = styled.main`
@@ -10,7 +10,7 @@ function MainPage() {
   return (
     <Main>
       <MainTheme />
-      <MainContents />
+      <Outlet />
     </Main>
   );
 }

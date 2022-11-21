@@ -8,6 +8,7 @@ import Loading from './component/common/Loading';
 import Header from './component/common/header/Header';
 import LoginModal from './component/common/modal/LoginModal';
 import 'react-toastify/dist/ReactToastify.css';
+import RestaurantPage from './pages/RestaurantPage';
 
 const MainPage = React.lazy(() => import('./pages/MainPage'));
 const PublishPage = React.lazy(() => import('./pages/PublishPage'));
@@ -52,7 +53,9 @@ function App() {
         )}
         <Header loginModalOpener={loginModalOpener} />
         <Routes>
-          <Route path="/" element={<MainPage />} />
+          <Route path="/" element={<MainPage />}>
+            <Route index element={<RestaurantPage />} />
+          </Route>
           <Route path="/postDetail/:id" element={<PostDetailPage />} />
           <Route path="/publish" element={<PublishPage />} />
         </Routes>
