@@ -42,7 +42,7 @@ export const postDetailUserApi = async (boardId, accountId) => {
 };
 // 게시물 삭제 Api
 export const postDetailDeleteApi = async boardId => {
-  const data = await axios.delete(`/boards${boardId}`, {}, authHeader);
+  const data = await axios.delete(`/boards/${boardId}`, {}, authHeader);
 
   return data;
 };
