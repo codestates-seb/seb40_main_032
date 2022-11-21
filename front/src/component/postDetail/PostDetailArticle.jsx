@@ -268,8 +268,8 @@ function PostDetailArticle({ post, userLike, userFollow, self, board }) {
   const postDeleteHandler = () => {
     postDetailDeleteApi(board).then(() => {
       toast('삭제 되었습니다.', {
-        position: 'top-center',
-        autoClose: 2000,
+        position: 'top-right',
+        autoClose: 1000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: false,
@@ -334,7 +334,7 @@ function PostDetailArticle({ post, userLike, userFollow, self, board }) {
             <div className="footer__tags">
               <ul className="tags__list">
                 {tags.map(el => {
-                  return <li key={uuid()}>#${el}</li>;
+                  return <li key={uuid()}>#{el} </li>;
                 })}
               </ul>
             </div>
