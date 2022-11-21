@@ -2,7 +2,6 @@ package travelRepo.domain.board.dto;
 
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
-import org.springframework.web.multipart.MultipartFile;
 import travelRepo.domain.board.entity.Board;
 import travelRepo.domain.board.entity.Category;
 
@@ -23,17 +22,20 @@ public class BoardModifyReq {
 
     private List<String> tags;
 
-    private List<MultipartFile> images;
+    private List<String> images;
 
     public Board toBoard() {
 
-        Board board = Board.builder()
+        Board.BoardBuilder builder = Board.builder()
                 .title(title)
                 .content(content)
                 .location(location)
-                .category(category)
-                .build();
+                .category(category);
 
-        return board;
+        if (images != null) {
+            builder.thumbnail(images.get(0));
+        }
+
+        return builder.build();
     }
 }

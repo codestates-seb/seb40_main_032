@@ -3,9 +3,12 @@ package travelRepo.domain.board.dto;
 import lombok.Data;
 import travelRepo.domain.account.dto.AccountSummaryRes;
 import travelRepo.domain.board.entity.Board;
+import travelRepo.domain.board.entity.BoardPhoto;
+import travelRepo.domain.board.entity.BoardTag;
 import travelRepo.domain.board.entity.Category;
 
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -46,11 +49,13 @@ public class BoardDetailsRes {
         boardDetailsRes.setViews(board.getViews());
         boardDetailsRes.setTags(
                 board.getBoardTags().stream()
+                        .sorted(Comparator.comparing(BoardTag::getOrders))
                         .map(boardTag -> boardTag.getTag().getName())
                         .collect(Collectors.toList())
         );
         boardDetailsRes.setPhotos(
                 board.getBoardPhotos().stream()
+                        .sorted(Comparator.comparing(BoardPhoto::getOrders))
                         .map(boardPhoto -> boardPhoto.getPhoto())
                         .collect(Collectors.toList())
         );

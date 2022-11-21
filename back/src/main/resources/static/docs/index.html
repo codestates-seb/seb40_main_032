@@ -570,7 +570,7 @@ Host: localhost:8080
 Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2NjkwMTI2NTUsImV4cCI6MTY2OTAxNjI1NX0.zAZDqPLxcJPA1Glyuhrc50ttFmkYpPgGVzYJmhPijdQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2NjkwMTMxMTcsImV4cCI6MTY2OTAxNjcxN30.UgjQx42LTujUwOvQsUpdm3Fw9uzi0RkYHiAqbtURETY
 X-Content-Type-Options: nosniff
 X-XSS-Protection: 1; mode=block
 Cache-Control: no-cache, no-store, max-age=0, must-revalidate
@@ -749,7 +749,7 @@ Content-Length: 14
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="bash">$ curl 'http://localhost:8080/accounts/modify' -i -X POST \
     -H 'Content-Type: application/json;charset=UTF-8' \
-    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2NjkwMTI2NTUsImV4cCI6MTY2OTAxNjI1NX0.zAZDqPLxcJPA1Glyuhrc50ttFmkYpPgGVzYJmhPijdQ' \
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2NjkwMTMxMTYsImV4cCI6MTY2OTAxNjcxNn0.NrMIuLUesOz_3ESL0vWIukOQ8a8nrM-ROhKxhqXUKu4' \
     -H 'Accept: application/json' \
     -d '{
   "password" : "123456789",
@@ -764,7 +764,7 @@ Content-Length: 14
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">POST /accounts/modify HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2NjkwMTI2NTUsImV4cCI6MTY2OTAxNjI1NX0.zAZDqPLxcJPA1Glyuhrc50ttFmkYpPgGVzYJmhPijdQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2NjkwMTMxMTYsImV4cCI6MTY2OTAxNjcxNn0.NrMIuLUesOz_3ESL0vWIukOQ8a8nrM-ROhKxhqXUKu4
 Accept: application/json
 Content-Length: 125
 Host: localhost:8080
@@ -886,14 +886,14 @@ Content-Length: 18
 <div class="title">curl-request</div>
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="bash">$ curl 'http://localhost:8080/accounts' -i -X DELETE \
-    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2NjkwMTI2NTQsImV4cCI6MTY2OTAxNjI1NH0._ahmtc-AU2uN7tNmK3I_X5iEhi-f68KSVdPH4LVZdSg'</code></pre>
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2NjkwMTMxMTYsImV4cCI6MTY2OTAxNjcxNn0.NrMIuLUesOz_3ESL0vWIukOQ8a8nrM-ROhKxhqXUKu4'</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">http-request</div>
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">DELETE /accounts HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2NjkwMTI2NTQsImV4cCI6MTY2OTAxNjI1NH0._ahmtc-AU2uN7tNmK3I_X5iEhi-f68KSVdPH4LVZdSg
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2NjkwMTMxMTYsImV4cCI6MTY2OTAxNjcxNn0.NrMIuLUesOz_3ESL0vWIukOQ8a8nrM-ROhKxhqXUKu4
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -1058,14 +1058,14 @@ Content-Length: 257
 <div class="title">curl-request</div>
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="bash">$ curl 'http://localhost:8080/accounts/login' -i -X GET \
-    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2NjkwMTI2NTUsImV4cCI6MTY2OTAxNjI1NX0.zAZDqPLxcJPA1Glyuhrc50ttFmkYpPgGVzYJmhPijdQ'</code></pre>
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2NjkwMTMxMTYsImV4cCI6MTY2OTAxNjcxNn0.NrMIuLUesOz_3ESL0vWIukOQ8a8nrM-ROhKxhqXUKu4'</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">http-request</div>
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">GET /accounts/login HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2NjkwMTI2NTUsImV4cCI6MTY2OTAxNjI1NX0.zAZDqPLxcJPA1Glyuhrc50ttFmkYpPgGVzYJmhPijdQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2NjkwMTMxMTYsImV4cCI6MTY2OTAxNjcxNn0.NrMIuLUesOz_3ESL0vWIukOQ8a8nrM-ROhKxhqXUKu4
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -1177,14 +1177,14 @@ Content-Length: 257
 <div class="title">curl-request</div>
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="bash">$ curl 'http://localhost:8080/accounts/follow/10001?page=1&amp;size=5&amp;sort=createdAt%2Cdesc&amp;status=following' -i -X GET \
-    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2NjkwMTI2NTQsImV4cCI6MTY2OTAxNjI1NH0._ahmtc-AU2uN7tNmK3I_X5iEhi-f68KSVdPH4LVZdSg'</code></pre>
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2NjkwMTMxMTYsImV4cCI6MTY2OTAxNjcxNn0.NrMIuLUesOz_3ESL0vWIukOQ8a8nrM-ROhKxhqXUKu4'</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">http-request</div>
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">GET /accounts/follow/10001?page=1&amp;size=5&amp;sort=createdAt%2Cdesc&amp;status=following HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2NjkwMTI2NTQsImV4cCI6MTY2OTAxNjI1NH0._ahmtc-AU2uN7tNmK3I_X5iEhi-f68KSVdPH4LVZdSg
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2NjkwMTMxMTYsImV4cCI6MTY2OTAxNjcxNn0.NrMIuLUesOz_3ESL0vWIukOQ8a8nrM-ROhKxhqXUKu4
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -1493,78 +1493,41 @@ X-Frame-Options: DENY</code></pre>
 <div class="title">curl-request</div>
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="bash">$ curl 'http://localhost:8080/boards' -i -X POST \
-    -H 'Content-Type: multipart/form-data;charset=UTF-8' \
-    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InVzZXJBQHRlc3QuY29tIiwic3ViIjoiMjAwMDEiLCJpYXQiOjE2NjkwMTI2NTUsImV4cCI6MTY2OTAxNjI1NX0.dLUvnWVwerw0dBzD_fRYK38vM-pMJF6ZixBr_CPcf48' \
+    -H 'Content-Type: application/json;charset=UTF-8' \
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InVzZXJBQHRlc3QuY29tIiwic3ViIjoiMjAwMDEiLCJpYXQiOjE2NjkwMTMxMTcsImV4cCI6MTY2OTAxNjcxN30.Gi5sgiu6EmVrVPySGg1QMMrulZ2jySK-1E-_8v6h9N4' \
     -H 'Accept: application/json' \
-    -F 'images=@image1.png;type=image/png' \
-    -F 'images=@image2.png;type=image/png' \
-    -F 'images=@image3.png;type=image/png' \
-    -F 'title=board title' \
-    -F 'content=board content' \
-    -F 'location=board location' \
-    -F 'category=SPOT' \
-    -F 'tags=tag1' \
-    -F 'tags=tag2' \
-    -F 'tags=tag3'</code></pre>
+    -d '{
+  "title" : "board title",
+  "content" : "board content",
+  "location" : "board location",
+  "category" : "STAY",
+  "tags" : [ "tag1", "tag2", "tag3" ],
+  "images" : [ "https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg" ]
+}'</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">http-request</div>
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">POST /boards HTTP/1.1
-Content-Type: multipart/form-data;charset=UTF-8; boundary=6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InVzZXJBQHRlc3QuY29tIiwic3ViIjoiMjAwMDEiLCJpYXQiOjE2NjkwMTI2NTUsImV4cCI6MTY2OTAxNjI1NX0.dLUvnWVwerw0dBzD_fRYK38vM-pMJF6ZixBr_CPcf48
+Content-Type: application/json;charset=UTF-8
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InVzZXJBQHRlc3QuY29tIiwic3ViIjoiMjAwMDEiLCJpYXQiOjE2NjkwMTMxMTcsImV4cCI6MTY2OTAxNjcxN30.Gi5sgiu6EmVrVPySGg1QMMrulZ2jySK-1E-_8v6h9N4
 Accept: application/json
+Content-Length: 273
 Host: localhost:8080
 
---6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
-Content-Disposition: form-data; name=title
-
-board title
---6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
-Content-Disposition: form-data; name=content
-
-board content
---6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
-Content-Disposition: form-data; name=location
-
-board location
---6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
-Content-Disposition: form-data; name=category
-
-SPOT
---6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
-Content-Disposition: form-data; name=tags
-
-tag1
---6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
-Content-Disposition: form-data; name=tags
-
-tag2
---6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
-Content-Disposition: form-data; name=tags
-
-tag3
---6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
-Content-Disposition: form-data; name=images; filename=image1.png
-Content-Type: image/png
-
-(file data)
---6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
-Content-Disposition: form-data; name=images; filename=image2.png
-Content-Type: image/png
-
-(file data)
---6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
-Content-Disposition: form-data; name=images; filename=image3.png
-Content-Type: image/png
-
-(file data)
---6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm--</code></pre>
+{
+  "title" : "board title",
+  "content" : "board content",
+  "location" : "board location",
+  "category" : "STAY",
+  "tags" : [ "tag1", "tag2", "tag3" ],
+  "images" : [ "https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg" ]
+}</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 18. request-headers</caption>
+<caption class="title">Table 18. request-fields</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -1572,29 +1535,7 @@ Content-Type: image/png
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Name</th>
-<th class="tableblock halign-left valign-top">Description</th>
-<th class="tableblock halign-left valign-top">Required</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Authorization</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">JWT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong>true</strong></code></p></td>
-</tr>
-</tbody>
-</table>
-<table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 19. request-parameters</caption>
-<colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 33.3333%;">
-<col style="width: 33.3334%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Path</th>
 <th class="tableblock halign-left valign-top">Description</th>
 <th class="tableblock halign-left valign-top">Required</th>
 </tr>
@@ -1625,10 +1566,15 @@ Content-Type: image/png
 <td class="tableblock halign-left valign-top"><p class="tableblock">게시글 태그</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>false</code></p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>images</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">사진</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong>true</strong></code></p></td>
+</tr>
 </tbody>
 </table>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 20. request-parts</caption>
+<caption class="title">Table 19. request-headers</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -1636,15 +1582,15 @@ Content-Type: image/png
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Part</th>
+<th class="tableblock halign-left valign-top">Name</th>
 <th class="tableblock halign-left valign-top">Description</th>
 <th class="tableblock halign-left valign-top">Required</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>images</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">사진</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Authorization</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">JWT</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong>true</strong></code></p></td>
 </tr>
 </tbody>
@@ -1671,7 +1617,7 @@ Content-Length: 14
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 21. response-fields</caption>
+<caption class="title">Table 20. response-fields</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -1699,78 +1645,41 @@ Content-Length: 14
 <div class="title">curl-request</div>
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="bash">$ curl 'http://localhost:8080/boards/31001' -i -X POST \
-    -H 'Content-Type: multipart/form-data;charset=UTF-8' \
-    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InVzZXJBQHRlc3QuY29tIiwic3ViIjoiMjAwMDEiLCJpYXQiOjE2NjkwMTI2NTUsImV4cCI6MTY2OTAxNjI1NX0.dLUvnWVwerw0dBzD_fRYK38vM-pMJF6ZixBr_CPcf48' \
+    -H 'Content-Type: application/json;charset=UTF-8' \
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InVzZXJBQHRlc3QuY29tIiwic3ViIjoiMjAwMDEiLCJpYXQiOjE2NjkwMTMxMTcsImV4cCI6MTY2OTAxNjcxN30.Gi5sgiu6EmVrVPySGg1QMMrulZ2jySK-1E-_8v6h9N4' \
     -H 'Accept: application/json' \
-    -F 'images=@image1.png;type=image/png' \
-    -F 'images=@image2.png;type=image/png' \
-    -F 'images=@image3.png;type=image/png' \
-    -F 'title=modified mock board title' \
-    -F 'content=modified mock board content' \
-    -F 'location=modified mock board location' \
-    -F 'category=RESTAURANT' \
-    -F 'tags=mock tag4' \
-    -F 'tags=mock tag2' \
-    -F 'tags=mock tag3'</code></pre>
+    -d '{
+  "title" : "modified board title",
+  "content" : "modified board content",
+  "location" : "modified board location",
+  "category" : "RESTAURANT",
+  "tags" : [ "tag3", "tag2", "tag1" ],
+  "images" : [ "https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg" ]
+}'</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">http-request</div>
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">POST /boards/31001 HTTP/1.1
-Content-Type: multipart/form-data;charset=UTF-8; boundary=6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InVzZXJBQHRlc3QuY29tIiwic3ViIjoiMjAwMDEiLCJpYXQiOjE2NjkwMTI2NTUsImV4cCI6MTY2OTAxNjI1NX0.dLUvnWVwerw0dBzD_fRYK38vM-pMJF6ZixBr_CPcf48
+Content-Type: application/json;charset=UTF-8
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InVzZXJBQHRlc3QuY29tIiwic3ViIjoiMjAwMDEiLCJpYXQiOjE2NjkwMTMxMTcsImV4cCI6MTY2OTAxNjcxN30.Gi5sgiu6EmVrVPySGg1QMMrulZ2jySK-1E-_8v6h9N4
 Accept: application/json
+Content-Length: 306
 Host: localhost:8080
 
---6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
-Content-Disposition: form-data; name=title
-
-modified mock board title
---6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
-Content-Disposition: form-data; name=content
-
-modified mock board content
---6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
-Content-Disposition: form-data; name=location
-
-modified mock board location
---6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
-Content-Disposition: form-data; name=category
-
-RESTAURANT
---6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
-Content-Disposition: form-data; name=tags
-
-mock tag4
---6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
-Content-Disposition: form-data; name=tags
-
-mock tag2
---6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
-Content-Disposition: form-data; name=tags
-
-mock tag3
---6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
-Content-Disposition: form-data; name=images; filename=image1.png
-Content-Type: image/png
-
-(file data)
---6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
-Content-Disposition: form-data; name=images; filename=image2.png
-Content-Type: image/png
-
-(file data)
---6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
-Content-Disposition: form-data; name=images; filename=image3.png
-Content-Type: image/png
-
-(file data)
---6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm--</code></pre>
+{
+  "title" : "modified board title",
+  "content" : "modified board content",
+  "location" : "modified board location",
+  "category" : "RESTAURANT",
+  "tags" : [ "tag3", "tag2", "tag1" ],
+  "images" : [ "https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg" ]
+}</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 22. /boards/{boardId}</caption>
+<caption class="title">Table 21. /boards/{boardId}</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -1788,6 +1697,53 @@ Content-Type: image/png
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>boardId</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">게시글 식별자</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong>true</strong></code></p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 22. request-fields</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>title</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">수정된 게시글 제목</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>false</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">수정된 게시글 내용</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>false</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>location</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">수정된 위치</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>false</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>category</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">수정된 게시글 분류</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>false</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>tags</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">수정된 게시글 태그</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>false</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>images</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">수정된 사진</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>false</code></p></td>
 </tr>
 </tbody>
 </table>
@@ -1813,70 +1769,6 @@ Content-Type: image/png
 </tr>
 </tbody>
 </table>
-<table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 24. request-parameters</caption>
-<colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 33.3333%;">
-<col style="width: 33.3334%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Parameter</th>
-<th class="tableblock halign-left valign-top">Description</th>
-<th class="tableblock halign-left valign-top">Required</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>title</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">게시글 제목</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>false</code></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>content</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">게시글 내용</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>false</code></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>location</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">위치</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>false</code></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>category</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">게시글 분류</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>false</code></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>tags</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">게시글 태그</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>false</code></p></td>
-</tr>
-</tbody>
-</table>
-<table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 25. request-parts</caption>
-<colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 33.3333%;">
-<col style="width: 33.3334%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Part</th>
-<th class="tableblock halign-left valign-top">Description</th>
-<th class="tableblock halign-left valign-top">Required</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>images</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">사진</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>false</code></p></td>
-</tr>
-</tbody>
-</table>
 <div class="listingblock">
 <div class="title">http-response</div>
 <div class="content">
@@ -1899,7 +1791,7 @@ Content-Length: 18
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 26. response-fields</caption>
+<caption class="title">Table 24. response-fields</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -1927,19 +1819,19 @@ Content-Length: 18
 <div class="title">curl-request</div>
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="bash">$ curl 'http://localhost:8080/boards/31002' -i -X DELETE \
-    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InVzZXJBQHRlc3QuY29tIiwic3ViIjoiMjAwMDEiLCJpYXQiOjE2NjkwMTI2NTUsImV4cCI6MTY2OTAxNjI1NX0.dLUvnWVwerw0dBzD_fRYK38vM-pMJF6ZixBr_CPcf48'</code></pre>
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InVzZXJBQHRlc3QuY29tIiwic3ViIjoiMjAwMDEiLCJpYXQiOjE2NjkwMTMxMTcsImV4cCI6MTY2OTAxNjcxN30.Gi5sgiu6EmVrVPySGg1QMMrulZ2jySK-1E-_8v6h9N4'</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">http-request</div>
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">DELETE /boards/31002 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InVzZXJBQHRlc3QuY29tIiwic3ViIjoiMjAwMDEiLCJpYXQiOjE2NjkwMTI2NTUsImV4cCI6MTY2OTAxNjI1NX0.dLUvnWVwerw0dBzD_fRYK38vM-pMJF6ZixBr_CPcf48
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InVzZXJBQHRlc3QuY29tIiwic3ViIjoiMjAwMDEiLCJpYXQiOjE2NjkwMTMxMTcsImV4cCI6MTY2OTAxNjcxN30.Gi5sgiu6EmVrVPySGg1QMMrulZ2jySK-1E-_8v6h9N4
 Host: localhost:8080</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 27. /boards/{boardId}</caption>
+<caption class="title">Table 25. /boards/{boardId}</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -1961,7 +1853,7 @@ Host: localhost:8080</code></pre>
 </tbody>
 </table>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 28. request-headers</caption>
+<caption class="title">Table 26. request-headers</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -2016,7 +1908,7 @@ Host: localhost:8080</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 29. /boards/{boardId}</caption>
+<caption class="title">Table 27. /boards/{boardId}</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -2073,7 +1965,7 @@ Content-Length: 551
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 30. response-fields</caption>
+<caption class="title">Table 28. response-fields</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -2178,7 +2070,7 @@ Host: localhost:8080</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 31. request-parameters</caption>
+<caption class="title">Table 29. request-parameters</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -2465,7 +2357,7 @@ Content-Length: 8553
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 32. response-fields</caption>
+<caption class="title">Table 30. response-fields</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -2570,7 +2462,7 @@ Host: localhost:8080</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 33. /boards/account/{accountId}</caption>
+<caption class="title">Table 31. /boards/account/{accountId}</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -2694,7 +2586,7 @@ Content-Length: 3079
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 34. response-fields</caption>
+<caption class="title">Table 32. response-fields</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -2794,7 +2686,7 @@ Content-Length: 3079
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="bash">$ curl 'http://localhost:8080/comments' -i -X POST \
     -H 'Content-Type: application/json;charset=UTF-8' \
-    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InVzZXJBQHRlc3QuY29tIiwic3ViIjoiMjAwMDEiLCJpYXQiOjE2NjkwMTI2NTYsImV4cCI6MTY2OTAxNjI1Nn0.76XH-keiD3p2pNmtwBw-u_k9jT9tECTioFzmRpjgKSA' \
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InVzZXJBQHRlc3QuY29tIiwic3ViIjoiMjAwMDEiLCJpYXQiOjE2NjkwMTMxMTcsImV4cCI6MTY2OTAxNjcxN30.Gi5sgiu6EmVrVPySGg1QMMrulZ2jySK-1E-_8v6h9N4' \
     -d '{
   "boardId" : 21001,
   "content" : "testCommentContents"
@@ -2806,7 +2698,7 @@ Content-Length: 3079
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">POST /comments HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InVzZXJBQHRlc3QuY29tIiwic3ViIjoiMjAwMDEiLCJpYXQiOjE2NjkwMTI2NTYsImV4cCI6MTY2OTAxNjI1Nn0.76XH-keiD3p2pNmtwBw-u_k9jT9tECTioFzmRpjgKSA
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InVzZXJBQHRlc3QuY29tIiwic3ViIjoiMjAwMDEiLCJpYXQiOjE2NjkwMTMxMTcsImV4cCI6MTY2OTAxNjcxN30.Gi5sgiu6EmVrVPySGg1QMMrulZ2jySK-1E-_8v6h9N4
 Content-Length: 60
 Host: localhost:8080
 
@@ -2817,7 +2709,7 @@ Host: localhost:8080
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 35. request-fields</caption>
+<caption class="title">Table 33. request-fields</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -2844,7 +2736,7 @@ Host: localhost:8080
 </tbody>
 </table>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 36. request-headers</caption>
+<caption class="title">Table 34. request-headers</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -2888,7 +2780,7 @@ X-Frame-Options: DENY</code></pre>
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="bash">$ curl 'http://localhost:8080/comments/25001' -i -X PATCH \
     -H 'Content-Type: application/json;charset=UTF-8' \
-    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InVzZXJBQHRlc3QuY29tIiwic3ViIjoiMjAwMDEiLCJpYXQiOjE2NjkwMTI2NTYsImV4cCI6MTY2OTAxNjI1Nn0.76XH-keiD3p2pNmtwBw-u_k9jT9tECTioFzmRpjgKSA' \
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InVzZXJBQHRlc3QuY29tIiwic3ViIjoiMjAwMDEiLCJpYXQiOjE2NjkwMTMxMTcsImV4cCI6MTY2OTAxNjcxN30.Gi5sgiu6EmVrVPySGg1QMMrulZ2jySK-1E-_8v6h9N4' \
     -d '{
   "content" : "modified testContents"
 }'</code></pre>
@@ -2899,7 +2791,7 @@ X-Frame-Options: DENY</code></pre>
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">PATCH /comments/25001 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InVzZXJBQHRlc3QuY29tIiwic3ViIjoiMjAwMDEiLCJpYXQiOjE2NjkwMTI2NTYsImV4cCI6MTY2OTAxNjI1Nn0.76XH-keiD3p2pNmtwBw-u_k9jT9tECTioFzmRpjgKSA
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InVzZXJBQHRlc3QuY29tIiwic3ViIjoiMjAwMDEiLCJpYXQiOjE2NjkwMTMxMTcsImV4cCI6MTY2OTAxNjcxN30.Gi5sgiu6EmVrVPySGg1QMMrulZ2jySK-1E-_8v6h9N4
 Content-Length: 41
 Host: localhost:8080
 
@@ -2909,7 +2801,7 @@ Host: localhost:8080
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 37. /comments/{commentId}</caption>
+<caption class="title">Table 35. /comments/{commentId}</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -2931,7 +2823,7 @@ Host: localhost:8080
 </tbody>
 </table>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 38. request-fields</caption>
+<caption class="title">Table 36. request-fields</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -2953,7 +2845,7 @@ Host: localhost:8080
 </tbody>
 </table>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 39. request-headers</caption>
+<caption class="title">Table 37. request-headers</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -2996,19 +2888,19 @@ X-Frame-Options: DENY</code></pre>
 <div class="title">curl-request</div>
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="bash">$ curl 'http://localhost:8080/comments/35001' -i -X DELETE \
-    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InVzZXJBQHRlc3QuY29tIiwic3ViIjoiMjAwMDEiLCJpYXQiOjE2NjkwMTI2NTYsImV4cCI6MTY2OTAxNjI1Nn0.76XH-keiD3p2pNmtwBw-u_k9jT9tECTioFzmRpjgKSA'</code></pre>
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InVzZXJBQHRlc3QuY29tIiwic3ViIjoiMjAwMDEiLCJpYXQiOjE2NjkwMTMxMTcsImV4cCI6MTY2OTAxNjcxN30.Gi5sgiu6EmVrVPySGg1QMMrulZ2jySK-1E-_8v6h9N4'</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">http-request</div>
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">DELETE /comments/35001 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InVzZXJBQHRlc3QuY29tIiwic3ViIjoiMjAwMDEiLCJpYXQiOjE2NjkwMTI2NTYsImV4cCI6MTY2OTAxNjI1Nn0.76XH-keiD3p2pNmtwBw-u_k9jT9tECTioFzmRpjgKSA
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InVzZXJBQHRlc3QuY29tIiwic3ViIjoiMjAwMDEiLCJpYXQiOjE2NjkwMTMxMTcsImV4cCI6MTY2OTAxNjcxN30.Gi5sgiu6EmVrVPySGg1QMMrulZ2jySK-1E-_8v6h9N4
 Host: localhost:8080</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 40. /comments/{commentId}</caption>
+<caption class="title">Table 38. /comments/{commentId}</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -3030,7 +2922,7 @@ Host: localhost:8080</code></pre>
 </tbody>
 </table>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 41. request-headers</caption>
+<caption class="title">Table 39. request-headers</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -3085,7 +2977,7 @@ Host: localhost:8080</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 42. /comments/board/{boardId}</caption>
+<caption class="title">Table 40. /comments/board/{boardId}</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -3107,7 +2999,7 @@ Host: localhost:8080</code></pre>
 </tbody>
 </table>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 43. request-parameters</caption>
+<caption class="title">Table 41. request-parameters</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -3178,13 +3070,13 @@ Content-Length: 1606
       "nickname" : "userC"
     }
   }, {
-    "commentId" : 25001,
+    "commentId" : 25003,
     "content" : "testComment",
     "createdAt" : "2022-10-14T14:00:01",
     "account" : {
-      "accountId" : 20001,
+      "accountId" : 20003,
       "profile" : "https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg",
-      "nickname" : "userA"
+      "nickname" : "userC"
     }
   }, {
     "commentId" : 25002,
@@ -3204,7 +3096,7 @@ Content-Length: 1606
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 44. response-fields</caption>
+<caption class="title">Table 42. response-fields</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -3293,19 +3185,19 @@ Content-Length: 1606
 <div class="title">curl-request</div>
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="bash">$ curl 'http://localhost:8080/follows/10002' -i -X POST \
-    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2NjkwMTI2NTYsImV4cCI6MTY2OTAxNjI1Nn0.JZ2GbGv9ZBZLMzktUUuH2LXkChxSvK0foaQ9Rf5FVa4'</code></pre>
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2NjkwMTMxMTcsImV4cCI6MTY2OTAxNjcxN30.UgjQx42LTujUwOvQsUpdm3Fw9uzi0RkYHiAqbtURETY'</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">http-request</div>
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">POST /follows/10002 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2NjkwMTI2NTYsImV4cCI6MTY2OTAxNjI1Nn0.JZ2GbGv9ZBZLMzktUUuH2LXkChxSvK0foaQ9Rf5FVa4
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2NjkwMTMxMTcsImV4cCI6MTY2OTAxNjcxN30.UgjQx42LTujUwOvQsUpdm3Fw9uzi0RkYHiAqbtURETY
 Host: localhost:8080</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 45. request-headers</caption>
+<caption class="title">Table 43. request-headers</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -3327,7 +3219,7 @@ Host: localhost:8080</code></pre>
 </tbody>
 </table>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 46. /follows/{accountId}</caption>
+<caption class="title">Table 44. /follows/{accountId}</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -3370,7 +3262,7 @@ Content-Length: 26
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 47. response-fields</caption>
+<caption class="title">Table 45. response-fields</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -3398,19 +3290,19 @@ Content-Length: 26
 <div class="title">curl-request</div>
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="bash">$ curl 'http://localhost:8080/follows/10002' -i -X GET \
-    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2NjkwMTI2NTYsImV4cCI6MTY2OTAxNjI1Nn0.JZ2GbGv9ZBZLMzktUUuH2LXkChxSvK0foaQ9Rf5FVa4'</code></pre>
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2NjkwMTMxMTcsImV4cCI6MTY2OTAxNjcxN30.UgjQx42LTujUwOvQsUpdm3Fw9uzi0RkYHiAqbtURETY'</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">http-request</div>
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">GET /follows/10002 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2NjkwMTI2NTYsImV4cCI6MTY2OTAxNjI1Nn0.JZ2GbGv9ZBZLMzktUUuH2LXkChxSvK0foaQ9Rf5FVa4
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2NjkwMTMxMTcsImV4cCI6MTY2OTAxNjcxN30.UgjQx42LTujUwOvQsUpdm3Fw9uzi0RkYHiAqbtURETY
 Host: localhost:8080</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 48. request-headers</caption>
+<caption class="title">Table 46. request-headers</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -3432,7 +3324,7 @@ Host: localhost:8080</code></pre>
 </tbody>
 </table>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 49. /follows/{accountId}</caption>
+<caption class="title">Table 47. /follows/{accountId}</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -3475,7 +3367,7 @@ Content-Length: 21
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 50. response-fields</caption>
+<caption class="title">Table 48. response-fields</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -3509,19 +3401,19 @@ Content-Length: 21
 <div class="title">curl-request</div>
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="bash">$ curl 'http://localhost:8080/likes/12002' -i -X POST \
-    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2NjkwMTI2NTYsImV4cCI6MTY2OTAxNjI1Nn0.JZ2GbGv9ZBZLMzktUUuH2LXkChxSvK0foaQ9Rf5FVa4'</code></pre>
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2NjkwMTMxMTcsImV4cCI6MTY2OTAxNjcxN30.UgjQx42LTujUwOvQsUpdm3Fw9uzi0RkYHiAqbtURETY'</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">http-request</div>
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">POST /likes/12002 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2NjkwMTI2NTYsImV4cCI6MTY2OTAxNjI1Nn0.JZ2GbGv9ZBZLMzktUUuH2LXkChxSvK0foaQ9Rf5FVa4
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2NjkwMTMxMTcsImV4cCI6MTY2OTAxNjcxN30.UgjQx42LTujUwOvQsUpdm3Fw9uzi0RkYHiAqbtURETY
 Host: localhost:8080</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 51. request-headers</caption>
+<caption class="title">Table 49. request-headers</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -3543,7 +3435,7 @@ Host: localhost:8080</code></pre>
 </tbody>
 </table>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 52. /likes/{boardId}</caption>
+<caption class="title">Table 50. /likes/{boardId}</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -3586,7 +3478,7 @@ Content-Length: 26
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 53. response-fields</caption>
+<caption class="title">Table 51. response-fields</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -3614,19 +3506,19 @@ Content-Length: 26
 <div class="title">curl-request</div>
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="bash">$ curl 'http://localhost:8080/likes/12002' -i -X GET \
-    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2NjkwMTI2NTYsImV4cCI6MTY2OTAxNjI1Nn0.JZ2GbGv9ZBZLMzktUUuH2LXkChxSvK0foaQ9Rf5FVa4'</code></pre>
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2NjkwMTMxMTcsImV4cCI6MTY2OTAxNjcxN30.UgjQx42LTujUwOvQsUpdm3Fw9uzi0RkYHiAqbtURETY'</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">http-request</div>
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">GET /likes/12002 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2NjkwMTI2NTYsImV4cCI6MTY2OTAxNjI1Nn0.JZ2GbGv9ZBZLMzktUUuH2LXkChxSvK0foaQ9Rf5FVa4
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2NjkwMTMxMTcsImV4cCI6MTY2OTAxNjcxN30.UgjQx42LTujUwOvQsUpdm3Fw9uzi0RkYHiAqbtURETY
 Host: localhost:8080</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 54. request-headers</caption>
+<caption class="title">Table 52. request-headers</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -3648,7 +3540,7 @@ Host: localhost:8080</code></pre>
 </tbody>
 </table>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 55. /likes/{boardId}</caption>
+<caption class="title">Table 53. /likes/{boardId}</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -3691,7 +3583,7 @@ Content-Length: 20
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 56. response-fields</caption>
+<caption class="title">Table 54. response-fields</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -3726,7 +3618,7 @@ Content-Length: 20
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="bash">$ curl 'http://localhost:8080/image-files' -i -X POST \
     -H 'Content-Type: multipart/form-data;charset=UTF-8' \
-    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2NjkwMTI2NTYsImV4cCI6MTY2OTAxNjI1Nn0.JZ2GbGv9ZBZLMzktUUuH2LXkChxSvK0foaQ9Rf5FVa4' \
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2NjkwMTMxMTcsImV4cCI6MTY2OTAxNjcxN30.UgjQx42LTujUwOvQsUpdm3Fw9uzi0RkYHiAqbtURETY' \
     -F 'images=@image1.jpeg;type=image/jpeg' \
     -F 'images=@image2.jpeg;type=image/jpeg' \
     -F 'images=@image3.jpeg;type=image/jpeg'</code></pre>
@@ -3737,7 +3629,7 @@ Content-Length: 20
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">POST /image-files HTTP/1.1
 Content-Type: multipart/form-data;charset=UTF-8; boundary=6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2NjkwMTI2NTYsImV4cCI6MTY2OTAxNjI1Nn0.JZ2GbGv9ZBZLMzktUUuH2LXkChxSvK0foaQ9Rf5FVa4
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2NjkwMTMxMTcsImV4cCI6MTY2OTAxNjcxN30.UgjQx42LTujUwOvQsUpdm3Fw9uzi0RkYHiAqbtURETY
 Host: localhost:8080
 
 --6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
@@ -3759,7 +3651,7 @@ Content-Type: image/jpeg
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 57. request-headers</caption>
+<caption class="title">Table 55. request-headers</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -3781,7 +3673,7 @@ Content-Type: image/jpeg
 </tbody>
 </table>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 58. request-parts</caption>
+<caption class="title">Table 56. request-parts</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -3819,12 +3711,12 @@ X-Frame-Options: DENY
 Content-Length: 260
 
 {
-  "imagePaths" : [ "http://localhost:8080/image-files/8d380dc7-57bb-4ac7-98de-bc3cca84e3bf.jpeg", "http://localhost:8080/image-files/a20ed987-10d3-4127-bbcf-9ffa41a4b316.jpeg", "http://localhost:8080/image-files/4eab222a-fc73-49f4-a73d-bf9d45c30233.jpeg" ]
+  "imagePaths" : [ "http://localhost:8080/image-files/8df0de5c-2347-4606-bf0a-55d13494d2d4.jpeg", "http://localhost:8080/image-files/be106459-d5ea-4425-9e99-87510ff136ab.jpeg", "http://localhost:8080/image-files/c8abfe40-6e71-4e6f-a3ea-d928c96aa4f0.jpeg" ]
 }</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 59. response-fields</caption>
+<caption class="title">Table 57. response-fields</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -3852,7 +3744,7 @@ Content-Length: 260
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2022-11-21 15:35:16 +0900
+Last updated 2022-11-21 15:44:40 +0900
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css">

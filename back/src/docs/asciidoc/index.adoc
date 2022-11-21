@@ -152,14 +152,11 @@ include::{snippets}/boardAdd/curl-request.adoc[]
 .http-request
 include::{snippets}/boardAdd/http-request.adoc[]
 
+.request-fields
+include::{snippets}/boardAdd/request-fields.adoc[]
+
 .request-headers
 include::{snippets}/boardAdd/request-headers.adoc[]
-
-.request-parameters
-include::{snippets}/boardAdd/request-parameters.adoc[]
-
-.request-parts
-include::{snippets}/boardAdd/request-parts.adoc[]
 
 .http-response
 include::{snippets}/boardAdd/http-response.adoc[]
@@ -177,14 +174,11 @@ include::{snippets}/boardModify/http-request.adoc[]
 .path-parameters
 include::{snippets}/boardModify/path-parameters.adoc[]
 
+.request-fields
+include::{snippets}/boardModify/request-fields.adoc[]
+
 .request-headers
 include::{snippets}/boardModify/request-headers.adoc[]
-
-.request-parameters
-include::{snippets}/boardModify/request-parameters.adoc[]
-
-.request-parts
-include::{snippets}/boardModify/request-parts.adoc[]
 
 .http-response
 include::{snippets}/boardModify/http-response.adoc[]
