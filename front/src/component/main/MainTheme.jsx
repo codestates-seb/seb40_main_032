@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { BiRestaurant, BiHotel, BiMap } from 'react-icons/bi';
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
 
 const MainThemeBar = styled.div`
   width: 100%;
@@ -50,27 +51,65 @@ const MainThemeBar = styled.div`
 `;
 
 function MainTheme() {
+  const activInitState = {
+    restaurant: true,
+    stay: false,
+    spot: false,
+  };
+  const [isActive, setIsActive] = useState(activInitState);
+
   return (
     <MainThemeBar>
       <ul className="theme__lists">
-        <li className="theme__restarant active">
-          <button>
+        <li
+          className={
+            isActive.restaurant ? 'theme__restarant active' : 'theme__restarant'
+          }
+        >
+          <button
+            onClick={() =>
+              setIsActive({
+                ...isActive,
+                restaurant: true,
+                stay: false,
+                spot: false,
+              })
+            }
+          >
             <Link to="/">
               <BiRestaurant />
               <span>맛집</span>
             </Link>
           </button>
         </li>
-        <li className="theme__hotel">
-          <button>
+        <li className={isActive.stay ? 'theme__hotel active' : 'theme__hotel'}>
+          <button
+            onClick={() =>
+              setIsActive({
+                ...isActive,
+                restaurant: false,
+                stay: true,
+                spot: false,
+              })
+            }
+          >
             <Link to="/stay">
               <BiHotel />
               <span>숙소 </span>
             </Link>
           </button>
         </li>
-        <li className="theme__trip">
-          <button>
+        <li className={isActive.spot ? 'theme__trip active' : 'theme__trip'}>
+          <button
+            onClick={() =>
+              setIsActive({
+                ...isActive,
+                restaurant: false,
+                stay: false,
+                spot: true,
+              })
+            }
+          >
             <Link to="/spot">
               <BiMap />
               <span>여행지</span>
