@@ -227,11 +227,6 @@ class BoardControllerTest extends After {
                         pathParameters(
                                 parameterWithName("boardId").description("게시글 식별자")
                         ),
-                        requestParts(
-                                List.of(
-                                        partWithName("images").description("사진").optional()
-                                )
-                        ),
                         requestFields(
                                 List.of(
                                         fieldWithPath("title").description("수정된 게시글 제목").optional(),
