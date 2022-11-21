@@ -21,22 +21,29 @@ const MainThemeBar = styled.div`
         background: none;
         border: none;
         display: flex;
-        align-items: center;
-        cursor: pointer;
-        > svg {
-          width: 2rem;
-          height: 2rem;
-        }
+        > a {
+          width: 100%;
+          height: 100%;
+          display: flex;
+          align-items: center;
+          color: var(--font-base-grey);
+          > svg {
+            width: 2rem;
+            height: 2rem;
+          }
 
-        > span {
-          font-size: 1.6rem;
-          padding-left: 5px;
+          > span {
+            font-size: 1.6rem;
+            padding-left: 5px;
+          }
         }
       }
 
       &.active {
-        color: var(--font-base-black);
         border-bottom: 2px solid var(--font-base-black);
+        > button > a {
+          color: var(--font-base-black);
+        }
       }
     }
   }
