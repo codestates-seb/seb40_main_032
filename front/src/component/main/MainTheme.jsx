@@ -59,18 +59,23 @@ const MainThemeBar = styled.div`
       transition: all 0.5s;
     }
 
-    .theme__restarant.active ~ .bar {
-      left: 9px;
+    .theme__all.active ~ .bar {
+      left: 1.1rem;
+      opacity: 1;
+    }
+
+    .theme__restaurant.active ~ .bar {
+      left: 10.4rem;
       opacity: 1;
     }
 
     .theme__hotel.active ~ .bar {
-      left: 10.3rem;
+      left: 19.6rem;
       opacity: 1;
     }
 
     .theme__trip.active ~ .bar {
-      left: 20.4rem;
+      left: 29.7rem;
       opacity: 1;
     }
   }
@@ -78,7 +83,8 @@ const MainThemeBar = styled.div`
 
 function MainTheme() {
   const activInitState = {
-    restaurant: true,
+    all: true,
+    restaurant: false,
     stay: false,
     spot: false,
   };
@@ -87,22 +93,43 @@ function MainTheme() {
   return (
     <MainThemeBar>
       <ul className="theme__lists">
-        <li
-          className={
-            isActive.restaurant ? 'theme__restarant active' : 'theme__restarant'
-          }
-        >
+        <li className={isActive.all ? 'theme__all active' : 'theme__all'}>
           <button
             onClick={() =>
               setIsActive({
                 ...isActive,
-                restaurant: true,
+                all: true,
+                restaurant: false,
                 stay: false,
                 spot: false,
               })
             }
           >
             <Link to="/">
+              <BiRestaurant />
+              <span>전체</span>
+            </Link>
+          </button>
+        </li>
+        <li
+          className={
+            isActive.restaurant
+              ? 'theme__restaurant active'
+              : 'theme__restaurant'
+          }
+        >
+          <button
+            onClick={() =>
+              setIsActive({
+                ...isActive,
+                all: false,
+                restaurant: true,
+                stay: false,
+                spot: false,
+              })
+            }
+          >
+            <Link to="/restaurant">
               <BiRestaurant />
               <span>맛집</span>
             </Link>
@@ -113,6 +140,7 @@ function MainTheme() {
             onClick={() =>
               setIsActive({
                 ...isActive,
+                all: false,
                 restaurant: false,
                 stay: true,
                 spot: false,
@@ -130,6 +158,7 @@ function MainTheme() {
             onClick={() =>
               setIsActive({
                 ...isActive,
+                all: false,
                 restaurant: false,
                 stay: false,
                 spot: true,
