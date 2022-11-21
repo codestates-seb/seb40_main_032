@@ -1,6 +1,7 @@
 import { Outlet } from 'react-router-dom';
 import styled from 'styled-components';
 import MainTheme from '../../component/main/MainTheme';
+import Footer from '../../component/common/footer/Footer';
 
 const Main = styled.main`
   padding: 8rem 0 4rem;
@@ -56,12 +57,15 @@ const Main = styled.main`
 
 function MainPage() {
   return (
-    <Main>
-      <MainTheme />
-      <section className="main__wrapper">
-        <Outlet />
-      </section>
-    </Main>
+    <>
+      <Main>
+        <MainTheme />
+        <section className="main__wrapper">
+          <Outlet />
+        </section>
+      </Main>
+      <Footer />
+    </>
   );
 }
 
