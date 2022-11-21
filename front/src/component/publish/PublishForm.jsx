@@ -24,6 +24,12 @@ function PublishForm() {
     tags: [],
   });
 
+  const [titleValid, setTitleValid] = useState(false);
+  const [contentValid, setContentValid] = useState(false);
+
+  const [titleMessage, setTitleMessage] = useState('');
+  const [contentMessage, setContentMessage] = useState('');
+
   const [categorySelected, setCategorySelected] = useState('');
   const [tags, setTags] = useState([]);
   const [newTag, setNewTag] = useState();
@@ -35,8 +41,31 @@ function PublishForm() {
   const { title, content, location } = formData;
 
   // 입력값 저장 함수
-  const onChange = event =>
+  const onChange = event => {
+    const InputName = event.target.name;
+    const InputValue = event.target.value;
+    const InputLength = InputValue.length;
+    if (InputName === 'title') {
+      if (InputLength < 5) {
+        setTitleMessage('5글자 이상 입력하세요');
+        setTitleValid(false);
+      } else if (InputLength >= 5 && InputLength <= 40) {
+        setTitleValid(true);
+      } else {
+        setTitleMessage('40글자 이하로 입력해주세요');
+        setTitleValid(false);
+      }
+    }
+    if (InputName === 'content')
+      if (InputLength < 5) {
+        setContentMessage('5글자 이상 입력하세요');
+        setContentValid(false);
+      } else setContentValid(true);
     setFormData({ ...formData, [event.target.name]: event.target.value });
+  };
+
+  // 필수 입력 정보 (TODO : 사진 컴포넌트 완성되면 추가)
+  const mandatoryInfo = titleValid && contentValid && formData.category;
 
   // 테마 선택 함수
   const onClick = index => {
@@ -52,11 +81,13 @@ function PublishForm() {
 
     if (event.key === 'Enter' || event.key === ',') {
       if (value !== '' && filtered.indexOf(value) === -1 && value.length <= 6) {
-        setTags([...tags, value]);
-        setFormData({ ...formData, tags: [...tags, value] });
-        setTimeout(() => {
-          setNewTag('');
-        }, 0);
+        if (tags.length <= 4) {
+          setTags([...tags, value]);
+          setFormData({ ...formData, tags: [...tags, value] });
+          setTimeout(() => {
+            setNewTag('');
+          }, 0);
+        }
       }
     }
   };
@@ -68,15 +99,16 @@ function PublishForm() {
 
   // 게시글 등록 요청
   const publishRequest = async () => {
-    await publishApi(formData)
-      .then(res => {
-        if (res.status === 201) {
-          console.log(res);
-          setPublishSuccess(true);
-          navigate('/');
-        }
-      })
-      .catch(error => console.log(error.response.data.message));
+    if (mandatoryInfo)
+      await publishApi(formData)
+        .then(res => {
+          if (res.status === 201) {
+            setPublishSuccess(true);
+            navigate('/');
+          }
+        })
+        .catch(error => console.log(error.response.data.message));
+    else console.log('not valid'); // 임시
   };
 
   // 등록 버튼 모달 연결
@@ -137,16 +169,7 @@ function PublishForm() {
 
   return (
     <Container>
-      <h1>
-        새 게시물
-        <button
-          onClick={() => {
-            console.log(formData);
-          }}
-        >
-          123213
-        </button>
-      </h1>
+      <h1>새 게시물</h1>
       <PublishPhoto />
       <TitleContainer>
         <div className="title__label">
@@ -165,6 +188,9 @@ function PublishForm() {
           placeholder="제목을 입력하세요"
           required
         />
+        <span className="validation__message">
+          {titleValid ? null : titleMessage}
+        </span>
       </TitleContainer>
       <ContentContainer>
         <div className="content__label">
@@ -183,6 +209,9 @@ function PublishForm() {
           placeholder="이야기를 공유해주세요"
           required
         />
+        <span className="validation__message">
+          {contentValid ? null : contentMessage}
+        </span>
       </ContentContainer>
       <LocationCategoryRow>
         <LocationContainer>
@@ -196,7 +225,7 @@ function PublishForm() {
             name="location"
             value={location || ''}
             onChange={event => onChange(event)}
-            maxLength="20"
+            maxLength="40"
             placeholder="위치를 남겨주세요"
           />
         </LocationContainer>
@@ -240,6 +269,7 @@ function PublishForm() {
             onChange={event => setNewTag(event.target.value)}
             onKeyDown={event => handleTagAdd(event)}
             placeholder="# 태그를 입력하세요"
+            disabled={tags.length === 5}
           />
         </ul>
       </TagContainer>
@@ -250,6 +280,7 @@ function PublishForm() {
           fontSize="var(--font-15)"
           fontWeight="var(--font-bold)"
           onClick={confirmModalOpener}
+          disabled={!mandatoryInfo}
         >
           <span>등록</span>
         </PublishButton>
@@ -308,6 +339,9 @@ const Container = styled.div`
   label {
     font-weight: var(--font-semi-bold);
     font-size: var(--font-20);
+  }
+  .validation__message {
+    color: red;
   }
   @media screen and (max-width: 549px) {
     gap: 2rem;
@@ -466,8 +500,8 @@ const PublishButton = styled(DefaultButton)`
     height: 4vh;
   }
   &:hover {
-    background: var(--button-theme-hv);
-    color: var(--base-white-color);
+    background: var(—-button-theme-hv);
+    color: var(—-base-white-color);
     transition: 0.1s ease-in-out;
   }
 `;
