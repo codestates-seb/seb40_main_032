@@ -93,7 +93,7 @@ function LoginModal({ modalCloser, loginNotify }) {
       // unwrap()을 해줘야만 비동기 처리가 제대로 작동함.
       await dispatch(loginAsync(data)).unwrap();
       setLoginError(false);
-      loginUserApi();
+      await loginUserApi();
       loginNotify();
       modalCloser();
       window.location.reload();
