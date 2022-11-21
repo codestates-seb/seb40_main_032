@@ -1,20 +1,20 @@
 import { useEffect, useRef, useCallback, useState } from 'react';
 import axios from 'axios';
-import Post from '../component/common/Post';
-import MainSort from '../component/main/MainSort';
+import Post from '../../component/common/Post';
+import MainSort from '../../component/main/MainSort';
 
-function AllThemePage() {
+function SpotPage() {
   const target = useRef(null);
   const [isPending, setIsPending] = useState(true);
   const [extraPage, setExtraPage] = useState(true);
   const [posts, setPosts] = useState([]);
   const page = useRef(1);
 
-  const getAllData = useCallback(async quantity => {
+  const getSpotData = useCallback(async quantity => {
     try {
       setIsPending(true);
       const { data } = await axios(
-        `/boards?&size=${quantity}&page=${page.current}`,
+        `/boards?category=SPOT&size=${quantity}&page=${page.current}`,
       );
       // console.log(data.content);
       setPosts(prev => [...prev, ...data.content]);
@@ -39,7 +39,7 @@ function AllThemePage() {
     const io = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          getAllData(20); // 데이터 요청
+          getSpotData(20); // 데이터 요청
         }
       },
       { threshold: 1 },
@@ -62,4 +62,4 @@ function AllThemePage() {
   );
 }
 
-export default AllThemePage;
+export default SpotPage;

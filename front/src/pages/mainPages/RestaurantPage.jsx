@@ -1,7 +1,7 @@
 import { useEffect, useRef, useCallback, useState } from 'react';
 import axios from 'axios';
-import Post from '../component/common/Post';
-import MainSort from '../component/main/MainSort';
+import Post from '../../component/common/Post';
+import MainSort from '../../component/main/MainSort';
 
 function RestaurantPage() {
   const target = useRef(null);

@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom';
 import styled from 'styled-components';
-import MainTheme from '../component/main/MainTheme';
+import MainTheme from '../../component/main/MainTheme';
 
 const Main = styled.main`
   padding: 8rem 0 4rem;
