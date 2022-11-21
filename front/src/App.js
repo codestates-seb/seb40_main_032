@@ -9,6 +9,8 @@ import Header from './component/common/header/Header';
 import LoginModal from './component/common/modal/LoginModal';
 import 'react-toastify/dist/ReactToastify.css';
 import RestaurantPage from './pages/RestaurantPage';
+import StayPage from './pages/StayPage';
+import SpotPage from './pages/SpotPage';
 
 const MainPage = React.lazy(() => import('./pages/MainPage'));
 const PublishPage = React.lazy(() => import('./pages/PublishPage'));
@@ -55,6 +57,8 @@ function App() {
         <Routes>
           <Route path="/" element={<MainPage />}>
             <Route index element={<RestaurantPage />} />
+            <Route path="stay" element={<StayPage />} />
+            <Route path="spot" element={<SpotPage />} />
           </Route>
           <Route path="/postDetail/:id" element={<PostDetailPage />} />
           <Route path="/publish" element={<PublishPage />} />
