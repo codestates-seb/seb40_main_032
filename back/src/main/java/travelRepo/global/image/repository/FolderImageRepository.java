@@ -1,15 +1,14 @@
 package travelRepo.global.image.repository;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.UUID;
 
-@Service
+@Repository
 @ConditionalOnProperty(value = "mod", havingValue = "local")
 public class FolderImageRepository implements ImageRepository {
 
