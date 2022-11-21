@@ -105,7 +105,9 @@ function PublishPhoto() {
       console.log(formData.get('images'));
     }
     try {
-      postPhotoApi(formData).then(res => console.log(res));
+      if (blobPhotos) {
+        postPhotoApi(formData).then(res => console.log(res.data.imagePaths));
+      }
     } catch (err) {
       console.log(err);
     }
