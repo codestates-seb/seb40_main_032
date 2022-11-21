@@ -81,7 +81,6 @@ public class BoardService {
         });
 
         Optional.ofNullable(boardModifyReq.getTags()).ifPresent(tagNames -> {
-            boardTagRepository.deleteByBoardId(boardId);
             addBoardTagsToBoard(boardModifyReq.getTags(), board);
         });
 
@@ -143,11 +142,22 @@ public class BoardService {
 
         List<BoardTag> boardTags = tagNames.stream()
                 .map((tagName -> {
+
+                    BoardTag boardTag = null;
                     Tag tag = findTag(tagName);
-                    BoardTag boardTag = BoardTag.builder()
-                            .tag(tag)
-                            .build();
+                    Optional<BoardTag> optionalBoardTag = boardTagRepository.findByBoardIdAndTagId(board.getId(), tag.getId());
+
+                    if (optionalBoardTag.isEmpty()) {
+                        boardTag = BoardTag.builder()
+                                .tag(tag)
+                                .build();
+                    } else {
+                        boardTag = optionalBoardTag.get();
+                    }
+
+                    boardTag.setOrders(tagNames.indexOf(tagName));
                     return boardTag;
+
                 })).collect(Collectors.toList());
 
         board.addBoardTags(boardTags);
@@ -168,14 +178,14 @@ public class BoardService {
     }
 
     @Transactional
-    protected Tag findTag(String tagName) {
+    public Tag findTag(String tagName) {
 
         return tagRepository.findTagByName(tagName)
                 .orElseGet(() -> addTag(tagName));
     }
 
     @Transactional
-    protected Tag addTag(String tagName) {
+    public Tag addTag(String tagName) {
 
         Tag tag = Tag.builder()
                 .name(tagName)
