@@ -7,7 +7,7 @@ const MainThemeBar = styled.div`
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.16);
   background: #fff;
   position: fixed;
-  z-index: 10;
+  z-index: 9;
   display: flex;
   justify-content: center;
 

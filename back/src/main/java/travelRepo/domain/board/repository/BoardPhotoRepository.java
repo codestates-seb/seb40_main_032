@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import travelRepo.domain.board.entity.BoardPhoto;
 
+import java.util.Optional;
+
 public interface BoardPhotoRepository extends JpaRepository<BoardPhoto, Long> {
 
     @Modifying(flushAutomatically = true)
@@ -16,4 +18,7 @@ public interface BoardPhotoRepository extends JpaRepository<BoardPhoto, Long> {
     @Modifying(flushAutomatically = true)
     @Query("delete from BoardPhoto boardPhoto where boardPhoto.board.id = :boardId")
     void deleteByBoardId(@Param("boardId") Long boardId);
+
+    @Query("select b from BoardPhoto b where b.board.id = :boardId and b.photo = :photo")
+    Optional<BoardPhoto> findByBoardIdAndPhoto(@Param("boardId") Long boardId, @Param("photo") String photo);
 }

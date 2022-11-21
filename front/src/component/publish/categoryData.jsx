@@ -3,7 +3,8 @@ import uuid from 'react-uuid';
 const categoryData = [
   {
     id: uuid(),
-    value: '맛집',
+    category: 'RESTAURANT',
+    text: '맛집',
     theme: {
       background: 'var(--button-theme)',
       color: 'var(--base-white-color)',
@@ -11,7 +12,8 @@ const categoryData = [
   },
   {
     id: uuid(),
-    value: '숙소',
+    category: 'STAY',
+    text: '숙소',
     theme: {
       background: 'var(--font-tag-color)',
       color: 'var(--base-white-color)',
@@ -19,7 +21,8 @@ const categoryData = [
   },
   {
     id: uuid(),
-    value: '여행지',
+    category: 'SPOT',
+    text: '여행지',
     theme: {
       background: 'var(--font-base-black)',
       color: 'var(--base-white-color)',

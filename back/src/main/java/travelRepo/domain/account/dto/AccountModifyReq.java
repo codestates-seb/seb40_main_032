@@ -16,15 +16,15 @@ public class AccountModifyReq {
 
     private String intro;
 
-    private MultipartFile profile;
+    private String profile;
 
-    public Account toAccount(String profile, String password) {
+    public Account toAccount(String password) {
 
         return Account.builder()
                 .password(password)
                 .nickname(this.nickname)
                 .intro(this.intro)
-                .profile(profile)
+                .profile(this.profile)
                 .build();
     }
 }
