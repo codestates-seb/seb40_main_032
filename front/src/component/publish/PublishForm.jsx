@@ -49,16 +49,16 @@ function PublishForm() {
       if (InputLength < 5) {
         setTitleMessage('5글자 이상 입력하세요');
         setTitleValid(false);
-      } else if (InputLength >= 5 && InputLength <= 20) {
+      } else if (InputLength >= 5 && InputLength <= 40) {
         setTitleValid(true);
       } else {
-        setTitleMessage('20글자 이하로 입력해주세요');
+        setTitleMessage('40글자 이하로 입력해주세요');
         setTitleValid(false);
       }
     }
     if (InputName === 'content')
       if (InputLength < 5) {
-        setContentMessage('본문은 5글자 이상 입력해주세요');
+        setContentMessage('5글자 이상 입력하세요');
         setContentValid(false);
       } else setContentValid(true);
     setFormData({ ...formData, [event.target.name]: event.target.value });
@@ -225,7 +225,7 @@ function PublishForm() {
             name="location"
             value={location || ''}
             onChange={event => onChange(event)}
-            maxLength="20"
+            maxLength="40"
             placeholder="위치를 남겨주세요"
           />
         </LocationContainer>
@@ -500,8 +500,8 @@ const PublishButton = styled(DefaultButton)`
     height: 4vh;
   }
   &:hover {
-    background: var(—button-theme-hv);
-    color: var(—base-white-color);
+    background: var(—-button-theme-hv);
+    color: var(—-base-white-color);
     transition: 0.1s ease-in-out;
   }
 `;
