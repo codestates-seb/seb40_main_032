@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import { BiRestaurant, BiHotel, BiMap } from 'react-icons/bi';
-import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 
 const MainThemeBar = styled.div`
   width: 100%;
@@ -82,29 +81,13 @@ const MainThemeBar = styled.div`
 `;
 
 function MainTheme() {
-  const activInitState = {
-    all: true,
-    restaurant: false,
-    stay: false,
-    spot: false,
-  };
-  const [isActive, setIsActive] = useState(activInitState);
+  const { pathname } = useLocation();
 
   return (
     <MainThemeBar>
       <ul className="theme__lists">
-        <li className={isActive.all ? 'theme__all active' : 'theme__all'}>
-          <button
-            onClick={() =>
-              setIsActive({
-                ...isActive,
-                all: true,
-                restaurant: false,
-                stay: false,
-                spot: false,
-              })
-            }
-          >
+        <li className={pathname === '/' ? 'theme__all active' : 'theme__all'}>
+          <button>
             <Link to="/">
               <BiRestaurant />
               <span>전체</span>
@@ -113,58 +96,36 @@ function MainTheme() {
         </li>
         <li
           className={
-            isActive.restaurant
+            pathname === '/restaurant'
               ? 'theme__restaurant active'
               : 'theme__restaurant'
           }
         >
-          <button
-            onClick={() =>
-              setIsActive({
-                ...isActive,
-                all: false,
-                restaurant: true,
-                stay: false,
-                spot: false,
-              })
-            }
-          >
+          <button>
             <Link to="/restaurant">
               <BiRestaurant />
               <span>맛집</span>
             </Link>
           </button>
         </li>
-        <li className={isActive.stay ? 'theme__hotel active' : 'theme__hotel'}>
-          <button
-            onClick={() =>
-              setIsActive({
-                ...isActive,
-                all: false,
-                restaurant: false,
-                stay: true,
-                spot: false,
-              })
-            }
-          >
+        <li
+          className={
+            pathname === '/stay' ? 'theme__hotel active' : 'theme__hotel'
+          }
+        >
+          <button>
             <Link to="/stay">
               <BiHotel />
               <span>숙소 </span>
             </Link>
           </button>
         </li>
-        <li className={isActive.spot ? 'theme__trip active' : 'theme__trip'}>
-          <button
-            onClick={() =>
-              setIsActive({
-                ...isActive,
-                all: false,
-                restaurant: false,
-                stay: false,
-                spot: true,
-              })
-            }
-          >
+        <li
+          className={
+            pathname === '/spot' ? 'theme__trip active' : 'theme__trip'
+          }
+        >
+          <button>
             <Link to="/spot">
               <BiMap />
               <span>여행지</span>
