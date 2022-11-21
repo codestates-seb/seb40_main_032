@@ -10,7 +10,7 @@ function AllThemePage() {
   const [posts, setPosts] = useState([]);
   const page = useRef(1);
 
-  const axiosData = useCallback(async quantity => {
+  const getAllData = useCallback(async quantity => {
     try {
       setIsPending(true);
       const { data } = await axios(
@@ -39,7 +39,7 @@ function AllThemePage() {
     const io = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          axiosData(20); // 데이터 요청
+          getAllData(20); // 데이터 요청
         }
       },
       { threshold: 1 },
