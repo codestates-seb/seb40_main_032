@@ -12,6 +12,7 @@ import RestaurantPage from './pages/RestaurantPage';
 import StayPage from './pages/StayPage';
 import SpotPage from './pages/SpotPage';
 import Footer from './component/common/footer/Footer';
+import AllThemePage from './pages/AllThemePage';
 
 const MainPage = React.lazy(() => import('./pages/MainPage'));
 const PublishPage = React.lazy(() => import('./pages/PublishPage'));
@@ -57,7 +58,8 @@ function App() {
         <Header loginModalOpener={loginModalOpener} />
         <Routes>
           <Route path="/" element={<MainPage />}>
-            <Route index element={<RestaurantPage />} />
+            <Route index element={<AllThemePage />} />
+            <Route path="restaurant" element={<RestaurantPage />} />
             <Route path="stay" element={<StayPage />} />
             <Route path="spot" element={<SpotPage />} />
           </Route>
