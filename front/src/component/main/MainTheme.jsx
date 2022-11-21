@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { BiRestaurant, BiHotel, BiMap } from 'react-icons/bi';
+import { BiRocket, BiRestaurant, BiHotel, BiMapPin } from 'react-icons/bi';
 import { Link, useLocation } from 'react-router-dom';
 
 const MainThemeBar = styled.div`
@@ -44,6 +44,9 @@ const MainThemeBar = styled.div`
 
       &.active > button > a {
         color: var(--font-base-black);
+        > svg {
+          fill: var(--button-theme);
+        }
       }
     }
 
@@ -89,7 +92,7 @@ function MainTheme() {
         <li className={pathname === '/' ? 'theme__all active' : 'theme__all'}>
           <button>
             <Link to="/">
-              <BiRestaurant />
+              <BiRocket />
               <span>전체</span>
             </Link>
           </button>
@@ -127,7 +130,7 @@ function MainTheme() {
         >
           <button>
             <Link to="/spot">
-              <BiMap />
+              <BiMapPin />
               <span>여행지</span>
             </Link>
           </button>
