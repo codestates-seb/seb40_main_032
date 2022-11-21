@@ -10,12 +10,21 @@ const DetailWrapper = styled.div`
     font-size: 1.8rem;
     color: var(--font-base-grey);
   }
+  .detail__more--hide {
+    display: none;
+  }
 `;
 
-function CommentDetail() {
+function CommentDetail({ more, moreEvent }) {
+  const moreHandler = () => {
+    moreEvent(true);
+  };
+
   return (
-    <DetailWrapper>
-      <p className="detail__more">+ 더 보 기</p>
+    <DetailWrapper onClick={moreHandler}>
+      <p className={`detail__more detail__more${more ? '--hide' : ''}`}>
+        + 더 보 기
+      </p>
     </DetailWrapper>
   );
 }
