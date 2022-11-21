@@ -2,12 +2,11 @@ package travelRepo.domain.comment.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.SliceImpl;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import travelRepo.domain.account.dto.AccountSummaryRes;
 import travelRepo.domain.comment.dto.CommentAddReq;
 import travelRepo.domain.comment.dto.CommentDetailsRes;
 import travelRepo.domain.comment.dto.CommentModifyReq;
@@ -16,9 +15,6 @@ import travelRepo.global.argumentresolver.LoginAccountId;
 import travelRepo.global.common.dto.SliceDto;
 
 import javax.validation.Valid;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 @RequestMapping("/comments")
@@ -54,7 +50,7 @@ public class CommentController {
 
     @GetMapping("/board/{boardId}")
     public ResponseEntity<SliceDto<CommentDetailsRes>> commentList(@PathVariable Long boardId,
-                                                                   @PageableDefault(size = 5, sort = "createdAt") Pageable pageable) {
+                                                                   @PageableDefault(size = 5, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
 
         SliceDto<CommentDetailsRes> response = commentService.commentList(boardId, pageable);
 
