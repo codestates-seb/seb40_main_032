@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
@@ -10,8 +10,8 @@ import {
   postDetailLikeApi,
 } from '../../api/postDetailApi';
 import Like from '../common/like/Like';
-import LoginModal from '../common/modal/LoginModal';
 import YesNoModal from '../common/modal/YesNoModal';
+import { loginModalActions } from '../../redux/loginModalSlice';
 
 const Container = styled.div`
   flex: 1;
@@ -203,11 +203,10 @@ function PostDetailArticle({ post, userLike, userFollow, self, board }) {
   const [like, setLike] = useState(
     userLike.likes !== '' ? userLike.likes : false,
   );
-  const [loginModal, setLoginModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
   const [likeCountState, setLikeCountState] = useState(likeCount);
   const login = useSelector(state => state.login.isLogin);
-
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   // 해당회원 정보창으로 이동
   const userMovePageHandler = () => {
@@ -217,14 +216,10 @@ function PostDetailArticle({ post, userLike, userFollow, self, board }) {
   // 로그인 여부 체크
   const loginCheck = () => {
     if (!login) {
-      setLoginModal(true);
+      dispatch(loginModalActions.openLoginModal());
       return false;
     }
     return true;
-  };
-  // login modal close
-  const modalClose = () => {
-    setLoginModal(false);
   };
 
   // 좋아요 및 좋아요 취소 핸들러
@@ -285,6 +280,7 @@ function PostDetailArticle({ post, userLike, userFollow, self, board }) {
       navigate('/');
     });
   };
+  // 게시글 수정 페이지 이동 핸들러
   const postModifyHandler = () => {
     navigate('/publish', { replace: false, state: { post } });
   };
@@ -295,24 +291,9 @@ function PostDetailArticle({ post, userLike, userFollow, self, board }) {
       handler();
     }
   };
-  // login modal notify
-  const loginNotify = () =>
-    toast('로그인 성공!', {
-      position: 'top-center',
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: true,
-      progress: undefined,
-      theme: 'light',
-    });
 
   return (
     <Container>
-      {loginModal && (
-        <LoginModal modalCloser={modalClose} loginNotify={loginNotify} />
-      )}
       {deleteModal && (
         <YesNoModal
           modalMessage="게시글을 정말 삭제하시겠습니까?"
