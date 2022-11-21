@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { BiRestaurant, BiHotel, BiMap } from 'react-icons/bi';
+import { Link } from 'react-router-dom';
 
 const MainThemeBar = styled.div`
   width: 100%;
@@ -47,20 +48,26 @@ function MainTheme() {
       <ul className="theme__lists">
         <li className="theme__restarant active">
           <button>
-            <BiRestaurant />
-            <span>맛집</span>
+            <Link to="/">
+              <BiRestaurant />
+              <span>맛집</span>
+            </Link>
           </button>
         </li>
         <li className="theme__hotel">
           <button>
-            <BiHotel />
-            <span>숙소 </span>
+            <Link to="/stay">
+              <BiHotel />
+              <span>숙소 </span>
+            </Link>
           </button>
         </li>
         <li className="theme__trip">
           <button>
-            <BiMap />
-            <span>여행지</span>
+            <Link to="/spot">
+              <BiMap />
+              <span>여행지</span>
+            </Link>
           </button>
         </li>
       </ul>
