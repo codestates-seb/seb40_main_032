@@ -1,5 +1,6 @@
 package travelRepo.domain.board.controller;
 
+import com.google.gson.Gson;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +14,11 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import travelRepo.domain.account.entity.Account;
 import travelRepo.domain.account.repository.AccountRepository;
+import travelRepo.domain.board.dto.BoardAddReq;
+import travelRepo.domain.board.dto.BoardModifyReq;
 import travelRepo.domain.board.entity.Category;
 import travelRepo.global.exception.BusinessLogicException;
 import travelRepo.global.security.authentication.UserAccount;
@@ -28,8 +32,7 @@ import static org.springframework.restdocs.headers.HeaderDocumentation.headerWit
 import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
-import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
-import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -49,6 +52,9 @@ class BoardControllerTest extends After {
     private AccountRepository accountRepository;
 
     @Autowired
+    private Gson gson;
+
+    @Autowired
     private JwtProcessor jwtProcessor;
 
     @Test
@@ -59,31 +65,22 @@ class BoardControllerTest extends After {
         Account account = accountRepository.findById(20001L).get();
         String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
 
-        MockMultipartFile image1 = new MockMultipartFile("images", "image1.png", "image/png", "(file data)".getBytes());
-        MockMultipartFile image2 = new MockMultipartFile("images", "image2.png", "image/png", "(file data)".getBytes());
-        MockMultipartFile image3 = new MockMultipartFile("images", "image3.png", "image/png", "(file data)".getBytes());
-
-
-        String title = "board title";
-        String content = "board content";
-        String location = "board location";
-        String category = "SPOT";
-        String tag1 = "tag1";
-        String tag2 = "tag2";
-        String tag3 = "tag3";
+        BoardAddReq boardAddReq = new BoardAddReq();
+        boardAddReq.setTitle("board title");
+        boardAddReq.setContent("board content");
+        boardAddReq.setLocation("board location");
+        boardAddReq.setCategory(Category.STAY);
+        boardAddReq.setTags(List.of("tag1", "tag2", "tag3"));
+        boardAddReq.setImages(List.of("https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg"));
+        String content = gson.toJson(boardAddReq);
 
         //when
         ResultActions actions = mockMvc.perform(
                 multipart("/boards")
-                        .file(image1).file(image2).file(image3)
-                        .param("title", title)
-                        .param("content", content)
-                        .param("location", location)
-                        .param("category", category)
-                        .param("tags", tag1).param("tags", tag2).param("tags", tag3)
                         .header("Authorization", jwt)
                         .accept(MediaType.APPLICATION_JSON)
-                        .contentType(MediaType.MULTIPART_FORM_DATA)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(content)
         );
 
         //then
@@ -98,18 +95,14 @@ class BoardControllerTest extends After {
                                         headerWithName("Authorization").description("JWT")
                                 )
                         ),
-                        requestParts(
+                        requestFields(
                                 List.of(
-                                        partWithName("images").description("사진")
-                                )
-                        ),
-                        requestParameters(
-                                List.of(
-                                        parameterWithName("title").description("게시글 제목"),
-                                        parameterWithName("content").description("게시글 내용"),
-                                        parameterWithName("location").description("위치").optional(),
-                                        parameterWithName("category").description("게시글 분류"),
-                                        parameterWithName("tags").description("게시글 태그").optional()
+                                        fieldWithPath("title").description("게시글 제목"),
+                                        fieldWithPath("content").description("게시글 내용"),
+                                        fieldWithPath("location").description("위치").optional(),
+                                        fieldWithPath("category").description("게시글 분류"),
+                                        fieldWithPath("tags").description("게시글 태그").optional(),
+                                        fieldWithPath("images").description("사진")
                                 )
                         ),
                         responseFields(
@@ -128,85 +121,66 @@ class BoardControllerTest extends After {
         Account account = accountRepository.findById(20001L).get();
         String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
 
-        MockMultipartFile image1 = new MockMultipartFile("images", "image1.png", "image/png", "(file data)".getBytes());
-        MockMultipartFile image2 = new MockMultipartFile("images", "image2.png", "image/png", "(file data)".getBytes());
-        MockMultipartFile image3 = new MockMultipartFile("images", "image3.png", "image/png", "(file data)".getBytes());
+        BoardAddReq boardAddReq1 = new BoardAddReq();
+        boardAddReq1.setTitle("title is too loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong");
+        boardAddReq1.setContent("board content");
+        boardAddReq1.setLocation("board location");
+        boardAddReq1.setCategory(Category.SPOT);
+        boardAddReq1.setTags(List.of("tag1", "tag2", "tag3"));
+        boardAddReq1.setImages(List.of("https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg"));
+        String content1 = gson.toJson(boardAddReq1);
 
+        BoardAddReq boardAddReq2 = new BoardAddReq();
+        boardAddReq2.setTitle("board title");
+        boardAddReq2.setContent("ctt");
+        boardAddReq2.setLocation("board location");
+        boardAddReq2.setCategory(Category.SPOT);
+        boardAddReq2.setTags(List.of("tag1", "tag2", "tag3"));
+        boardAddReq2.setImages(List.of("https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg"));
+        String content2 = gson.toJson(boardAddReq2);
 
-        String title = "board title";
-        String content = "board content";
-        String tooLongTitle = "title is too loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong";
-        String tooShortContent = "ctt";
-        String location = "board location";
-        String category = "SPOT";
-        String tag1 = "tag1";
-        String tag2 = "tag2";
-        String tag3 = "tag3";
+        BoardAddReq boardAddReq3 = new BoardAddReq();
+        boardAddReq3.setTitle("board title");
+        boardAddReq3.setContent("board content");
+        boardAddReq3.setLocation("board location");
+        boardAddReq3.setTags(List.of("tag1", "tag2", "tag3"));
+        boardAddReq3.setImages(List.of("https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg"));
+        String content3 = gson.toJson(boardAddReq3);
 
         //when
         ResultActions titleValidationEx = mockMvc.perform(
                 multipart("/boards")
-                        .file(image1).file(image2).file(image3)
-                        .param("title", tooLongTitle)
-                        .param("content", content)
-                        .param("location", location)
-                        .param("category", category)
-                        .param("tags", tag1).param("tags", tag2).param("tags", tag3)
                         .header("Authorization", jwt)
                         .accept(MediaType.APPLICATION_JSON)
-                        .contentType(MediaType.MULTIPART_FORM_DATA)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(content1)
         );
         ResultActions contentValidationEx = mockMvc.perform(
                 multipart("/boards")
-                        .file(image1).file(image2).file(image3)
-                        .param("title", title)
-                        .param("content", tooShortContent)
-                        .param("location", location)
-                        .param("category", category)
-                        .param("tags", tag1).param("tags", tag2).param("tags", tag3)
                         .header("Authorization", jwt)
                         .accept(MediaType.APPLICATION_JSON)
-                        .contentType(MediaType.MULTIPART_FORM_DATA)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(content2)
         );
-        ResultActions categoryValidationEx = mockMvc.perform(
+        ResultActions notEnoughParameterEx = mockMvc.perform(
                 multipart("/boards")
-                        .file(image1).file(image2).file(image3)
-                        .param("title", tooLongTitle)
-                        .param("content", content)
-                        .param("location", location)
-                        .param("tags", tag1).param("tags", tag2).param("tags", tag3)
                         .header("Authorization", jwt)
                         .accept(MediaType.APPLICATION_JSON)
-                        .contentType(MediaType.MULTIPART_FORM_DATA)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(content3)
         );
-        ResultActions imageValidationEx = mockMvc.perform(
-                multipart("/boards")
-                        .param("title", tooLongTitle)
-                        .param("content", content)
-                        .param("location", location)
-                        .param("category", category)
-                        .param("tags", tag1).param("tags", tag2).param("tags", tag3)
-                        .header("Authorization", jwt)
-                        .accept(MediaType.APPLICATION_JSON)
-                        .contentType(MediaType.MULTIPART_FORM_DATA)
-        );
-
         //then
         titleValidationEx
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.exception").value(BindException.class.getSimpleName()))
+                .andExpect(jsonPath("$.exception").value(MethodArgumentNotValidException.class.getSimpleName()))
                 .andExpect(jsonPath("$.message").value("잘못된 입력값입니다."));
         contentValidationEx
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.exception").value(BindException.class.getSimpleName()))
+                .andExpect(jsonPath("$.exception").value(MethodArgumentNotValidException.class.getSimpleName()))
                 .andExpect(jsonPath("$.message").value("잘못된 입력값입니다."));
-        categoryValidationEx
+        notEnoughParameterEx
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.exception").value(BindException.class.getSimpleName()))
-                .andExpect(jsonPath("$.message").value("잘못된 입력값입니다."));
-        imageValidationEx
-                .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.exception").value(BindException.class.getSimpleName()))
+                .andExpect(jsonPath("$.exception").value(MethodArgumentNotValidException.class.getSimpleName()))
                 .andExpect(jsonPath("$.message").value("잘못된 입력값입니다."));
     }
 
@@ -220,31 +194,22 @@ class BoardControllerTest extends After {
 
         Long boardId = 31001L;
 
-        MockMultipartFile image1 = new MockMultipartFile("images", "image1.png", "image/png", "(file data)".getBytes());
-        MockMultipartFile image2 = new MockMultipartFile("images", "image2.png", "image/png", "(file data)".getBytes());
-        MockMultipartFile image3 = new MockMultipartFile("images", "image3.png", "image/png", "(file data)".getBytes());
-
-
-        String title = "modified mock board title";
-        String content = "modified mock board content";
-        String location = "modified mock board location";
-        String category = "RESTAURANT";
-        String tag4 = "mock tag4";
-        String tag2 = "mock tag2";
-        String tag3 = "mock tag3";
+        BoardModifyReq boardModifyReq = new BoardModifyReq();
+        boardModifyReq.setTitle("modified board title");
+        boardModifyReq.setContent("modified board content");
+        boardModifyReq.setLocation("modified board location");
+        boardModifyReq.setCategory(Category.RESTAURANT);
+        boardModifyReq.setTags(List.of("tag3", "tag2", "tag1"));
+        boardModifyReq.setImages(List.of("https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg"));
+        String content = gson.toJson(boardModifyReq);
 
         //when
         ResultActions actions = mockMvc.perform(
                 multipart("/boards/{boardId}", boardId)
-                        .file(image1).file(image2).file(image3)
-                        .param("title", title)
-                        .param("content", content)
-                        .param("location", location)
-                        .param("category", category)
-                        .param("tags", tag4).param("tags", tag2).param("tags", tag3)
                         .header("Authorization", jwt)
                         .accept(MediaType.APPLICATION_JSON)
-                        .contentType(MediaType.MULTIPART_FORM_DATA)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(content)
         );
 
         //then
@@ -267,13 +232,14 @@ class BoardControllerTest extends After {
                                         partWithName("images").description("사진").optional()
                                 )
                         ),
-                        requestParameters(
+                        requestFields(
                                 List.of(
-                                        parameterWithName("title").description("게시글 제목").optional(),
-                                        parameterWithName("content").description("게시글 내용").optional(),
-                                        parameterWithName("location").description("위치").optional(),
-                                        parameterWithName("category").description("게시글 분류").optional(),
-                                        parameterWithName("tags").description("게시글 태그").optional()
+                                        fieldWithPath("title").description("수정된 게시글 제목").optional(),
+                                        fieldWithPath("content").description("수정된 게시글 내용").optional(),
+                                        fieldWithPath("location").description("수정된 위치").optional(),
+                                        fieldWithPath("category").description("수정된 게시글 분류").optional(),
+                                        fieldWithPath("tags").description("수정된 게시글 태그").optional(),
+                                        fieldWithPath("images").description("수정된 사진").optional()
                                 )
                         ),
                         responseFields(
@@ -294,15 +260,17 @@ class BoardControllerTest extends After {
 
         Long boardId = 41001L;
 
-        String title = "modified mock board title";
+        BoardModifyReq boardModifyReq = new BoardModifyReq();
+        boardModifyReq.setTitle("modified board title");
+        String content = gson.toJson(boardModifyReq);
 
         //when
         ResultActions actions = mockMvc.perform(
                 multipart("/boards/{boardId}", boardId)
-                        .param("title", title)
                         .header("Authorization", jwt)
                         .accept(MediaType.APPLICATION_JSON)
-                        .contentType(MediaType.MULTIPART_FORM_DATA)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(content)
         );
 
         //then
@@ -322,15 +290,17 @@ class BoardControllerTest extends After {
 
         Long boardId = 21002L;
 
-        String title = "modified mock board title";
+        BoardModifyReq boardModifyReq = new BoardModifyReq();
+        boardModifyReq.setTitle("modified board title");
+        String content = gson.toJson(boardModifyReq);
 
         //when
         ResultActions actions = mockMvc.perform(
                 multipart("/boards/{boardId}", boardId)
-                        .param("title", title)
                         .header("Authorization", jwt)
                         .accept(MediaType.APPLICATION_JSON)
-                        .contentType(MediaType.MULTIPART_FORM_DATA)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(content)
         );
 
         //then
