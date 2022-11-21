@@ -11,6 +11,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import RestaurantPage from './pages/RestaurantPage';
 import StayPage from './pages/StayPage';
 import SpotPage from './pages/SpotPage';
+import Footer from './component/common/footer/Footer';
 
 const MainPage = React.lazy(() => import('./pages/MainPage'));
 const PublishPage = React.lazy(() => import('./pages/PublishPage'));
@@ -63,6 +64,7 @@ function App() {
           <Route path="/postDetail/:id" element={<PostDetailPage />} />
           <Route path="/publish" element={<PublishPage />} />
         </Routes>
+        <Footer />
       </Suspense>
     </Router>
   );
