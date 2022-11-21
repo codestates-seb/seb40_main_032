@@ -179,14 +179,14 @@ public class BoardService {
     }
 
     @Transactional
-    public Tag findTag(String tagName) {
+    protected Tag findTag(String tagName) {
 
         return tagRepository.findTagByName(tagName)
                 .orElseGet(() -> addTag(tagName));
     }
 
     @Transactional
-    public Tag addTag(String tagName) {
+    protected Tag addTag(String tagName) {
 
         Tag tag = Tag.builder()
                 .name(tagName)
