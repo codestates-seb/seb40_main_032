@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import CommentWrite from './CommentWrite';
-import CommentDetail from './CommentDetail';
+// import CommentDetail from './CommentDetail';
 
 const CommentWrapper = styled.section`
   width: 100%;
@@ -19,7 +19,7 @@ function Comment() {
   return (
     <CommentWrapper className="comment">
       <CommentWrite />
-      <CommentDetail />
+      {/* <CommentDetail /> */}
     </CommentWrapper>
   );
 }
