@@ -36,13 +36,13 @@ export const postDetailUserApi = async (boardId, accountId) => {
     post: postDetail.data,
     like: data[0].data,
     follow: data[1].data,
-    self: accountId === postDetail.data.account.accountId,
+    self: Number(accountId) === postDetail.data.account.accountId,
   };
   return board;
 };
 // 게시물 삭제 Api
 export const postDetailDeleteApi = async boardId => {
-  const data = await axios.delete(`/boards/${boardId}`, {}, authHeader);
+  const data = await axios.delete(`/boards/${boardId}`, authHeader);
 
   return data;
 };
