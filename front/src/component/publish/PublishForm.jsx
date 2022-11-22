@@ -174,6 +174,14 @@ function PublishForm() {
     return () => {};
   }, [photoUrl]);
 
+  // formData에서 images상태에 저장된 URL 삭제하는 함수
+  const deleteImages = index => {
+    setImages(prev => {
+      const prevData = [...prev];
+      prevData.splice(index, 1);
+      return prevData;
+    });
+  };
   useEffect(() => {
     setFormData(prev => {
       return { ...prev, images: [...images] };
@@ -189,7 +197,7 @@ function PublishForm() {
   return (
     <Container>
       <h1>새 게시물</h1>
-      <PublishPhoto setPhotoUrl={setPhotoUrl} />
+      <PublishPhoto setPhotoUrl={setPhotoUrl} deleteImages={deleteImages} />
       <TitleContainer>
         <div className="title__label">
           <label htmlFor="title">제목</label>

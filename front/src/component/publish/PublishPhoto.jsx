@@ -95,7 +95,7 @@ const RemoveIcon = styled(IoIosRemoveCircleOutline)`
   }
 `;
 
-function PublishPhoto({ setPhotoUrl }) {
+function PublishPhoto({ setPhotoUrl, deleteImages }) {
   const [photos, setPhotos] = useState([]);
   const [blobPhotos, setBlobPhotos] = useState();
 
@@ -114,6 +114,7 @@ function PublishPhoto({ setPhotoUrl }) {
   const removePhotos = indexRemove => {
     URL.revokeObjectURL(photos[indexRemove]);
     setPhotos([...photos.filter((_, index) => index !== indexRemove)]); // 미리보기에서 삭제
+    deleteImages(indexRemove); // Formdata에서 삭제
   };
 
   /* eslint-disable */
