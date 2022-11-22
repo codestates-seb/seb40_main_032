@@ -1,8 +1,14 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
+import UserInfo from '../../component/userInfo/UserInfo';
 
 function MyPage() {
-  return <Outlet />;
+  return (
+    <>
+      <UserInfo />
+      <Outlet />;
+    </>
+  );
 }
 
 export default MyPage;
