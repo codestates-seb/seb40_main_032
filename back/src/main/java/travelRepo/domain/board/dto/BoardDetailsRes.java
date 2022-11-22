@@ -46,7 +46,7 @@ public class BoardDetailsRes {
         boardDetailsRes.setLocation(board.getLocation());
         boardDetailsRes.setCategory(board.getCategory());
         boardDetailsRes.setLikeCount(board.getLikeCount());
-        boardDetailsRes.setViews(board.getViews());
+        boardDetailsRes.setViews(board.getViews() + 1);
         boardDetailsRes.setTags(
                 board.getBoardTags().stream()
                         .sorted(Comparator.comparing(BoardTag::getOrders))
