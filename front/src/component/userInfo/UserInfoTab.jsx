@@ -82,28 +82,6 @@ const MainThemeBar = styled.div`
   }
 `;
 
-// const Container = styled.div`
-//   color: var(--font-base-black);
-//   width: 100%;
-//   display: flex;
-//   justify-content: space-around;
-//   align-items: center;
-// `;
-
-// const Tab = styled(Link)`
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   text-decoration: none;
-//   color: inherit;
-//   padding: 10px;
-//   &.isActive,
-//   &:hover {
-//     transition: 0.3s linear;
-//     border-bottom: 2px solid var(--font-base-grey);
-//   }
-// `;
-
 const CircleIcon = styled.div`
   background-color: var(--font-tag-color);
   color: var(--base-white-color);
@@ -127,25 +105,6 @@ function UserInfoTab({ userdata }) {
 
   // 임시 데이터
   const [posts] = useState(['내글1', '내글2']);
-
-  // const tabItems = [
-  //   {
-  //     title: '게시글',
-  //     link: '/',
-  //     icon: <CircleIcon>{posts.length}</CircleIcon>,
-  //   },
-  //   { title: '좋아요', link: '/', icon: <HeartIcon /> },
-  //   {
-  //     title: '팔로워',
-  //     link: '/',
-  //     icon: <CircleIcon>{userdata.follower}</CircleIcon>,
-  //   },
-  //   {
-  //     title: '팔로잉',
-  //     link: '/',
-  //     icon: <CircleIcon>{userdata.folloing}</CircleIcon>,
-  //   },
-  // ];
 
   return (
     <MainThemeBar>

@@ -5,17 +5,21 @@ import UserInfoCard from './UserInfoCard';
 import loginUserApi from '../../api/loginUserApi';
 
 const Wrapper = styled.div`
+  position: relative;
   display: flex;
   justify-content: center;
   width: 100%;
-  margin-top: 8rem;
+  padding: 8rem;
+  margin-bottom: 14rem;
 `;
 
 const Container = styled.div`
+  position: fixed;
   display: flex;
   justify-content: center;
   flex-direction: column;
   height: 20rem;
+  width: 100%;
 `;
 
 function UserInfo() {
