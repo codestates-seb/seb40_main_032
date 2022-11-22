@@ -4,16 +4,7 @@ import UserInfoTab from './UserInfoTab';
 import UserInfoCard from './UserInfoCard';
 import loginUserApi from '../../api/loginUserApi';
 
-const Wrapper = styled.div`
-  position: relative;
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  padding: 8rem;
-  margin-bottom: 14rem;
-`;
-
-const Container = styled.div`
+const UserWrapper = styled.div`
   position: fixed;
   display: flex;
   justify-content: center;
@@ -49,12 +40,10 @@ function UserInfo() {
   }, []);
 
   return (
-    <Wrapper>
-      <Container>
-        <UserInfoCard userdata={myProfile} />
-        <UserInfoTab userdata={myProfile} />
-      </Container>
-    </Wrapper>
+    <UserWrapper>
+      <UserInfoCard userdata={myProfile} />
+      <UserInfoTab userdata={myProfile} />
+    </UserWrapper>
   );
 }
 

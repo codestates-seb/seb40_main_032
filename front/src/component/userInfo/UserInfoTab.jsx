@@ -43,9 +43,6 @@ const MainThemeBar = styled.div`
 
       &.active > button > a {
         color: var(--font-base-black);
-        > svg {
-          fill: var(--button-theme);
-        }
       }
     }
 
@@ -55,28 +52,28 @@ const MainThemeBar = styled.div`
       width: 8rem;
       height: 3px;
       margin: 0;
-      background: var(--button-theme);
+      background: var(--font-tag-color);
       opacity: 0;
       transition: all 0.5s;
     }
 
-    .theme__all.active ~ .bar {
-      left: 1.1rem;
+    .theme__mypost.active ~ .bar {
+      left: 1.5rem;
       opacity: 1;
     }
 
-    .theme__restaurant.active ~ .bar {
-      left: 10.4rem;
+    .theme__mylikes.active ~ .bar {
+      left: 12.5rem;
       opacity: 1;
     }
 
-    .theme__hotel.active ~ .bar {
-      left: 19.6rem;
+    .theme__myfollower.active ~ .bar {
+      left: 23.5rem;
       opacity: 1;
     }
 
-    .theme__trip.active ~ .bar {
-      left: 29.7rem;
+    .theme__myfollowing.active ~ .bar {
+      left: 35rem;
       opacity: 1;
     }
   }
@@ -111,7 +108,7 @@ function UserInfoTab({ userdata }) {
       <ul className="theme__lists">
         <li
           className={
-            pathname === '/mypage' ? 'theme__all active' : 'theme__all'
+            pathname === '/mypage' ? 'theme__mypost active' : 'theme__mypost'
           }
         >
           <button>
@@ -124,8 +121,8 @@ function UserInfoTab({ userdata }) {
         <li
           className={
             pathname === '/mypage/mylikes'
-              ? 'theme__restaurant active'
-              : 'theme__restaurant'
+              ? 'theme__mylikes active'
+              : 'theme__mylikes'
           }
         >
           <button>
@@ -138,8 +135,8 @@ function UserInfoTab({ userdata }) {
         <li
           className={
             pathname === '/mypage/myfollower'
-              ? 'theme__hotel active'
-              : 'theme__hotel'
+              ? 'theme__myfollower active'
+              : 'theme__myfollower'
           }
         >
           <button>
@@ -152,8 +149,8 @@ function UserInfoTab({ userdata }) {
         <li
           className={
             pathname === '/mypage/myfollowing'
-              ? 'theme__trip active'
-              : 'theme__trip'
+              ? 'theme__myfollowing active'
+              : 'theme__myfollowing'
           }
         >
           <button>

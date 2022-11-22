@@ -6,13 +6,14 @@ import UserInfo from '../../component/userInfo/UserInfo';
 const MyPageWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  padding: 8rem 0 0 0;
 `;
 
 function MyPage() {
   return (
-    <MyPageWrapper>
+    <MyPageWrapper className="mypagewrapper">
       <UserInfo />
-      <Outlet />;
+      <Outlet />
     </MyPageWrapper>
   );
 }
