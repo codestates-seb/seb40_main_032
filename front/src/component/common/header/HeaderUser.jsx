@@ -15,14 +15,13 @@ const HeaderUserWrapper = styled.nav`
   min-width: 20rem;
   position: relative;
   .header__write {
-    margin-left: 0.8rem;
-    margin-right: 0.8rem;
-    color: var(--font-base-black);
-    background-color: transparent;
-    border: 1px solid transparent;
-    font-size: 2rem;
-    cursor: pointer;
     flex: 1;
+    margin-right: 1.5rem;
+    background: #fff;
+    color: var(--main-font-color);
+    &:hover {
+      background: var(--button-font-color);
+    }
   }
   .header__box {
     display: flex;
@@ -55,6 +54,7 @@ const HeaderUserWrapper = styled.nav`
     }
     .header__burger {
       display: block;
+      fill: var(--font-base-grey);
     }
   }
 `;
@@ -77,15 +77,23 @@ function HeaderUser({ loginModalOpener }) {
 
   return (
     <HeaderUserWrapper>
-      <button className="header__write">게시물 작성</button>
+      <DefaultButton
+        className="header__write"
+        fontSize="1.6rem"
+        width="9.5rem"
+        height="4.3rem"
+        fontWeight="500"
+      >
+        게시물 작성
+      </DefaultButton>
       <div className="header__box">
         {!isLogin ? (
           <DefaultButton
             onClick={loginModalOpener}
-            fontSize="2rem"
-            width="10rem"
-            height="5rem"
-            fontWeight="700"
+            fontSize="1.6rem"
+            width="7.5rem"
+            height="4.3rem"
+            fontWeight="500"
           >
             로그인
           </DefaultButton>
@@ -130,7 +138,7 @@ function HeaderUser({ loginModalOpener }) {
       <GiHamburgerMenu
         onClick={() => setActive(prev => !prev)}
         className="header__burger"
-        size="3.4rem"
+        size="2.5rem"
       />
       <HeaderDropDownBox active={active} activeHandler={activeHandler} />
     </HeaderUserWrapper>
