@@ -18,6 +18,10 @@ spring:
           auth: true
           starttls:
             enable: true
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 100MB
 
 jwt:
   secret-key: ${JWT_SECRET_KEY}
