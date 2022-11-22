@@ -43,13 +43,11 @@ const HeartIcon = styled(AiFillHeart)`
   height: 3rem;
 `;
 
-function UserInfoTab() {
+function UserInfoTab({ userdata }) {
   const [isActive, setIsActive] = useState(false);
 
   // 임시 데이터
   const [posts] = useState(['내글1', '내글2']);
-  const [followers] = useState(['사람1', '사람2']);
-  const [following] = useState(['사람3', '사람4', '사람5']);
 
   const tabItems = [
     {
@@ -61,12 +59,12 @@ function UserInfoTab() {
     {
       title: '팔로워',
       link: '/',
-      icon: <CircleIcon>{followers.length}</CircleIcon>,
+      icon: <CircleIcon>{userdata.follower}</CircleIcon>,
     },
     {
       title: '팔로잉',
       link: '/',
-      icon: <CircleIcon>{following.length}</CircleIcon>,
+      icon: <CircleIcon>{userdata.folloing}</CircleIcon>,
     },
   ];
 

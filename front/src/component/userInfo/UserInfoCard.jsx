@@ -40,27 +40,23 @@ const EditButton = styled(Link)`
   }
 `;
 
-function UserInfoCard() {
-  const dataTemp = {
-    nickname: '닉네임',
-    email: 'userEmail@gmail.com',
-    body: '자기소개입니다. 글자수 제한은 얼마인가요?',
-  };
+function UserInfoCard({ userdata }) {
+  console.log(userdata);
 
   const [isMyPage] = useState(true);
 
   return (
     <Container>
-      <UserInfoAvatar />
+      <UserInfoAvatar profileimg={userdata.profile} />
       <UserInfoText>
         <div>
-          <h1>{dataTemp.nickname}</h1>
+          <h1>{userdata.nickname}</h1>
           <EditButton to="#" isMyPage={isMyPage || null}>
             내 정보수정
           </EditButton>
         </div>
-        <h5>{dataTemp.email}</h5>
-        <p>{dataTemp.body}</p>
+        <h5>{userdata.email}</h5>
+        <p>{userdata.intro}</p>
       </UserInfoText>
     </Container>
   );
