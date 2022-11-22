@@ -11,10 +11,11 @@ const Main = styled.main`
 
   .main__wrapper {
     width: 100%;
-    padding: 5rem 0;
-    position: relative;
+    padding: 5rem 0 1rem;
     display: flex;
     justify-content: center;
+    align-items: center;
+    flex-direction: column;
 
     @media screen and (max-width: 549px) {
       padding: 0;
