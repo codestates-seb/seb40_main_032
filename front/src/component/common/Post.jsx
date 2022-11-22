@@ -105,6 +105,12 @@ const PostWrapper = styled.div`
             -webkit-line-clamp: 1;
             -webkit-box-orient: vertical;
             word-break: break-all;
+
+            @media screen and (max-width: 1621px) {
+              &:last-child {
+                display: none;
+              }
+            }
           }
         }
         .post__info {
@@ -162,11 +168,13 @@ function Post({ post }) {
           <div className="post__tw">
             {/* tag && user */}
             <ul className="post__tags">
-              {post.tags.map(tag => (
-                <li key={uuid()} className="post__tag">
-                  #{tag}
-                </li>
-              ))}
+              {post.tags.map((tag, idx) => {
+                return idx < 3 ? (
+                  <li key={uuid()} className="post__tag">
+                    #{tag}
+                  </li>
+                ) : null;
+              })}
             </ul>
             <div className="post__info">
               <span className="post__avatar">
