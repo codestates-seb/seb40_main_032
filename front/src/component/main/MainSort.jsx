@@ -3,7 +3,7 @@ import styled from 'styled-components';
 const MainSortBar = styled.div`
   position: absolute;
   top: 1.2rem;
-  right: 10rem;
+  right: 3rem;
   padding-top: 5rem;
 
   @media screen and (max-width: 549px) {
