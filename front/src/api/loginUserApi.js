@@ -8,10 +8,12 @@ const loginUserApi = async () => {
       Authorization: jwt,
     },
   });
+
   if (!localStorage.getItem('id') && !localStorage.getItem('profile')) {
     localStorage.setItem('id', login.data.id);
     localStorage.setItem('profile', login.data.profile);
   }
+  return login;
 };
 
 export default loginUserApi;
