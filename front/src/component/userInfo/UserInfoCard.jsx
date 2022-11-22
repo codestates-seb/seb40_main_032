@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import UserInfoAvatar from './UserInfoAvatar';
@@ -24,6 +23,9 @@ const UserInfoText = styled.div`
     display: flex;
     justify-content: space-between;
     width: 100%;
+    > h1 {
+      margin-right: 1rem;
+    }
   }
   > p {
     text-align: start;
@@ -31,7 +33,6 @@ const UserInfoText = styled.div`
 `;
 
 const EditButton = styled(Link)`
-  display: ${props => (props.isMyPage ? 'block' : 'none')};
   color: var(--button-theme);
   text-decoration: none;
   cursor: pointer;
@@ -43,17 +44,13 @@ const EditButton = styled(Link)`
 function UserInfoCard({ userdata }) {
   console.log(userdata);
 
-  const [isMyPage] = useState(true);
-
   return (
     <Container>
       <UserInfoAvatar profileimg={userdata.profile} />
       <UserInfoText>
         <div>
           <h1>{userdata.nickname}</h1>
-          <EditButton to="#" isMyPage={isMyPage || null}>
-            내 정보수정
-          </EditButton>
+          <EditButton to="#">내 정보수정</EditButton>
         </div>
         <h5>{userdata.email}</h5>
         <p>{userdata.intro}</p>

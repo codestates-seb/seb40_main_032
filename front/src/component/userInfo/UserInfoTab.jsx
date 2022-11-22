@@ -28,8 +28,8 @@ const Tab = styled(Link)`
 const CircleIcon = styled.div`
   background-color: var(--font-tag-color);
   color: var(--base-white-color);
-  width: 25px;
-  height: 25px;
+  width: 1.7rem;
+  height: 1.7rem;
   border-radius: 50%;
   display: flex;
   justify-content: center;
@@ -39,8 +39,8 @@ const CircleIcon = styled.div`
 
 const HeartIcon = styled(AiFillHeart)`
   color: var(--font-tag-color);
-  width: 3rem;
-  height: 3rem;
+  width: 2rem;
+  height: 2rem;
 `;
 
 function UserInfoTab({ userdata }) {
