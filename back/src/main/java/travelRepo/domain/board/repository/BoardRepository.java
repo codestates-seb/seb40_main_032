@@ -13,10 +13,6 @@ import java.util.Optional;
 
 public interface BoardRepository extends JpaRepository<Board, Long>, BoardRepositoryCustom {
 
-    @EntityGraph(attributePaths = {"boardTags", "account"})
-    @Query("select b from Board b")
-    Slice<Board> findAllWithBoardTagsAndAccount(Pageable pageable);
-
     @Modifying(flushAutomatically = true)
     @Query("delete from Board board where board.account.id = :accountId")
     void deleteByAccountId(@Param("accountId") Long accountId);
@@ -28,4 +24,8 @@ public interface BoardRepository extends JpaRepository<Board, Long>, BoardReposi
     @EntityGraph(attributePaths = {"boardTags", "account"})
     @Query("select b from Board b where b.account.id = :accountId")
     Slice<Board> findAllByAccountWithBoardTagsAndAccount(@Param("accountId") Long accountId, Pageable pageable);
+
+    @Modifying(flushAutomatically = true)
+    @Query("update Board b set b.views = b.views + 1 where b.id = :boardId")
+    int updateViews(@Param("boardId") Long boardId);
 }

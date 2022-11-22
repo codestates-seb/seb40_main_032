@@ -73,10 +73,6 @@ public class Board extends BaseTime {
         }
     }
 
-    public void increaseViews() {
-        this.views++;
-    }
-
     public void modify(Board board) {
         Optional.ofNullable(board.getTitle()).ifPresent(title -> this.title = title);
         Optional.ofNullable(board.getContent()).ifPresent(content -> this.content = content);

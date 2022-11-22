@@ -133,19 +133,17 @@ function CommentWrite() {
   };
   // 댓글 작성 핸들러
   const commentSendHandler = () => {
-    if (modalOpenHandler()) {
+    if (modalOpenHandler() && comment !== '') {
       postDetailCommentSubmitApi(boardId.id, comment)
         .then(() => {
-          // console.log(document.documentElement.clientHeight);
           setCommentLoading(true);
           setHasNext(true);
           setPage(0);
-          // setHasNext(false);
           setCommentList([]);
           resetComment('');
 
           toast('댓글 입력 성공!', {
-            position: 'top-center',
+            position: 'top-right',
             autoClose: 1000,
             hideProgressBar: false,
             closeOnClick: true,

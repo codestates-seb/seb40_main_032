@@ -79,7 +79,7 @@ public class BoardService {
         });
 
         Optional.ofNullable(boardModifyReq.getTags()).ifPresent(tagNames -> {
-            addBoardTagsToBoard(boardModifyReq.getTags(), board);
+            addBoardTagsToBoard(tagNames, board);
         });
 
         return new IdDto(boardId);
@@ -111,7 +111,7 @@ public class BoardService {
         Board board = boardRepository.findByIdWithBoardTagsAndAccount(boardId)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_BOARD));
 
-        board.increaseViews();
+        boardRepository.updateViews(boardId);
 
         return BoardDetailsRes.of(board);
     }
