@@ -6,7 +6,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 import travelRepo.domain.account.entity.Account;
 import travelRepo.domain.account.repository.AccountRepository;
 import travelRepo.domain.board.dto.BoardAddReq;
@@ -80,7 +79,7 @@ public class BoardService {
         });
 
         Optional.ofNullable(boardModifyReq.getTags()).ifPresent(tagNames -> {
-            addBoardTagsToBoard(boardModifyReq.getTags(), board);
+            addBoardTagsToBoard(tagNames, board);
         });
 
         return new IdDto(boardId);
@@ -112,7 +111,7 @@ public class BoardService {
         Board board = boardRepository.findByIdWithBoardTagsAndAccount(boardId)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_BOARD));
 
-        board.increaseViews();
+        boardRepository.updateViews(boardId);
 
         return BoardDetailsRes.of(board);
     }
