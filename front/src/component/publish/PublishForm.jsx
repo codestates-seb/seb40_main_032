@@ -107,7 +107,6 @@ function PublishForm() {
         .then(res => {
           if (res.status === 201) {
             console.log(res);
-            console.log('enroll', res.data.id);
           }
         })
         .catch(error => console.log(error.response.data.message));
