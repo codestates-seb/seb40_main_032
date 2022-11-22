@@ -5,6 +5,9 @@ import Footer from '../../component/common/footer/Footer';
 
 const Main = styled.main`
   padding: 8rem 0 4rem;
+  @media screen and (max-width: 549px) {
+    padding-top: 6rem;
+  }
 
   .main__wrapper {
     width: 100%;
