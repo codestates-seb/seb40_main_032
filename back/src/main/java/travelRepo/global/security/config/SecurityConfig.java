@@ -46,6 +46,7 @@ public class SecurityConfig {
 
         http
                 .authorizeRequests()
+                .mvcMatchers(HttpMethod.GET, "/accounts/login").authenticated()
                 .mvcMatchers(HttpMethod.GET, "/docs/index.html").permitAll()
                 .mvcMatchers(HttpMethod.GET, "/accounts/**").permitAll()
                 .mvcMatchers(HttpMethod.GET, "/boards/**").permitAll()

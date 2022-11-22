@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { MdOutlineLuggage } from 'react-icons/md';
+import { Link } from 'react-router-dom';
 import Search from './Search';
 import HeaderUser from './HeaderUser';
 
@@ -24,9 +24,16 @@ const HeaderWrapper = styled.header`
   }
 
   .header__logo {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    > h1 {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      > a {
+        font-family: 'Lobster', cursive;
+        color: var(--button-theme);
+        font-size: 3.5rem;
+      }
+    }
   }
   .header__search {
     flex: 3;
@@ -48,9 +55,9 @@ function Header({ loginModalOpener }) {
       <section className="header__container">
         {/* main Logo */}
         <div className="header__logo">
-          {/* <Link to="/"> */}
-          <MdOutlineLuggage size="4.3rem" color="hsl(146, 50%, 50%)" />
-          {/* </Link> */}
+          <h1>
+            <Link to="/">Tripagram</Link>
+          </h1>
         </div>
         {/* Hedaer Search */}
         <div className="header__search">

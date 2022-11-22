@@ -6,7 +6,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 import travelRepo.domain.account.entity.Account;
 import travelRepo.domain.account.repository.AccountRepository;
 import travelRepo.domain.board.dto.BoardAddReq;
@@ -143,7 +142,9 @@ public class BoardService {
                 .map((tagName -> {
 
                     Tag tag = findTag(tagName);
-                    BoardTag boardTag = boardTagRepository.findByBoardIdAndTagId(board.getId(), tag.getId())
+                    BoardTag boardTag = board.getBoardTags().stream()
+                            .filter(bt -> bt.getTag().getName().equals(tagName))
+                            .findAny()
                             .orElseGet(() -> {
                                 return BoardTag.builder()
                                         .tag(tag)
@@ -163,7 +164,9 @@ public class BoardService {
         List<BoardPhoto> boardPhotos = images.stream()
                 .map(image -> {
 
-                    BoardPhoto boardPhoto = boardPhotoRepository.findByBoardIdAndPhoto(board.getId(), image)
+                    BoardPhoto boardPhoto = board.getBoardPhotos().stream()
+                            .filter(bp -> bp.getPhoto().equals(image))
+                            .findAny()
                             .orElseGet(() -> {
                                 return BoardPhoto.builder()
                                         .photo(image)
