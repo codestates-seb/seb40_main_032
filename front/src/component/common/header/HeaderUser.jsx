@@ -20,7 +20,8 @@ const HeaderUserWrapper = styled.nav`
     background: #fff;
     color: var(--main-font-color);
     &:hover {
-      background: var(--button-font-color);
+      background: #f5f5f5;
+      color: var(--main-font-color);
     }
   }
   .header__box {
