@@ -110,6 +110,12 @@ function PublishPhoto({ setPhotoUrl }) {
     setPhotos(uploaded);
   };
 
+  // 사진 개별 삭제
+  const removePhotos = indexRemove => {
+    URL.revokeObjectURL(photos[indexRemove]);
+    setPhotos([...photos.filter((_, index) => index !== indexRemove)]); // 미리보기에서 삭제
+  };
+
   /* eslint-disable */
   const handleClick = event => {
     event.target.value = ''; // 동일한 사진을 여러번 올릴수 있게 해줌
