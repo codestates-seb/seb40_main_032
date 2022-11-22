@@ -17,8 +17,14 @@ const SearchInput = styled.input`
   border: 1px solid var(--font-base-grey);
   padding-left: 2rem;
   padding-right: 5rem;
+  outline: none;
   @media screen and (max-width: 549px) {
     height: 3.5rem;
+  }
+  :focus {
+    box-shadow: 0px 0px 2px 2px rgb(64 191 119 / 25%);
+    border: 1px solid var(--button-theme);
+    transition: all 0.2s;
   }
 `;
 
