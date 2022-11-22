@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { BiUserCircle } from 'react-icons/bi';
 import { useSelector } from 'react-redux';
@@ -61,6 +62,7 @@ const HeaderUserWrapper = styled.nav`
 `;
 
 function HeaderUser({ loginModalOpener }) {
+  const navigate = useNavigate();
   const [active, setActive] = useState(false);
   const [profileImg, setProfileImg] = useState('');
   const isLogin = useSelector(state => state.login.isLogin);
@@ -79,6 +81,9 @@ function HeaderUser({ loginModalOpener }) {
   return (
     <HeaderUserWrapper>
       <DefaultButton
+        onClick={() => {
+          navigate('/publish');
+        }}
         className="header__write"
         fontSize="1.6rem"
         width="9.5rem"
