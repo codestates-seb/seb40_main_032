@@ -8,6 +8,7 @@ import Loading from './component/common/Loading';
 import Header from './component/common/header/Header';
 import LoginModal from './component/common/modal/LoginModal';
 import 'react-toastify/dist/ReactToastify.css';
+import MyPage from './pages/MyPage';
 
 const MainPage = React.lazy(() => import('./pages/MainPage'));
 const PublishPage = React.lazy(() => import('./pages/PublishPage'));
@@ -55,6 +56,7 @@ function App() {
           <Route path="/" element={<MainPage />} />
           <Route path="/postDetail/:id" element={<PostDetailPage />} />
           <Route path="/publish" element={<PublishPage />} />
+          <Route path="/mypage" element={<MyPage />} />
         </Routes>
       </Suspense>
     </Router>
