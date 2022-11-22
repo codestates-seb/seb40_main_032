@@ -133,6 +133,9 @@ const PostWrapper = styled.div`
       }
     }
   }
+  @media screen and (max-width: 549px) {
+    padding-top: 2.2rem;
+  }
 `;
 // { image, title, like, tag, user }
 function Post({ post }) {

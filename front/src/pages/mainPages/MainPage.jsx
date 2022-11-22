@@ -18,7 +18,7 @@ const Main = styled.main`
 
     @media screen and (max-width: 549px) {
       padding: 0;
-      padding-top: 5rem;
+      padding-top: 4rem;
     }
 
     .main__container {
@@ -49,6 +49,7 @@ const Main = styled.main`
       }
 
       @media screen and (max-width: 549px) {
+        margin: 0 1rem;
         .post,
         .post__skeleton {
           flex-basis: 100%;
