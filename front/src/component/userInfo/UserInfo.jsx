@@ -1,6 +1,8 @@
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import UserInfoTab from './UserInfoTab';
 import UserInfoCard from './UserInfoCard';
+import loginUserApi from '../../api/loginUserApi';
 
 const Wrapper = styled.div`
   display: flex;
@@ -17,11 +19,36 @@ const Container = styled.div`
 `;
 
 function UserInfo() {
+  const [myProfile, setMyProfile] = useState({
+    email: '',
+    nickname: '',
+    intro: '',
+    profile: '',
+    following: '',
+    follower: '',
+  });
+
+  // 내 정보 불러오기
+  useEffect(() => {
+    loginUserApi()
+      .then(res =>
+        setMyProfile({
+          email: res.data.email,
+          nickname: res.data.nickname,
+          intro: res.data.intro,
+          profile: res.data.profile,
+          following: res.data.following,
+          follower: res.data.follower,
+        }),
+      )
+      .catch(err => console.log(err));
+  }, []);
+
   return (
     <Wrapper>
       <Container>
-        <UserInfoCard />
-        <UserInfoTab />
+        <UserInfoCard userdata={myProfile} />
+        <UserInfoTab userdata={myProfile} />
       </Container>
     </Wrapper>
   );
