@@ -7,7 +7,7 @@ const PostWrapper = styled.div`
   display: flex;
   justify-content: center;
   flex: none;
-  flex-basis: 25%;
+  flex-basis: 20%;
   padding: 4rem 1.2rem 0;
 
   .post__container {
