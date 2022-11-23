@@ -1,10 +1,9 @@
 import styled from 'styled-components';
 
 const MainSortBar = styled.div`
-  position: absolute;
-  top: 1.2rem;
-  right: 10rem;
-  padding-top: 5rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 
   @media screen and (max-width: 549px) {
     display: none;
@@ -12,6 +11,10 @@ const MainSortBar = styled.div`
 
   .main__sortbar {
     display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    max-width: 172rem;
+    margin: 2rem 3rem;
 
     > li {
       margin-right: 1.5rem;
@@ -34,6 +37,10 @@ const MainSortBar = styled.div`
         background: none;
         border: none;
         cursor: pointer;
+        &:hover {
+          font-weight: 600;
+          transition: all 0.3s;
+        }
       }
     }
   }

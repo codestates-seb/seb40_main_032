@@ -81,6 +81,34 @@ const MainThemeBar = styled.div`
       opacity: 1;
     }
   }
+
+  @media screen and (max-width: 549px) {
+    .theme__lists > li {
+      margin: 0 1rem;
+      > button {
+        height: 4rem;
+        > a > span {
+          font-size: 1.4rem;
+        }
+      }
+
+      &.bar {
+        width: 6rem;
+      }
+      &.theme__restaurant.active ~ .bar {
+        left: 7.8rem;
+      }
+
+      &.theme__hotel.active ~ .bar {
+        left: 14.3rem;
+      }
+
+      &.theme__trip.active ~ .bar {
+        width: 7rem;
+        left: 21.5rem;
+      }
+    }
+  }
 `;
 
 function MainTheme() {

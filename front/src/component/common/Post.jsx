@@ -8,7 +8,7 @@ const PostWrapper = styled.div`
   justify-content: center;
   flex: none;
   flex-basis: 20%;
-  padding: 4rem 1.2rem 0;
+  padding: 0 1.2rem 3rem;
 
   .post__container {
     display: flex;
@@ -105,6 +105,12 @@ const PostWrapper = styled.div`
             -webkit-line-clamp: 1;
             -webkit-box-orient: vertical;
             word-break: break-all;
+
+            @media screen and (max-width: 1621px) {
+              &:last-child {
+                display: none;
+              }
+            }
           }
         }
         .post__info {
@@ -133,6 +139,9 @@ const PostWrapper = styled.div`
       }
     }
   }
+  @media screen and (max-width: 549px) {
+    padding-top: 2.2rem;
+  }
 `;
 // { image, title, like, tag, user }
 function Post({ post }) {
@@ -159,11 +168,13 @@ function Post({ post }) {
           <div className="post__tw">
             {/* tag && user */}
             <ul className="post__tags">
-              {post.tags.map(tag => (
-                <li key={uuid()} className="post__tag">
-                  #{tag}
-                </li>
-              ))}
+              {post.tags.map((tag, idx) => {
+                return idx < 3 ? (
+                  <li key={uuid()} className="post__tag">
+                    #{tag}
+                  </li>
+                ) : null;
+              })}
             </ul>
             <div className="post__info">
               <span className="post__avatar">

@@ -4,9 +4,9 @@ import { getCookie } from '../util/cookie';
 const publishApi = formData => {
   const jwt = getCookie('accessToken');
 
-  return axios.post('/boards', formData, {
+  return axios.post('/boards', JSON.stringify(formData), {
     headers: {
-      'Content-Type': 'multipart/form-data;charset=UTF-8',
+      'Content-Type': 'application/json',
       Authorization: jwt,
     },
   });
