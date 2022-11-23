@@ -8,10 +8,15 @@ import Loading from './component/common/Loading';
 import Header from './component/common/header/Header';
 import LoginModal from './component/common/modal/LoginModal';
 import 'react-toastify/dist/ReactToastify.css';
+import MyPage from './pages/myPages/MyPage';
 import RestaurantPage from './pages/mainPages/RestaurantPage';
 import StayPage from './pages/mainPages/StayPage';
 import SpotPage from './pages/mainPages/SpotPage';
 import AllThemePage from './pages/mainPages/AllThemePage';
+import MyPost from './pages/myPages/MyPost';
+import MyLikes from './pages/myPages/MyLikes';
+import MyFollower from './pages/myPages/MyFollower';
+import MyFollowing from './pages/myPages/MyFollowing';
 
 const MainPage = React.lazy(() => import('./pages/mainPages/MainPage'));
 const PublishPage = React.lazy(() => import('./pages/PublishPage'));
@@ -64,6 +69,12 @@ function App() {
           </Route>
           <Route path="/postDetail/:id" element={<PostDetailPage />} />
           <Route path="/publish" element={<PublishPage />} />
+          <Route path="/mypage" element={<MyPage />}>
+            <Route index element={<MyPost />} />
+            <Route path="mylikes" element={<MyLikes />} />
+            <Route path="myfollower" element={<MyFollower />} />
+            <Route path="myfollowing" element={<MyFollowing />} />
+          </Route>
         </Routes>
       </Suspense>
     </Router>
