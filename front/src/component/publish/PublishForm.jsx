@@ -456,7 +456,7 @@ const Category = styled.button`
   border: none;
   border-radius: var(--radius-10);
   font-weight: var(--font-semi-bold);
-  font-size: 15px;
+  font-size: 13px;
   opacity: 0.7;
   padding: 0.5rem;
   cursor: pointer;
