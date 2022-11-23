@@ -50,18 +50,18 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom{
     }
 
     private BooleanExpression boardContainsQuery(String q) {
-        return QBoard.board.title.contains(q).or(QBoard.board.content.contains(q).or(tag.name.contains(q)));
+        return board.title.contains(q).or(board.content.contains(q).or(tag.name.contains(q)));
     }
 
     private void sort(Pageable pageable, JPAQuery<Board> query) {
 
         if (pageable.getSort().isEmpty()) {
-            query.orderBy(QBoard.board.createdAt.desc());
+            query.orderBy(board.createdAt.desc());
             return;
         }
 
         for (Sort.Order o : pageable.getSort()) {
-            PathBuilder pathBuilder = new PathBuilder<>(QBoard.board.getType(), QBoard.board.getMetadata());
+            PathBuilder pathBuilder = new PathBuilder<>(board.getType(), board.getMetadata());
             query.orderBy(new OrderSpecifier(o.isAscending() ? Order.ASC : Order.DESC,
                     pathBuilder.get(o.getProperty())));
         }
