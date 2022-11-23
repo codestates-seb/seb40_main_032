@@ -101,28 +101,26 @@ function PublishForm() {
   };
 
   // 게시글 등록 요청
-  const publishRequest = async () => {
+  const publishRequest = async event => {
+    event.preventDefault();
     if (mandatoryInfo)
       await publishApi(formData)
         .then(res => {
           if (res.status === 201) {
             console.log(res);
+            console.log(res.data.id);
+            setConfirmModalOpened(true);
+            setTimeout(() => {
+              navigate(`/postDetail/${res.data.id}`);
+            }, 2000);
           }
         })
         .catch(error => console.log(error.response.data.message));
     else console.log('not valid'); // 임시
   };
 
-  // 등록 버튼 모달 연결
-  const confirmModalOpener = event => {
-    event.preventDefault();
-    publishRequest();
-    setConfirmModalOpened(true);
-  };
-
   const confirmModalCloser = () => {
     setConfirmModalOpened(false);
-    navigate('/');
   };
 
   // 취소 버튼 모달 연결
@@ -305,7 +303,7 @@ function PublishForm() {
           height="4vh"
           fontSize="var(--font-15)"
           fontWeight="var(--font-bold)"
-          onClick={confirmModalOpener}
+          onClick={publishRequest}
           disabled={!mandatoryInfo}
         >
           <span>등록</span>
