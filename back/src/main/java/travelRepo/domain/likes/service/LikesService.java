@@ -43,14 +43,14 @@ public class LikesService {
                     .build();
 
             likesRepository.save(likes);
-            board.upLikeCount();
+            boardRepository.upLikeCount(boardId);
 
             return LikesPostRes.of(Status.SUCCESS);
         }
 
         Likes likes = optionalLikes.get();
         likesRepository.delete(likes);
-        board.downLikeCount();
+        boardRepository.downLikeCount(boardId);
 
         return LikesPostRes.of(Status.CANCEL);
     }
