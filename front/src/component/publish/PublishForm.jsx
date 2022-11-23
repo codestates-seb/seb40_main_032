@@ -13,7 +13,9 @@ import { loginModalActions } from '../../redux/loginModalSlice';
 function PublishForm() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const locationEdit = useLocation();
+  const loc = useLocation();
+  const isPublishPage = loc.state === null;
+  console.log('publishpage?', isPublishPage);
 
   const login = useSelector(state => state.login.isLogin);
 
@@ -187,9 +189,9 @@ function PublishForm() {
 
   // 상세 페이지에서 수정 클릭시 정보 받아올 준비
   useEffect(() => {
-    console.log(locationEdit);
+    console.log(loc);
     return () => {};
-  }, [locationEdit]);
+  }, [loc]);
 
   return (
     <Container>
