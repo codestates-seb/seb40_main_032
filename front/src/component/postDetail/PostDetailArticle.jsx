@@ -14,16 +14,18 @@ import YesNoModal from '../common/modal/YesNoModal';
 import { loginModalActions } from '../../redux/loginModalSlice';
 
 const Container = styled.div`
-  flex: 1;
+  flex-basis: 30%;
+  /* overflow: scroll;
+  height: auto; */
+  padding: 1rem 2rem;
   color: var(--font-base-black);
-  display: flex;
-  flex-direction: column;
-  padding: 2vh;
-  width: 33vw;
-  max-height: 70vh;
-  height: auto;
   border: 1px solid var(--holder-base-color);
   font-size: var(--font-15);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+
   .post__category {
     color: var(--font-base-grey);
   }
@@ -35,64 +37,66 @@ const Container = styled.div`
 `;
 
 const Header = styled.div`
-  height: 20%;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  /* margin-bottom: 1rem; */
   flex-wrap: wrap;
-  .writer__info {
+  .image__box {
     display: flex;
-    flex-direction: center;
+    justify-content: flex-start;
     align-items: center;
-    flex-wrap: wrap;
+    flex-basis: 10%;
   }
   .writer__avatar {
-    display: flex;
-    flex-direction: center;
-    align-items: center;
-    width: 6.5rem;
-    height: 6.5rem;
-    border-radius: 100rem;
-    border: 2px solid black;
-    margin-right: 1.5rem;
+    width: 2.5vw;
+    height: 2.5vh;
+    border-radius: 50%;
     cursor: pointer;
   }
   .writer__name {
+    flex-basis: 60%;
     font-size: var(--font-20);
+    overflow: hidden;
+    text-overflow: ellipsis;
     cursor: pointer;
   }
   .follow__button {
-    display: flex;
-    align-items: center;
-    border: none;
+    flex-basis: 25%;
+    height: 4rem;
+    font-size: 1.8rem;
     border-radius: var(--radius-10);
-    width: auto;
-    height: 2.5rem;
-    padding: 1rem;
     font-weight: var(--font-semi-bold);
     color: var(--button-theme);
     background-color: var(--button-font-color);
+    border: none;
     cursor: pointer;
-    min-width: 5.6rem;
+  }
+  @media screen and (max-width: 549px) {
+    .writer__avatar {
+      width: 4.5rem;
+    }
+    .writer__name {
+      font-size: 18px;
+    }
   }
 `;
 
 const Body = styled.div`
-  height: 100%;
   display: flex;
   flex-direction: column;
-  margin-top: 1rem;
+  justify-content: space-between;
+  flex-basis: 80%;
   .article__header {
-    font-size: var(--font-20);
+    font-size: 2rem;
     font-weight: var(--font-semi-bold);
-    margin-bottom: 1rem;
+    flex-basis: 5%;
   }
   .article__content {
     font-size: var(--font-15);
-    /* height: 38vh; */
-    flex: 2;
-    overflow: scroll;
-    margin-right: auto;
+    flex-basis: 60%;
+    word-wrap: break-word;
+    overflow: auto;
     ::-webkit-scrollbar {
       display: none;
     }
@@ -101,7 +105,6 @@ const Body = styled.div`
     margin-top: 1rem;
   }
   .article__footer {
-    margin-top: auto;
     flex-wrap: wrap;
     .footer__first {
       display: flex;
@@ -109,7 +112,6 @@ const Body = styled.div`
       justify-content: space-between;
       flex-wrap: wrap;
       .footer__tags {
-        height: auto;
         display: flex;
         align-items: center;
         color: var(--button-theme);
@@ -168,6 +170,9 @@ const Body = styled.div`
     .article__location {
       font-size: var(--font-15);
     }
+    .article__header {
+      font-size: var(--font-20);
+    }
     .article__footer {
       .footer__first {
         .footer__tags {
@@ -196,6 +201,8 @@ function PostDetailArticle({ post, userLike, userFollow, self, board }) {
     createdAt,
     account,
   } = post;
+  console.log(self);
+  console.log(location);
   const date = new Date(createdAt).toISOString().split('T')[0];
   const [follow, setFollow] = useState(
     userFollow.follow !== '' ? userFollow.follow : false,
@@ -304,7 +311,7 @@ function PostDetailArticle({ post, userLike, userFollow, self, board }) {
       <div className="post__category">{category}</div>
       <Header>
         <div
-          className="writer__info"
+          className="image__box"
           role="button"
           tabIndex={0}
           onClick={userMovePageHandler}
@@ -317,15 +324,15 @@ function PostDetailArticle({ post, userLike, userFollow, self, board }) {
             src={`${account.profile}`}
             alt="avatar"
           />
-          <div className="writer__name">{account.nickname}</div>
         </div>
+        <span className="writer__name">{account.nickname}</span>
         <button className="follow__button" onClick={followHandler}>
           {follow ? '팔로잉중' : '팔로우'}
         </button>
       </Header>
       <Body>
-        <div className="article__header">{title}</div>
-        <div className="article__content">{content}</div>
+        <p className="article__header">{title}</p>
+        <pre className="article__content">{content}</pre>
         {location ? (
           <div className="article__location"> 위치 : {location}</div>
         ) : null}
@@ -383,18 +390,18 @@ function PostDetailArticle({ post, userLike, userFollow, self, board }) {
             </div>
           </div>
           <div className="footer__second">
-            {self ? (
-              <div className="button__area">
-                <button className="button__edit" onClick={postModifyHandler}>
-                  수정
-                </button>
-                <button className="button__delete" onClick={openDeleteModal}>
-                  삭제
-                </button>
-              </div>
-            ) : (
+            {/*  {self ? ( */}
+            <div className="button__area">
+              <button className="button__edit" onClick={postModifyHandler}>
+                수정
+              </button>
+              <button className="button__delete" onClick={openDeleteModal}>
+                삭제
+              </button>
+            </div>
+            {/* ) : (
               <div />
-            )}
+            )} */}
             <div className="article__date">{date}</div>
           </div>
         </div>

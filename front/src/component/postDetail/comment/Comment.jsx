@@ -7,12 +7,23 @@ const CommentWrapper = styled.section`
   height: 100%;
   border: 1px solid var(--holder-base-color);
   border-radius: var(--radius-10);
-  margin: 0 auto;
   max-height: 39rem;
   overflow: auto;
-  @media screen and (max-width: 549px) {
+  flex-basis: 90%;
+  @media screen and (max-width: 710px) {
     border: none;
+    flex-basis: 100%;
+    ::-webkit-scrollbar {
+      display: none;
+    }
   }
+  /* @media screen and (max-width: 549px) {
+    border: none;
+    flex-basis: 100%;
+    ::-webkit-scrollbar {
+      display: none;
+    }
+  } */
 `;
 
 function Comment() {

@@ -5,25 +5,23 @@ import { IoIosArrowDropright, IoIosArrowDropleft } from 'react-icons/io';
 import uuid from 'react-uuid';
 
 const Container = styled.div`
-  width: 100%;
-  height: 70vh;
-  flex: 2;
+  flex-basis: 60%;
   overflow: hidden;
+  height: 100%;
   position: relative;
   .image__container {
     display: flex;
     width: 100%;
-    height: 70vh;
-    flex: 2;
+    height: 0;
     transition: all 0.5s ease-in-out;
-    margin-left: -${props => props.count}%;
+    padding-bottom: calc(700 / 1000 * 100%);
     position: relative;
   }
   .dot__list {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: inherit;
+    width: 100%;
     position: absolute;
     bottom: 10px;
   }
@@ -45,12 +43,13 @@ const Container = styled.div`
   }
 `;
 
-const TempImg = styled.img`
-  width: inherit;
-  height: inherit;
-  object-fit: cover;
-  border: 1px solid var(--holder-base-color);
-  border-right: none;
+const PostImg = styled.img`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transition: all 500ms linear;
   @media screen and (max-width: 549px) {
     border: 1px solid var(--holder-base-color);
     border-bottom: none;
@@ -101,7 +100,7 @@ function PostDetailPhoto({ photos }) {
       />
       <div className="image__container">
         {photos.map(el => {
-          return <TempImg key={uuid()} src={el} />;
+          return <PostImg key={uuid()} src={el} />;
         })}
       </div>
       <div className="dot__list">

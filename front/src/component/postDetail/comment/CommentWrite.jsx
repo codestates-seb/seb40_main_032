@@ -25,6 +25,7 @@ const WriteWrapper = styled.article`
     outline: none;
     height: 6.6rem;
     padding-left: 3rem;
+    padding-right: 7.5rem;
     font-size: 2rem;
   }
 
@@ -81,10 +82,8 @@ function CommentWrite() {
       setPage(prev => prev + 1);
     }
   };
-  console.log(hasNext);
   // 무한 스크롤 데이터 요청 핸들러
   const commentListGetHandler = useCallback((board, val = 1) => {
-    console.log(`val ${val}`);
     postDetailCommentApi(board, val).then(res => {
       setCommentLoading(true);
       setCommentList(prev => [...prev, ...res.content]);
@@ -168,7 +167,7 @@ function CommentWrite() {
         placeholder="댓글을 입력 해주세요"
         value={comment}
         onChange={setComment}
-        onKeyDown={e => {
+        onKeyUp={e => {
           if (e.code === 'Enter') {
             commentSendHandler();
           }
