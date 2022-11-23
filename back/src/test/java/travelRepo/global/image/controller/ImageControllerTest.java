@@ -90,7 +90,7 @@ class ImageControllerTest extends After {
                         ),
                         requestParts(
                                 List.of(
-                                        partWithName("images").description("이미지").optional()
+                                        partWithName("images").description("이미지")
                                 )
                         ),
                         responseFields(

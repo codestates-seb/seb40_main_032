@@ -19,7 +19,8 @@ public enum ExceptionCode {
     UPLOAD_FAILED(500, "이미지를 업로드하는데 실패했습니다.", "011"),
     MAIL_SEND_FAILED(500, "이메일 전송이 실패했습니다.", "012"),
     TEMP_PASSWORD_DELAY(400, "임시 비밀번호 발급은 1시간에 한번 가능합니다.", "013"),
-    DUPLICATION_NICKNAME(400, "동일한 닉네임의 계정이 존재합니다.", "014");
+    DUPLICATION_NICKNAME(400, "동일한 닉네임의 계정이 존재합니다.", "014"),
+    EMPTY_FILE(400, "파일이 비어있습니다.", "015");
 
     private int status;
 
