@@ -7,6 +7,8 @@ import loginUserApi from '../../api/loginUserApi';
 const UserWrapper = styled.div`
   position: fixed;
   display: flex;
+  background: #fff;
+  z-index: 9;
   justify-content: center;
   flex-direction: column;
   height: 20rem;
