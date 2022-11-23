@@ -1,15 +1,15 @@
 import axios from 'axios';
 import { getCookie } from '../util/cookie';
 
-const publishApi = formData => {
+const postPhotoApi = formData => {
   const jwt = getCookie('accessToken');
 
-  return axios.post('/boards', JSON.stringify(formData), {
+  return axios.post('image-files', formData, {
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'multipart/form-data;charset=UTF-8',
       Authorization: jwt,
     },
   });
 };
 
-export default publishApi;
+export default postPhotoApi;

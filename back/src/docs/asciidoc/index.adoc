@@ -54,11 +54,8 @@ include::{snippets}/accountModify/http-request.adoc[]
 .request-headers
 include::{snippets}/accountModify/request-headers.adoc[]
 
-.request-parts
-include::{snippets}/accountModify/request-parts.adoc[]
-
-.request-parameters
-include::{snippets}/accountModify/request-parameters.adoc[]
+.request-fields
+include::{snippets}/accountModify/request-fields.adoc[]
 
 .http-response
 include::{snippets}/accountModify/http-response.adoc[]

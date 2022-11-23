@@ -69,7 +69,6 @@ public class BoardService {
         board.modify(modifyBoard);
 
         Optional.ofNullable(boardModifyReq.getImages()).ifPresent(images -> addBoardPhotosToBoard(images, board));
-
         Optional.ofNullable(boardModifyReq.getTags()).ifPresent(tagNames -> addBoardTagsToBoard(tagNames, board));
 
         return new IdDto(boardId);

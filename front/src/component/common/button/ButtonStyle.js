@@ -18,7 +18,7 @@ const ButtonStyle = css`
 export const DefaultButton = styled.button`
   ${ButtonStyle}
 
-  &:active {
+  &:hover {
     background: var(--button-theme-hv);
     color: var(--base-white-color);
   }

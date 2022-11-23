@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import { GiHamburgerMenu } from 'react-icons/gi';
-import { RiArrowDownSFill } from 'react-icons/ri';
 import { BiUserCircle } from 'react-icons/bi';
 import { useSelector } from 'react-redux';
+import { MdOutlineArrowDropDown, MdOutlineArrowDropUp } from 'react-icons/md';
 import { DefaultButton } from '../button/ButtonStyle';
-import { removeCookie } from '../../../util/cookie';
+import HeaderDropDownBox from './HeaderDropDownBox';
 
 const HeaderUserWrapper = styled.nav`
   width: 100%;
@@ -13,20 +13,22 @@ const HeaderUserWrapper = styled.nav`
   display: flex;
   align-items: center;
   min-width: 20rem;
+  position: relative;
   .header__write {
-    margin-left: 0.8rem;
-    margin-right: 0.8rem;
-    color: var(--font-base-black);
-    background-color: transparent;
-    border: 1px solid transparent;
-    font-size: 2rem;
-    cursor: pointer;
     flex: 1;
+    margin-right: 1.5rem;
+    background: #fff;
+    color: var(--main-font-color);
+    &:hover {
+      background: #f5f5f5;
+      color: var(--main-font-color);
+    }
   }
   .header__box {
     display: flex;
     align-items: center;
     cursor: pointer;
+    position: relative;
     .profile__image {
       width: 3.5rem;
       border-radius: var(--radius-50);
@@ -34,12 +36,6 @@ const HeaderUserWrapper = styled.nav`
     > :last-child {
       transition: transform 300ms;
       transform: rotate(360deg);
-    }
-  }
-  .header__box--rorate {
-    > :last-child {
-      transition: transform 300ms;
-      transform: rotate(180deg);
     }
   }
   .header__burger {
@@ -59,12 +55,13 @@ const HeaderUserWrapper = styled.nav`
     }
     .header__burger {
       display: block;
+      fill: var(--font-base-grey);
     }
   }
 `;
 
 function HeaderUser({ loginModalOpener }) {
-  const [rorate, setRorate] = useState('');
+  const [active, setActive] = useState(false);
   const [profileImg, setProfileImg] = useState('');
   const isLogin = useSelector(state => state.login.isLogin);
 
@@ -75,52 +72,76 @@ function HeaderUser({ loginModalOpener }) {
     }
   }, [profileImg]);
 
-  // 로그아웃 핸들러
-  const logoutHandler = () => {
-    removeCookie('accessToken');
-    localStorage.removeItem('id');
-    localStorage.removeItem('profile');
-    window.location.href = '/';
+  const activeHandler = () => {
+    setActive(false);
   };
 
   return (
     <HeaderUserWrapper>
-      <button className="header__write">게시물 작성</button>
-      <div
-        className={`header__box ${isLogin ? `header__box${rorate}` : ''}`}
-        role="button"
-        tabIndex={0}
-        onClick={() => setRorate(prev => (prev !== '' ? '' : '--rorate'))}
-        onKeyDown={() => setRorate(prev => (prev !== '' ? '' : '--rorate'))}
+      <DefaultButton
+        className="header__write"
+        fontSize="1.6rem"
+        width="9.5rem"
+        height="4.3rem"
+        fontWeight="500"
       >
+        게시물 작성
+      </DefaultButton>
+      <div className="header__box">
         {!isLogin ? (
           <DefaultButton
             onClick={loginModalOpener}
-            fontSize="2rem"
-            width="10rem"
-            height="5rem"
-            fontWeight="700"
+            fontSize="1.6rem"
+            width="7.5rem"
+            height="4.3rem"
+            fontWeight="500"
           >
             로그인
           </DefaultButton>
         ) : (
           <>
-            {/* 임시 로그아웃 버튼 */}
-            <button onClick={logoutHandler}>로그아웃</button>
             {profileImg ? (
-              <img
-                className="profile__image"
-                src={profileImg}
-                alt="프로필 이미지"
-              />
+              <div
+                role="button"
+                tabIndex={0}
+                onClick={() => setActive(prev => !prev)}
+                onKeyDown={e => {
+                  if (e.code === 'Enter') {
+                    setActive(prev => !prev);
+                  }
+                }}
+              >
+                <img
+                  className="profile__image"
+                  src={profileImg}
+                  alt="프로필 이미지"
+                />
+              </div>
             ) : (
               <BiUserCircle size="4.3rem" />
             )}
-            <RiArrowDownSFill size="2.5rem" color="hsl(146, 50%, 50%)" />
+            {active ? (
+              <MdOutlineArrowDropDown
+                onClick={() => setActive(prev => !prev)}
+                size="2.5rem"
+                color="hsl(146, 50%, 50%)"
+              />
+            ) : (
+              <MdOutlineArrowDropUp
+                size="2.5rem"
+                color="hsl(146, 50%, 50%)"
+                onClick={() => setActive(prev => !prev)}
+              />
+            )}
           </>
         )}
       </div>
-      <GiHamburgerMenu className="header__burger" size="3.4rem" />
+      <GiHamburgerMenu
+        onClick={() => setActive(prev => !prev)}
+        className="header__burger"
+        size="2.5rem"
+      />
+      <HeaderDropDownBox active={active} activeHandler={activeHandler} />
     </HeaderUserWrapper>
   );
 }
