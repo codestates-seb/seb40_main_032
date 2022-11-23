@@ -2,6 +2,8 @@ package travelRepo.domain.account.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -57,6 +59,7 @@ public class AccountService {
     }
 
     @Transactional
+    @CacheEvict(key = "#loginAccountId", value = {"findAccount", "findLoginAccount"})
     public IdDto modifyAccount(Long loginAccountId, AccountModifyReq accountModifyReq) {
 
         verifyDuplicateNickname(accountModifyReq.getNickname());
@@ -75,6 +78,7 @@ public class AccountService {
     }
 
     @Transactional
+    @CacheEvict(key = "#loginAccountId", value = {"findAccount", "findLoginAccount"})
     public void removeAccount(Long loginAccountId) {
 
         likesRepository.deleteByAccountId(loginAccountId);
@@ -87,6 +91,7 @@ public class AccountService {
         accountRepository.deleteById(loginAccountId);
     }
 
+    @Cacheable(key = "#accountId", value = "findAccount")
     public AccountDetailsRes findAccount(Long accountId) {
 
         Account account = accountRepository.findById(accountId)
@@ -98,6 +103,7 @@ public class AccountService {
         return AccountDetailsRes.of(account, following, follower);
     }
 
+    @Cacheable(key = "#loginAccountId", value = "findLoginAccount")
     public LoginAccountDetailsRes findLoginAccount(Long loginAccountId) {
 
         Account account = accountRepository.findById(loginAccountId)
