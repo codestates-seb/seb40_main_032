@@ -29,13 +29,9 @@ const MainThemeBar = styled.div`
           display: flex;
           align-items: center;
           color: var(--font-base-grey);
-          > svg {
-            width: 2rem;
-            height: 2rem;
-          }
 
           > span {
-            font-size: 1.6rem;
+            font-size: 1.7rem;
             padding-left: 5px;
           }
         }
@@ -57,24 +53,55 @@ const MainThemeBar = styled.div`
       transition: all 0.5s;
     }
 
+    /* TODO: left 값 화면 너비에 따라 달라지게 해야할 것 같음 */
     .theme__mypost.active ~ .bar {
       left: 1.5rem;
       opacity: 1;
     }
 
     .theme__mylikes.active ~ .bar {
-      left: 12.5rem;
+      left: 12.8rem;
       opacity: 1;
     }
 
     .theme__myfollower.active ~ .bar {
-      left: 23.5rem;
+      left: 24.2rem;
       opacity: 1;
     }
 
     .theme__myfollowing.active ~ .bar {
-      left: 35rem;
+      left: 35.7rem;
       opacity: 1;
+    }
+  }
+  @media screen and (max-width: 549px) {
+    .theme__lists > li {
+      margin: 0 1rem;
+      > button {
+        height: 4rem;
+        > a > span {
+          font-size: 1.4rem;
+        }
+      }
+
+      &.theme__mypost.active ~ .bar {
+        width: 6rem;
+        left: 1rem;
+      }
+      &.theme__mylikes.active ~ .bar {
+        width: 6rem;
+        left: 9rem;
+      }
+
+      &.theme__myfollower.active ~ .bar {
+        width: 6rem;
+        left: 17.5rem;
+      }
+
+      &.theme__myfollowing.active ~ .bar {
+        width: 6rem;
+        left: 26rem;
+      }
     }
   }
 `;
@@ -89,12 +116,20 @@ const CircleIcon = styled.div`
   justify-content: center;
   align-items: center;
   margin-right: 5px;
+  @media screen and (max-width: 549px) {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
 `;
 
 const HeartIcon = styled(AiFillHeart)`
   color: var(--font-tag-color);
   width: 2rem;
   height: 2rem;
+  @media screen and (max-width: 549px) {
+    width: 1.8rem;
+    height: 1.8rem;
+  }
 `;
 
 function UserInfoTab({ userdata }) {
