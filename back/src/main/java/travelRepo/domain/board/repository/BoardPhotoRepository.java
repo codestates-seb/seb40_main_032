@@ -13,7 +13,7 @@ public interface BoardPhotoRepository extends JpaRepository<BoardPhoto, Long> {
             "where boardPhoto.board in (select board from Board board where board.account.id = :accountId)")
     void deleteByAccountId(@Param("accountId") Long accountId);
 
-    @Modifying(flushAutomatically = true)
+    @Modifying(clearAutomatically = true)
     @Query("delete from BoardPhoto boardPhoto where boardPhoto.board.id = :boardId")
     void deleteByBoardId(@Param("boardId") Long boardId);
 }
