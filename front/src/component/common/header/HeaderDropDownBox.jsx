@@ -80,7 +80,7 @@ function HeaderDropDownBox({ active, activeHandler }) {
           />
           <HedaerDropDownItem
             linkText="마이 페이지"
-            link="/myPage"
+            link="/mypage"
             activeHandler={activeHandler}
           />
           <HedaerDropDownItem
