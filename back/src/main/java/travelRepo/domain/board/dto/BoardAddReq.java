@@ -2,7 +2,6 @@ package travelRepo.domain.board.dto;
 
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
-import org.springframework.web.multipart.MultipartFile;
 import travelRepo.domain.account.entity.Account;
 import travelRepo.domain.board.entity.Board;
 import travelRepo.domain.board.entity.Category;

@@ -18,9 +18,6 @@ import travelRepo.global.common.dto.SliceDto;
 import travelRepo.global.exception.BusinessLogicException;
 import travelRepo.global.exception.ExceptionCode;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -74,6 +71,6 @@ public class CommentService {
 
         Slice<Comment> comments = commentRepository.findAllByBoard_Id(boardId, pageable);
 
-        return new SliceDto(comments.map(CommentDetailsRes::of));
+        return new SliceDto<>(comments.map(CommentDetailsRes::of));
     }
 }

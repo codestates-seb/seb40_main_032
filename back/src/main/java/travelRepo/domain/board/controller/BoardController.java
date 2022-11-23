@@ -32,7 +32,7 @@ public class BoardController {
 
         IdDto response = boardService.addBoard(loginAccountId, boardAddReq);
 
-        return new ResponseEntity(response, HttpStatus.CREATED);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @PostMapping("/{boardId}")
@@ -42,7 +42,7 @@ public class BoardController {
 
         IdDto response = boardService.modifyBoard(loginAccountId, boardModifyReq, boardId);
 
-        return new ResponseEntity(response, HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @DeleteMapping("/{boardId}")
@@ -57,7 +57,7 @@ public class BoardController {
 
         BoardDetailsRes response = boardService.findBoard(boardId);
 
-        return new ResponseEntity(response, HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping
@@ -67,7 +67,7 @@ public class BoardController {
 
         SliceDto<BoardSummaryRes> response = boardService.findBoards(query, category, pageable);
 
-        return new ResponseEntity(response, HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping("/account/{accountId}")
@@ -76,6 +76,6 @@ public class BoardController {
 
         SliceDto<BoardSummaryRes> response = boardService.findBoardsByAccount(accountId, pageable);
 
-        return new ResponseEntity(response, HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
