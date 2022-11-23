@@ -80,12 +80,4 @@ public class Board extends BaseTime {
         Optional.ofNullable(board.getThumbnail()).ifPresent(thumbnail -> this.thumbnail = thumbnail);
         Optional.ofNullable(board.getCategory()).ifPresent(category -> this.category = category);
     }
-
-    public void downLikeCount() {
-        this.likeCount--;
-    }
-
-    public void upLikeCount() {
-        this.likeCount++;
-    }
 }

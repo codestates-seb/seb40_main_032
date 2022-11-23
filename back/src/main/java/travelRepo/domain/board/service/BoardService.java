@@ -1,7 +1,6 @@
 package travelRepo.domain.board.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
@@ -23,7 +22,6 @@ import travelRepo.global.common.dto.IdDto;
 import travelRepo.global.common.dto.SliceDto;
 import travelRepo.global.exception.BusinessLogicException;
 import travelRepo.global.exception.ExceptionCode;
-import travelRepo.global.image.service.ImageService;
 
 import java.util.List;
 import java.util.Optional;
@@ -41,10 +39,6 @@ public class BoardService {
     private final TagRepository tagRepository;
     private final LikesRepository likesRepository;
     private final AccountRepository accountRepository;
-    private final ImageService imageService;
-
-    @Value("${dir}")
-    private String path;
 
     @Transactional
     public IdDto addBoard(Long loginAccountId, BoardAddReq boardAddReq) {
@@ -74,13 +68,9 @@ public class BoardService {
         Board modifyBoard = boardModifyReq.toBoard();
         board.modify(modifyBoard);
 
-        Optional.ofNullable(boardModifyReq.getImages()).ifPresent(images -> {
-            addBoardPhotosToBoard(images, board);
-        });
+        Optional.ofNullable(boardModifyReq.getImages()).ifPresent(images -> addBoardPhotosToBoard(images, board));
 
-        Optional.ofNullable(boardModifyReq.getTags()).ifPresent(tagNames -> {
-            addBoardTagsToBoard(tagNames, board);
-        });
+        Optional.ofNullable(boardModifyReq.getTags()).ifPresent(tagNames -> addBoardTagsToBoard(tagNames, board));
 
         return new IdDto(boardId);
     }
@@ -126,14 +116,14 @@ public class BoardService {
 
         Slice<Board> boards = boardRepository.findAllByQueries(queries, category, pageable);
 
-        return new SliceDto(boards.map(BoardSummaryRes::of));
+        return new SliceDto<>(boards.map(BoardSummaryRes::of));
     }
 
     public SliceDto<BoardSummaryRes> findBoardsByAccount(Long accountId, Pageable pageable) {
 
         Slice<Board> boards = boardRepository.findAllByAccountWithBoardTagsAndAccount(accountId, pageable);
 
-        return new SliceDto(boards.map(BoardSummaryRes::of));
+        return new SliceDto<>(boards.map(BoardSummaryRes::of));
     }
 
     private void addBoardTagsToBoard(List<String> tagNames, Board board) {
@@ -145,11 +135,9 @@ public class BoardService {
                     BoardTag boardTag = board.getBoardTags().stream()
                             .filter(bt -> bt.getTag().getName().equals(tagName))
                             .findAny()
-                            .orElseGet(() -> {
-                                return BoardTag.builder()
-                                        .tag(tag)
-                                        .build();
-                            });
+                            .orElseGet(() -> BoardTag.builder()
+                                    .tag(tag)
+                                    .build());
 
                     boardTag.setOrders(tagNames.indexOf(tagName));
                     return boardTag;
@@ -167,11 +155,9 @@ public class BoardService {
                     BoardPhoto boardPhoto = board.getBoardPhotos().stream()
                             .filter(bp -> bp.getPhoto().equals(image))
                             .findAny()
-                            .orElseGet(() -> {
-                                return BoardPhoto.builder()
-                                        .photo(image)
-                                        .build();
-                            });
+                            .orElseGet(() -> BoardPhoto.builder()
+                                    .photo(image)
+                                    .build());
                     boardPhoto.setOrders(images.indexOf(image));
                     return boardPhoto;
 
