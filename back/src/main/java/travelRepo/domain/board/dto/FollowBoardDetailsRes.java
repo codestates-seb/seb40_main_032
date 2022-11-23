@@ -17,8 +17,7 @@ public class FollowBoardDetailsRes {
         FollowBoardDetailsRes followBoardDetailsRes = new FollowBoardDetailsRes();
 
         followBoardDetailsRes.setId(board.getId());
-        followBoardDetailsRes.setThumbnail(board.getBoardPhotos().stream()
-                .findFirst().get().getPhoto());
+        followBoardDetailsRes.setThumbnail(board.getThumbnail());
         followBoardDetailsRes.setTitle(board.getTitle());
 
         return followBoardDetailsRes;

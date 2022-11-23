@@ -165,7 +165,7 @@ class CommentControllerTest {
         Account account = accountRepository.findById(20001L).get();
         String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
 
-        Long commentId = 25001l;
+        Long commentId = 25001L;
 
         String commentContent = "modified testContents";
         CommentModifyReq commentModifyReq = new CommentModifyReq();

@@ -27,5 +27,13 @@ public interface BoardRepository extends JpaRepository<Board, Long>, BoardReposi
 
     @Modifying(flushAutomatically = true)
     @Query("update Board b set b.views = b.views + 1 where b.id = :boardId")
-    int updateViews(@Param("boardId") Long boardId);
+    void updateViews(@Param("boardId") Long boardId);
+
+    @Modifying(flushAutomatically = true)
+    @Query("update Board b set b.likeCount = b.likeCount + 1 where b.id = :boardId")
+    void upLikeCount(@Param("boardId") Long boardId);
+
+    @Modifying(flushAutomatically = true)
+    @Query("update Board b set b.likeCount = b.likeCount - 1 where b.id = :boardId")
+    void downLikeCount(@Param("boardId") Long boardId);
 }

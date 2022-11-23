@@ -14,6 +14,7 @@ function PublishForm() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const locationEdit = useLocation();
+
   const login = useSelector(state => state.login.isLogin);
 
   const [formData, setFormData] = useState({
@@ -22,23 +23,25 @@ function PublishForm() {
     location: '',
     category: '',
     tags: [],
+    images: [],
   });
 
-  const [titleValid, setTitleValid] = useState(false);
-  const [contentValid, setContentValid] = useState(false);
+  const { title, content, location } = formData;
 
-  const [titleMessage, setTitleMessage] = useState('');
-  const [contentMessage, setContentMessage] = useState('');
-
+  const [photoUrl, setPhotoUrl] = useState(); // S3에서 가져온 URL정보
+  const [images, setImages] = useState([]); // URL정보 보관
   const [categorySelected, setCategorySelected] = useState('');
   const [tags, setTags] = useState([]);
   const [newTag, setNewTag] = useState();
 
   const [confirmModalOpened, setConfirmModalOpened] = useState(false);
   const [yesNoModalOpened, setYesNoModalOpened] = useState(false);
-  const [publishSuccess, setPublishSuccess] = useState(false);
 
-  const { title, content, location } = formData;
+  // 유효성검사
+  const [titleValid, setTitleValid] = useState(false);
+  const [contentValid, setContentValid] = useState(false);
+  const [titleMessage, setTitleMessage] = useState('');
+  const [contentMessage, setContentMessage] = useState('');
 
   // 입력값 저장 함수
   const onChange = event => {
@@ -103,8 +106,7 @@ function PublishForm() {
       await publishApi(formData)
         .then(res => {
           if (res.status === 201) {
-            setPublishSuccess(true);
-            navigate('/');
+            console.log(res);
           }
         })
         .catch(error => console.log(error.response.data.message));
@@ -115,12 +117,12 @@ function PublishForm() {
   const confirmModalOpener = event => {
     event.preventDefault();
     publishRequest();
-    if (publishSuccess) setConfirmModalOpened(true);
+    setConfirmModalOpened(true);
   };
 
   const confirmModalCloser = () => {
     setConfirmModalOpened(false);
-    navigate(-1);
+    navigate('/');
   };
 
   // 취소 버튼 모달 연결
@@ -156,21 +158,45 @@ function PublishForm() {
   useEffect(() => {
     if (!login) {
       alert('로그인 해주세요');
-      navigate('/main');
+      navigate('/');
       loginModalOpener();
     }
     return () => {};
   }, []);
 
+  // 사진정보 formData에 담아주기
+  useEffect(() => {
+    if (photoUrl) {
+      setImages([...images, photoUrl]);
+      setFormData({ ...formData, images: [...images, photoUrl] });
+    }
+    return () => {};
+  }, [photoUrl]);
+
+  // formData에서 images상태에 저장된 URL 삭제하는 함수
+  const deleteImages = index => {
+    setImages(prev => {
+      const prevData = [...prev];
+      prevData.splice(index, 1);
+      return prevData;
+    });
+  };
+  useEffect(() => {
+    setFormData(prev => {
+      return { ...prev, images: [...images] };
+    });
+  }, [images]);
+
   // 상세 페이지에서 수정 클릭시 정보 받아올 준비
   useEffect(() => {
     console.log(locationEdit);
+    return () => {};
   }, [locationEdit]);
 
   return (
     <Container>
       <h1>새 게시물</h1>
-      <PublishPhoto />
+      <PublishPhoto setPhotoUrl={setPhotoUrl} deleteImages={deleteImages} />
       <TitleContainer>
         <div className="title__label">
           <label htmlFor="title">제목</label>
@@ -432,6 +458,7 @@ const Category = styled.button`
   border: none;
   border-radius: var(--radius-10);
   font-weight: var(--font-semi-bold);
+  font-size: 15px;
   opacity: 0.7;
   padding: 0.5rem;
   cursor: pointer;
@@ -440,7 +467,9 @@ const Category = styled.button`
     opacity: 1;
     font-weight: var(--font-bold);
     transition: 0.2s all ease-in-out;
-    box-shadow: var(--bx-sh-two);
+  }
+  @media screen and (max-width: 549px) {
+    font-size: 10px;
   }
 `;
 

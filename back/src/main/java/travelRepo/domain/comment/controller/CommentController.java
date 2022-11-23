@@ -54,6 +54,6 @@ public class CommentController {
 
         SliceDto<CommentDetailsRes> response = commentService.commentList(boardId, pageable);
 
-        return new ResponseEntity(response, HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

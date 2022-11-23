@@ -5,17 +5,21 @@ import Footer from '../../component/common/footer/Footer';
 
 const Main = styled.main`
   padding: 8rem 0 4rem;
+  @media screen and (max-width: 549px) {
+    padding-top: 6rem;
+  }
 
   .main__wrapper {
     width: 100%;
-    padding: 5rem 0;
-    position: relative;
+    padding: 5rem 0 1rem;
     display: flex;
     justify-content: center;
+    align-items: center;
+    flex-direction: column;
 
     @media screen and (max-width: 549px) {
       padding: 0;
-      padding-top: 5rem;
+      padding-top: 4rem;
     }
 
     .main__container {
@@ -46,6 +50,7 @@ const Main = styled.main`
       }
 
       @media screen and (max-width: 549px) {
+        margin: 0 1rem;
         .post,
         .post__skeleton {
           flex-basis: 100%;

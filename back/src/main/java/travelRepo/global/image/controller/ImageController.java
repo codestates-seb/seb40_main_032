@@ -14,6 +14,7 @@ import travelRepo.global.image.dto.ImageUploadReq;
 import travelRepo.global.image.dto.ImageUploadRes;
 import travelRepo.global.image.service.ImageService;
 
+import javax.validation.Valid;
 import java.net.MalformedURLException;
 import java.util.List;
 
@@ -38,7 +39,7 @@ public class ImageController {
     }
 
     @PostMapping
-    public ResponseEntity<ImageUploadRes> imageUpload(@ModelAttribute ImageUploadReq imageUploadReq) {
+    public ResponseEntity<ImageUploadRes> imageUpload(@Valid @ModelAttribute ImageUploadReq imageUploadReq) {
 
         List<String> imagePaths = imageService.uploadImage(imageUploadReq.getImages(), path);
 
