@@ -570,7 +570,7 @@ Host: localhost:8080
 Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2NjkwMTMxMTcsImV4cCI6MTY2OTAxNjcxN30.UgjQx42LTujUwOvQsUpdm3Fw9uzi0RkYHiAqbtURETY
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2NjkxNzk4MjMsImV4cCI6MTY2OTE4MzQyM30.uZqW2M3Z9qiz-8I3z8GWjouafCIXVU8aUOp7j91fNq4
 X-Content-Type-Options: nosniff
 X-XSS-Protection: 1; mode=block
 Cache-Control: no-cache, no-store, max-age=0, must-revalidate
@@ -749,7 +749,7 @@ Content-Length: 14
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="bash">$ curl 'http://localhost:8080/accounts/modify' -i -X POST \
     -H 'Content-Type: application/json;charset=UTF-8' \
-    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2NjkwMTMxMTYsImV4cCI6MTY2OTAxNjcxNn0.NrMIuLUesOz_3ESL0vWIukOQ8a8nrM-ROhKxhqXUKu4' \
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2NjkxNzk4MjMsImV4cCI6MTY2OTE4MzQyM30.uZqW2M3Z9qiz-8I3z8GWjouafCIXVU8aUOp7j91fNq4' \
     -H 'Accept: application/json' \
     -d '{
   "password" : "123456789",
@@ -764,7 +764,7 @@ Content-Length: 14
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">POST /accounts/modify HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2NjkwMTMxMTYsImV4cCI6MTY2OTAxNjcxNn0.NrMIuLUesOz_3ESL0vWIukOQ8a8nrM-ROhKxhqXUKu4
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2NjkxNzk4MjMsImV4cCI6MTY2OTE4MzQyM30.uZqW2M3Z9qiz-8I3z8GWjouafCIXVU8aUOp7j91fNq4
 Accept: application/json
 Content-Length: 125
 Host: localhost:8080
@@ -886,14 +886,14 @@ Content-Length: 18
 <div class="title">curl-request</div>
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="bash">$ curl 'http://localhost:8080/accounts' -i -X DELETE \
-    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2NjkwMTMxMTYsImV4cCI6MTY2OTAxNjcxNn0.NrMIuLUesOz_3ESL0vWIukOQ8a8nrM-ROhKxhqXUKu4'</code></pre>
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2NjkxNzk4MjMsImV4cCI6MTY2OTE4MzQyM30.uZqW2M3Z9qiz-8I3z8GWjouafCIXVU8aUOp7j91fNq4'</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">http-request</div>
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">DELETE /accounts HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2NjkwMTMxMTYsImV4cCI6MTY2OTAxNjcxNn0.NrMIuLUesOz_3ESL0vWIukOQ8a8nrM-ROhKxhqXUKu4
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2NjkxNzk4MjMsImV4cCI6MTY2OTE4MzQyM30.uZqW2M3Z9qiz-8I3z8GWjouafCIXVU8aUOp7j91fNq4
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -1058,14 +1058,14 @@ Content-Length: 257
 <div class="title">curl-request</div>
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="bash">$ curl 'http://localhost:8080/accounts/login' -i -X GET \
-    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2NjkwMTMxMTYsImV4cCI6MTY2OTAxNjcxNn0.NrMIuLUesOz_3ESL0vWIukOQ8a8nrM-ROhKxhqXUKu4'</code></pre>
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2NjkxNzk4MjMsImV4cCI6MTY2OTE4MzQyM30.uZqW2M3Z9qiz-8I3z8GWjouafCIXVU8aUOp7j91fNq4'</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">http-request</div>
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">GET /accounts/login HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2NjkwMTMxMTYsImV4cCI6MTY2OTAxNjcxNn0.NrMIuLUesOz_3ESL0vWIukOQ8a8nrM-ROhKxhqXUKu4
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2NjkxNzk4MjMsImV4cCI6MTY2OTE4MzQyM30.uZqW2M3Z9qiz-8I3z8GWjouafCIXVU8aUOp7j91fNq4
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -1177,14 +1177,14 @@ Content-Length: 257
 <div class="title">curl-request</div>
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="bash">$ curl 'http://localhost:8080/accounts/follow/10001?page=1&amp;size=5&amp;sort=createdAt%2Cdesc&amp;status=following' -i -X GET \
-    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2NjkwMTMxMTYsImV4cCI6MTY2OTAxNjcxNn0.NrMIuLUesOz_3ESL0vWIukOQ8a8nrM-ROhKxhqXUKu4'</code></pre>
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2NjkxNzk4MjMsImV4cCI6MTY2OTE4MzQyM30.uZqW2M3Z9qiz-8I3z8GWjouafCIXVU8aUOp7j91fNq4'</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">http-request</div>
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">GET /accounts/follow/10001?page=1&amp;size=5&amp;sort=createdAt%2Cdesc&amp;status=following HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2NjkwMTMxMTYsImV4cCI6MTY2OTAxNjcxNn0.NrMIuLUesOz_3ESL0vWIukOQ8a8nrM-ROhKxhqXUKu4
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2NjkxNzk4MjMsImV4cCI6MTY2OTE4MzQyM30.uZqW2M3Z9qiz-8I3z8GWjouafCIXVU8aUOp7j91fNq4
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -1494,7 +1494,7 @@ X-Frame-Options: DENY</code></pre>
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="bash">$ curl 'http://localhost:8080/boards' -i -X POST \
     -H 'Content-Type: application/json;charset=UTF-8' \
-    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InVzZXJBQHRlc3QuY29tIiwic3ViIjoiMjAwMDEiLCJpYXQiOjE2NjkwMTMxMTcsImV4cCI6MTY2OTAxNjcxN30.Gi5sgiu6EmVrVPySGg1QMMrulZ2jySK-1E-_8v6h9N4' \
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InVzZXJBQHRlc3QuY29tIiwic3ViIjoiMjAwMDEiLCJpYXQiOjE2NjkxNzk4MjQsImV4cCI6MTY2OTE4MzQyNH0.b5EPE5sSpq01Q2z2DN3dBJ2bLQOaWbmKjlUl7_Q4wVs' \
     -H 'Accept: application/json' \
     -d '{
   "title" : "board title",
@@ -1511,7 +1511,7 @@ X-Frame-Options: DENY</code></pre>
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">POST /boards HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InVzZXJBQHRlc3QuY29tIiwic3ViIjoiMjAwMDEiLCJpYXQiOjE2NjkwMTMxMTcsImV4cCI6MTY2OTAxNjcxN30.Gi5sgiu6EmVrVPySGg1QMMrulZ2jySK-1E-_8v6h9N4
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InVzZXJBQHRlc3QuY29tIiwic3ViIjoiMjAwMDEiLCJpYXQiOjE2NjkxNzk4MjQsImV4cCI6MTY2OTE4MzQyNH0.b5EPE5sSpq01Q2z2DN3dBJ2bLQOaWbmKjlUl7_Q4wVs
 Accept: application/json
 Content-Length: 273
 Host: localhost:8080
@@ -1646,7 +1646,7 @@ Content-Length: 14
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="bash">$ curl 'http://localhost:8080/boards/31001' -i -X POST \
     -H 'Content-Type: application/json;charset=UTF-8' \
-    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InVzZXJBQHRlc3QuY29tIiwic3ViIjoiMjAwMDEiLCJpYXQiOjE2NjkwMTMxMTcsImV4cCI6MTY2OTAxNjcxN30.Gi5sgiu6EmVrVPySGg1QMMrulZ2jySK-1E-_8v6h9N4' \
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InVzZXJBQHRlc3QuY29tIiwic3ViIjoiMjAwMDEiLCJpYXQiOjE2NjkxNzk4MjQsImV4cCI6MTY2OTE4MzQyNH0.b5EPE5sSpq01Q2z2DN3dBJ2bLQOaWbmKjlUl7_Q4wVs' \
     -H 'Accept: application/json' \
     -d '{
   "title" : "modified board title",
@@ -1663,7 +1663,7 @@ Content-Length: 14
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">POST /boards/31001 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InVzZXJBQHRlc3QuY29tIiwic3ViIjoiMjAwMDEiLCJpYXQiOjE2NjkwMTMxMTcsImV4cCI6MTY2OTAxNjcxN30.Gi5sgiu6EmVrVPySGg1QMMrulZ2jySK-1E-_8v6h9N4
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InVzZXJBQHRlc3QuY29tIiwic3ViIjoiMjAwMDEiLCJpYXQiOjE2NjkxNzk4MjQsImV4cCI6MTY2OTE4MzQyNH0.b5EPE5sSpq01Q2z2DN3dBJ2bLQOaWbmKjlUl7_Q4wVs
 Accept: application/json
 Content-Length: 306
 Host: localhost:8080
@@ -1819,14 +1819,14 @@ Content-Length: 18
 <div class="title">curl-request</div>
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="bash">$ curl 'http://localhost:8080/boards/31002' -i -X DELETE \
-    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InVzZXJBQHRlc3QuY29tIiwic3ViIjoiMjAwMDEiLCJpYXQiOjE2NjkwMTMxMTcsImV4cCI6MTY2OTAxNjcxN30.Gi5sgiu6EmVrVPySGg1QMMrulZ2jySK-1E-_8v6h9N4'</code></pre>
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InVzZXJBQHRlc3QuY29tIiwic3ViIjoiMjAwMDEiLCJpYXQiOjE2NjkxNzk4MjQsImV4cCI6MTY2OTE4MzQyNH0.b5EPE5sSpq01Q2z2DN3dBJ2bLQOaWbmKjlUl7_Q4wVs'</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">http-request</div>
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">DELETE /boards/31002 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InVzZXJBQHRlc3QuY29tIiwic3ViIjoiMjAwMDEiLCJpYXQiOjE2NjkwMTMxMTcsImV4cCI6MTY2OTAxNjcxN30.Gi5sgiu6EmVrVPySGg1QMMrulZ2jySK-1E-_8v6h9N4
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InVzZXJBQHRlc3QuY29tIiwic3ViIjoiMjAwMDEiLCJpYXQiOjE2NjkxNzk4MjQsImV4cCI6MTY2OTE4MzQyNH0.b5EPE5sSpq01Q2z2DN3dBJ2bLQOaWbmKjlUl7_Q4wVs
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -2686,7 +2686,7 @@ Content-Length: 3079
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="bash">$ curl 'http://localhost:8080/comments' -i -X POST \
     -H 'Content-Type: application/json;charset=UTF-8' \
-    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InVzZXJBQHRlc3QuY29tIiwic3ViIjoiMjAwMDEiLCJpYXQiOjE2NjkwMTMxMTcsImV4cCI6MTY2OTAxNjcxN30.Gi5sgiu6EmVrVPySGg1QMMrulZ2jySK-1E-_8v6h9N4' \
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InVzZXJBQHRlc3QuY29tIiwic3ViIjoiMjAwMDEiLCJpYXQiOjE2NjkxNzk4MjQsImV4cCI6MTY2OTE4MzQyNH0.b5EPE5sSpq01Q2z2DN3dBJ2bLQOaWbmKjlUl7_Q4wVs' \
     -d '{
   "boardId" : 21001,
   "content" : "testCommentContents"
@@ -2698,7 +2698,7 @@ Content-Length: 3079
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">POST /comments HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InVzZXJBQHRlc3QuY29tIiwic3ViIjoiMjAwMDEiLCJpYXQiOjE2NjkwMTMxMTcsImV4cCI6MTY2OTAxNjcxN30.Gi5sgiu6EmVrVPySGg1QMMrulZ2jySK-1E-_8v6h9N4
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InVzZXJBQHRlc3QuY29tIiwic3ViIjoiMjAwMDEiLCJpYXQiOjE2NjkxNzk4MjQsImV4cCI6MTY2OTE4MzQyNH0.b5EPE5sSpq01Q2z2DN3dBJ2bLQOaWbmKjlUl7_Q4wVs
 Content-Length: 60
 Host: localhost:8080
 
@@ -2780,7 +2780,7 @@ X-Frame-Options: DENY</code></pre>
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="bash">$ curl 'http://localhost:8080/comments/25001' -i -X PATCH \
     -H 'Content-Type: application/json;charset=UTF-8' \
-    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InVzZXJBQHRlc3QuY29tIiwic3ViIjoiMjAwMDEiLCJpYXQiOjE2NjkwMTMxMTcsImV4cCI6MTY2OTAxNjcxN30.Gi5sgiu6EmVrVPySGg1QMMrulZ2jySK-1E-_8v6h9N4' \
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InVzZXJBQHRlc3QuY29tIiwic3ViIjoiMjAwMDEiLCJpYXQiOjE2NjkxNzk4MjQsImV4cCI6MTY2OTE4MzQyNH0.b5EPE5sSpq01Q2z2DN3dBJ2bLQOaWbmKjlUl7_Q4wVs' \
     -d '{
   "content" : "modified testContents"
 }'</code></pre>
@@ -2791,7 +2791,7 @@ X-Frame-Options: DENY</code></pre>
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">PATCH /comments/25001 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InVzZXJBQHRlc3QuY29tIiwic3ViIjoiMjAwMDEiLCJpYXQiOjE2NjkwMTMxMTcsImV4cCI6MTY2OTAxNjcxN30.Gi5sgiu6EmVrVPySGg1QMMrulZ2jySK-1E-_8v6h9N4
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InVzZXJBQHRlc3QuY29tIiwic3ViIjoiMjAwMDEiLCJpYXQiOjE2NjkxNzk4MjQsImV4cCI6MTY2OTE4MzQyNH0.b5EPE5sSpq01Q2z2DN3dBJ2bLQOaWbmKjlUl7_Q4wVs
 Content-Length: 41
 Host: localhost:8080
 
@@ -2888,14 +2888,14 @@ X-Frame-Options: DENY</code></pre>
 <div class="title">curl-request</div>
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="bash">$ curl 'http://localhost:8080/comments/35001' -i -X DELETE \
-    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InVzZXJBQHRlc3QuY29tIiwic3ViIjoiMjAwMDEiLCJpYXQiOjE2NjkwMTMxMTcsImV4cCI6MTY2OTAxNjcxN30.Gi5sgiu6EmVrVPySGg1QMMrulZ2jySK-1E-_8v6h9N4'</code></pre>
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InVzZXJBQHRlc3QuY29tIiwic3ViIjoiMjAwMDEiLCJpYXQiOjE2NjkxNzk4MjQsImV4cCI6MTY2OTE4MzQyNH0.b5EPE5sSpq01Q2z2DN3dBJ2bLQOaWbmKjlUl7_Q4wVs'</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">http-request</div>
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">DELETE /comments/35001 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InVzZXJBQHRlc3QuY29tIiwic3ViIjoiMjAwMDEiLCJpYXQiOjE2NjkwMTMxMTcsImV4cCI6MTY2OTAxNjcxN30.Gi5sgiu6EmVrVPySGg1QMMrulZ2jySK-1E-_8v6h9N4
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InVzZXJBQHRlc3QuY29tIiwic3ViIjoiMjAwMDEiLCJpYXQiOjE2NjkxNzk4MjQsImV4cCI6MTY2OTE4MzQyNH0.b5EPE5sSpq01Q2z2DN3dBJ2bLQOaWbmKjlUl7_Q4wVs
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -3185,14 +3185,14 @@ Content-Length: 1606
 <div class="title">curl-request</div>
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="bash">$ curl 'http://localhost:8080/follows/10002' -i -X POST \
-    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2NjkwMTMxMTcsImV4cCI6MTY2OTAxNjcxN30.UgjQx42LTujUwOvQsUpdm3Fw9uzi0RkYHiAqbtURETY'</code></pre>
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2NjkxNzk4MjQsImV4cCI6MTY2OTE4MzQyNH0.LwqG6_CSrOd9quG7XAuLVDtFzzUeYQAB0JEyn00EE7Y'</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">http-request</div>
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">POST /follows/10002 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2NjkwMTMxMTcsImV4cCI6MTY2OTAxNjcxN30.UgjQx42LTujUwOvQsUpdm3Fw9uzi0RkYHiAqbtURETY
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2NjkxNzk4MjQsImV4cCI6MTY2OTE4MzQyNH0.LwqG6_CSrOd9quG7XAuLVDtFzzUeYQAB0JEyn00EE7Y
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -3290,14 +3290,14 @@ Content-Length: 26
 <div class="title">curl-request</div>
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="bash">$ curl 'http://localhost:8080/follows/10002' -i -X GET \
-    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2NjkwMTMxMTcsImV4cCI6MTY2OTAxNjcxN30.UgjQx42LTujUwOvQsUpdm3Fw9uzi0RkYHiAqbtURETY'</code></pre>
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2NjkxNzk4MjQsImV4cCI6MTY2OTE4MzQyNH0.LwqG6_CSrOd9quG7XAuLVDtFzzUeYQAB0JEyn00EE7Y'</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">http-request</div>
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">GET /follows/10002 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2NjkwMTMxMTcsImV4cCI6MTY2OTAxNjcxN30.UgjQx42LTujUwOvQsUpdm3Fw9uzi0RkYHiAqbtURETY
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2NjkxNzk4MjQsImV4cCI6MTY2OTE4MzQyNH0.LwqG6_CSrOd9quG7XAuLVDtFzzUeYQAB0JEyn00EE7Y
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -3401,14 +3401,14 @@ Content-Length: 21
 <div class="title">curl-request</div>
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="bash">$ curl 'http://localhost:8080/likes/12002' -i -X POST \
-    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2NjkwMTMxMTcsImV4cCI6MTY2OTAxNjcxN30.UgjQx42LTujUwOvQsUpdm3Fw9uzi0RkYHiAqbtURETY'</code></pre>
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2NjkxNzk4MjQsImV4cCI6MTY2OTE4MzQyNH0.LwqG6_CSrOd9quG7XAuLVDtFzzUeYQAB0JEyn00EE7Y'</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">http-request</div>
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">POST /likes/12002 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2NjkwMTMxMTcsImV4cCI6MTY2OTAxNjcxN30.UgjQx42LTujUwOvQsUpdm3Fw9uzi0RkYHiAqbtURETY
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2NjkxNzk4MjQsImV4cCI6MTY2OTE4MzQyNH0.LwqG6_CSrOd9quG7XAuLVDtFzzUeYQAB0JEyn00EE7Y
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -3506,14 +3506,14 @@ Content-Length: 26
 <div class="title">curl-request</div>
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="bash">$ curl 'http://localhost:8080/likes/12002' -i -X GET \
-    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2NjkwMTMxMTcsImV4cCI6MTY2OTAxNjcxN30.UgjQx42LTujUwOvQsUpdm3Fw9uzi0RkYHiAqbtURETY'</code></pre>
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2NjkxNzk4MjQsImV4cCI6MTY2OTE4MzQyNH0.LwqG6_CSrOd9quG7XAuLVDtFzzUeYQAB0JEyn00EE7Y'</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">http-request</div>
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">GET /likes/12002 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2NjkwMTMxMTcsImV4cCI6MTY2OTAxNjcxN30.UgjQx42LTujUwOvQsUpdm3Fw9uzi0RkYHiAqbtURETY
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2NjkxNzk4MjQsImV4cCI6MTY2OTE4MzQyNH0.LwqG6_CSrOd9quG7XAuLVDtFzzUeYQAB0JEyn00EE7Y
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -3618,7 +3618,7 @@ Content-Length: 20
 <div class="content">
 <pre class="prettyprint highlight"><code data-lang="bash">$ curl 'http://localhost:8080/image-files' -i -X POST \
     -H 'Content-Type: multipart/form-data;charset=UTF-8' \
-    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2NjkwMTMxMTcsImV4cCI6MTY2OTAxNjcxN30.UgjQx42LTujUwOvQsUpdm3Fw9uzi0RkYHiAqbtURETY' \
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2NjkxNzk4MjQsImV4cCI6MTY2OTE4MzQyNH0.LwqG6_CSrOd9quG7XAuLVDtFzzUeYQAB0JEyn00EE7Y' \
     -F 'images=@image1.jpeg;type=image/jpeg' \
     -F 'images=@image2.jpeg;type=image/jpeg' \
     -F 'images=@image3.jpeg;type=image/jpeg'</code></pre>
@@ -3629,7 +3629,7 @@ Content-Length: 20
 <div class="content">
 <pre class="prettyprint highlight nowrap"><code data-lang="http">POST /image-files HTTP/1.1
 Content-Type: multipart/form-data;charset=UTF-8; boundary=6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2NjkwMTMxMTcsImV4cCI6MTY2OTAxNjcxN30.UgjQx42LTujUwOvQsUpdm3Fw9uzi0RkYHiAqbtURETY
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbIlJPTEVfVVNFUiJdLCJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwic3ViIjoiMTAwMDEiLCJpYXQiOjE2NjkxNzk4MjQsImV4cCI6MTY2OTE4MzQyNH0.LwqG6_CSrOd9quG7XAuLVDtFzzUeYQAB0JEyn00EE7Y
 Host: localhost:8080
 
 --6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
@@ -3690,7 +3690,7 @@ Content-Type: image/jpeg
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>images</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">이미지</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>false</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong>true</strong></code></p></td>
 </tr>
 </tbody>
 </table>
@@ -3711,7 +3711,7 @@ X-Frame-Options: DENY
 Content-Length: 260
 
 {
-  "imagePaths" : [ "http://localhost:8080/image-files/8df0de5c-2347-4606-bf0a-55d13494d2d4.jpeg", "http://localhost:8080/image-files/be106459-d5ea-4425-9e99-87510ff136ab.jpeg", "http://localhost:8080/image-files/c8abfe40-6e71-4e6f-a3ea-d928c96aa4f0.jpeg" ]
+  "imagePaths" : [ "http://localhost:8080/image-files/1486b93c-2538-4b53-af84-2e7d4481d27d.jpeg", "http://localhost:8080/image-files/eea0a6df-7903-4f21-bb02-bbd7a737d2c0.jpeg", "http://localhost:8080/image-files/efed2978-8fe4-47c5-ba5b-05bead67620d.jpeg" ]
 }</code></pre>
 </div>
 </div>
@@ -3744,7 +3744,7 @@ Content-Length: 260
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2022-11-21 15:44:40 +0900
+Last updated 2022-11-22 15:50:27 +0900
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css">

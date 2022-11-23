@@ -19,10 +19,11 @@ public class ImageService {
 
     public String uploadImage(MultipartFile image, String path) {
 
+        if (image == null || image.isEmpty()) {
+            throw new BusinessLogicException(ExceptionCode.EMPTY_FILE);
+        }
+
         try {
-            if (image == null || image.isEmpty()) {
-                return null;
-            }
             return imageRepository.save(image, path);
         } catch (IOException e) {
             throw new BusinessLogicException(ExceptionCode.UPLOAD_FAILED);
