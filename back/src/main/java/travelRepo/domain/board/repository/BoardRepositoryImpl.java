@@ -35,25 +35,25 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom{
                 .limit(pageable.getPageSize());
 
         for (String q : queries) {
-            query.where(boardContainsQuery(board, q));
+            query.where(boardContainsQuery(q));
         }
 
         if (category != null) {
             query.where(board.category.eq(category));
         }
 
-        sort(pageable, board, query);
+        sort(pageable, query);
 
         List<Board> boards = query.distinct().fetch();
 
-        return new SliceImpl(boards, pageable, boards.size() == pageable.getPageSize());
+        return new SliceImpl<>(boards, pageable, boards.size() == pageable.getPageSize());
     }
 
-    private BooleanExpression boardContainsQuery(QBoard board, String q) {
+    private BooleanExpression boardContainsQuery(String q) {
         return board.title.contains(q).or(board.content.contains(q).or(tag.name.contains(q)));
     }
 
-    private void sort(Pageable pageable, QBoard board, JPAQuery<Board> query) {
+    private void sort(Pageable pageable, JPAQuery<Board> query) {
 
         if (pageable.getSort().isEmpty()) {
             query.orderBy(board.createdAt.desc());
@@ -61,7 +61,7 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom{
         }
 
         for (Sort.Order o : pageable.getSort()) {
-            PathBuilder pathBuilder = new PathBuilder(board.getType(), board.getMetadata());
+            PathBuilder pathBuilder = new PathBuilder<>(board.getType(), board.getMetadata());
             query.orderBy(new OrderSpecifier(o.isAscending() ? Order.ASC : Order.DESC,
                     pathBuilder.get(o.getProperty())));
         }

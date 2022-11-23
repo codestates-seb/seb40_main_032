@@ -56,7 +56,7 @@ public class BoardDetailsRes {
         boardDetailsRes.setPhotos(
                 board.getBoardPhotos().stream()
                         .sorted(Comparator.comparing(BoardPhoto::getOrders))
-                        .map(boardPhoto -> boardPhoto.getPhoto())
+                        .map(BoardPhoto::getPhoto)
                         .collect(Collectors.toList())
         );
         boardDetailsRes.setCreatedAt(board.getCreatedAt());

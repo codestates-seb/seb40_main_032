@@ -6,8 +6,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import travelRepo.domain.board.entity.BoardTag;
 
-import java.util.Optional;
-
 public interface BoardTagRepository extends JpaRepository<BoardTag, Long> {
 
     @Modifying(flushAutomatically = true)
@@ -18,7 +16,4 @@ public interface BoardTagRepository extends JpaRepository<BoardTag, Long> {
     @Modifying(flushAutomatically = true)
     @Query("delete from BoardTag boardTag where boardTag.board.id = :boardId")
     void deleteByBoardId(@Param("boardId") Long boardId);
-
-    @Query("select b from BoardTag b where b.board.id = :boardId and b.tag.id = :tagId")
-    Optional<BoardTag> findByBoardIdAndTagId(@Param("boardId") Long boardId, @Param("tagId") Long tagId);
 }

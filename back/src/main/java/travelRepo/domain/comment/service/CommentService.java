@@ -71,6 +71,6 @@ public class CommentService {
 
         Slice<Comment> comments = commentRepository.findAllByBoard_Id(boardId, pageable);
 
-        return new SliceDto(comments.map(CommentDetailsRes::of));
+        return new SliceDto<>(comments.map(CommentDetailsRes::of));
     }
 }
