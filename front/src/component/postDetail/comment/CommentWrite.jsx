@@ -18,26 +18,42 @@ const WriteWrapper = styled.article`
   border-radius: var(--radius-10);
   margin: 2rem auto 1rem auto;
   position: relative;
-  .comment__input {
+  .comment__sticky {
+    display: flex;
+    /* border: 1px solid var(--font-base-grey); */
+    /* border-radius: var(--radius-10); */
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    left: 0;
+    background-color: var(--base-white-color);
     width: 100%;
+    height: 10rem;
+  }
+  .comment__input {
+    border-radius: 1rem 0 0 1rem;
     border: 1px solid var(--font-base-grey);
-    border-radius: var(--radius-10);
+    width: 100%;
     outline: none;
     height: 6.6rem;
     padding-left: 3rem;
-    padding-right: 7.5rem;
     font-size: 2rem;
+    border-right: none;
   }
 
   .comment__button {
-    position: absolute;
-    top: 1.4rem;
-    right: 3rem;
-    border: none;
+    top: 1rem;
+    right: 0;
+    flex-basis: 15%;
     background-color: transparent;
+    border-radius: 0 1rem 1rem 0;
     color: var(--button-theme);
     font-size: 2.2rem;
-    font-weight: 800;
+    font-weight: 700;
+    height: 6.6rem;
+    border: 1px solid var(--font-base-grey);
+    border-left: none;
     cursor: pointer;
   }
   .comment__endPoint {
@@ -53,12 +69,16 @@ const WriteWrapper = styled.article`
   }
   @media screen and (max-width: 549px) {
     width: 100%;
+    .comment__sticky {
+      height: 8rem;
+    }
     .comment__input {
       font-size: 1.5rem;
       height: 5.5rem;
     }
     .comment__button {
       font-size: 1.5rem;
+      height: 5.5rem;
       right: 3rem;
     }
   }
@@ -86,7 +106,10 @@ function CommentWrite() {
   const commentListGetHandler = useCallback((board, val = 1) => {
     postDetailCommentApi(board, val).then(res => {
       setCommentLoading(true);
-      setCommentList(prev => [...prev, ...res.content]);
+      setCommentList(prev => {
+        // console.log(prev);
+        return [...prev, ...res.content];
+      });
       setHasNext(res.hasNext);
       setCommentLoading(false);
     });
@@ -138,7 +161,10 @@ function CommentWrite() {
           setCommentLoading(true);
           setHasNext(true);
           setPage(0);
-          setCommentList([]);
+          setCommentList(prev => {
+            console.log(prev);
+            return [];
+          });
           resetComment('');
 
           toast('댓글 입력 성공!', {
@@ -162,25 +188,27 @@ function CommentWrite() {
 
   return (
     <WriteWrapper className="comment__write">
-      <input
-        className="comment__input"
-        placeholder="댓글을 입력 해주세요"
-        value={comment}
-        onChange={setComment}
-        onKeyUp={e => {
-          if (e.code === 'Enter') {
+      <div className="comment__sticky">
+        <input
+          className="comment__input"
+          placeholder="댓글을 입력 해주세요"
+          value={comment}
+          onChange={setComment}
+          onKeyUp={e => {
+            if (e.code === 'Enter') {
+              commentSendHandler();
+            }
+          }}
+        />
+        <button
+          className="comment__button"
+          onClick={() => {
             commentSendHandler();
-          }
-        }}
-      />
-      <button
-        className="comment__button"
-        onClick={() => {
-          commentSendHandler();
-        }}
-      >
-        등록
-      </button>
+          }}
+        >
+          등록
+        </button>
+      </div>
       {commentLoading ? (
         <Loading />
       ) : (
@@ -199,6 +227,7 @@ function CommentWrite() {
                 nickName={el.account.nickname}
                 accountId={el.account.accountId}
                 commentId={el.commentId}
+                create={el.createdAt}
                 watcher={deleteModifyWatcherHandler}
               />
             );

@@ -9,28 +9,20 @@ const CommentWrapper = styled.section`
   border-radius: var(--radius-10);
   max-height: 39rem;
   overflow: auto;
-  flex-basis: 90%;
-  @media screen and (max-width: 710px) {
-    border: none;
-    flex-basis: 100%;
-    ::-webkit-scrollbar {
-      display: none;
-    }
+  flex-basis: 100%;
+  @media screen and (max-width: 999px) {
+    flex-basis: 93%;
   }
-  /* @media screen and (max-width: 549px) {
+  @media screen and (max-width: 549px) {
     border: none;
     flex-basis: 100%;
-    ::-webkit-scrollbar {
-      display: none;
-    }
-  } */
+  }
 `;
 
 function Comment() {
   return (
     <CommentWrapper className="comment">
       <CommentWrite />
-      {/* <CommentDetail /> */}
     </CommentWrapper>
   );
 }

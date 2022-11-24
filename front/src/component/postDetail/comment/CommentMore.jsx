@@ -13,7 +13,7 @@ const MoreWrapper = styled.div`
   margin: 2rem auto;
   font-size: 1.3rem;
   padding: 1rem 2rem 1rem 1rem;
-
+  word-break: break-all;
   display: flex;
 
   .comment__user {
@@ -62,6 +62,13 @@ const MoreWrapper = styled.div`
     font-size: var(--font-15);
     font-weight: var(--font-regular);
   }
+  .comment__content {
+    margin-bottom: 1rem;
+  }
+
+  .comment__create {
+    text-align: end;
+  }
 `;
 
 function CommentMore({
@@ -71,7 +78,9 @@ function CommentMore({
   accountId,
   commentId,
   watcher,
+  create,
 }) {
+  const createAt = new Date(create).toISOString().split('T')[0];
   const userId = Number(localStorage.getItem('id'));
   const [modifyComment, setModifyComment] = useState(comment);
   const [modifyFlag, setModifyFlag] = useState(false);
@@ -172,7 +181,10 @@ function CommentMore({
               onChange={e => setModifyComment(e.target.value)}
             />
           ) : (
-            <p className="comment__content">{comment}</p>
+            <>
+              <p className="comment__content">{comment}</p>
+              <p className="comment__create">{createAt}</p>
+            </>
           )}
         </div>
       </div>
