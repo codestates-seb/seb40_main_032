@@ -13,7 +13,6 @@ function RestaurantPage() {
     setIsPending,
     1,
   );
-  console.log(isPending);
 
   return (
     <>
@@ -22,7 +21,9 @@ function RestaurantPage() {
         {posts.map(post => {
           return <Post key={post.boardId} post={post} />;
         })}
-        <div ref={target} className="target" />
+        <div ref={target} className="target">
+          {isPending && <div>로딩중..</div>}
+        </div>
       </div>
     </>
   );

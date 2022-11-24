@@ -7,7 +7,6 @@ function AllThemePage() {
   const [isPending, setIsPending] = useState(true);
   const [posts, setPosts] = useState([]);
   const target = useIntersect('/boards?', 20, setPosts, setIsPending, 1);
-  console.log(isPending);
 
   return (
     <>
@@ -16,7 +15,9 @@ function AllThemePage() {
         {posts.map(post => {
           return <Post key={post.boardId} post={post} />;
         })}
-        <div ref={target} className="target" />
+        <div ref={target} className="target">
+          {isPending && <div>로딩중..</div>}
+        </div>
       </div>
     </>
   );
