@@ -1,7 +1,6 @@
-import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-import { AiFillHeart } from 'react-icons/ai';
+import { AiFillHeart, AiFillPicture } from 'react-icons/ai';
 
 const MainThemeBar = styled.div`
   width: 100%;
@@ -132,11 +131,18 @@ const HeartIcon = styled(AiFillHeart)`
   }
 `;
 
+const PostIcon = styled(AiFillPicture)`
+  color: var(--font-tag-color);
+  width: 2rem;
+  height: 2rem;
+  @media screen and (max-width: 549px) {
+    width: 1.8rem;
+    height: 1.8rem;
+  }
+`;
+
 function UserInfoTab({ userdata }) {
   const { pathname } = useLocation();
-
-  // 임시 데이터
-  const [posts] = useState(['내글1', '내글2']);
 
   return (
     <MainThemeBar>
@@ -148,7 +154,7 @@ function UserInfoTab({ userdata }) {
         >
           <button>
             <Link to="/mypage">
-              <CircleIcon>{posts.length}</CircleIcon>
+              <PostIcon />
               <span>게시글</span>
             </Link>
           </button>
