@@ -16,10 +16,6 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 @RequiredArgsConstructor
 public class CacheConfig {
 
-    public final RedisConnectionFactory redisConnectionFactory;
-
-    public final ObjectMapper objectMapper;
-
     public final RedisConnectionFactory connectionFactory;
 
     @Bean
