@@ -205,6 +205,6 @@ public class BoardService {
             valueOperations.increment(key);
             boardDetailsRes.setViews(Integer.parseInt(view) + 1);
         }
-
     }
+
 }

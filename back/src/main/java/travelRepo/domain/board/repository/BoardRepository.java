@@ -7,8 +7,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import travelRepo.domain.account.entity.Account;
 import travelRepo.domain.board.entity.Board;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface BoardRepository extends JpaRepository<Board, Long>, BoardRepositoryCustom {
@@ -36,4 +38,7 @@ public interface BoardRepository extends JpaRepository<Board, Long>, BoardReposi
     @Modifying(flushAutomatically = true)
     @Query("update Board b set b.likeCount = b.likeCount - 1 where b.id = :boardId")
     void downLikeCount(@Param("boardId") Long boardId);
+
+    @Query("select board from Board board where board.account.id = :accountId")
+    List<Board> findByAccountId(@Param("accountId") Long accountId);
 }

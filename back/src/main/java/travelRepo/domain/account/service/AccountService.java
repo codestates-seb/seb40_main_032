@@ -6,12 +6,15 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import travelRepo.domain.account.dto.*;
 import travelRepo.domain.account.entity.Account;
 import travelRepo.domain.account.repository.AccountRepository;
+import travelRepo.domain.board.entity.Board;
 import travelRepo.domain.board.repository.BoardPhotoRepository;
 import travelRepo.domain.board.repository.BoardRepository;
 import travelRepo.domain.board.repository.BoardTagRepository;
@@ -39,6 +42,7 @@ public class AccountService {
     private final LikesRepository likesRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final ImageService imageService;
+    private final RedisTemplate<String, String> redisTemplate;
 
     @Value("${dir}")
     private String path;
@@ -74,6 +78,8 @@ public class AccountService {
         Account modifyAccount = accountModifyReq.toAccount(encodePassword);
         account.modify(modifyAccount);
 
+        removeBoardFromRedis(loginAccountId);
+
         return new IdDto(account.getId());
     }
 
@@ -89,6 +95,8 @@ public class AccountService {
 
         followRepository.deleteByAccountId(loginAccountId);
         accountRepository.deleteById(loginAccountId);
+
+        removeBoardFromRedis(loginAccountId);
     }
 
     @Cacheable(key = "#accountId", value = "findAccount")
@@ -142,6 +150,19 @@ public class AccountService {
             if (accountRepository.existsByNickname(nickname)) {
                 throw new BusinessLogicException(ExceptionCode.DUPLICATION_NICKNAME);
             }
+        }
+    }
+
+    private void removeBoardFromRedis(Long accountId) {
+
+        List<Board> boards = boardRepository.findByAccountId(accountId);
+        ValueOperations<String, String> valueOperations = redisTemplate.opsForValue();
+        for (Board board : boards) {
+            String key = "findBoard::" + board.getId();
+            if (valueOperations.get(key) == null) {
+                continue;
+            }
+            redisTemplate.delete(key);
         }
     }
 }
