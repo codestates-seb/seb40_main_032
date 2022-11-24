@@ -1,7 +1,7 @@
-import React, { useEffect, useState, useRef, useCallback } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import myPostApi from '../../api/myPostApi';
 import Post from '../../component/common/Post';
+import useIntersect from '../../hooks/useIntersect';
 
 const MyPageMain = styled.main`
   padding-top: 23rem;
@@ -41,48 +41,22 @@ const MyPageMain = styled.main`
 `;
 
 function MyPost() {
-  const target = useRef(null);
   const [myPost, setMyPost] = useState([]);
-  const [extraPage, setExtraPage] = useState(true);
-  const page = useRef(1);
-
-  // post데이터 호출 함수
-  const getMyPost = useCallback(quantity => {
-    myPostApi(quantity, page)
-      .then(res => {
-        setMyPost(prev => [...prev, ...res.content]);
-        setExtraPage(res.hasNext);
-        console.log(res);
-        if (res.content.length) {
-          page.current += 1;
-        }
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  }, []);
-
-  useEffect(() => {
-    const io = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          getMyPost(); // 데이터 요청
-        }
-      },
-      { threshold: 1 },
-    );
-    if (target.current && extraPage) {
-      io.observe(target.current);
-    }
-    return () => io.disconnect();
-  }, [extraPage]);
+  const [isPending, setIsPending] = useState(false);
+  const accountId = localStorage.getItem('id');
+  const target = useIntersect(
+    `/boards/account/${accountId}?`,
+    15,
+    setMyPost,
+    setIsPending,
+  );
 
   return (
     <MyPageMain>
-      {myPost &&
-        myPost.map(post => {
-          return <Post key={post.boardId} post={post} />;
-        })}
+      {myPost.map(post => {
+        return <Post key={post.boardId} post={post} />;
+      })}
+      {isPending && <div>로딩중...</div>}
       <div ref={target} className="target" />
     </MyPageMain>
   );
