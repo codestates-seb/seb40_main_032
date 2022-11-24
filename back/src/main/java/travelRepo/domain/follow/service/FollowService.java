@@ -1,6 +1,8 @@
 package travelRepo.domain.follow.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import travelRepo.domain.follow.dto.FollowCheckRes;
@@ -24,6 +26,10 @@ public class FollowService {
     private final AccountRepository accountRepository;
 
     @Transactional
+    @Caching(evict = {
+            @CacheEvict(key = "#loginAccountId", value = "findAccount"),
+            @CacheEvict(key = "#accountId", value = "findAccount")
+    })
     public FollowPostRes postFollow(Long loginAccountId, Long accountId) {
 
         verifySelfFollow(loginAccountId, accountId);

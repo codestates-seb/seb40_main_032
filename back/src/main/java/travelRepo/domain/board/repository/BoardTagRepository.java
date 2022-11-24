@@ -13,7 +13,7 @@ public interface BoardTagRepository extends JpaRepository<BoardTag, Long> {
             "in (select board from Board board where board.account.id = :accountId)")
     void deleteByAccountId(@Param("accountId") Long accountId);
 
-    @Modifying(flushAutomatically = true)
+    @Modifying(clearAutomatically = true)
     @Query("delete from BoardTag boardTag where boardTag.board.id = :boardId")
     void deleteByBoardId(@Param("boardId") Long boardId);
 }
