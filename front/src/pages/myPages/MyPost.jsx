@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import styled from 'styled-components';
 import myPostApi from '../../api/myPostApi';
 import Post from '../../component/common/Post';
@@ -41,18 +41,41 @@ const MyPageMain = styled.main`
 `;
 
 function MyPost() {
+  const target = useRef(null);
   const [myPost, setMyPost] = useState([]);
+  const [extraPage, setExtraPage] = useState(true);
+  const page = useRef(1);
 
   // post데이터 호출 함수
-  const getMyPost = () => {
-    myPostApi().then(res => {
-      setMyPost(res.content);
-    });
-  };
+  const getMyPost = useCallback(quantity => {
+    myPostApi(quantity, page)
+      .then(res => {
+        setMyPost(prev => [...prev, ...res.content]);
+        setExtraPage(res.hasNext);
+        console.log(res);
+        if (res.content.length) {
+          page.current += 1;
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }, []);
 
   useEffect(() => {
-    getMyPost();
-  }, []);
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          getMyPost(); // 데이터 요청
+        }
+      },
+      { threshold: 1 },
+    );
+    if (target.current && extraPage) {
+      io.observe(target.current);
+    }
+    return () => io.disconnect();
+  }, [extraPage]);
 
   return (
     <MyPageMain>
@@ -60,6 +83,7 @@ function MyPost() {
         myPost.map(post => {
           return <Post key={post.boardId} post={post} />;
         })}
+      <div ref={target} className="target" />
     </MyPageMain>
   );
 }
