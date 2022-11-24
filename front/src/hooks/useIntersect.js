@@ -22,6 +22,8 @@ const useIntersect = (api, size, setPosts, setIsPending, threshold = 0) => {
       SetHasNextPage(data.hasNext);
       if (data.hasNext) {
         page.current += 1;
+      } else {
+        target.current.style.display = 'none';
       }
     } catch (err) {
       console.log('Error', err.message);
