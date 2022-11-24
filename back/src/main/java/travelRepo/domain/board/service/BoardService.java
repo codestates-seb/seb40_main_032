@@ -1,8 +1,12 @@
 package travelRepo.domain.board.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import travelRepo.domain.account.entity.Account;
@@ -39,6 +43,7 @@ public class BoardService {
     private final TagRepository tagRepository;
     private final LikesRepository likesRepository;
     private final AccountRepository accountRepository;
+    private final RedisTemplate<String, String> redisTemplate;
 
     @Transactional
     public IdDto addBoard(Long loginAccountId, BoardAddReq boardAddReq) {
@@ -56,6 +61,7 @@ public class BoardService {
     }
 
     @Transactional
+    @CacheEvict(key = "#boardId", value = "findBoard")
     public IdDto modifyBoard(Long loginAccountId, BoardModifyReq boardModifyReq, Long boardId) {
 
         Board board = boardRepository.findByIdWithBoardTagsAndAccount(boardId)
@@ -76,6 +82,7 @@ public class BoardService {
     }
 
     @Transactional
+    @CacheEvict(key = "#boardId", value = "findBoard")
     public void removeBoard(Long loginAccountId, Long boardId) {
 
         Board board = boardRepository.findByIdWithBoardTagsAndAccount(boardId)
@@ -96,12 +103,11 @@ public class BoardService {
     }
 
     @Transactional
+    @Cacheable(key = "#boardId", value = "findBoard")
     public BoardDetailsRes findBoard(Long boardId) {
 
         Board board = boardRepository.findByIdWithBoardTagsAndAccount(boardId)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_BOARD));
-
-        boardRepository.updateViews(boardId);
 
         return BoardDetailsRes.of(board);
     }
@@ -182,5 +188,23 @@ public class BoardService {
                 .build();
 
         return tagRepository.save(tag);
+    }
+
+    public void upViewToRedis(Long boardId, BoardDetailsRes boardDetailsRes) {
+
+        String key = "boardView::" + boardId;
+        ValueOperations<String, String> valueOperations = redisTemplate.opsForValue();
+        String view = valueOperations.get(key);
+        if (view == null) {
+            Board board = boardRepository.findById(boardId)
+                    .orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_BOARD));
+            valueOperations.set(key, String.valueOf(board.getViews() + 1));
+
+            boardDetailsRes.setViews(board.getViews() + 1);
+        } else {
+            valueOperations.increment(key);
+            boardDetailsRes.setViews(Integer.parseInt(view) + 1);
+        }
+
     }
 }
