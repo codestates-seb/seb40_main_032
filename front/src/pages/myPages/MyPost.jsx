@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import Post from '../../component/common/Post';
 import useIntersect from '../../hooks/useIntersect';
+import { getCookie } from '../../util/cookie';
 
 const MyPageMain = styled.main`
   padding-top: 23rem;
@@ -43,7 +44,7 @@ const MyPageMain = styled.main`
 function MyPost() {
   const [myPost, setMyPost] = useState([]);
   const [isPending, setIsPending] = useState(false);
-  const accountId = localStorage.getItem('id');
+  const accountId = getCookie('accountId');
   const target = useIntersect(
     `/boards/account/${accountId}?`,
     15,
