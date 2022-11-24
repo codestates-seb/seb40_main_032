@@ -6,6 +6,7 @@ import PostDetailArticle from './PostDetailArticle';
 import Comment from './comment/Comment';
 import Loading from '../common/Loading';
 import { postDetailApi, postDetailUserApi } from '../../api/postDetailApi';
+import { getCookie } from '../../util/cookie';
 
 const Container = styled.main`
   height: 100%;
@@ -100,7 +101,7 @@ function PostDetailMain() {
   const boardId = useParams();
   const [postDetail, setPostDetail] = useState('');
   const [loading, setLoading] = useState(true);
-  const accountId = localStorage.getItem('id');
+  const accountId = getCookie('accountId');
   useEffect(() => {
     if (accountId) {
       postDetailUserApi(boardId.id, accountId)
