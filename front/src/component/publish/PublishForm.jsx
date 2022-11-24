@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import styled from 'styled-components';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
@@ -9,13 +9,14 @@ import ConfirmModal from '../common/modal/ConfirmModal';
 import YesNoModal from '../common/modal/YesNoModal';
 import publishApi from '../../api/publishApi';
 import { loginModalActions } from '../../redux/loginModalSlice';
+import postEditApi from '../../api/postEditApi';
 
 function PublishForm() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const loc = useLocation();
-  const isPublishPage = loc.state === null;
-  console.log('publishpage?', isPublishPage);
+  const loc = useLocation().state;
+  const isPublishPage = loc === null; // 작성/수정페이지 구분
+  const ref = useRef(); // 자식 컴포넌트 ref 설정
 
   const login = useSelector(state => state.login.isLogin);
 
@@ -28,13 +29,12 @@ function PublishForm() {
     images: [],
   });
 
-  const { title, content, location } = formData;
-
   const [photoUrl, setPhotoUrl] = useState(); // S3에서 가져온 URL정보
   const [images, setImages] = useState([]); // URL정보 보관
   const [categorySelected, setCategorySelected] = useState('');
   const [tags, setTags] = useState([]);
   const [newTag, setNewTag] = useState();
+  const [boardId, setBoardId] = useState(); // 수정 post보낼 board id
 
   const [confirmModalOpened, setConfirmModalOpened] = useState(false);
   const [yesNoModalOpened, setYesNoModalOpened] = useState(false);
@@ -50,6 +50,7 @@ function PublishForm() {
     const InputName = event.target.name;
     const InputValue = event.target.value;
     const InputLength = InputValue.length;
+
     if (InputName === 'title') {
       if (InputLength < 5) {
         setTitleMessage('5글자 이상 입력하세요');
@@ -66,11 +67,15 @@ function PublishForm() {
         setContentMessage('5글자 이상 입력하세요');
         setContentValid(false);
       } else setContentValid(true);
+
     setFormData({ ...formData, [event.target.name]: event.target.value });
   };
 
-  // 필수 입력 정보 (TODO : 사진 컴포넌트 완성되면 추가)
-  const mandatoryInfo = titleValid && contentValid && formData.category;
+  const mandatoryInfo =
+    images.length !== 0 &&
+    titleValid &&
+    contentValid &&
+    formData.category !== undefined;
 
   // 테마 선택 함수
   const onClick = index => {
@@ -121,6 +126,27 @@ function PublishForm() {
     else console.log('not valid'); // 임시
   };
 
+  // 게시글 수정 요청
+  const editRequest = async event => {
+    event.preventDefault();
+    if (
+      images.length !== 0 &&
+      formData.title.length >= 5 &&
+      formData.content.length >= 5
+    )
+      await postEditApi(boardId, formData)
+        .then(res => {
+          if (res.status === 200) {
+            setConfirmModalOpened(true);
+            setTimeout(() => {
+              navigate(`/postDetail/${res.data.id}`);
+            }, 1000);
+          }
+        })
+        .catch(error => console.log(error.response.data.message));
+  };
+
+  // 모달 닫는 함수
   const confirmModalCloser = () => {
     setConfirmModalOpened(false);
   };
@@ -142,17 +168,6 @@ function PublishForm() {
   const loginModalOpener = () => {
     dispatch(loginModalActions.openLoginModal());
   };
-
-  // 등록 버튼 타이머 설정
-  useEffect(() => {
-    let timer;
-    if (confirmModalOpened) {
-      timer = setTimeout(() => {
-        confirmModalCloser();
-      }, 1500);
-    }
-    return () => clearTimeout(timer);
-  }, [confirmModalOpened]);
 
   // (비로그인) url입력 접근시 로그인창으로 redirect
   useEffect(() => {
@@ -181,22 +196,39 @@ function PublishForm() {
       return prevData;
     });
   };
+
   useEffect(() => {
     setFormData(prev => {
       return { ...prev, images: [...images] };
     });
   }, [images]);
 
-  // 상세 페이지에서 수정 클릭시 정보 받아올 준비
+  // 상세 페이지에서 수정 클릭시 정보 받아오기
   useEffect(() => {
-    console.log(loc);
-    return () => {};
+    if (!isPublishPage) {
+      const data = loc.post;
+      setFormData({
+        title: data.title,
+        content: data.content,
+        location: data.location,
+        category: data.category,
+        tags: [...data.tags],
+      });
+      setImages([...data.photos]);
+      setTags([...data.tags]);
+      setBoardId(data.boardId);
+      ref.current.preview([...data.photos]); // 장착시 미리보기 실행 코드
+    }
   }, [loc]);
 
   return (
     <Container>
-      <h1>새 게시물</h1>
-      <PublishPhoto setPhotoUrl={setPhotoUrl} deleteImages={deleteImages} />
+      <h1>{isPublishPage ? '새 게시물' : '내 글 수정'}</h1>
+      <PublishPhoto
+        setPhotoUrl={setPhotoUrl}
+        deleteImages={deleteImages}
+        ref={ref}
+      />
       <TitleContainer>
         <div className="title__label">
           <label htmlFor="title">제목</label>
@@ -206,7 +238,7 @@ function PublishForm() {
           type="text"
           id="title"
           name="title"
-          value={title || ''}
+          defaultValue={isPublishPage ? null : loc.post.title}
           maxLength="40"
           onChange={event => {
             onChange(event);
@@ -227,7 +259,7 @@ function PublishForm() {
           type="text"
           id="content"
           name="content"
-          value={content || ''}
+          defaultValue={isPublishPage ? null : loc.post.content}
           rows="7"
           onChange={event => {
             onChange(event);
@@ -249,7 +281,7 @@ function PublishForm() {
             type="text"
             id="location"
             name="location"
-            value={location || ''}
+            defaultValue={isPublishPage ? null : loc.post.location}
             onChange={event => onChange(event)}
             maxLength="40"
             placeholder="위치를 남겨주세요"
@@ -305,10 +337,9 @@ function PublishForm() {
           height="4vh"
           fontSize="var(--font-15)"
           fontWeight="var(--font-bold)"
-          onClick={publishRequest}
-          disabled={!mandatoryInfo}
+          onClick={isPublishPage ? publishRequest : editRequest}
         >
-          <span>등록</span>
+          <span>{isPublishPage ? '등록' : '수정'}</span>
         </PublishButton>
         <CancelButton
           width="8vw"
@@ -322,13 +353,21 @@ function PublishForm() {
       <>
         {confirmModalOpened ? (
           <ConfirmModal
-            modalMessage="게시글 등록이 완료되었습니다."
+            modalMessage={
+              isPublishPage
+                ? '게시글 등록이 완료되었습니다.'
+                : '게시글 수정이 완료되었습니다.'
+            }
             modalCloser={confirmModalCloser}
           />
         ) : null}
         {yesNoModalOpened ? (
           <YesNoModal
-            modalMessage="게시글 작성을 취소할까요?"
+            modalMessage={
+              isPublishPage
+                ? '게시글 작성을 취소할까요?'
+                : '게시글 수정을 취소할까요?'
+            }
             modalActioner={yesNoModalActioner}
             modalCloser={yesNoModalCloser}
           />
@@ -423,7 +462,7 @@ const LocationCategoryRow = styled.section`
   display: flex;
   justify-content: space-between;
   width: 100%;
-  gap: 1rem;
+  gap: 1.5rem;
   @media screen and (max-width: 549px) {
     flex-direction: column;
   }
@@ -437,6 +476,7 @@ const LocationContainer = styled.div`
 // 테마 - 선택(필수:택1)
 const CategoryContainer = styled.div`
   width: 100%;
+
   #categories {
     display: flex;
     flex-direction: row;
@@ -467,6 +507,7 @@ const Category = styled.button`
     opacity: 1;
     font-weight: var(--font-bold);
     transition: 0.2s all ease-in-out;
+    box-shadow: var(--bx-sh-four);
   }
   @media screen and (max-width: 549px) {
     font-size: 10px;

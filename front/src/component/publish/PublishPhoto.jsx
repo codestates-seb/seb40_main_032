@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, forwardRef, useImperativeHandle } from 'react';
 import styled from 'styled-components';
 import { BsCamera } from 'react-icons/bs';
 import uuid from 'react-uuid';
@@ -95,7 +95,7 @@ const RemoveIcon = styled(IoIosRemoveCircleOutline)`
   }
 `;
 
-function PublishPhoto({ setPhotoUrl, deleteImages }) {
+const PublishPhoto = forwardRef(({ setPhotoUrl, deleteImages }, ref) => {
   const [photos, setPhotos] = useState([]);
   const [blobPhotos, setBlobPhotos] = useState();
 
@@ -109,6 +109,12 @@ function PublishPhoto({ setPhotoUrl, deleteImages }) {
     });
     setPhotos(uploaded);
   };
+
+  // 수정페이지 진입시 미리보기 불러오는 함수
+  const preview = data => {
+    return data.map(el => photos.push(el));
+  };
+  useImperativeHandle(ref, () => ({ preview }));
 
   // 사진 개별 삭제
   const removePhotos = indexRemove => {
@@ -188,6 +194,6 @@ function PublishPhoto({ setPhotoUrl, deleteImages }) {
       </div>
     </Container>
   );
-}
+});
 
 export default PublishPhoto;
