@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 import { IoIosArrowDropright, IoIosArrowDropleft } from 'react-icons/io';
-// import PostMockData from './PostMockData';
 import uuid from 'react-uuid';
 
 const Container = styled.div`
@@ -9,13 +8,32 @@ const Container = styled.div`
   overflow: hidden;
   height: 100%;
   position: relative;
+  border-radius: 1rem 0 0 1rem;
   .image__container {
     display: flex;
     width: 100%;
     height: 0;
     transition: all 0.5s ease-in-out;
-    padding-bottom: calc(700 / 1000 * 100%);
+    padding-bottom: calc(1050 / 1000 * 100%);
     position: relative;
+    left: calc(${props => props.count}* -100%);
+
+    transition: all 500ms linear;
+    > img:first-child {
+      left: 0%;
+    }
+    > img:nth-child(2) {
+      left: 100%;
+    }
+    > img:nth-child(3) {
+      left: 200%;
+    }
+    > img:nth-child(4) {
+      left: 300%;
+    }
+    > img:nth-child(5) {
+      left: 400%;
+    }
   }
   .dot__list {
     display: flex;
@@ -23,33 +41,44 @@ const Container = styled.div`
     align-items: center;
     width: 100%;
     position: absolute;
-    bottom: 10px;
+    bottom: 2rem;
   }
   .image__dot {
     background: hsl(0, 0%, 82.74%);
     border-radius: 100%;
-    height: 10px;
-    width: 10px;
+    height: 1rem;
+    width: 1rem;
   }
   .image__dot + .image__dot {
-    margin-left: 20px;
+    margin-left: 2rem;
   }
   .image__dot--current {
     background: var(--base-white-color);
   }
+  @media screen and (max-width: 999px) {
+    border-radius: 1rem 1rem 0 0;
+    .image__container {
+      padding-bottom: calc(600 / 1000 * 100%);
+    }
+  }
+
   @media screen and (max-width: 549px) {
-    width: 88vw;
-    height: 32rem;
+    .image__container {
+      padding-bottom: calc(1000 / 1000 * 100%);
+    }
   }
 `;
 
 const PostImg = styled.img`
   position: absolute;
   top: 0;
-  left: 0;
+  left: 0%;
   width: 100%;
   height: 100%;
   transition: all 500ms linear;
+  background-color: rgba(0, 0, 0, 0.9);
+  object-fit: contain;
+
   @media screen and (max-width: 549px) {
     border: 1px solid var(--holder-base-color);
     border-bottom: none;
@@ -61,7 +90,6 @@ const arrowStyle = css`
   transform: translate(0, -50%);
   z-index: 2;
   cursor: pointer;
-
   &:hover {
     & > path {
       color: var(--base-white-color);
@@ -91,7 +119,7 @@ function PostDetailPhoto({ photos }) {
   };
 
   return (
-    <Container count={`${count}00`}>
+    <Container count={count} container={photos.length}>
       <LeftBtn size="40" onClick={prev} first={count} />
       <RightBtn
         size="40"

@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-// import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import PostDetailPhoto from './PostDetailPhoto';
@@ -13,54 +12,86 @@ const Container = styled.main`
   margin-top: 8rem;
   padding-top: 5rem;
 
+  display: flex;
+  justify-content: center;
+
   .detail__container {
-    max-width: 172rem;
-    margin: auto;
+    max-width: 110rem;
+    width: 100%;
+    margin: 0 3rem;
   }
   .detail__body {
     margin-bottom: 3rem;
-    padding-inline-start: 3vw;
-    padding-inline-end: 3vw;
-    min-width: auto;
+    width: 100%;
+    height: 0;
+    top: 0;
+    left: 0;
+    position: relative;
+    overflow: hidden;
+    padding-top: calc(750 / 1200 * 100%);
   }
   .detail__box {
     display: flex;
     justify-content: center;
+
+    position: absolute;
+    overflow: hidden;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
   }
   .detail__comment {
     padding-bottom: 2rem;
-    padding-inline-start: 3vw;
-    padding-inline-end: 3vw;
   }
   .comment__box {
     display: flex;
     justify-content: center;
   }
 
-  /* @media screen and (max-width: 710px) {
+  @media screen and (max-width: 999px) {
+    .detail__body {
+      width: 100%;
+      height: auto;
+      top: 0;
+      left: 0;
+      position: static;
+      overflow: visible;
+      padding-top: 0;
+      padding: 0 3rem;
+    }
     .detail__box {
       flex-direction: column;
+      position: static;
+      overflow: visible;
+      top: 0;
+      left: 0;
     }
-  } */
+  }
 
   @media screen and (max-width: 549px) {
     padding-top: 2rem;
     .detail__body {
-      padding-inline-start: 2rem;
-      padding-inline-end: 2rem;
+      padding-inline-start: 1rem;
+      padding-inline-end: 1rem;
       flex-direction: column;
       align-items: center;
     }
     .detail__box {
       flex-direction: column;
       min-width: 0;
+      padding-inline-start: 0;
+      padding-inline-end: 0;
       > div {
         width: 100%;
       }
     }
     .detail__comment {
-      padding-inline-start: 2rem;
-      padding-inline-end: 2rem;
+      padding-inline-start: 1rem;
+      padding-inline-end: 1rem;
+    }
+    .detail__container {
+      margin: 0;
     }
   }
 `;

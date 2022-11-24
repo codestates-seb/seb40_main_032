@@ -14,14 +14,12 @@ import YesNoModal from '../common/modal/YesNoModal';
 import { loginModalActions } from '../../redux/loginModalSlice';
 
 const Container = styled.div`
-  flex-basis: 30%;
-  /* overflow: scroll;
-  height: auto; */
+  flex-basis: 40%;
   padding: 1rem 2rem;
   color: var(--font-base-black);
   border: 1px solid var(--holder-base-color);
   font-size: var(--font-15);
-
+  border-radius: 0 1rem 1rem 0;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -29,28 +27,23 @@ const Container = styled.div`
   .post__category {
     color: var(--font-base-grey);
   }
-  @media screen and (max-width: 549px) {
-    width: 88vw;
-    height: auto;
-    padding: 1.5rem 2rem;
+  @media screen and (max-width: 999px) {
+    border-radius: 0 0 1rem 1rem;
   }
 `;
 
 const Header = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: ${props => (props.justify ? 'space-between' : 'flex-start')};
   align-items: center;
-  /* margin-bottom: 1rem; */
   flex-wrap: wrap;
   .image__box {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    flex-basis: 10%;
+    width: 3rem;
+    height: 3rem;
   }
   .writer__avatar {
-    width: 2.5vw;
-    height: 2.5vh;
+    width: 100%;
+    height: 100%;
     border-radius: 50%;
     cursor: pointer;
   }
@@ -60,24 +53,38 @@ const Header = styled.div`
     overflow: hidden;
     text-overflow: ellipsis;
     cursor: pointer;
+    margin-left: ${props => (props.justify ? '-1.5rem' : '1rem')};
   }
   .follow__button {
-    flex-basis: 25%;
-    height: 4rem;
-    font-size: 1.8rem;
+    flex-basis: 20%;
+    height: 3rem;
+    font-size: 1.4rem;
     border-radius: var(--radius-10);
     font-weight: var(--font-semi-bold);
-    color: var(--button-theme);
-    background-color: var(--button-font-color);
+    color: var(--button-font-color);
+    background-color: var(--button-theme);
     border: none;
     cursor: pointer;
-  }
-  @media screen and (max-width: 549px) {
-    .writer__avatar {
-      width: 4.5rem;
+    transition: 500ms linear;
+    &:hover {
+      color: var(--button-theme-hv);
     }
+  }
+  .follow__button--active {
+    color: var(--button-theme);
+    background-color: var(--button-font-color);
+  }
+
+  @media screen and (max-width: 999px) {
     .writer__name {
-      font-size: 18px;
+      margin-left: 1rem;
+      font-size: 2rem;
+      flex-grow: 2;
+    }
+    .follow__button {
+      font-size: 1.6rem;
+      flex-basis: 10%;
+      min-width: 6.5rem;
     }
   }
 `;
@@ -91,18 +98,20 @@ const Body = styled.div`
     font-size: 2rem;
     font-weight: var(--font-semi-bold);
     flex-basis: 5%;
+    margin-bottom: 1rem;
   }
   .article__content {
     font-size: var(--font-15);
-    flex-basis: 60%;
-    word-wrap: break-word;
+    flex-basis: 50%;
+    flex-grow: 2;
+    white-space: pre-line;
     overflow: auto;
     ::-webkit-scrollbar {
       display: none;
     }
   }
   .article__location {
-    margin-top: 1rem;
+    margin: 1rem 0;
   }
   .article__footer {
     flex-wrap: wrap;
@@ -135,7 +144,6 @@ const Body = styled.div`
         font-size: var(--font-10);
         margin-right: 5px;
         color: var(--font-base-grey);
-        min-width: 5rem;
       }
     }
     .footer__second {
@@ -154,37 +162,14 @@ const Body = styled.div`
       }
     }
   }
-  .button__edit {
-    cursor: pointer;
-  }
+  .button__edit,
   .button__delete {
     cursor: pointer;
   }
   @media screen and (max-width: 549px) {
-    .viewlike__wrapper {
-      flex-direction: column;
-    }
-    .article__content {
-      height: 20vh;
-    }
-    .article__location {
-      font-size: var(--font-15);
-    }
     .article__header {
       font-size: var(--font-20);
-    }
-    .article__footer {
-      .footer__first {
-        .footer__tags {
-          width: 56%;
-        }
-        .footer__views {
-          margin-right: 0px;
-        }
-        .footer__likes {
-          font-size: var(--font-20);
-        }
-      }
+      margin: 1rem 0;
     }
   }
 `;
@@ -202,7 +187,6 @@ function PostDetailArticle({ post, userLike, userFollow, self, board }) {
     account,
   } = post;
   console.log(self);
-  console.log(location);
   const date = new Date(createdAt).toISOString().split('T')[0];
   const [follow, setFollow] = useState(
     userFollow.follow !== '' ? userFollow.follow : false,
@@ -309,7 +293,7 @@ function PostDetailArticle({ post, userLike, userFollow, self, board }) {
         />
       )}
       <div className="post__category">{category}</div>
-      <Header>
+      <Header justify={!self}>
         <div
           className="image__box"
           role="button"
@@ -326,13 +310,20 @@ function PostDetailArticle({ post, userLike, userFollow, self, board }) {
           />
         </div>
         <span className="writer__name">{account.nickname}</span>
-        <button className="follow__button" onClick={followHandler}>
-          {follow ? '팔로잉중' : '팔로우'}
-        </button>
+        {!self && (
+          <button
+            className={`follow__button follow__button${
+              follow ? '--active' : ''
+            }`}
+            onClick={followHandler}
+          >
+            {follow ? '팔로잉중' : '팔로우'}
+          </button>
+        )}
       </Header>
       <Body>
         <p className="article__header">{title}</p>
-        <pre className="article__content">{content}</pre>
+        <div className="article__content">{content}</div>
         {location ? (
           <div className="article__location"> 위치 : {location}</div>
         ) : null}
@@ -390,18 +381,18 @@ function PostDetailArticle({ post, userLike, userFollow, self, board }) {
             </div>
           </div>
           <div className="footer__second">
-            {/*  {self ? ( */}
-            <div className="button__area">
-              <button className="button__edit" onClick={postModifyHandler}>
-                수정
-              </button>
-              <button className="button__delete" onClick={openDeleteModal}>
-                삭제
-              </button>
-            </div>
-            {/* ) : (
+            {self ? (
+              <div className="button__area">
+                <button className="button__edit" onClick={postModifyHandler}>
+                  수정
+                </button>
+                <button className="button__delete" onClick={openDeleteModal}>
+                  삭제
+                </button>
+              </div>
+            ) : (
               <div />
-            )} */}
+            )}
             <div className="article__date">{date}</div>
           </div>
         </div>
