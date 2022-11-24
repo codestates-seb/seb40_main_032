@@ -1,5 +1,8 @@
 package travelRepo.domain.likes.likesRepository;
 
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -20,6 +23,10 @@ public interface LikesRepository extends JpaRepository<Likes, Long> {
     @Modifying(clearAutomatically = true)
     @Query("delete from Likes likes where likes.board.id = :boardId")
     void deleteByBoardId(@Param("boardId") Long BoardId);
+
+    @EntityGraph(attributePaths = {"board"})
+    @Query("select l from Likes l where l.account.id = :accountId")
+    Slice<Likes> findAllByAccountIdWithBoard(@Param("accountId") Long accountId, Pageable pageable);
 
     boolean existsByAccount_IdAndBoard_Id(Long AccountId, Long BoardId);
 
