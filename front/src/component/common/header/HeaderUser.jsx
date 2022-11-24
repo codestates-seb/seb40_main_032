@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import { MdOutlineArrowDropDown, MdOutlineArrowDropUp } from 'react-icons/md';
 import { DefaultButton } from '../button/ButtonStyle';
 import HeaderDropDownBox from './HeaderDropDownBox';
+import { getCookie } from '../../../util/cookie';
 
 const HeaderUserWrapper = styled.nav`
   width: 100%;
@@ -68,9 +69,10 @@ function HeaderUser({ loginModalOpener }) {
   const isLogin = useSelector(state => state.login.isLogin);
 
   // 프로필 이미지 가져오기
+  const profile = getCookie('profile');
   useEffect(() => {
-    if (localStorage.getItem('profile')) {
-      setProfileImg(localStorage.getItem('profile'));
+    if (profile) {
+      setProfileImg(profile);
     }
   }, [profileImg]);
 

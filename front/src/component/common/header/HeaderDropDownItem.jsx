@@ -27,9 +27,9 @@ const ItemWrapper = styled.li`
 function HedaerDropDownItem({ linkText, link, activeHandler }) {
   // 로그아웃 핸들러
   const logoutHandler = () => {
+    removeCookie('profile');
+    removeCookie('accountId');
     removeCookie('accessToken');
-    localStorage.removeItem('id');
-    localStorage.removeItem('profile');
     window.location.href = '/';
   };
 
