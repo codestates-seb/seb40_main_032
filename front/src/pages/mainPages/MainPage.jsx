@@ -65,6 +65,7 @@ const Main = styled.main`
     justify-content: center;
     align-items: center;
     margin-bottom: 3rem;
+    background-color: #bbb;
   }
 `;
 
