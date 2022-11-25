@@ -56,6 +56,7 @@ public class BoardController {
     public ResponseEntity<BoardDetailsRes> boardDetails(@PathVariable Long boardId) {
 
         BoardDetailsRes response = boardService.findBoard(boardId);
+        boardService.upViewToRedis(boardId, response);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

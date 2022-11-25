@@ -103,10 +103,10 @@ include::{snippets}/loginAccountDetails/http-request.adoc[]
 include::{snippets}/loginAccountDetails/request-headers.adoc[]
 
 .http-response
-include::{snippets}/accountDetails/http-response.adoc[]
+include::{snippets}/loginAccountDetails/http-response.adoc[]
 
 .response-fields
-include::{snippets}/accountDetails/response-fields.adoc[]
+include::{snippets}/loginAccountDetails/response-fields.adoc[]
 
 === 팔로우 회원 조회
 .curl-request

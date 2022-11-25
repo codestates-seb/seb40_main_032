@@ -1,6 +1,7 @@
 package travelRepo.domain.likes.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import travelRepo.domain.account.entity.Account;
@@ -27,6 +28,7 @@ public class LikesService {
     private final BoardRepository boardRepository;
 
     @Transactional
+    @CacheEvict(key = "#boardId", value = "findBoard")
     public LikesPostRes postLikes(Long loginAccountId, Long boardId) {
 
         Account loginAccount = accountRepository.findById(loginAccountId)

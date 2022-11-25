@@ -4,14 +4,18 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import travelRepo.domain.account.dto.*;
 import travelRepo.domain.account.entity.Account;
 import travelRepo.domain.account.repository.AccountRepository;
+import travelRepo.domain.board.entity.Board;
 import travelRepo.domain.board.repository.BoardPhotoRepository;
 import travelRepo.domain.board.repository.BoardRepository;
 import travelRepo.domain.board.repository.BoardTagRepository;
@@ -24,6 +28,7 @@ import travelRepo.global.exception.ExceptionCode;
 import travelRepo.global.image.service.ImageService;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
@@ -39,6 +44,7 @@ public class AccountService {
     private final LikesRepository likesRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final ImageService imageService;
+    private final RedisTemplate<String, String> redisTemplate;
 
     @Value("${dir}")
     private String path;
@@ -74,12 +80,16 @@ public class AccountService {
         Account modifyAccount = accountModifyReq.toAccount(encodePassword);
         account.modify(modifyAccount);
 
+        removeBoardFromRedis(loginAccountId);
+
         return new IdDto(account.getId());
     }
 
     @Transactional
     @CacheEvict(key = "#loginAccountId", value = {"findAccount", "findLoginAccount"})
     public void removeAccount(Long loginAccountId) {
+
+        removeBoardFromRedis(loginAccountId);
 
         likesRepository.deleteByAccountId(loginAccountId);
         commentRepository.deleteByAccountId(loginAccountId);
@@ -89,6 +99,7 @@ public class AccountService {
 
         followRepository.deleteByAccountId(loginAccountId);
         accountRepository.deleteById(loginAccountId);
+
     }
 
     @Cacheable(key = "#accountId", value = "findAccount")
@@ -141,6 +152,24 @@ public class AccountService {
         if (nickname != null) {
             if (accountRepository.existsByNickname(nickname)) {
                 throw new BusinessLogicException(ExceptionCode.DUPLICATION_NICKNAME);
+            }
+        }
+    }
+
+    private void removeBoardFromRedis(Long accountId) {
+
+        List<Board> boards = boardRepository.findByAccountId(accountId);
+        ValueOperations<String, String> valueOperations = redisTemplate.opsForValue();
+        for (Board board : boards) {
+            String boardKey = "findBoard::" + board.getId();
+            String viewKey = "boardView::" + board.getId();
+
+            if (valueOperations.get(boardKey) != null) {
+                redisTemplate.delete(boardKey);
+            }
+
+            if (valueOperations.get(viewKey) != null) {
+                redisTemplate.delete(viewKey);
             }
         }
     }
