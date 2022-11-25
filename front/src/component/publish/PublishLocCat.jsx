@@ -10,7 +10,8 @@ function PublishLocCat({
   setFormData,
 }) {
   const [isSelected, setIsSelected] = useState('');
-  const [displayText, setDisplayText] = useState(['']);
+  const [displayText, setDisplayText] = useState('');
+  const [displayColor, setDisplayColor] = useState('');
 
   // 테마 선택 함수
   const onClick = index => {
@@ -18,16 +19,23 @@ function PublishLocCat({
     const { category } = categoryData[index];
     const { text } = categoryData[index];
     setDisplayText(text);
+    setDisplayColor(categoryData[index].theme);
     setFormData({ ...formData, category });
   };
 
   // 수정창에서 선택한 테마 보여주기
   useEffect(() => {
     console.log(loc);
-    if (loc.post.category === 'RESTAURANT')
+    if (loc.post.category === 'RESTAURANT') {
       setDisplayText(categoryData[0].text);
-    if (loc.post.category === 'STAY') setDisplayText(categoryData[1].text);
-    if (loc.post.category === 'SPOT') setDisplayText(categoryData[2].text);
+      setDisplayColor(categoryData[0].theme);
+    } else if (loc.post.category === 'STAY') {
+      setDisplayText(categoryData[1].text);
+      setDisplayColor(categoryData[1].theme);
+    } else if (loc.post.category === 'SPOT') {
+      setDisplayText(categoryData[2].text);
+      setDisplayColor(categoryData[2].theme);
+    }
   }, []);
 
   return (
@@ -50,7 +58,9 @@ function PublishLocCat({
       <CategoryContainer>
         <label htmlFor="category">
           <span className="category__label">테마</span>
-          <span className="category__text">{` - ${displayText}`}</span>
+          <CategoryLabel
+            theme={displayColor}
+          >{` - ${displayText}`}</CategoryLabel>
         </label>
         <div id="categories">
           {categoryData.map((item, index) => {
@@ -102,12 +112,14 @@ const CategoryContainer = styled.div`
     border-radius: var(--radius-10);
     padding: 0.5rem;
   }
-  .category__text {
-    font-size: var(--font-15);
-  }
   @media screen and (max-width: 549px) {
     width: 70%;
   }
+`;
+
+const CategoryLabel = styled.span`
+  font-size: var(--font-15);
+  color: ${props => props.theme.background};
 `;
 
 const Category = styled.button`
