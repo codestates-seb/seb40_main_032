@@ -1,19 +1,21 @@
 import styled from 'styled-components';
+import LoadingSpinner from './LoadingSpinner';
 
 const LoadingImg = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: calc(100vh - 140px);
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
 `;
 
 function Loading() {
   return (
     <LoadingImg>
-      <img
-        src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif?20151024034921"
-        alt="loading"
-      />
+      <LoadingSpinner width={100} />
     </LoadingImg>
   );
 }
