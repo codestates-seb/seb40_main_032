@@ -78,4 +78,13 @@ public class BoardController {
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+    @GetMapping("/like/account/{accountId}")
+    public ResponseEntity<SliceDto<BoardSummaryRes>> likeBoardList(@PathVariable Long accountId,
+                                                                   @PageableDefault(size = 20, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
+
+        SliceDto<BoardSummaryRes> response = boardService.findBoardsByLikes(accountId, pageable);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 }
