@@ -1,13 +1,14 @@
 import styled from 'styled-components';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { BiUserCircle } from 'react-icons/bi';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { MdOutlineArrowDropDown, MdOutlineArrowDropUp } from 'react-icons/md';
 import { DefaultButton } from '../button/ButtonStyle';
 import HeaderDropDownBox from './HeaderDropDownBox';
 import { getCookie } from '../../../util/cookie';
+import { loginModalActions } from '../../../redux/loginModalSlice';
 
 const HeaderUserWrapper = styled.nav`
   width: 100%;
@@ -61,12 +62,17 @@ const HeaderUserWrapper = styled.nav`
     }
   }
 `;
-
-function HeaderUser({ loginModalOpener }) {
+// { loginModalOpener }
+function HeaderUser() {
   const navigate = useNavigate();
   const [active, setActive] = useState(false);
   const [profileImg, setProfileImg] = useState('');
   const isLogin = useSelector(state => state.login.isLogin);
+  const dispatch = useDispatch();
+  const target = useRef(null);
+  const loginModalOpen = () => {
+    dispatch(loginModalActions.openLoginModal());
+  };
 
   // 프로필 이미지 가져오기
   const profile = getCookie('profile');
@@ -79,6 +85,16 @@ function HeaderUser({ loginModalOpener }) {
   const activeHandler = () => {
     setActive(false);
   };
+
+  useEffect(() => {
+    const io = new IntersectionObserver(() => {
+      setActive(false);
+    });
+    if (target.current) {
+      io.observe(target.current);
+    }
+    return () => io.disconnect();
+  }, []);
 
   return (
     <HeaderUserWrapper>
@@ -96,15 +112,24 @@ function HeaderUser({ loginModalOpener }) {
       </DefaultButton>
       <div className="header__box">
         {!isLogin ? (
-          <DefaultButton
-            onClick={loginModalOpener}
-            fontSize="1.6rem"
-            width="7.5rem"
-            height="4.3rem"
-            fontWeight="500"
-          >
-            로그인
-          </DefaultButton>
+          <>
+            <DefaultButton
+              onClick={loginModalOpen}
+              fontSize="1.6rem"
+              width="7.5rem"
+              height="4.3rem"
+              fontWeight="500"
+            >
+              로그인
+            </DefaultButton>
+
+            <div className="header__burger" ref={target}>
+              <GiHamburgerMenu
+                onClick={() => setActive(prev => !prev)}
+                size="2.5rem"
+              />
+            </div>
+          </>
         ) : (
           <>
             {profileImg ? (
@@ -143,11 +168,12 @@ function HeaderUser({ loginModalOpener }) {
           </>
         )}
       </div>
-      <GiHamburgerMenu
-        onClick={() => setActive(prev => !prev)}
-        className="header__burger"
-        size="2.5rem"
-      />
+      <div className="header__burger" ref={target}>
+        <GiHamburgerMenu
+          onClick={() => setActive(prev => !prev)}
+          size="2.5rem"
+        />
+      </div>
       <HeaderDropDownBox active={active} activeHandler={activeHandler} />
     </HeaderUserWrapper>
   );

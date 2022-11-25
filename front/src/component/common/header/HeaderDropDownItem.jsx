@@ -39,7 +39,7 @@ function HedaerDropDownItem({ linkText, link, activeHandler }) {
         <button
           onClick={() => {
             activeHandler();
-            logoutHandler();
+            if (linkText === '로그아웃') logoutHandler();
           }}
         >
           {linkText}
