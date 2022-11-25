@@ -196,7 +196,7 @@ function UserInfoTab({ userdata }) {
         >
           <button>
             <Link to="/mypage/myfollowing">
-              <CircleIcon>{userdata.folloing}</CircleIcon>
+              <CircleIcon>{userdata.following}</CircleIcon>
               <span>팔로잉</span>
             </Link>
           </button>
