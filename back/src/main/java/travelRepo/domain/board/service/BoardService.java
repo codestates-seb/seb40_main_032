@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import travelRepo.domain.account.entity.Account;
@@ -29,6 +30,7 @@ import travelRepo.global.exception.ExceptionCode;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -207,4 +209,20 @@ public class BoardService {
         }
     }
 
+    @Transactional
+    @Scheduled(cron = "0 0 0/1 * * ?")
+    public void updateViewToMySql() {
+
+        Set<String> keys = redisTemplate.keys("boardView*");
+        if (keys == null) {
+            return;
+        }
+        for (String key : keys) {
+            long boardId = Long.parseLong(key.split("::")[1]);
+            int views = Integer.parseInt(redisTemplate.opsForValue().get(key));
+            boardRepository.updateViews(boardId, views);
+        }
+        redisTemplate.delete(keys);
+
+    }
 }

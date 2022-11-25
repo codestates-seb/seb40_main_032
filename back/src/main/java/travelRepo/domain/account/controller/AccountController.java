@@ -3,6 +3,8 @@ package travelRepo.domain.account.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -65,7 +67,7 @@ public class AccountController {
     public ResponseEntity<PageDto<FollowAccountDetailsRes>> followAccountList(@LoginAccountId Long loginAccountId,
                                                                               @PathVariable Long accountId,
                                                                               @RequestParam String status,
-                                                                              Pageable pageable) {
+                                                                              @PageableDefault(size = 5) Pageable pageable) {
 
         if (!status.equals("following") && !status.equals("follower")) {
             throw new BusinessLogicException(ExceptionCode.IlLEGAL_PARAMETER);
