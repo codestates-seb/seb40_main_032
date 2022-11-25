@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import LoadingSpinner from '../../component/common/LoadingSpinner';
 import Post from '../../component/common/Post';
 import MainSort from '../../component/main/MainSort';
 import useIntersect from '../../hooks/useIntersect';
@@ -16,7 +17,7 @@ function AllThemePage() {
           return <Post key={post.boardId} post={post} />;
         })}
         <div ref={target} className="target">
-          {isPending && <div>로딩중..</div>}
+          {isPending && <LoadingSpinner />}
         </div>
       </div>
     </>
