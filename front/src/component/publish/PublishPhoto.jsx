@@ -143,6 +143,7 @@ const PublishPhoto = forwardRef(({ setPhotoUrl, deleteImages }, ref) => {
     URL.revokeObjectURL(photos[indexRemove]);
     setPhotos([...photos.filter((_, index) => index !== indexRemove)]); // 미리보기에서 삭제
     deleteImages(indexRemove); // Formdata에서 삭제
+    setErrorMessage('');
   };
 
   /* eslint-disable */
