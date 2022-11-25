@@ -17,7 +17,6 @@ import travelRepo.domain.board.repository.BoardRepository;
 import travelRepo.domain.board.repository.BoardTagRepository;
 import travelRepo.domain.board.repository.TagRepository;
 import travelRepo.domain.comment.repository.CommentRepository;
-import travelRepo.domain.likes.entity.Likes;
 import travelRepo.domain.likes.likesRepository.LikesRepository;
 import travelRepo.global.common.dto.IdDto;
 import travelRepo.global.common.dto.SliceDto;
@@ -129,8 +128,7 @@ public class BoardService {
 
     public SliceDto<BoardSummaryRes> findBoardsByLikes(Long accountId, Pageable pageable) {
 
-        Slice<Likes> likes = likesRepository.findAllByAccountIdWithBoard(accountId, pageable);
-        Slice<Board> boards = likes.map(Likes::getBoard);
+        Slice<Board> boards = boardRepository.findAllByAccountLikesWithBoardTagsAndAccount(accountId, pageable);
 
         return new SliceDto<>(boards.map(BoardSummaryRes::of));
     }

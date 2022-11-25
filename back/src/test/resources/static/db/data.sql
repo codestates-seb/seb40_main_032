@@ -110,3 +110,11 @@ INSERT INTO Comment(comment_id, createdAt, modifiedAt, content, account_id, boar
 INSERT INTO Comment(comment_id, createdAt, modifiedAt, content, account_id, board_id) VALUES('25006', '2022-10-14 14:00:01', '2022-10-14 14:00:01', 'testComment', '20003', '21001');
 -- for delete
 INSERT INTO Comment(comment_id, createdAt, modifiedAt, content, account_id, board_id) VALUES('35001', '2022-10-14 14:00:01', '2022-10-14 14:00:01', 'testComment', '20001', '31001');
+
+INSERT INTO Likes(likes_id, createdAt, modifiedAt, account_id, board_id) VALUES('26001', '2022-11-14 13:00:01', '2022-11-14 13:00:01', '20001', '21001');
+INSERT INTO Likes(likes_id, createdAt, modifiedAt, account_id, board_id) VALUES('26002', '2022-11-14 13:00:02', '2022-11-14 13:00:02', '20001', '21004');
+INSERT INTO Likes(likes_id, createdAt, modifiedAt, account_id, board_id) VALUES('26003', '2022-11-14 13:00:03', '2022-11-14 13:00:03', '20001', '21007');
+INSERT INTO Likes(likes_id, createdAt, modifiedAt, account_id, board_id) VALUES('26004', '2022-11-14 13:00:04', '2022-11-14 13:00:04', '20001', '21010');
+INSERT INTO Likes(likes_id, createdAt, modifiedAt, account_id, board_id) VALUES('26005', '2022-11-14 13:00:05', '2022-11-14 13:00:05', '20001', '21013');
+INSERT INTO Likes(likes_id, createdAt, modifiedAt, account_id, board_id) VALUES('26006', '2022-11-14 13:00:06', '2022-11-14 13:00:06', '20001', '21016');
+INSERT INTO Likes(likes_id, createdAt, modifiedAt, account_id, board_id) VALUES('26007', '2022-11-14 13:00:07', '2022-11-14 13:00:07', '20001', '21019');

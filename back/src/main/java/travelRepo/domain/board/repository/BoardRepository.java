@@ -25,6 +25,10 @@ public interface BoardRepository extends JpaRepository<Board, Long>, BoardReposi
     @Query("select b from Board b where b.account.id = :accountId")
     Slice<Board> findAllByAccountIdWithBoardTagsAndAccount(@Param("accountId") Long accountId, Pageable pageable);
 
+    @EntityGraph(attributePaths = {"boardTags", "account"})
+    @Query("select b from Board b left join Likes l on b.id = l.board.id where l.account.id = :accountId order by l.createdAt desc")
+    Slice<Board> findAllByAccountLikesWithBoardTagsAndAccount(@Param("accountId") Long accountId, Pageable pageable);
+
     @Modifying(flushAutomatically = true)
     @Query("update Board b set b.views = b.views + 1 where b.id = :boardId")
     void updateViews(@Param("boardId") Long boardId);
