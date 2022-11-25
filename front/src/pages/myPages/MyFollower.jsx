@@ -10,7 +10,7 @@ const MyPageMain = styled.main`
   .follower__container {
     width: 100%;
     max-width: 172rem;
-    margin: 5rem 3rem;
+    margin: 5rem 3rem 0;
   }
 `;
 
