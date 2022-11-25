@@ -582,8 +582,60 @@ class BoardControllerTest extends After {
         //then
         actions
                 .andExpect(status().isOk())
+                .andExpect(jsonPath("$.sliceNumber").value(1))
+                .andExpect(jsonPath("$.size").value(20))
+                .andExpect(jsonPath("$.hasNext").value(false))
+                .andExpect(jsonPath("$.numberOfElements").value(7))
                 .andDo(document(
                         "accountBoardList",
+                        getRequestPreProcessor(),
+                        getResponsePreProcessor(),
+                        pathParameters(
+                                parameterWithName("accountId").description("계정 식별자")
+                        ),
+                        responseFields(
+                                List.of(
+                                        fieldWithPath("content[]").type(JsonFieldType.ARRAY).description("게시물 목록"),
+                                        fieldWithPath("content[].boardId").type(JsonFieldType.NUMBER).description("게시글 식별자"),
+                                        fieldWithPath("content[].thumbnail").type(JsonFieldType.STRING).description("게시글 썸네일"),
+                                        fieldWithPath("content[].title").type(JsonFieldType.STRING).description("게시글 제목"),
+                                        fieldWithPath("content[].likeCount").type(JsonFieldType.NUMBER).description("게시글 좋아요 수"),
+                                        fieldWithPath("content[].tags").type(JsonFieldType.ARRAY).description("게시글 태그"),
+                                        fieldWithPath("content[].account").type(JsonFieldType.OBJECT).description("글쓴이"),
+                                        fieldWithPath("content[].account.accountId").type(JsonFieldType.NUMBER).description("계정 식별자"),
+                                        fieldWithPath("content[].account.profile").type(JsonFieldType.STRING).description("프로필 사진"),
+                                        fieldWithPath("content[].account.nickname").type(JsonFieldType.STRING).description("닉네임"),
+                                        fieldWithPath("sliceNumber").type(JsonFieldType.NUMBER).description("현재 슬라이스 번호"),
+                                        fieldWithPath("size").type(JsonFieldType.NUMBER).description("슬라이스 사이즈"),
+                                        fieldWithPath("hasNext").type(JsonFieldType.BOOLEAN).description("다음 슬라이스 존재 여부"),
+                                        fieldWithPath("numberOfElements").type(JsonFieldType.NUMBER).description("현재 슬라이스의 게시글 수")
+                                )
+                        )
+                ));
+    }
+
+    @Test
+    @DisplayName("좋아요한 게시글 조회_성공")
+    public void likeBoardList_Success() throws Exception {
+
+        //given
+        Long accountId = 20001L;
+
+        //when
+        ResultActions actions = mockMvc.perform(
+                get("/boards/like/account/{accountId}", accountId)
+                        .accept(MediaType.APPLICATION_JSON)
+        );
+
+        //then
+        actions
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.sliceNumber").value(1))
+                .andExpect(jsonPath("$.size").value(20))
+                .andExpect(jsonPath("$.hasNext").value(false))
+                .andExpect(jsonPath("$.numberOfElements").value(7))
+                .andDo(document(
+                        "likeBoardList",
                         getRequestPreProcessor(),
                         getResponsePreProcessor(),
                         pathParameters(
