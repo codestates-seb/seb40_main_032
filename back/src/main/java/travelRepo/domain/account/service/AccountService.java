@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -27,6 +28,7 @@ import travelRepo.global.exception.ExceptionCode;
 import travelRepo.global.image.service.ImageService;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
@@ -87,6 +89,8 @@ public class AccountService {
     @CacheEvict(key = "#loginAccountId", value = {"findAccount", "findLoginAccount"})
     public void removeAccount(Long loginAccountId) {
 
+        removeBoardFromRedis(loginAccountId);
+
         likesRepository.deleteByAccountId(loginAccountId);
         commentRepository.deleteByAccountId(loginAccountId);
         boardPhotoRepository.deleteByAccountId(loginAccountId);
@@ -96,7 +100,6 @@ public class AccountService {
         followRepository.deleteByAccountId(loginAccountId);
         accountRepository.deleteById(loginAccountId);
 
-        removeBoardFromRedis(loginAccountId);
     }
 
     @Cacheable(key = "#accountId", value = "findAccount")
@@ -158,11 +161,16 @@ public class AccountService {
         List<Board> boards = boardRepository.findByAccountId(accountId);
         ValueOperations<String, String> valueOperations = redisTemplate.opsForValue();
         for (Board board : boards) {
-            String key = "findBoard::" + board.getId();
-            if (valueOperations.get(key) == null) {
-                continue;
+            String boardKey = "findBoard::" + board.getId();
+            String viewKey = "boardView::" + board.getId();
+
+            if (valueOperations.get(boardKey) != null) {
+                redisTemplate.delete(boardKey);
             }
-            redisTemplate.delete(key);
+
+            if (valueOperations.get(viewKey) != null) {
+                redisTemplate.delete(viewKey);
+            }
         }
     }
 }

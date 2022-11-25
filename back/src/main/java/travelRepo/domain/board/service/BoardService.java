@@ -3,8 +3,11 @@ package travelRepo.domain.board.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
+import org.springframework.data.redis.connection.RedisConnection;
+import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -84,7 +87,7 @@ public class BoardService {
     }
 
     @Transactional
-    @CacheEvict(key = "#boardId", value = "findBoard")
+    @CacheEvict(key = "#boardId", value = "{findBoard, boardView}")
     public void removeBoard(Long loginAccountId, Long boardId) {
 
         Board board = boardRepository.findByIdWithBoardTagsAndAccount(boardId)
@@ -207,22 +210,5 @@ public class BoardService {
             valueOperations.increment(key);
             boardDetailsRes.setViews(Integer.parseInt(view) + 1);
         }
-    }
-
-    @Transactional
-    @Scheduled(cron = "0 0 0/1 * * ?")
-    public void updateViewToMySql() {
-
-        Set<String> keys = redisTemplate.keys("boardView*");
-        if (keys == null) {
-            return;
-        }
-        for (String key : keys) {
-            long boardId = Long.parseLong(key.split("::")[1]);
-            int views = Integer.parseInt(redisTemplate.opsForValue().get(key));
-            boardRepository.updateViews(boardId, views);
-        }
-        redisTemplate.delete(keys);
-
     }
 }
