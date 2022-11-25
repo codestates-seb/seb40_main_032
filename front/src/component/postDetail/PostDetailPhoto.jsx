@@ -1,7 +1,15 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { IoIosArrowDropright, IoIosArrowDropleft } from 'react-icons/io';
 import uuid from 'react-uuid';
+
+const nthCss = count => {
+  return `
+  > img:nth-child(${count + 1}) {
+    left: ${count}00%;
+  }
+  `;
+};
 
 const Container = styled.div`
   flex-basis: 60%;
@@ -19,7 +27,8 @@ const Container = styled.div`
     left: calc(${props => props.count}* -100%);
 
     transition: all 500ms linear;
-    > img:first-child {
+    ${props => props.container}/* > img:nth-child(1) {
+      // first-child
       left: 0%;
     }
     > img:nth-child(2) {
@@ -33,7 +42,7 @@ const Container = styled.div`
     }
     > img:nth-child(5) {
       left: 400%;
-    }
+    } */
   }
   .dot__list {
     display: flex;
@@ -118,8 +127,17 @@ function PostDetailPhoto({ photos }) {
     setCount(nextvalue => nextvalue + 1);
   };
 
+  const imageLeftFunc = useCallback(() => {
+    let str = '';
+    photos.map((_, idx) => {
+      str += nthCss(idx);
+      return str;
+    });
+    return str;
+  }, []);
+
   return (
-    <Container count={count} container={photos.length}>
+    <Container count={count} container={imageLeftFunc()}>
       <LeftBtn size="40" onClick={prev} first={count} />
       <RightBtn
         size="40"
