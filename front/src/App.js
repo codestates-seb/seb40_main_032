@@ -29,9 +29,10 @@ function App() {
   );
 
   // 로그인 모달 여닫는 함수
-  const loginModalOpener = () => {
-    dispatch(loginModalActions.openLoginModal());
-  };
+  // Slice로 관리함에 따른 Refactor
+  // const loginModalOpener = () => {
+  //   dispatch(loginModalActions.openLoginModal());
+  // };
   const loginModalCloser = () => {
     dispatch(loginModalActions.closeLoginModal());
   };
@@ -59,7 +60,7 @@ function App() {
             loginNotify={loginNotify}
           />
         )}
-        <Header loginModalOpener={loginModalOpener} />
+        <Header /> {/* loginModalOpener={loginModalOpener} */}
         <Routes>
           <Route path="/" element={<MainPage />}>
             <Route index element={<AllThemePage />} />
