@@ -24,9 +24,11 @@ function PublishTags({ formData, setFormData, tags, setTags }) {
 
   // 해쉬태그 삭제
   const handleTagRemove = indexRemove => {
-    setTags([...tags.filter((_, index) => index !== indexRemove)]);
-    setFormData({ ...formData, tags: [...tags] });
-    // 태그 삭제가 이상하게 반영됨
+    setTags(prev => {
+      const filtered = [...prev.filter((_, index) => index !== indexRemove)];
+      setFormData({ ...formData, tags: [...filtered] });
+      return filtered;
+    });
   };
 
   return (
