@@ -80,6 +80,10 @@ function PublishForm() {
 
   // 상세 페이지에서 수정 클릭시 정보 받아오기
   useEffect(() => {
+    // 게시글 수정에서 게시글 작성 클릭시 리로딩 되는 분기점
+    if (boardId && isPublishPage) {
+      window.location.reload();
+    }
     if (!isPublishPage) {
       const data = loc.post;
       setFormData({
@@ -94,9 +98,6 @@ function PublishForm() {
       setBoardId(data.boardId);
       ref.current.preview([...data.photos]); // 장착시 미리보기 실행 코드
     }
-    return () => {
-      window.location.reload();
-    };
   }, [loc]);
 
   const mandatory =
