@@ -13,6 +13,11 @@ const UserWrapper = styled.div`
   flex-direction: column;
   height: 20rem;
   width: 100%;
+
+  @media screen and (max-width: 549px) {
+    height: 15rem;
+    top: 6rem;
+  }
 `;
 
 function UserInfo() {

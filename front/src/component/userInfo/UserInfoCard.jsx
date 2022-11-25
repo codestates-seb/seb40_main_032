@@ -25,6 +25,10 @@ const UserInfoText = styled.div`
     width: 100%;
     > h1 {
       margin-right: 1rem;
+
+      @media screen and (max-width: 549px) {
+        font-size: 1.5rem;
+      }
     }
   }
   > p {

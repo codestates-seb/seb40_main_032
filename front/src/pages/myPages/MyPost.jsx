@@ -43,6 +43,7 @@ const MyPageMain = styled.main`
   }
 
   @media screen and (max-width: 549px) {
+    padding-top: 13rem;
     margin: 0 1rem;
     .post,
     .post__skeleton {
