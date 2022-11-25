@@ -10,12 +10,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import travelRepo.domain.board.repository.BoardRepository;
 
-import javax.annotation.PostConstruct;
 import java.util.Set;
 
 @Component
 @RequiredArgsConstructor
-public class CachingProcessor {
+public class CacheProcessor {
 
     RedisTemplate<String, String> redisTemplate;
     BoardRepository boardRepository;
