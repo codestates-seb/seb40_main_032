@@ -11,6 +11,7 @@ import CommentMore from './CommentMore';
 import { loginModalActions } from '../../../redux/loginModalSlice';
 import Loading from '../../common/Loading';
 import useInput from '../../../hooks/useInput';
+import debounce from '../../../util/debounce';
 
 const WriteWrapper = styled.article`
   width: 90%;
@@ -153,6 +154,7 @@ function CommentWrite() {
     }
     return true;
   };
+
   // 댓글 작성 핸들러
   const commentSendHandler = () => {
     if (modalOpenHandler() && comment !== '') {
@@ -185,6 +187,10 @@ function CommentWrite() {
         });
     }
   };
+  // 디바운스 적용 댓글 등록 핸들러
+  const debounceSendHandler = debounce(() => {
+    commentSendHandler();
+  }, 100);
 
   return (
     <WriteWrapper className="comment__write">
@@ -196,7 +202,7 @@ function CommentWrite() {
           onChange={setComment}
           onKeyUp={e => {
             if (e.code === 'Enter') {
-              commentSendHandler();
+              debounceSendHandler();
             }
           }}
         />
