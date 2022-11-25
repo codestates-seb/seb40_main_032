@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import LoadingSpinner from '../../component/common/LoadingSpinner';
 import Post from '../../component/common/Post';
 import MainSort from '../../component/main/MainSort';
@@ -7,11 +7,31 @@ import useIntersect from '../../hooks/useIntersect';
 function AllThemePage() {
   const [isPending, setIsPending] = useState(true);
   const [posts, setPosts] = useState([]);
-  const target = useIntersect('/boards?', 20, setPosts, setIsPending, 1);
+  const [sort, setSort] = useState('createdAt,desc');
+  const [target, page, hasNext] = useIntersect(
+    '/boards?',
+    20,
+    setPosts,
+    setIsPending,
+    0.7,
+    sort,
+  );
+
+  const sortHandler = sorted => {
+    console.log(sorted);
+    setSort(sorted);
+    target.current.style.display = 'flex';
+    page.current = 1;
+    setPosts([]);
+  };
+
+  useEffect(() => {
+    hasNext(true);
+  }, [sort]);
 
   return (
     <>
-      <MainSort />
+      <MainSort sortHandler={sortHandler} />
       <div className="main__container">
         {posts.map(post => {
           return <Post key={post.boardId} post={post} />;
