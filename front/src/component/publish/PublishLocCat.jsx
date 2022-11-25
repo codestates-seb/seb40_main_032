@@ -26,15 +26,17 @@ function PublishLocCat({
   // 수정창에서 선택한 테마 보여주기
   useEffect(() => {
     console.log(loc);
-    if (loc.post.category === 'RESTAURANT') {
-      setDisplayText(categoryData[0].text);
-      setDisplayColor(categoryData[0].theme);
-    } else if (loc.post.category === 'STAY') {
-      setDisplayText(categoryData[1].text);
-      setDisplayColor(categoryData[1].theme);
-    } else if (loc.post.category === 'SPOT') {
-      setDisplayText(categoryData[2].text);
-      setDisplayColor(categoryData[2].theme);
+    if (!isPublishPage) {
+      if (loc.post.category === 'RESTAURANT') {
+        setDisplayText(categoryData[0].text);
+        setDisplayColor(categoryData[0].theme);
+      } else if (loc.post.category === 'STAY') {
+        setDisplayText(categoryData[1].text);
+        setDisplayColor(categoryData[1].theme);
+      } else if (loc.post.category === 'SPOT') {
+        setDisplayText(categoryData[2].text);
+        setDisplayColor(categoryData[2].theme);
+      }
     }
   }, []);
 
