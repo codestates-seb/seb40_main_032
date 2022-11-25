@@ -94,6 +94,9 @@ function PublishForm() {
       setBoardId(data.boardId);
       ref.current.preview([...data.photos]); // 장착시 미리보기 실행 코드
     }
+    return () => {
+      window.location.reload();
+    };
   }, [loc]);
 
   const mandatory =
