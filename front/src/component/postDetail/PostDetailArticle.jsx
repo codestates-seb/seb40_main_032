@@ -14,94 +14,106 @@ import YesNoModal from '../common/modal/YesNoModal';
 import { loginModalActions } from '../../redux/loginModalSlice';
 
 const Container = styled.div`
-  flex: 1;
+  flex-basis: 40%;
+  padding: 1rem 2rem;
   color: var(--font-base-black);
-  display: flex;
-  flex-direction: column;
-  padding: 2vh;
-  width: 33vw;
-  max-height: 70vh;
-  height: auto;
   border: 1px solid var(--holder-base-color);
   font-size: var(--font-15);
+  border-radius: 0 1rem 1rem 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+
   .post__category {
     color: var(--font-base-grey);
   }
-  @media screen and (max-width: 549px) {
-    width: 88vw;
-    height: auto;
-    padding: 1.5rem 2rem;
+  @media screen and (max-width: 999px) {
+    border-radius: 0 0 1rem 1rem;
   }
 `;
 
 const Header = styled.div`
-  height: 20%;
   display: flex;
-  justify-content: space-between;
+  justify-content: ${props => (props.justify ? 'space-between' : 'flex-start')};
   align-items: center;
   flex-wrap: wrap;
-  .writer__info {
-    display: flex;
-    flex-direction: center;
-    align-items: center;
-    flex-wrap: wrap;
+  .image__box {
+    width: 3rem;
+    height: 3rem;
   }
   .writer__avatar {
-    display: flex;
-    flex-direction: center;
-    align-items: center;
-    width: 6.5rem;
-    height: 6.5rem;
-    border-radius: 100rem;
-    border: 2px solid black;
-    margin-right: 1.5rem;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
     cursor: pointer;
   }
   .writer__name {
+    flex-basis: 60%;
     font-size: var(--font-20);
+    overflow: hidden;
+    text-overflow: ellipsis;
     cursor: pointer;
+    margin-left: ${props => (props.justify ? '-1.5rem' : '1rem')};
   }
   .follow__button {
-    display: flex;
-    align-items: center;
-    border: none;
+    flex-basis: 20%;
+    height: 3rem;
+    font-size: 1.4rem;
     border-radius: var(--radius-10);
-    width: auto;
-    height: 2.5rem;
-    padding: 1rem;
     font-weight: var(--font-semi-bold);
+    color: var(--button-font-color);
+    background-color: var(--button-theme);
+    border: none;
+    cursor: pointer;
+    transition: 500ms linear;
+    &:hover {
+      color: var(--button-theme-hv);
+    }
+  }
+  .follow__button--active {
     color: var(--button-theme);
     background-color: var(--button-font-color);
-    cursor: pointer;
-    min-width: 5.6rem;
+  }
+
+  @media screen and (max-width: 999px) {
+    .writer__name {
+      margin-left: 1rem;
+      font-size: 2rem;
+      flex-grow: 2;
+    }
+    .follow__button {
+      font-size: 1.6rem;
+      flex-basis: 10%;
+      min-width: 6.5rem;
+    }
   }
 `;
 
 const Body = styled.div`
-  height: 100%;
   display: flex;
   flex-direction: column;
-  margin-top: 1rem;
+  justify-content: space-between;
+  flex-basis: 80%;
   .article__header {
-    font-size: var(--font-20);
+    font-size: 2rem;
     font-weight: var(--font-semi-bold);
+    flex-basis: 5%;
     margin-bottom: 1rem;
   }
   .article__content {
     font-size: var(--font-15);
-    /* height: 38vh; */
-    flex: 2;
-    overflow: scroll;
-    margin-right: auto;
+    flex-basis: 50%;
+    flex-grow: 2;
+    white-space: pre-line;
+    overflow: auto;
     ::-webkit-scrollbar {
       display: none;
     }
   }
   .article__location {
-    margin-top: 1rem;
+    margin: 1rem 0;
   }
   .article__footer {
-    margin-top: auto;
     flex-wrap: wrap;
     .footer__first {
       display: flex;
@@ -109,7 +121,6 @@ const Body = styled.div`
       justify-content: space-between;
       flex-wrap: wrap;
       .footer__tags {
-        height: auto;
         display: flex;
         align-items: center;
         color: var(--button-theme);
@@ -133,7 +144,6 @@ const Body = styled.div`
         font-size: var(--font-10);
         margin-right: 5px;
         color: var(--font-base-grey);
-        min-width: 5rem;
       }
     }
     .footer__second {
@@ -152,34 +162,14 @@ const Body = styled.div`
       }
     }
   }
-  .button__edit {
-    cursor: pointer;
-  }
+  .button__edit,
   .button__delete {
     cursor: pointer;
   }
   @media screen and (max-width: 549px) {
-    .viewlike__wrapper {
-      flex-direction: column;
-    }
-    .article__content {
-      height: 20vh;
-    }
-    .article__location {
-      font-size: var(--font-15);
-    }
-    .article__footer {
-      .footer__first {
-        .footer__tags {
-          width: 56%;
-        }
-        .footer__views {
-          margin-right: 0px;
-        }
-        .footer__likes {
-          font-size: var(--font-20);
-        }
-      }
+    .article__header {
+      font-size: var(--font-20);
+      margin: 1rem 0;
     }
   }
 `;
@@ -196,6 +186,7 @@ function PostDetailArticle({ post, userLike, userFollow, self, board }) {
     createdAt,
     account,
   } = post;
+  console.log(self);
   const date = new Date(createdAt).toISOString().split('T')[0];
   const [follow, setFollow] = useState(
     userFollow.follow !== '' ? userFollow.follow : false,
@@ -302,9 +293,9 @@ function PostDetailArticle({ post, userLike, userFollow, self, board }) {
         />
       )}
       <div className="post__category">{category}</div>
-      <Header>
+      <Header justify={!self}>
         <div
-          className="writer__info"
+          className="image__box"
           role="button"
           tabIndex={0}
           onClick={userMovePageHandler}
@@ -317,14 +308,21 @@ function PostDetailArticle({ post, userLike, userFollow, self, board }) {
             src={`${account.profile}`}
             alt="avatar"
           />
-          <div className="writer__name">{account.nickname}</div>
         </div>
-        <button className="follow__button" onClick={followHandler}>
-          {follow ? '팔로잉중' : '팔로우'}
-        </button>
+        <span className="writer__name">{account.nickname}</span>
+        {!self && (
+          <button
+            className={`follow__button follow__button${
+              follow ? '--active' : ''
+            }`}
+            onClick={followHandler}
+          >
+            {follow ? '팔로잉중' : '팔로우'}
+          </button>
+        )}
       </Header>
       <Body>
-        <div className="article__header">{title}</div>
+        <p className="article__header">{title}</p>
         <div className="article__content">{content}</div>
         {location ? (
           <div className="article__location"> 위치 : {location}</div>
