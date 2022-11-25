@@ -69,6 +69,9 @@ const Container = styled.section`
     border-radius: 10px;
   }
 
+  .message__error {
+    color: red;
+  }
   @media screen and (max-width: 549px) {
     width: 100%;
     justify-content: space-between;
@@ -99,6 +102,8 @@ const PublishPhoto = forwardRef(({ setPhotoUrl, deleteImages }, ref) => {
   const [photos, setPhotos] = useState([]);
   const [blobPhotos, setBlobPhotos] = useState();
 
+  const [errorMessage, setErrorMessage] = useState('');
+
   // 미리보기 사진 띄우기 - 클라이언트 메모리로 처리
   const uploadPhotos = async event => {
     const uploaded = [...photos];
@@ -108,6 +113,23 @@ const PublishPhoto = forwardRef(({ setPhotoUrl, deleteImages }, ref) => {
       return uploaded.push(URL.createObjectURL(obj)); // Blob 객체를 임시 URL로 바꾸어 img src로 mapping
     });
     setPhotos(uploaded);
+  };
+
+  const validatePhotos = event => {
+    const targetFileSize = event.target.files[0].size; // 업로드 사진 크기 (단위:bytes)
+    const targetFileSizeToMb = targetFileSize / (1024 * 1024); // bytes=>megabyte 변환
+    const targetFileSizeToKb = targetFileSize / 1024; // b=>kilobyte 변환
+    const MAX_SIZE_MB = 10; // 최대 10mb <= 이 부분을 설정하시면 됩니다.
+    const MIN_SIZE_KB = 0; // 최소 0kb
+
+    if (targetFileSizeToMb > MAX_SIZE_MB) {
+      setErrorMessage(`사진 1장당 최대 ${MAX_SIZE_MB}MB까지 등록 가능합니다.`);
+    } else if (targetFileSizeToKb < MIN_SIZE_KB) {
+      setErrorMessage(`최소 업로드 크기는 ${MIN_SIZE_KB}KB 입니다.`);
+    } else {
+      setErrorMessage('');
+      uploadPhotos(event); // 조건 통과시 상단의 미리보기 업로드 함수 실행
+    }
   };
 
   // 수정페이지 진입시 미리보기 불러오는 함수
@@ -180,7 +202,7 @@ const PublishPhoto = forwardRef(({ setPhotoUrl, deleteImages }, ref) => {
             <input
               id="upload__button"
               type="file"
-              onChange={uploadPhotos}
+              onChange={validatePhotos}
               onClick={handleClick}
               accept="image/jpg, image/png, image/jpeg"
             />
@@ -188,9 +210,12 @@ const PublishPhoto = forwardRef(({ setPhotoUrl, deleteImages }, ref) => {
         </div>
       </div>
       <div>
-        <span className="footer">
-          업로드 가능한 파일 포맷은 jpg, jpeg, png입니다.
-        </span>
+        {!errorMessage.length ? null : (
+          <div className="message__error">{errorMessage}</div>
+        )}
+      </div>
+      <div className="message">
+        업로드 가능한 파일 포맷은 jpg, jpeg, png입니다.
       </div>
     </Container>
   );
