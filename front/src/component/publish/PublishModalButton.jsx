@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { DefaultButton, TransparentButton } from '../common/button/ButtonStyle';
 import ConfirmModal from '../common/modal/ConfirmModal';
 import YesNoModal from '../common/modal/YesNoModal';
@@ -38,10 +39,45 @@ function PublishModalButton({ boardId, mandatory, formData, isPublishPage }) {
     dispatch(loginModalActions.openLoginModal());
   };
 
+  const photoAlert = () => {
+    toast('사진을 1장 이상 업로드 하세요', {
+      position: 'top-right',
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      progress: undefined,
+      theme: 'light',
+    });
+  };
+
+  const categoryAlert = () => {
+    toast('테마를 선택하세요', {
+      position: 'top-right',
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      progress: undefined,
+      theme: 'light',
+    });
+  };
+
+  const showAlert = () => {
+    if (formData.images.length === 0) {
+      photoAlert();
+    }
+    if (formData.category === '') {
+      categoryAlert();
+    }
+  };
+
   // 게시글 등록 요청
   const publishRequest = async event => {
     event.preventDefault();
-    if (mandatory)
+    if (mandatory) {
       await publishApi(formData)
         .then(res => {
           if (res.status === 201) {
@@ -54,13 +90,13 @@ function PublishModalButton({ boardId, mandatory, formData, isPublishPage }) {
           }
         })
         .catch(error => console.log(error.response.data.message));
-    else console.log('not valid'); // 임시
+    } else showAlert();
   };
 
   // 게시글 수정 요청
   const editRequest = async event => {
     event.preventDefault();
-    if (mandatory)
+    if (mandatory) {
       await postEditApi(boardId, formData)
         .then(res => {
           if (res.status === 200) {
@@ -71,6 +107,7 @@ function PublishModalButton({ boardId, mandatory, formData, isPublishPage }) {
           }
         })
         .catch(error => console.log(error.response.data.message));
+    } else showAlert();
   };
 
   // (비로그인) url입력 접근시 로그인창으로 redirect
