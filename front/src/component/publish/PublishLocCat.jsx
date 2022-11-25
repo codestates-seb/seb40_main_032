@@ -23,12 +23,11 @@ function PublishLocCat({
 
   // 수정창에서 선택한 테마 보여주기
   useEffect(() => {
-    if (!isPublishPage)
-      if (formData.category === 'CATEGORY')
-        setDisplayText(categoryData[0].text);
-      else if (formData.category === 'STAY')
-        setDisplayText(categoryData[1].text);
-      else setDisplayText(categoryData[2].text);
+    console.log(loc);
+    if (loc.post.category === 'RESTAURANT')
+      setDisplayText(categoryData[0].text);
+    if (loc.post.category === 'STAY') setDisplayText(categoryData[1].text);
+    if (loc.post.category === 'SPOT') setDisplayText(categoryData[2].text);
   }, []);
 
   return (
