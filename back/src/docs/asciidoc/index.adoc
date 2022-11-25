@@ -250,6 +250,22 @@ include::{snippets}/accountBoardList/http-response.adoc[]
 .response-fields
 include::{snippets}/accountBoardList/response-fields.adoc[]
 
+=== 좋아요한 게시글 조회
+.curl-request
+include::{snippets}/likeBoardList/curl-request.adoc[]
+
+.http-request
+include::{snippets}/likeBoardList/http-request.adoc[]
+
+.path-parameters
+include::{snippets}/likeBoardList/path-parameters.adoc[]
+
+.http-response
+include::{snippets}/likeBoardList/http-response.adoc[]
+
+.response-fields
+include::{snippets}/likeBoardList/response-fields.adoc[]
+
 ***
 == CommentController
 === 댓글 등록
