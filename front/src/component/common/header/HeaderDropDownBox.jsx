@@ -1,4 +1,8 @@
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
+import { loginModalActions } from '../../../redux/loginModalSlice';
+import SignupModal from '../modal/SignupModal';
 import HedaerDropDownItem from './HeaderDropDownItem';
 
 const MenuContainer = styled.div`
@@ -18,15 +22,6 @@ const MenuContainer = styled.div`
     }
   }
 
-  /* .menu__dropdown::before {
-    position: absolute;
-    top: -5px;
-    right: 2rem;
-    height: 2rem;
-    width: 2rem;
-    background: var(--base-white-color);
-    transform: rotate(45deg);
-  } */
   .menu__dropdown ul li {
     padding: 1rem 0px;
     border-top: 1px solid rgba(0, 0, 0, 0.05);
@@ -69,25 +64,58 @@ const MenuContainer = styled.div`
 `;
 
 function HeaderDropDownBox({ active, activeHandler }) {
+  const isLogin = useSelector(state => state.login.isLogin);
+  const dispatch = useDispatch();
+  const loginModalOpen = () => {
+    dispatch(loginModalActions.openLoginModal());
+  };
+  const [signUpModal, setSignUpModal] = useState(false);
+
+  const signUpOpenHandler = () => {
+    setSignUpModal(true);
+  };
+
+  const signUpCloseHandler = () => {
+    setSignUpModal(false);
+  };
+
   return (
     <MenuContainer>
+      {signUpModal && <SignupModal onSignupModalCloser={signUpCloseHandler} />}
       <div className={`menu__dropdown ${active ? 'active' : 'inactive'}`}>
         <ul>
-          <HedaerDropDownItem
-            linkText="게시물 작성"
-            link="/publish"
-            activeHandler={activeHandler}
-          />
-          <HedaerDropDownItem
-            linkText="마이 페이지"
-            link="/mypage"
-            activeHandler={activeHandler}
-          />
-          <HedaerDropDownItem
-            linkText="로그아웃"
-            link="/"
-            activeHandler={activeHandler}
-          />
+          {isLogin ? (
+            <>
+              <HedaerDropDownItem
+                linkText="게시물 작성"
+                link="/publish"
+                activeHandler={activeHandler}
+              />
+              <HedaerDropDownItem
+                linkText="마이 페이지"
+                link="/mypage"
+                activeHandler={activeHandler}
+              />
+              <HedaerDropDownItem
+                linkText="로그아웃"
+                link="/"
+                activeHandler={activeHandler}
+              />
+            </>
+          ) : (
+            <>
+              <HedaerDropDownItem
+                linkText="로그인"
+                link="/"
+                activeHandler={loginModalOpen}
+              />
+              <HedaerDropDownItem
+                linkText="회원가입"
+                link="/"
+                activeHandler={signUpOpenHandler}
+              />
+            </>
+          )}
         </ul>
       </div>
     </MenuContainer>

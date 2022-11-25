@@ -7,11 +7,15 @@ const CommentWrapper = styled.section`
   height: 100%;
   border: 1px solid var(--holder-base-color);
   border-radius: var(--radius-10);
-  margin: 0 auto;
   max-height: 39rem;
   overflow: auto;
+  flex-basis: 100%;
+  @media screen and (max-width: 999px) {
+    flex-basis: 93%;
+  }
   @media screen and (max-width: 549px) {
     border: none;
+    flex-basis: 100%;
   }
 `;
 
@@ -19,7 +23,6 @@ function Comment() {
   return (
     <CommentWrapper className="comment">
       <CommentWrite />
-      {/* <CommentDetail /> */}
     </CommentWrapper>
   );
 }

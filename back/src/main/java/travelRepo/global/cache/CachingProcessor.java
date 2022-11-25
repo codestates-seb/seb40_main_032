@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import travelRepo.domain.board.repository.BoardRepository;
 
+import javax.annotation.PostConstruct;
 import java.util.Set;
 
 @Component
@@ -33,6 +34,10 @@ public class CachingProcessor {
             boardRepository.updateViews(boardId, views);
         }
 
+        flushRedis();
+    }
+
+    public void flushRedis() {
         redisTemplate.execute(new RedisCallback<Object>() {
             @Override
             public Object doInRedis(RedisConnection connection) throws DataAccessException {

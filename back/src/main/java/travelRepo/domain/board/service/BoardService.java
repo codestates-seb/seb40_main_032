@@ -132,7 +132,14 @@ public class BoardService {
 
     public SliceDto<BoardSummaryRes> findBoardsByAccount(Long accountId, Pageable pageable) {
 
-        Slice<Board> boards = boardRepository.findAllByAccountWithBoardTagsAndAccount(accountId, pageable);
+        Slice<Board> boards = boardRepository.findAllByAccountIdWithBoardTagsAndAccount(accountId, pageable);
+
+        return new SliceDto<>(boards.map(BoardSummaryRes::of));
+    }
+
+    public SliceDto<BoardSummaryRes> findBoardsByLikes(Long accountId, Pageable pageable) {
+
+        Slice<Board> boards = boardRepository.findAllByAccountLikesWithBoardTagsAndAccount(accountId, pageable);
 
         return new SliceDto<>(boards.map(BoardSummaryRes::of));
     }

@@ -60,8 +60,8 @@ const HeaderWrapper = styled.header`
     }
   }
 `;
-
-function Header({ loginModalOpener }) {
+// { loginModalOpener }
+function Header() {
   return (
     <HeaderWrapper className="header">
       <section className="header__container">
@@ -77,7 +77,7 @@ function Header({ loginModalOpener }) {
         </div>
         {/* post write / user login & user join / user info & user logout */}
         <div className="header__info">
-          <HeaderUser loginModalOpener={loginModalOpener} />
+          <HeaderUser /> {/* loginModalOpener={loginModalOpener} */}
         </div>
       </section>
     </HeaderWrapper>

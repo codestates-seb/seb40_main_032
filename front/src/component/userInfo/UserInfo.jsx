@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import UserInfoTab from './UserInfoTab';
 import UserInfoCard from './UserInfoCard';
-import loginUserApi from '../../api/loginUserApi';
+import userDataApi from '../../api/userDataApi';
 
 const UserWrapper = styled.div`
   position: fixed;
@@ -27,7 +27,7 @@ function UserInfo() {
 
   // 내 정보 불러오기
   useEffect(() => {
-    loginUserApi()
+    userDataApi()
       .then(res =>
         setMyProfile({
           email: res.data.email,

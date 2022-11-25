@@ -107,7 +107,7 @@ const PostWrapper = styled.div`
             word-break: break-all;
 
             @media screen and (max-width: 1621px) {
-              &:last-child {
+              &:nth-child(3) {
                 display: none;
               }
             }
