@@ -96,7 +96,6 @@ function PublishForm() {
     }
   }, [loc]);
 
-  console.log(formData);
   const mandatory =
     images.length !== 0 &&
     formData.title.length >= 5 &&
