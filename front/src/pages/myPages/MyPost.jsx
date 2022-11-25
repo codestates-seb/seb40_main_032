@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Post from '../../component/common/Post';
 import useIntersect from '../../hooks/useIntersect';
 import { getCookie } from '../../util/cookie';
+import LoadingSpinner from '../../component/common/LoadingSpinner';
 
 const MyPageMain = styled.main`
   padding-top: 23rem;
@@ -10,6 +11,15 @@ const MyPageMain = styled.main`
   margin: 0 3rem;
   display: flex;
   flex-wrap: wrap;
+
+  .target {
+    width: 100%;
+    height: 6rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 3rem;
+  }
 
   @media screen and (max-width: 1440px) {
     .post,
@@ -50,6 +60,7 @@ function MyPost() {
     15,
     setMyPost,
     setIsPending,
+    1,
   );
 
   return (
@@ -57,8 +68,9 @@ function MyPost() {
       {myPost.map(post => {
         return <Post key={post.boardId} post={post} />;
       })}
-      {isPending && <div>로딩중...</div>}
-      <div ref={target} className="target" />
+      <div ref={target} className="target">
+        {isPending && <LoadingSpinner />}
+      </div>
     </MyPageMain>
   );
 }
