@@ -8,7 +8,14 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 // setPosts: 받아온 데이터를 state값으로 바꿔줄 setState함수
 // setIsPending: pending state를 바꿔줄 setState함수
 // threshold(default는 0): 지정한 root(default는 뷰포트)에 target이 얼마나 보이는지 비율(0~1)
-const useIntersect = (api, size, setPosts, setIsPending, threshold = 0) => {
+const useIntersect = (
+  api,
+  size,
+  setPosts,
+  setIsPending,
+  threshold = 0,
+  sort = 'createdAt',
+) => {
   const target = useRef(null);
   const page = useRef(1);
   const [hasNextPage, SetHasNextPage] = useState(true);
@@ -16,7 +23,10 @@ const useIntersect = (api, size, setPosts, setIsPending, threshold = 0) => {
   const getData = useCallback(async () => {
     try {
       setIsPending(true);
-      const { data } = await axios(`${api}size=${size}&page=${page.current}`);
+      console.log(`${api}size=${size}&page=${page.current}&sort=${sort}`);
+      const { data } = await axios(
+        `${api}size=${size}&page=${page.current}&sort=${sort}`,
+      );
       setPosts(prev => [...prev, ...data.content]);
       setIsPending(false);
       SetHasNextPage(data.hasNext);
@@ -28,7 +38,7 @@ const useIntersect = (api, size, setPosts, setIsPending, threshold = 0) => {
     } catch (err) {
       console.log('Error', err.message);
     }
-  }, []);
+  }, [sort]);
 
   useEffect(() => {
     const io = new IntersectionObserver(
@@ -43,9 +53,9 @@ const useIntersect = (api, size, setPosts, setIsPending, threshold = 0) => {
       io.observe(target.current);
     }
     return () => io.disconnect();
-  }, [hasNextPage]);
+  }, [hasNextPage, sort]);
 
-  return target;
+  return [target, page, SetHasNextPage];
 };
 
 export default useIntersect;
