@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import loginSlice from './loginSlice';
 import loginModalSlice from './loginModalSlice';
+import searchSlice from './searchSlice';
 
 // 여기에 slice 작성하시면 됩니다.
 const reducer = {
+  search: searchSlice,
   login: loginSlice,
   loginModal: loginModalSlice,
 };
