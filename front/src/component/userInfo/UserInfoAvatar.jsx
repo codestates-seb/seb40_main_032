@@ -10,6 +10,13 @@ const Avatar = styled.img`
   display: flex;
   flex-direction: column;
   object-fit: fill;
+
+  @media screen and (max-width: 549px) {
+    width: 5rem;
+    height: 5rem;
+    min-width: 5rem;
+    min-height: 5rem;
+  }
 `;
 
 function UserInfoAvatar({ profileimg }) {

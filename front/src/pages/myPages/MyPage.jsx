@@ -7,6 +7,7 @@ const MyPageWrapper = styled.div`
   display: flex;
   flex-direction: column;
   padding: 8rem 0 0 0;
+  align-items: center;
 `;
 
 function MyPage() {

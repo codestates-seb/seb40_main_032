@@ -46,18 +46,42 @@ const MainSortBar = styled.div`
   }
 `;
 
-function MainSort() {
+function MainSort({ sort, sortHandler }) {
   return (
     <MainSortBar>
       <ul className="main__sortbar">
         <li>
-          <button>최신글</button>
+          <button
+            onClick={() => {
+              if (sort !== 'createdAt,desc') {
+                sortHandler('createdAt,desc');
+              }
+            }}
+          >
+            최신글
+          </button>
         </li>
         <li>
-          <button>추천수</button>
+          <button
+            onClick={() => {
+              if (sort !== 'likeCount,desc') {
+                sortHandler('likeCount,desc');
+              }
+            }}
+          >
+            추천수
+          </button>
         </li>
         <li>
-          <button>조회수</button>
+          <button
+            onClick={() => {
+              if (sort !== 'views,desc') {
+                sortHandler('views,desc');
+              }
+            }}
+          >
+            조회수
+          </button>
         </li>
       </ul>
     </MainSortBar>

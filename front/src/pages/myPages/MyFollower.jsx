@@ -1,5 +1,7 @@
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import FollowList from '../../component/follow/FollowList';
+import followDataApi from '../../api/followDataApi';
 
 const MyPageMain = styled.main`
   width: 100%;
@@ -15,6 +17,11 @@ const MyPageMain = styled.main`
 `;
 
 function MyFollower() {
+  useEffect(() => {
+    followDataApi(1, 'follower')
+      .then(res => console.log(res))
+      .catch(err => console.log(err));
+  }, []);
   return (
     <MyPageMain>
       <section className="follower__container">

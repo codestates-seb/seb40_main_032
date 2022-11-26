@@ -190,7 +190,7 @@ function CommentWrite() {
   // 디바운스 적용 댓글 등록 핸들러
   const debounceSendHandler = debounce(() => {
     commentSendHandler();
-  }, 100);
+  }, 200);
 
   return (
     <WriteWrapper className="comment__write">

@@ -27,10 +27,15 @@ const ItemWrapper = styled.li`
 function HedaerDropDownItem({ linkText, link, activeHandler }) {
   // 로그아웃 핸들러
   const logoutHandler = () => {
+    console.log('로그아웃 핸들러 앞');
     removeCookie('profile');
     removeCookie('accountId');
     removeCookie('accessToken');
-    window.location.href = '/';
+    console.log('로그아웃 핸들러 중간');
+    setTimeout(() => {
+      window.location.href = '/';
+    }, 500);
+    console.log('로그아웃 핸들러 끝');
   };
 
   return (
