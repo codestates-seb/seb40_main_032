@@ -1,11 +1,19 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
+import FollowList from '../../component/follow/FollowList';
 import followDataApi from '../../api/followDataApi';
 
 const MyPageMain = styled.main`
-  padding-top: 23rem;
-  max-width: 172rem;
-  margin: 0 3rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding-top: 20rem;
+
+  .follower__container {
+    width: 100%;
+    max-width: 172rem;
+    margin: 5rem 3rem 0;
+  }
 `;
 
 function MyFollower() {
@@ -14,7 +22,15 @@ function MyFollower() {
       .then(res => console.log(res))
       .catch(err => console.log(err));
   }, []);
-  return <MyPageMain>MyFollower</MyPageMain>;
+  return (
+    <MyPageMain>
+      <section className="follower__container">
+        <FollowList />
+        <FollowList />
+        <FollowList />
+      </section>
+    </MyPageMain>
+  );
 }
 
 export default MyFollower;
