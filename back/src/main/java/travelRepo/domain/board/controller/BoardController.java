@@ -68,9 +68,10 @@ public class BoardController {
 
     @GetMapping("/account/{accountId}")
     public ResponseEntity<SliceDto<BoardSummaryRes>> accountBoardList(@PathVariable Long accountId,
+                                                                      @RequestParam(required = false) Long lastBoardId,
                                                                       @PageableDefault(size = 20, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
 
-        SliceDto<BoardSummaryRes> response = boardService.findBoardsByAccount(accountId, pageable);
+        SliceDto<BoardSummaryRes> response = boardService.findBoardsByAccount(accountId, lastBoardId, pageable);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

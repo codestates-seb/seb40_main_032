@@ -24,7 +24,11 @@ public interface BoardRepository extends JpaRepository<Board, Long>, BoardReposi
 
     @EntityGraph(attributePaths = {"boardTags", "account"})
     @Query("select b from Board b where b.account.id = :accountId")
-    Slice<Board> findAllByAccountIdWithBoardTagsAndAccount(@Param("accountId") Long accountId, Pageable pageable);
+    Slice<Board> findAllByAccountIdWithBoardTagsAndAccountBefore(@Param("accountId") Long accountId, Pageable pageable);
+
+    @EntityGraph(attributePaths = {"boardTags", "account"})
+    @Query("select b from Board b where b.account.id = :accountId and b.id < :lastBoardId")
+    Slice<Board> findAllByAccountIdWithBoardTagsAndAccount(@Param("accountId") Long accountId, @Param("lastBoardId") Long lastBoardId, Pageable pageable);
 
     @EntityGraph(attributePaths = {"boardTags", "account"})
     @Query("select b from Board b left join Likes l on b.id = l.board.id where l.account.id = :accountId order by l.createdAt desc")
