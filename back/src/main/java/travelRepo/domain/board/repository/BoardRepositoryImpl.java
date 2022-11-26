@@ -43,6 +43,7 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom{
         }
 
         sort(pageable, query);
+        query.orderBy(board.id.desc());
 
         List<Board> boards = query.distinct().fetch();
 
