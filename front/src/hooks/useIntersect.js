@@ -10,6 +10,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 // threshold(default는 0): 지정한 root(default는 뷰포트)에 target이 얼마나 보이는지 비율(0~1)
 const useIntersect = (
   api,
+  query,
   size,
   setPosts,
   setIsPending,
@@ -20,31 +21,40 @@ const useIntersect = (
   const page = useRef(1);
   const [hasNextPage, SetHasNextPage] = useState(true);
 
-  const getData = useCallback(async () => {
-    try {
-      setIsPending(true);
-      console.log(`${api}size=${size}&page=${page.current}&sort=${sort}`);
-      const { data } = await axios(
-        `${api}size=${size}&page=${page.current}&sort=${sort}`,
-      );
-      setPosts(prev => [...prev, ...data.content]);
-      setIsPending(false);
-      SetHasNextPage(data.hasNext);
-      if (data.hasNext) {
-        page.current += 1;
-      } else {
-        target.current.style.display = 'none';
+  const getData = useCallback(
+    async search => {
+      try {
+        setIsPending(true);
+        console.log(
+          `${api}${search !== '' ? `query=${search}&` : ''}size=${size}&page=${
+            page.current
+          }&sort=${sort}`,
+        );
+        const { data } = await axios(
+          `${api}${search !== '' ? `query=${search}&` : ''}size=${size}&page=${
+            page.current
+          }&sort=${sort}`,
+        );
+        setPosts(prev => [...prev, ...data.content]);
+        setIsPending(false);
+        SetHasNextPage(data.hasNext);
+        if (data.hasNext) {
+          page.current += 1;
+        } else {
+          target.current.style.display = 'none';
+        }
+      } catch (err) {
+        console.log('Error', err.message);
       }
-    } catch (err) {
-      console.log('Error', err.message);
-    }
-  }, [sort]);
+    },
+    [sort],
+  );
 
   useEffect(() => {
     const io = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          getData();
+          getData(query);
         }
       },
       { threshold },
@@ -52,8 +62,9 @@ const useIntersect = (
     if (target.current && hasNextPage) {
       io.observe(target.current);
     }
+    console.log('3');
     return () => io.disconnect();
-  }, [hasNextPage, sort]);
+  }, [hasNextPage, sort, query]);
 
   return [target, page, SetHasNextPage];
 };
