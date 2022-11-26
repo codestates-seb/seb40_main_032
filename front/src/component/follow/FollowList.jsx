@@ -5,11 +5,11 @@ import FollowPost from './FollowPost';
 const FollowListContainer = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: 10rem;
+  padding-bottom: 4vw;
   position: relative;
   &::after {
     position: absolute;
-    bottom: -5rem;
+    bottom: 2vw;
     left: 50%;
     transform: translateX(-50%);
     width: 95%;
@@ -22,18 +22,19 @@ const FollowListContainer = styled.div`
   }
 
   .followList__leftside {
-    margin: 0 5rem 0 1.2rem;
-    flex-basis: 10%;
+    padding: 0 5rem 0 1.2rem;
     .followList__userinfo {
       display: flex;
       flex-direction: column;
       align-items: center;
+      padding: 5rem 0;
 
       .followList__avatar {
         width: 12rem;
         height: 12rem;
         border-radius: 50%;
         background: #eee;
+        overflow: hidden;
         > img {
           width: 100%;
           height: 100%;
@@ -56,7 +57,7 @@ const FollowListContainer = styled.div`
   }
 
   .followList__rightside {
-    flex-basis: 90%;
+    flex: 1;
     > ul {
       display: flex;
     }
@@ -69,7 +70,7 @@ function FollowList() {
       <div className="followList__leftside">
         <ul className="followList__userinfo">
           <li className="followList__avatar">
-            {/* <img src={} alt='아바타'/> */}
+            <img src="https://source.unsplash.com/random" alt="아바타" />
           </li>
           <li className="followList__username">
             <p>남극에서온펭귄</p>
