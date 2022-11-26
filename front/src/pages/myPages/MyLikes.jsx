@@ -11,6 +11,7 @@ const MyPageMain = styled.main`
   margin: 0 3rem;
   display: flex;
   flex-wrap: wrap;
+  width: 100%;
 
   .target {
     width: 100%;
