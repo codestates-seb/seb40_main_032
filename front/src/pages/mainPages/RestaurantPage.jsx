@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import LoadingSpinner from '../../component/common/LoadingSpinner';
 import Post from '../../component/common/Post';
 import MainSort from '../../component/main/MainSort';
@@ -8,8 +9,13 @@ function RestaurantPage() {
   const [isPending, setIsPending] = useState(true);
   const [posts, setPosts] = useState([]);
   const [sort, setSort] = useState('createdAt,desc');
+  const search = useSelector(state => state.search.search);
+
+  console.log(`search ${search} Re! 변경 감지!!`);
+
   const [target, page, hasNext] = useIntersect(
     '/boards?category=RESTAURANT&',
+    search,
     20,
     setPosts,
     setIsPending,
@@ -27,10 +33,17 @@ function RestaurantPage() {
 
   useEffect(() => {
     hasNext(true);
-  }, [sort]);
+  }, [sort, search]);
+
+  useEffect(() => {
+    if (search) {
+      sortHandler('createdAt,desc');
+    }
+  }, [search]);
+
   return (
     <>
-      <MainSort sortHandler={sortHandler} />
+      <MainSort sort={sort} sortHandler={sortHandler} />
       <div className="main__container">
         {posts.map(post => {
           return <Post key={post.boardId} post={post} />;

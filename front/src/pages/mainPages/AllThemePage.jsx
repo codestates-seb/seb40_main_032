@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import LoadingSpinner from '../../component/common/LoadingSpinner';
 import Post from '../../component/common/Post';
 import MainSort from '../../component/main/MainSort';
@@ -8,8 +9,13 @@ function AllThemePage() {
   const [isPending, setIsPending] = useState(true);
   const [posts, setPosts] = useState([]);
   const [sort, setSort] = useState('createdAt,desc');
+  const search = useSelector(state => state.search.search);
+
+  console.log(`search ${search} 변경 감지!!`);
+
   const [target, page, hasNext] = useIntersect(
     '/boards?',
+    search,
     20,
     setPosts,
     setIsPending,
@@ -27,7 +33,13 @@ function AllThemePage() {
 
   useEffect(() => {
     hasNext(true);
-  }, [sort]);
+  }, [sort, search]);
+
+  useEffect(() => {
+    if (search) {
+      sortHandler('createdAt,desc');
+    }
+  }, [search]);
 
   return (
     <>
