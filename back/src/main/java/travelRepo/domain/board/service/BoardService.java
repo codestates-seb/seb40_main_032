@@ -18,6 +18,7 @@ import travelRepo.domain.board.repository.BoardRepository;
 import travelRepo.domain.board.repository.BoardTagRepository;
 import travelRepo.domain.board.repository.TagRepository;
 import travelRepo.domain.comment.repository.CommentRepository;
+import travelRepo.domain.likes.entity.Likes;
 import travelRepo.domain.likes.likesRepository.LikesRepository;
 import travelRepo.global.common.dto.IdDto;
 import travelRepo.global.common.dto.SliceDto;
@@ -117,6 +118,7 @@ public class BoardService {
         Slice<Board> boards = boardRepository.findAllByQueries(queries, pageable, boardListReq);
 
         SliceDto<BoardSummaryRes> response = new SliceDto<>(boards.map(BoardSummaryRes::of));
+
         setRedisBoardViewsToRes(response);
 
         return response;
@@ -125,25 +127,23 @@ public class BoardService {
     public SliceDto<BoardSummaryRes> findBoardsByAccount(Long accountId, Long lastBoardId, Pageable pageable) {
 
         Slice<Board> boards;
+
         if (lastBoardId == null) {
             boards = boardRepository.findAllByAccountIdWithBoardTagsAndAccountBefore(accountId, pageable);
         } else {
             boards = boardRepository.findAllByAccountIdWithBoardTagsAndAccount(accountId, lastBoardId, pageable);
-            System.out.println("======================" + lastBoardId);
         }
 
-        SliceDto<BoardSummaryRes> response = new SliceDto<>(boards.map(BoardSummaryRes::of));
-        setRedisBoardViewsToRes(response);
-
-        return response;
+        return new SliceDto<>(boards.map(BoardSummaryRes::of));
     }
 
-    public SliceDto<BoardSummaryRes> findBoardsByLikes(Long accountId, Pageable pageable) {
+    public SliceDto<BoardSummaryResWithLikeId> findBoardsByLikes(Long accountId, Pageable pageable) {
 
         Slice<Board> boards = boardRepository.findAllByAccountLikesWithBoardTagsAndAccount(accountId, pageable);
 
-        SliceDto<BoardSummaryRes> response = new SliceDto<>(boards.map(BoardSummaryRes::of));
-        setRedisBoardViewsToRes(response);
+        SliceDto<BoardSummaryResWithLikeId> response = new SliceDto<>(boards.map(BoardSummaryResWithLikeId::of));
+
+        setLikeCountToRes(accountId, boards, response);
 
         return response;
     }
@@ -205,6 +205,20 @@ public class BoardService {
             if (index >= 0) {
                 response.getContent().get(index).setViews(views);
             }
+        }
+    }
+
+    private void setLikeCountToRes(Long accountId, Slice<Board> boards, SliceDto<BoardSummaryResWithLikeId> response) {
+
+        List<Long> boardIds = boards.getContent().stream()
+                .map(Board::getId)
+                .collect(Collectors.toList());
+
+        List<Likes> likes = likesRepository.findByAccountIdAndBoardIds(accountId, boardIds);
+
+
+        for (int i = 0; i < likes.size(); i++) {
+            response.getContent().get(i).setLikeId(likes.get(i).getId());
         }
     }
 

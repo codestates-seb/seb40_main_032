@@ -8,9 +8,13 @@ import travelRepo.domain.account.entity.Account;
 import travelRepo.domain.board.entity.Board;
 import travelRepo.domain.likes.entity.Likes;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface LikesRepository extends JpaRepository<Likes, Long> {
+
+    @Query("select l from Likes l where l.account.id = :accountId and l.board.id in (:boardIds) order by l.id")
+    List<Likes> findByAccountIdAndBoardIds(@Param("accountId") Long accountId, @Param("boardIds") List<Long> boardIds);
 
     @Modifying(flushAutomatically = true)
     @Query("delete from Likes likes where likes.account.id = :accountId " +
