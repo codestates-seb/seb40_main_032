@@ -1,15 +1,22 @@
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 import LoadingSpinner from '../../component/common/LoadingSpinner';
 import Post from '../../component/common/Post';
 import MainSort from '../../component/main/MainSort';
 import useIntersect from '../../hooks/useIntersect';
+import { searchActions } from '../../redux/searchSlice';
 
 function SpotPage() {
+  const { pathname } = useLocation();
+  const { search, path, memorySort } = useSelector(state => state.search);
+  const dispatch = useDispatch();
+
   const [isPending, setIsPending] = useState(true);
   const [posts, setPosts] = useState([]);
-  const [sort, setSort] = useState('createdAt,desc');
-  const search = useSelector(state => state.search.search);
+  const [sort, setSort] = useState(
+    pathname === path ? memorySort : 'createdAt,desc',
+  );
 
   console.log(`search ${search} SPOT! 변경 감지!!`);
   const [target, page, hasNext] = useIntersect(
@@ -24,10 +31,14 @@ function SpotPage() {
 
   const sortHandler = sorted => {
     console.log(sorted);
-    setSort(sorted);
+    if (sort !== sorted) {
+      setSort(sorted);
+    }
+    if (posts.length !== 0) {
+      setPosts([]);
+    }
     target.current.style.display = 'flex';
     page.current = 1;
-    setPosts([]);
   };
 
   useEffect(() => {
@@ -36,9 +47,16 @@ function SpotPage() {
 
   useEffect(() => {
     if (search) {
-      sortHandler('createdAt,desc');
+      sortHandler(sort);
     }
   }, [search]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(searchActions.setSort(sort));
+      dispatch(searchActions.setPath(pathname));
+    };
+  }, [sort]);
 
   return (
     <>
