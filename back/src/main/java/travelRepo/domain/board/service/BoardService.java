@@ -26,6 +26,7 @@ import travelRepo.global.exception.ExceptionCode;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -115,21 +116,30 @@ public class BoardService {
 
         Slice<Board> boards = boardRepository.findAllByQueries(queries, pageable, boardListReq);
 
-        return new SliceDto<>(boards.map(BoardSummaryRes::of));
+        SliceDto<BoardSummaryRes> response = new SliceDto<>(boards.map(BoardSummaryRes::of));
+        setRedisBoardViewsToRes(response);
+
+        return response;
     }
 
     public SliceDto<BoardSummaryRes> findBoardsByAccount(Long accountId, Pageable pageable) {
 
         Slice<Board> boards = boardRepository.findAllByAccountIdWithBoardTagsAndAccount(accountId, pageable);
 
-        return new SliceDto<>(boards.map(BoardSummaryRes::of));
+        SliceDto<BoardSummaryRes> response = new SliceDto<>(boards.map(BoardSummaryRes::of));
+        setRedisBoardViewsToRes(response);
+
+        return response;
     }
 
     public SliceDto<BoardSummaryRes> findBoardsByLikes(Long accountId, Pageable pageable) {
 
         Slice<Board> boards = boardRepository.findAllByAccountLikesWithBoardTagsAndAccount(accountId, pageable);
 
-        return new SliceDto<>(boards.map(BoardSummaryRes::of));
+        SliceDto<BoardSummaryRes> response = new SliceDto<>(boards.map(BoardSummaryRes::of));
+        setRedisBoardViewsToRes(response);
+
+        return response;
     }
 
     private void addBoardTagsToBoard(List<String> tagNames, Board board) {
@@ -171,6 +181,25 @@ public class BoardService {
                 .collect(Collectors.toList());
 
         board.addBoardPhotos(boardPhotos);
+    }
+
+    private void setRedisBoardViewsToRes(SliceDto<BoardSummaryRes> response) {
+
+        List<Long> boardIds = response.getContent().stream()
+                .map(BoardSummaryRes::getBoardId)
+                .collect(Collectors.toList());
+
+        Set<String> keys = redisTemplate.keys("boardView*");
+
+        for (String key : keys) {
+            long boardId = Long.parseLong(key.split("::")[1]);
+            int views = Integer.parseInt(redisTemplate.opsForValue().get(key));
+            int index = boardIds.indexOf(boardId);
+
+            if (index >= 0) {
+                response.getContent().get(index).setViews(views);
+            }
+        }
     }
 
     @Transactional

@@ -20,6 +20,8 @@ public class BoardSummaryRes {
 
     private int likeCount;
 
+    private int views;
+
     private List<String> tags;
 
     private AccountSummaryRes account;
@@ -31,6 +33,7 @@ public class BoardSummaryRes {
         boardSummaryRes.setThumbnail(board.getThumbnail());
         boardSummaryRes.setTitle(board.getTitle());
         boardSummaryRes.setLikeCount(board.getLikeCount());
+        boardSummaryRes.setViews(board.getViews());
         boardSummaryRes.setTags(
                 board.getBoardTags().stream()
                         .sorted(Comparator.comparing(BoardTag::getOrders))
