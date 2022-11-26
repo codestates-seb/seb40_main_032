@@ -46,14 +46,16 @@ const MainSortBar = styled.div`
   }
 `;
 
-function MainSort({ sortHandler }) {
+function MainSort({ sort, sortHandler }) {
   return (
     <MainSortBar>
       <ul className="main__sortbar">
         <li>
           <button
             onClick={() => {
-              sortHandler('createdAt,desc');
+              if (sort !== 'createdAt,desc') {
+                sortHandler('createdAt,desc');
+              }
             }}
           >
             최신글
@@ -62,7 +64,9 @@ function MainSort({ sortHandler }) {
         <li>
           <button
             onClick={() => {
-              sortHandler('likeCount,desc');
+              if (sort !== 'likeCount,desc') {
+                sortHandler('likeCount,desc');
+              }
             }}
           >
             추천수
@@ -71,7 +75,9 @@ function MainSort({ sortHandler }) {
         <li>
           <button
             onClick={() => {
-              sortHandler('views,desc');
+              if (sort !== 'views,desc') {
+                sortHandler('views,desc');
+              }
             }}
           >
             조회수

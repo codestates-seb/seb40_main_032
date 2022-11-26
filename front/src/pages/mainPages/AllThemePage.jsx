@@ -31,7 +31,7 @@ function AllThemePage() {
 
   return (
     <>
-      <MainSort sortHandler={sortHandler} />
+      <MainSort sort={sort} sortHandler={sortHandler} />
       <div className="main__container">
         {posts.map(post => {
           return <Post key={post.boardId} post={post} />;
