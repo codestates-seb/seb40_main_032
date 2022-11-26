@@ -17,8 +17,8 @@ import MyPost from './pages/myPages/MyPost';
 import MyLikes from './pages/myPages/MyLikes';
 import MyFollower from './pages/myPages/MyFollower';
 import MyFollowing from './pages/myPages/MyFollowing';
+import MainPage from './pages/mainPages/MainPage';
 
-const MainPage = React.lazy(() => import('./pages/mainPages/MainPage'));
 const PublishPage = React.lazy(() => import('./pages/PublishPage'));
 const PostDetailPage = React.lazy(() => import('./pages/PostDetailPage'));
 
