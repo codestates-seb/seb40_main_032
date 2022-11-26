@@ -3,22 +3,15 @@ package travelRepo.domain.board.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
-import org.springframework.data.redis.connection.RedisConnection;
-import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import travelRepo.domain.account.entity.Account;
 import travelRepo.domain.account.repository.AccountRepository;
-import travelRepo.domain.board.dto.BoardAddReq;
-import travelRepo.domain.board.dto.BoardDetailsRes;
-import travelRepo.domain.board.dto.BoardModifyReq;
-import travelRepo.domain.board.dto.BoardSummaryRes;
+import travelRepo.domain.board.dto.*;
 import travelRepo.domain.board.entity.*;
 import travelRepo.domain.board.repository.BoardPhotoRepository;
 import travelRepo.domain.board.repository.BoardRepository;
@@ -33,7 +26,6 @@ import travelRepo.global.exception.ExceptionCode;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -117,15 +109,11 @@ public class BoardService {
         return BoardDetailsRes.of(board);
     }
 
-    public SliceDto<BoardSummaryRes> findBoards(String query, Category category, Pageable pageable) {
+    public SliceDto<BoardSummaryRes> findBoards(BoardListReq boardListReq, Pageable pageable) {
 
-        if (query == null) {
-            query = "";
-        }
+        String[] queries = boardListReq.getQuery().strip().split("\\s+");
 
-        String[] queries = query.strip().split("\\s+");
-
-        Slice<Board> boards = boardRepository.findAllByQueries(queries, category, pageable);
+        Slice<Board> boards = boardRepository.findAllByQueries(queries, pageable, boardListReq);
 
         return new SliceDto<>(boards.map(BoardSummaryRes::of));
     }

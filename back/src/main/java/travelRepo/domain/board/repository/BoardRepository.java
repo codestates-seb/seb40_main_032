@@ -7,7 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import travelRepo.domain.account.entity.Account;
 import travelRepo.domain.board.entity.Board;
 
 import java.util.List;

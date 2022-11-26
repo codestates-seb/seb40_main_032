@@ -463,7 +463,7 @@ class BoardControllerTest extends After {
     public void boardList_Success() throws Exception {
 
         //given
-        String query = null;
+//        String query = null;
         String category = null;
         int page = 1;
         int size = 20;
@@ -472,7 +472,7 @@ class BoardControllerTest extends After {
         //when
         ResultActions actions = mockMvc.perform(
                 get("/boards")
-                        .param("query", query)
+//                        .param("query", query)
                         .param("category", category)
                         .param("page", String.valueOf(page))
                         .param("size", String.valueOf(size))
@@ -493,7 +493,7 @@ class BoardControllerTest extends After {
                         getResponsePreProcessor(),
                         requestParameters(
                                 List.of(
-                                        parameterWithName("query").description("검색어").optional(),
+//                                        parameterWithName("query").description("검색어").optional(),
                                         parameterWithName("category").description("게시글 분류").optional(),
                                         parameterWithName("page").description("페이지").optional(),
                                         parameterWithName("size").description("페이지 사이즈").optional(),

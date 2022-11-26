@@ -7,11 +7,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import travelRepo.domain.board.dto.BoardAddReq;
-import travelRepo.domain.board.dto.BoardDetailsRes;
-import travelRepo.domain.board.dto.BoardModifyReq;
-import travelRepo.domain.board.dto.BoardSummaryRes;
-import travelRepo.domain.board.entity.Category;
+import travelRepo.domain.board.dto.*;
 import travelRepo.domain.board.service.BoardService;
 import travelRepo.global.argumentresolver.LoginAccountId;
 import travelRepo.global.common.dto.IdDto;
@@ -62,11 +58,10 @@ public class BoardController {
     }
 
     @GetMapping
-    public ResponseEntity<SliceDto<BoardSummaryRes>> boardList(@RequestParam(required = false) String query,
-                                                               @RequestParam(required = false) Category category,
+    public ResponseEntity<SliceDto<BoardSummaryRes>> boardList(@ModelAttribute BoardListReq boardListReq,
                                                                @PageableDefault(size = 20, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
 
-        SliceDto<BoardSummaryRes> response = boardService.findBoards(query, category, pageable);
+        SliceDto<BoardSummaryRes> response = boardService.findBoards(boardListReq, pageable);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

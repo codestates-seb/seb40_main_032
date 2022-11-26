@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.SliceImpl;
 import org.springframework.data.domain.Sort;
+import travelRepo.domain.board.dto.BoardListReq;
 import travelRepo.domain.board.entity.*;
 
 import java.util.List;
@@ -25,27 +26,27 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom{
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public Slice<Board> findAllByQueries(String[] queries, Category category, Pageable pageable) {
+    public Slice<Board> findAllByQueries(String[] queries, Pageable pageable, BoardListReq boardListReq) {
 
         JPAQuery<Board> query = jpaQueryFactory
-                .selectFrom(board)
+                .selectFrom(board).distinct()
                 .leftJoin(board.boardTags, boardTag)
                 .leftJoin(boardTag.tag, tag)
-                .offset(pageable.getOffset())
+                .offset(pageable.getOffset()) // 삭제 예정
                 .limit(pageable.getPageSize());
 
         for (String q : queries) {
             query.where(boardContainsQuery(q));
         }
 
-        if (category != null) {
-            query.where(board.category.eq(category));
+        if (boardListReq.getCategory() != null) {
+            query.where(board.category.eq(boardListReq.getCategory()));
         }
 
-        sort(pageable, query);
+        sort(pageable, query, boardListReq);
         query.orderBy(board.id.desc());
 
-        List<Board> boards = query.distinct().fetch();
+        List<Board> boards = query.fetch();
 
         return new SliceImpl<>(boards, pageable, boards.size() == pageable.getPageSize());
     }
@@ -54,14 +55,55 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom{
         return board.title.contains(q).or(board.content.contains(q).or(tag.name.contains(q)));
     }
 
-    private void sort(Pageable pageable, JPAQuery<Board> query) {
+    private BooleanExpression startPointById(Long boardId) {
+
+        if (boardId == null) {
+            return null;
+        }
+
+        return board.id.lt(boardId);
+    }
+
+    private BooleanExpression startPointByViews(Long boardId, Integer boardViews) {
+
+        if (boardId == null || boardViews == null) {
+            return null;
+        }
+
+        return board.views.lt(boardViews).or(board.views.eq(boardViews).and(board.id.lt(boardId)));
+    }
+
+    private BooleanExpression startPointByLikeCount(Long boardId, Integer boardLikeCount) {
+
+        if (boardId == null || boardLikeCount == null) {
+            return null;
+        }
+
+        return board.likeCount.lt(boardLikeCount).or(board.likeCount.eq(boardLikeCount).and(board.id.lt(boardId)));
+    }
+
+    private void sort(Pageable pageable, JPAQuery<Board> query, BoardListReq boardListReq) {
 
         if (pageable.getSort().isEmpty()) {
+            query.where(startPointById(boardListReq.getLastBoardId()));
             query.orderBy(board.createdAt.desc());
             return;
         }
 
         for (Sort.Order o : pageable.getSort()) {
+
+            switch (o.getProperty()) {
+                case "createdAt" :
+                    query.where(startPointById(boardListReq.getLastBoardId()));
+                    break;
+                case "views" :
+                    query.where(startPointByViews(boardListReq.getLastBoardId(), boardListReq.getLastBoardViews()));
+                    break;
+                case "likeCount" :
+                    query.where(startPointByLikeCount(boardListReq.getLastBoardId(), boardListReq.getLastBoardLikeCount()));
+                    break;
+            }
+
             PathBuilder pathBuilder = new PathBuilder<>(board.getType(), board.getMetadata());
             query.orderBy(new OrderSpecifier(o.isAscending() ? Order.ASC : Order.DESC,
                     pathBuilder.get(o.getProperty())));
