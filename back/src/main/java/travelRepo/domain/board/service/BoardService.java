@@ -122,9 +122,15 @@ public class BoardService {
         return response;
     }
 
-    public SliceDto<BoardSummaryRes> findBoardsByAccount(Long accountId, Pageable pageable) {
+    public SliceDto<BoardSummaryRes> findBoardsByAccount(Long accountId, Long lastBoardId, Pageable pageable) {
 
-        Slice<Board> boards = boardRepository.findAllByAccountIdWithBoardTagsAndAccount(accountId, pageable);
+        Slice<Board> boards;
+        if (lastBoardId == null) {
+            boards = boardRepository.findAllByAccountIdWithBoardTagsAndAccountBefore(accountId, pageable);
+        } else {
+            boards = boardRepository.findAllByAccountIdWithBoardTagsAndAccount(accountId, lastBoardId, pageable);
+            System.out.println("======================" + lastBoardId);
+        }
 
         SliceDto<BoardSummaryRes> response = new SliceDto<>(boards.map(BoardSummaryRes::of));
         setRedisBoardViewsToRes(response);
