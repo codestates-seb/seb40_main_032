@@ -5,6 +5,7 @@ import travelRepo.domain.account.dto.AccountSummaryRes;
 import travelRepo.domain.board.entity.Board;
 import travelRepo.domain.board.entity.BoardTag;
 
+import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,6 +23,8 @@ public class BoardSummaryRes {
 
     private int views;
 
+    private LocalDateTime createdAt;
+
     private List<String> tags;
 
     private AccountSummaryRes account;
@@ -34,6 +37,7 @@ public class BoardSummaryRes {
         boardSummaryRes.setTitle(board.getTitle());
         boardSummaryRes.setLikeCount(board.getLikeCount());
         boardSummaryRes.setViews(board.getViews());
+        boardSummaryRes.setCreatedAt(board.getCreatedAt());
         boardSummaryRes.setTags(
                 board.getBoardTags().stream()
                         .sorted(Comparator.comparing(BoardTag::getOrders))

@@ -13,7 +13,7 @@ import java.util.Optional;
 
 public interface LikesRepository extends JpaRepository<Likes, Long> {
 
-    @Query("select l from Likes l where l.account.id = :accountId and l.board.id in (:boardIds) order by l.id")
+    @Query("select l from Likes l where l.account.id = :accountId and l.board.id in (:boardIds) order by l.createdAt")
     List<Likes> findByAccountIdAndBoardIds(@Param("accountId") Long accountId, @Param("boardIds") List<Long> boardIds);
 
     @Modifying(flushAutomatically = true)

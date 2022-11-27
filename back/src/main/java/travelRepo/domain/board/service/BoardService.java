@@ -137,7 +137,7 @@ public class BoardService {
 
         SliceDto<BoardSummaryResWithLikeId> response = new SliceDto<>(boards.map(BoardSummaryResWithLikeId::of));
 
-        setLikeIdToRes(accountId, boards, response);
+        setLikesDataToRes(accountId, boards, response);
 
         return response;
     }
@@ -202,7 +202,7 @@ public class BoardService {
         }
     }
 
-    private void setLikeIdToRes(Long accountId, Slice<Board> boards, SliceDto<BoardSummaryResWithLikeId> response) {
+    private void setLikesDataToRes(Long accountId, Slice<Board> boards, SliceDto<BoardSummaryResWithLikeId> response) {
 
         List<Long> boardIds = boards.getContent().stream()
                 .map(Board::getId)
@@ -210,9 +210,9 @@ public class BoardService {
 
         List<Likes> likes = likesRepository.findByAccountIdAndBoardIds(accountId, boardIds);
 
-
         for (int i = 0; i < likes.size(); i++) {
             response.getContent().get(i).setLikeId(likes.get(i).getId());
+            response.getContent().get(i).setLikeCreatedAt(likes.get(i).getCreatedAt());
         }
     }
 

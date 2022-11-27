@@ -5,6 +5,7 @@ import travelRepo.domain.account.dto.AccountSummaryRes;
 import travelRepo.domain.board.entity.Board;
 import travelRepo.domain.board.entity.BoardTag;
 
+import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,7 +15,6 @@ public class BoardSummaryResWithLikeId {
 
     private Long boardId;
 
-    private Long likeId;
 
     private String thumbnail;
 
@@ -23,6 +23,10 @@ public class BoardSummaryResWithLikeId {
     private int likeCount;
 
     private List<String> tags;
+
+    private Long likeId;
+
+    private LocalDateTime likeCreatedAt;
 
     private AccountSummaryRes account;
 
