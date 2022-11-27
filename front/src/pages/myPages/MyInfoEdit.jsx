@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import MyInfoEditForm from '../../component/myInfoEdit/MyInfoEditForm';
 import UserInfo from '../../component/userInfo/UserInfo';
 
 const WrapperUserInfo = styled.div`
@@ -8,9 +9,12 @@ const WrapperUserInfo = styled.div`
 
 function MyInfoEdit() {
   return (
-    <WrapperUserInfo>
-      <UserInfo />
-    </WrapperUserInfo>
+    <>
+      <WrapperUserInfo>
+        <UserInfo />
+      </WrapperUserInfo>
+      <MyInfoEditForm />
+    </>
   );
 }
 
