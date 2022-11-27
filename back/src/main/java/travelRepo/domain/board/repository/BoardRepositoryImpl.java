@@ -75,7 +75,7 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom{
     public Slice<Board> findAllByAccountLikesWithBoardTagsAndAccount(Long accountId, Long lastLikeId, Pageable pageable) {
 
         JPAQuery<Board> query = jpaQueryFactory
-                .selectFrom(board).distinct()
+                .selectFrom(board)
                 .leftJoin(likes).on(board.id.eq(likes.board.id))
                 .where(likes.account.id.eq(accountId))
                 .orderBy(likes.createdAt.desc())
