@@ -55,10 +55,7 @@ const PageButtons = styled.div`
   }
 `;
 
-// props : setCurrentPage, totalPages
-function Pagination() {
-  // props로 내려받을 페이지 수
-  const totalPages = 101;
+function Pagination({ totalPages, setCurrentPage }) {
   const initialPages =
     totalPages < 5
       ? Array(totalPages)
@@ -88,13 +85,13 @@ function Pagination() {
           .map((el, idx) => el + idx),
       );
     }
-    // setCurrentPage(pageGroup[0]);
+    setCurrentPage(pageGroup[0] - 5);
     setActivePage(pageGroup[0] - 5);
   };
 
   // 페이지 핸들러
   const handlePage = e => {
-    // setCurrentPage(Number(e.target.value));
+    setCurrentPage(Number(e.target.value));
     setActivePage(Number(e.target.value));
   };
 
@@ -108,7 +105,7 @@ function Pagination() {
           .map(el => (el + 5 <= totalPages ? el + 5 : null))
           .filter(el => el !== null),
       );
-      // setCurrentPage(pageGroup[0]);
+      setCurrentPage(pageGroup[0] + 5);
       setActivePage(pageGroup[0] + 5);
     }
   };
