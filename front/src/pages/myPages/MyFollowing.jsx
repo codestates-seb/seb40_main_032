@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import followDataApi from '../../api/followDataApi';
+import FollowList from '../../component/follow/FollowList';
 
 const MyPageMain = styled.main`
   padding-top: 23rem;
@@ -9,12 +10,21 @@ const MyPageMain = styled.main`
 `;
 
 function MyFollowing() {
+  const [myFollowing, setMyFollowing] = useState([]);
   useEffect(() => {
     followDataApi(1, 'following')
-      .then(res => console.log(res))
+      .then(res => {
+        return setMyFollowing(res.data.content);
+      })
       .catch(err => console.log(err));
   }, []);
-  return <MyPageMain>MyFollowing</MyPageMain>;
+  return (
+    <MyPageMain>
+      {myFollowing.map(following => (
+        <FollowList key={following.id} myFollowing={following} />
+      ))}
+    </MyPageMain>
+  );
 }
 
 export default MyFollowing;

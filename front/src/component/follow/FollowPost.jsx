@@ -43,18 +43,16 @@ const FollowThumb = styled.li`
   }
 `;
 
-function FollowPost() {
+function FollowPost({ boards }) {
+  console.log(boards);
   return (
     <FollowThumb>
       <div className="FollowThumb__container">
         <div className="followThumb__img">
-          <img
-            src="https://source.unsplash.com/random"
-            alt="팔로우썸네일이미지"
-          />
+          <img src={boards.thumbnail} alt="팔로우썸네일이미지" />
         </div>
         <div className="followThumb__title">
-          <p>남극참치맛있어요</p>
+          <p>{boards.title}</p>
         </div>
       </div>
     </FollowThumb>

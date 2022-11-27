@@ -64,16 +64,16 @@ const FollowListContainer = styled.div`
   }
 `;
 
-function FollowList() {
+function FollowList({ myFollowing }) {
   return (
     <FollowListContainer>
       <div className="followList__leftside">
         <ul className="followList__userinfo">
           <li className="followList__avatar">
-            <img src="https://source.unsplash.com/random" alt="아바타" />
+            <img src={myFollowing.profile} alt="아바타" />
           </li>
           <li className="followList__username">
-            <p>남극에서온펭귄</p>
+            <p>{myFollowing.nickname}</p>
           </li>
           <li className="followList__button">
             <DefaultButton width="9rem" height="3rem">
@@ -84,11 +84,10 @@ function FollowList() {
       </div>
       <div className="followList__rightside">
         <ul className="followList__posts">
-          <FollowPost />
-          <FollowPost />
-          <FollowPost />
-          <FollowPost />
-          <FollowPost />
+          {myFollowing &&
+            myFollowing.boards.map(board => (
+              <FollowPost key={board.id} boards={board} />
+            ))}
         </ul>
       </div>
     </FollowListContainer>
