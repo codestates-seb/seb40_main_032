@@ -640,6 +640,11 @@ class BoardControllerTest extends After {
                         pathParameters(
                                 parameterWithName("accountId").description("계정 식별자")
                         ),
+                        requestParameters(
+                                List.of(
+                                        parameterWithName("lastLikeId").description("마지막 게시글의 likeId").optional()
+                                )
+                        ),
                         responseFields(
                                 List.of(
                                         fieldWithPath("content[]").type(JsonFieldType.ARRAY).description("게시물 목록"),
