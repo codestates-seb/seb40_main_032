@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import FollowList from '../../component/follow/FollowList';
 import followDataApi from '../../api/followDataApi';
+import Pagination from '../../component/common/Pagination';
 
 const MyPageMain = styled.main`
   width: 100%;
@@ -23,13 +24,16 @@ function MyFollower() {
       .catch(err => console.log(err));
   }, []);
   return (
-    <MyPageMain>
-      <section className="follower__container">
-        <FollowList />
-        <FollowList />
-        <FollowList />
-      </section>
-    </MyPageMain>
+    <>
+      <MyPageMain>
+        <section className="follower__container">
+          <FollowList />
+          <FollowList />
+          <FollowList />
+        </section>
+      </MyPageMain>
+      <Pagination />
+    </>
   );
 }
 
