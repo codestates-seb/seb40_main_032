@@ -67,9 +67,15 @@ public class CommentService {
         commentRepository.delete(comment);
     }
     
-    public SliceDto<CommentDetailsRes> commentList(Long boardId, Pageable pageable) {
+    public SliceDto<CommentDetailsRes> commentList(Long boardId, Long lastCommentId, Pageable pageable) {
 
-        Slice<Comment> comments = commentRepository.findAllByBoard_Id(boardId, pageable);
+        Slice<Comment> comments;
+
+        if (lastCommentId == null) {
+            comments = commentRepository.findAllByBoard_Id(boardId, pageable);
+        } else {
+            comments = commentRepository.findAllAfterLastByBoardId(boardId, lastCommentId, pageable);
+        }
 
         return new SliceDto<>(comments.map(CommentDetailsRes::of));
     }

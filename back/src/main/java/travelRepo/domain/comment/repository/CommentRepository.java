@@ -26,5 +26,10 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
     @Query("select c from Comment c where c.id = :commentId")
     Optional<Comment> findByIdWithAccount(@Param("commentId") Long commentId);
 
+    @EntityGraph(attributePaths = {"account"})
     Slice<Comment> findAllByBoard_Id(Long boardsId, Pageable pageable);
+
+    @EntityGraph(attributePaths = {"account"})
+    @Query("select c from Comment c where c.board.id = :boardId and c.id < :lastCommentId")
+    Slice<Comment> findAllAfterLastByBoardId(@Param("boardId") Long boardId, @Param("lastCommentId") Long lastCommentId, Pageable pageable);
 }
