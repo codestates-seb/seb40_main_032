@@ -8,4 +8,8 @@ import travelRepo.domain.board.entity.Board;
 public interface BoardRepositoryCustom {
 
     Slice<Board> findAllByQueries(String[] queries, Pageable pageable, BoardListReq boardListReq);
+
+    Slice<Board> findAllByAccountIdWithBoardTagsAndAccount(Long accountId, Long lastBoardId, Pageable pageable);
+
+    Slice<Board> findAllByAccountLikesWithBoardTagsAndAccount(Long accountId, Long lastLikeId, Pageable pageable);
 }

@@ -126,20 +126,14 @@ public class BoardService {
 
     public SliceDto<BoardSummaryRes> findBoardsByAccount(Long accountId, Long lastBoardId, Pageable pageable) {
 
-        Slice<Board> boards;
-
-        if (lastBoardId == null) {
-            boards = boardRepository.findAllByAccountIdWithBoardTagsAndAccountBefore(accountId, pageable);
-        } else {
-            boards = boardRepository.findAllByAccountIdWithBoardTagsAndAccount(accountId, lastBoardId, pageable);
-        }
+        Slice<Board> boards = boardRepository.findAllByAccountIdWithBoardTagsAndAccount(accountId, lastBoardId, pageable);
 
         return new SliceDto<>(boards.map(BoardSummaryRes::of));
     }
 
-    public SliceDto<BoardSummaryResWithLikeId> findBoardsByLikes(Long accountId, Pageable pageable) {
+    public SliceDto<BoardSummaryResWithLikeId> findBoardsByLikes(Long accountId, Long lastLikeId, Pageable pageable) {
 
-        Slice<Board> boards = boardRepository.findAllByAccountLikesWithBoardTagsAndAccount(accountId, pageable);
+        Slice<Board> boards = boardRepository.findAllByAccountLikesWithBoardTagsAndAccount(accountId, lastLikeId, pageable);
 
         SliceDto<BoardSummaryResWithLikeId> response = new SliceDto<>(boards.map(BoardSummaryResWithLikeId::of));
 

@@ -19,6 +19,7 @@ import java.util.List;
 import static travelRepo.domain.board.entity.QBoard.*;
 import static travelRepo.domain.board.entity.QBoardTag.boardTag;
 import static travelRepo.domain.board.entity.QTag.*;
+import static travelRepo.domain.likes.entity.QLikes.likes;
 
 @RequiredArgsConstructor
 public class BoardRepositoryImpl implements BoardRepositoryCustom{
@@ -45,6 +46,45 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom{
 
         sort(pageable, query, boardListReq);
         query.orderBy(board.id.desc());
+
+        List<Board> boards = query.fetch();
+
+        return new SliceImpl<>(boards, pageable, boards.size() == pageable.getPageSize());
+    }
+
+    @Override
+    public Slice<Board> findAllByAccountIdWithBoardTagsAndAccount(Long accountId, Long lastBoardId, Pageable pageable) {
+
+        JPAQuery<Board> query = jpaQueryFactory
+                .selectFrom(board).distinct()
+                .where(board.account.id.eq(accountId))
+                .orderBy(board.createdAt.desc())
+                .offset(pageable.getOffset()) // 삭제 예정
+                .limit(pageable.getPageSize());
+
+        if (lastBoardId != null) {
+            query.where(board.id.lt(lastBoardId));
+        }
+
+        List<Board> boards = query.fetch();
+
+        return new SliceImpl<>(boards, pageable, boards.size() == pageable.getPageSize());
+    }
+
+    @Override
+    public Slice<Board> findAllByAccountLikesWithBoardTagsAndAccount(Long accountId, Long lastLikeId, Pageable pageable) {
+
+        JPAQuery<Board> query = jpaQueryFactory
+                .selectFrom(board).distinct()
+                .leftJoin(likes).on(board.id.eq(likes.board.id))
+                .where(likes.account.id.eq(accountId))
+                .orderBy(likes.createdAt.desc())
+                .offset(pageable.getOffset()) // 삭제 예정
+                .limit(pageable.getPageSize());
+
+        if (lastLikeId != null) {
+            query.where(likes.id.lt(lastLikeId));
+        }
 
         List<Board> boards = query.fetch();
 

@@ -1,7 +1,5 @@
 package travelRepo.domain.board.repository;
 
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -21,18 +19,6 @@ public interface BoardRepository extends JpaRepository<Board, Long>, BoardReposi
     @EntityGraph(attributePaths = {"boardTags", "account"})
     @Query("select b from Board b where b.id = :boardId")
     Optional<Board> findByIdWithBoardTagsAndAccount(@Param("boardId") Long boardId);
-
-    @EntityGraph(attributePaths = {"boardTags", "account"})
-    @Query("select b from Board b where b.account.id = :accountId")
-    Slice<Board> findAllByAccountIdWithBoardTagsAndAccountBefore(@Param("accountId") Long accountId, Pageable pageable);
-
-    @EntityGraph(attributePaths = {"boardTags", "account"})
-    @Query("select b from Board b where b.account.id = :accountId and b.id < :lastBoardId")
-    Slice<Board> findAllByAccountIdWithBoardTagsAndAccount(@Param("accountId") Long accountId, @Param("lastBoardId") Long lastBoardId, Pageable pageable);
-
-    @EntityGraph(attributePaths = {"boardTags", "account"})
-    @Query("select b from Board b left join Likes l on b.id = l.board.id where l.account.id = :accountId order by l.createdAt desc")
-    Slice<Board> findAllByAccountLikesWithBoardTagsAndAccount(@Param("accountId") Long accountId, Pageable pageable);
 
     @Modifying
     @Query("update Board b set b.views = :views where b.id = :boardId")
