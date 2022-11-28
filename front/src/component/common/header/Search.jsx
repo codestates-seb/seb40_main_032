@@ -1,5 +1,9 @@
 import styled from 'styled-components';
 import { BiSearchAlt } from 'react-icons/bi';
+import { useDispatch, useSelector } from 'react-redux';
+import { useLocation, useNavigate } from 'react-router-dom';
+import useInput from '../../../hooks/useInput';
+import { searchActions } from '../../../redux/searchSlice';
 
 const SearchWrapper = styled.div`
   width: 100%;
@@ -42,11 +46,43 @@ const SearchIcon = styled(BiSearchAlt)`
 `;
 
 function Search() {
+  // useParams 를통해서 해당 위치로 이동시킨다.
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
+  const sliceSearch = useSelector(state => state.search.search);
+  const [search, setSearch] = useInput(sliceSearch);
+  const dispatch = useDispatch();
+  const searchDispatchHandler = () => {
+    dispatch(searchActions.setSearch(search));
+    if (
+      pathname !== '/' &&
+      pathname !== '/restaurant' &&
+      pathname !== '/stay' &&
+      pathname !== '/spot'
+    ) {
+      dispatch(searchActions.setPath('/'));
+      dispatch(searchActions.setSort('createdAt,desc'));
+      navigate('/');
+    }
+  };
+
   return (
     <SearchWrapper>
       <div className="search__container">
-        <SearchInput />
-        <SearchIcon size="2.5rem" color="hsl(146, 50%, 50%)" />
+        <SearchInput
+          value={search}
+          onChange={setSearch}
+          onKeyUp={e => {
+            if (e.code === 'Enter') {
+              searchDispatchHandler();
+            }
+          }}
+        />
+        <SearchIcon
+          size="2.5rem"
+          color="hsl(146, 50%, 50%)"
+          onClick={searchDispatchHandler}
+        />
       </div>
     </SearchWrapper>
   );

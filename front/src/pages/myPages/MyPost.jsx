@@ -57,7 +57,7 @@ function MyPost() {
   const [myPost, setMyPost] = useState([]);
   const [isPending, setIsPending] = useState(false);
   const accountId = getCookie('accountId');
-  const target = useIntersect(
+  const [target] = useIntersect(
     `/boards/account/${accountId}?`,
     15,
     setMyPost,

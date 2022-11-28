@@ -26,7 +26,7 @@ const ItemWrapper = styled.li`
   }
 `;
 
-function HedaerDropDownItem({ linkText, link, activeHandler }) {
+function HeaderDropDownItem({ linkText, link, activeHandler }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -67,4 +67,4 @@ function HedaerDropDownItem({ linkText, link, activeHandler }) {
   );
 }
 
-export default HedaerDropDownItem;
+export default HeaderDropDownItem;
