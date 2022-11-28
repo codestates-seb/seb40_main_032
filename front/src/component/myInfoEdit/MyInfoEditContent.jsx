@@ -91,7 +91,7 @@ function MyInfoEditContent({ formData, setFormData }) {
 
   const onChange = event => {
     const InputName = event.target.name;
-    const InputValue = event.target.value;
+    const InputValue = event.target.value.trim();
     const InputLength = InputValue.length;
 
     if (InputName === 'nickname') {
@@ -113,7 +113,10 @@ function MyInfoEditContent({ formData, setFormData }) {
       } else setPasswordError(false);
     }
 
-    setFormData({ ...formData, [event.target.name]: event.target.value });
+    setFormData({
+      ...formData,
+      [InputName]: InputValue,
+    });
   };
 
   const editRequest = event => {
@@ -157,6 +160,7 @@ function MyInfoEditContent({ formData, setFormData }) {
         setDefaultNickname(res.data.nickname);
       })
       .catch(err => console.log(err));
+    return () => {};
   }, []);
 
   return (
@@ -206,7 +210,7 @@ function MyInfoEditContent({ formData, setFormData }) {
               name="intro"
               type="text"
               placeholder={
-                formData.intro.length === 0
+                formData.intro === ''
                   ? '자기소개를 입력해주세요'
                   : formData.intro
               }
