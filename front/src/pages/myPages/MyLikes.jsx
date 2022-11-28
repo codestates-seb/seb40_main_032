@@ -57,7 +57,7 @@ function MyLikes() {
   const [myLike, setMyLike] = useState([]);
   const [isPending, setIsPending] = useState(false);
   const accountId = getCookie('accountId');
-  const target = useIntersect(
+  const [target] = useIntersect(
     `/boards/like/account/${accountId}?`,
     20,
     setMyLike,
