@@ -376,7 +376,8 @@ class CommentControllerTest {
                         requestParameters(
                                 List.of(
                                         parameterWithName("size").description("페이지 사이즈").optional(),
-                                        parameterWithName("lastCommentId").description("마지막 댓글 Id").optional()
+                                        parameterWithName("lastCommentId").description("마지막 댓글 Id").optional(),
+                                        parameterWithName("lastCommentCreatedAt").description("마지막 댓글 생성 시각").optional()
                                 )
                         ),
                         responseFields(
