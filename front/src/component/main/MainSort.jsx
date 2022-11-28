@@ -14,7 +14,7 @@ const MainSortBar = styled.div`
     justify-content: flex-end;
     width: 100%;
     max-width: 172rem;
-    margin: 2rem 3rem;
+    margin: 2rem 1vw;
 
     > li {
       margin-right: 1.5rem;
