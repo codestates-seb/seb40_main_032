@@ -27,6 +27,7 @@ const Main = styled.main`
       margin: 0 3rem;
       display: flex;
       flex-wrap: wrap;
+      width: 100%;
 
       @media screen and (max-width: 1440px) {
         .post,

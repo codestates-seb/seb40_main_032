@@ -24,7 +24,7 @@ const ItemWrapper = styled.li`
   }
 `;
 
-function HedaerDropDownItem({ linkText, link, activeHandler }) {
+function HeaderDropDownItem({ linkText, link, activeHandler }) {
   // 로그아웃 핸들러
   const logoutHandler = () => {
     console.log('로그아웃 핸들러 앞');
@@ -58,4 +58,4 @@ function HedaerDropDownItem({ linkText, link, activeHandler }) {
   );
 }
 
-export default HedaerDropDownItem;
+export default HeaderDropDownItem;

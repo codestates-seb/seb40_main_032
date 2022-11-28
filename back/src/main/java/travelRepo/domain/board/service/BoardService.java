@@ -3,34 +3,29 @@ package travelRepo.domain.board.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
-import org.springframework.data.redis.connection.RedisConnection;
-import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import travelRepo.domain.account.entity.Account;
 import travelRepo.domain.account.repository.AccountRepository;
-import travelRepo.domain.board.dto.BoardAddReq;
-import travelRepo.domain.board.dto.BoardDetailsRes;
-import travelRepo.domain.board.dto.BoardModifyReq;
-import travelRepo.domain.board.dto.BoardSummaryRes;
+import travelRepo.domain.board.dto.*;
 import travelRepo.domain.board.entity.*;
 import travelRepo.domain.board.repository.BoardPhotoRepository;
 import travelRepo.domain.board.repository.BoardRepository;
 import travelRepo.domain.board.repository.BoardTagRepository;
 import travelRepo.domain.board.repository.TagRepository;
 import travelRepo.domain.comment.repository.CommentRepository;
+import travelRepo.domain.likes.entity.Likes;
 import travelRepo.domain.likes.likesRepository.LikesRepository;
 import travelRepo.global.common.dto.IdDto;
 import travelRepo.global.common.dto.SliceDto;
 import travelRepo.global.exception.BusinessLogicException;
 import travelRepo.global.exception.ExceptionCode;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -117,31 +112,35 @@ public class BoardService {
         return BoardDetailsRes.of(board);
     }
 
-    public SliceDto<BoardSummaryRes> findBoards(String query, Category category, Pageable pageable) {
+    public SliceDto<BoardSummaryRes> findBoards(BoardListReq boardListReq, Pageable pageable) {
 
-        if (query == null) {
-            query = "";
-        }
+        String[] queries = boardListReq.getQuery().strip().split("\\s+");
 
-        String[] queries = query.strip().split("\\s+");
+        Slice<Board> boards = boardRepository.findAllByQueries(queries, pageable, boardListReq);
 
-        Slice<Board> boards = boardRepository.findAllByQueries(queries, category, pageable);
+        SliceDto<BoardSummaryRes> response = new SliceDto<>(boards.map(BoardSummaryRes::of));
+
+        setRedisBoardViewsToRes(response);
+
+        return response;
+    }
+
+    public SliceDto<BoardSummaryRes> findBoardsByAccount(Long accountId, Long lastBoardId, LocalDateTime lastBoardCreatedAt, Pageable pageable) {
+
+        Slice<Board> boards = boardRepository.findAllByAccountIdWithBoardTagsAndAccount(accountId, lastBoardId, lastBoardCreatedAt, pageable);
 
         return new SliceDto<>(boards.map(BoardSummaryRes::of));
     }
 
-    public SliceDto<BoardSummaryRes> findBoardsByAccount(Long accountId, Pageable pageable) {
+    public SliceDto<BoardSummaryResWithLikeId> findBoardsByLikes(Long accountId, Long lastLikeId, LocalDateTime lastLikeCreatedAt, Pageable pageable) {
 
-        Slice<Board> boards = boardRepository.findAllByAccountIdWithBoardTagsAndAccount(accountId, pageable);
+        Slice<Board> boards = boardRepository.findAllByAccountLikesWithBoardTagsAndAccount(accountId, lastLikeId, lastLikeCreatedAt, pageable);
 
-        return new SliceDto<>(boards.map(BoardSummaryRes::of));
-    }
+        SliceDto<BoardSummaryResWithLikeId> response = new SliceDto<>(boards.map(BoardSummaryResWithLikeId::of));
 
-    public SliceDto<BoardSummaryRes> findBoardsByLikes(Long accountId, Pageable pageable) {
+        setLikesDataToRes(accountId, boards, response);
 
-        Slice<Board> boards = boardRepository.findAllByAccountLikesWithBoardTagsAndAccount(accountId, pageable);
-
-        return new SliceDto<>(boards.map(BoardSummaryRes::of));
+        return response;
     }
 
     private void addBoardTagsToBoard(List<String> tagNames, Board board) {
@@ -183,6 +182,39 @@ public class BoardService {
                 .collect(Collectors.toList());
 
         board.addBoardPhotos(boardPhotos);
+    }
+
+    private void setRedisBoardViewsToRes(SliceDto<BoardSummaryRes> response) {
+
+        List<Long> boardIds = response.getContent().stream()
+                .map(BoardSummaryRes::getBoardId)
+                .collect(Collectors.toList());
+
+        Set<String> keys = redisTemplate.keys("boardView*");
+
+        for (String key : keys) {
+            long boardId = Long.parseLong(key.split("::")[1]);
+            int views = Integer.parseInt(redisTemplate.opsForValue().get(key));
+            int index = boardIds.indexOf(boardId);
+
+            if (index >= 0) {
+                response.getContent().get(index).setViews(views);
+            }
+        }
+    }
+
+    private void setLikesDataToRes(Long accountId, Slice<Board> boards, SliceDto<BoardSummaryResWithLikeId> response) {
+
+        List<Long> boardIds = boards.getContent().stream()
+                .map(Board::getId)
+                .collect(Collectors.toList());
+
+        List<Likes> likes = likesRepository.findByAccountIdAndBoardIds(accountId, boardIds);
+
+        for (int i = 0; i < likes.size(); i++) {
+            response.getContent().get(i).setLikeId(likes.get(i).getId());
+            response.getContent().get(i).setLikeCreatedAt(likes.get(i).getCreatedAt().withNano(0));
+        }
     }
 
     @Transactional

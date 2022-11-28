@@ -349,13 +349,11 @@ class CommentControllerTest {
 
         //given
         Long boardId = 21001L;
-        int page = 1;
         int size = 5;
 
         //when
         ResultActions actions = mockMvc.perform(
                 get("/comments/board/{boardId}", boardId)
-                        .param("page", String.valueOf(page))
                         .param("size", String.valueOf(size))
                         .accept(MediaType.APPLICATION_JSON)
         );
@@ -377,8 +375,9 @@ class CommentControllerTest {
                         ),
                         requestParameters(
                                 List.of(
-                                        parameterWithName("page").description("페이지").optional(),
-                                        parameterWithName("size").description("페이지 사이즈").optional()
+                                        parameterWithName("size").description("페이지 사이즈").optional(),
+                                        parameterWithName("lastCommentId").description("마지막 댓글 Id").optional(),
+                                        parameterWithName("lastCommentCreatedAt").description("마지막 댓글 생성 시각").optional()
                                 )
                         ),
                         responseFields(

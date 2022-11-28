@@ -11,6 +11,7 @@ const MyPageMain = styled.main`
   margin: 0 3rem;
   display: flex;
   flex-wrap: wrap;
+  width: 100%;
 
   .target {
     width: 100%;
@@ -56,7 +57,7 @@ function MyPost() {
   const [myPost, setMyPost] = useState([]);
   const [isPending, setIsPending] = useState(false);
   const accountId = getCookie('accountId');
-  const target = useIntersect(
+  const [target] = useIntersect(
     `/boards/account/${accountId}?`,
     15,
     setMyPost,
