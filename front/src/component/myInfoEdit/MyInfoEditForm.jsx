@@ -13,8 +13,7 @@ const Container = styled.div`
   margin-top: 8rem;
   @media screen and (max-width: 549px) {
     flex-direction: column;
-    margin-top: 3em;
-    padding: 0 5vw;
+    margin-top: 4rem;
   }
 `;
 

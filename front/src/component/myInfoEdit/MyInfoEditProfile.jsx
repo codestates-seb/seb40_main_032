@@ -35,7 +35,7 @@ const ProfileDefault = styled.div`
 
 const ProfilePreview = styled.img`
   ${ProfileStyle}
-  border:none;
+  border:0.5px solid var(--holder-base-color);
 `;
 
 const ProfileEdit = styled.label`
@@ -46,6 +46,13 @@ const ProfileEdit = styled.label`
   width: 4.5rem;
   height: 4.5rem;
   background-color: var(--base-white-color);
+  &:hover {
+    background-color: var(--font-base-grey);
+    transition: 0.2s all ease-in-out;
+  }
+  &:active {
+    scale: calc(0.9);
+  }
 `;
 
 const CameraIcon = styled(BsCamera)`
