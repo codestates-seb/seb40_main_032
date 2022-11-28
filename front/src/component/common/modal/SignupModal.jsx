@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import signupApi from '../../../api/signupApi';
 import ModalCard from './ModalCard';
 import Backdrop from './Backdrop';
-import { DefaultButton } from '../button/ButtonStyle';
+import { DefaultButton, TransparentButton } from '../button/ButtonStyle';
 import ConfirmModal from './ConfirmModal';
 import defaultUserImgArr from '../../../assets/defaultUserImg';
 
@@ -37,12 +37,27 @@ const SignupModalStyle = styled.div`
       padding: 0.5rem 0.5rem 0.5rem 0;
       margin: 1rem 0;
       @media screen and (max-width: 550px) {
-        width: 100%;
+        //width: 100%;
       }
     }
     .input__validation {
       color: red;
       font-size: 1.2rem;
+    }
+    .checkbox__wrapper {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      .checkbox {
+        margin-right: 0.5rem;
+      }
+      div {
+        font-size: 1.2rem;
+      }
+    }
+    .termsbutton__wrapper {
+      display: flex;
+      justify-content: flex-end;
     }
   }
 `;
@@ -172,6 +187,10 @@ function SignupModal({ onSignupModalCloser }) {
     onSignupModalCloser();
   };
 
+  // 약관 모달 오프너
+  const termsHandler = e => {
+    e.preventDefault();
+  };
   return (
     <>
       <Backdrop onClick={onSignupModalCloser}>
@@ -232,6 +251,17 @@ function SignupModal({ onSignupModalCloser }) {
                   비밀번호는 8자 이상으로 입력해주세요.
                 </div>
               )}
+              <div className="checkbox__wrapper">
+                <input className="checkbox" type="checkbox" id="check" />
+                <label htmlFor="check">
+                  회원가입을 위해 이용약관에 동의해주세요.
+                </label>
+              </div>
+              <div className="termsbutton__wrapper">
+                <TransparentButton fontSize="1.2rem" onClick={termsHandler}>
+                  약관확인 &gt;
+                </TransparentButton>
+              </div>
               <DefaultButton
                 width="100%"
                 height="4rem"
