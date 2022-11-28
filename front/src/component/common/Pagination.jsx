@@ -117,6 +117,7 @@ function Pagination({ totalLists, currentPage, setCurrentPage }) {
       <button
         className={prevActive ? 'prev arrow__active' : 'prev'}
         onClick={handlePrev}
+        disabled={!prevActive}
       >
         <HiOutlineChevronLeft />
       </button>
@@ -137,6 +138,7 @@ function Pagination({ totalLists, currentPage, setCurrentPage }) {
       <button
         className={nextActive ? 'next arrow__active' : 'next'}
         onClick={handleNext}
+        disabled={!nextActive}
       >
         <HiOutlineChevronRight />
       </button>
