@@ -428,7 +428,7 @@ class BoardControllerTest extends After {
                                         fieldWithPath("views").type(JsonFieldType.NUMBER).description("조회수"),
                                         fieldWithPath("tags").type(JsonFieldType.ARRAY).description("게시글 태그"),
                                         fieldWithPath("photos").type(JsonFieldType.ARRAY).description("사진 주소"),
-                                        fieldWithPath("createdAt").type(JsonFieldType.STRING).description("게시글 생성 날짜"),
+                                        fieldWithPath("createdAt").type(JsonFieldType.STRING).description("게시글 생성 시각"),
                                         fieldWithPath("account").type(JsonFieldType.OBJECT).description("글쓴이"),
                                         fieldWithPath("account.accountId").type(JsonFieldType.NUMBER).description("계정 식별자"),
                                         fieldWithPath("account.profile").type(JsonFieldType.STRING).description("프로필 사진"),
@@ -463,20 +463,10 @@ class BoardControllerTest extends After {
     public void boardList_Success() throws Exception {
 
         //given
-        String query = null;
-        String category = null;
-        int page = 1;
-        int size = 20;
-        String sort = "createdAt,DESC";
 
         //when
         ResultActions actions = mockMvc.perform(
                 get("/boards")
-                        .param("query", query)
-                        .param("category", category)
-                        .param("page", String.valueOf(page))
-                        .param("size", String.valueOf(size))
-                        .param("sort", sort)
                         .accept(MediaType.APPLICATION_JSON)
         );
 
@@ -495,9 +485,12 @@ class BoardControllerTest extends After {
                                 List.of(
                                         parameterWithName("query").description("검색어").optional(),
                                         parameterWithName("category").description("게시글 분류").optional(),
-                                        parameterWithName("page").description("페이지").optional(),
                                         parameterWithName("size").description("페이지 사이즈").optional(),
-                                        parameterWithName("sort").description("정렬 기준").optional()
+                                        parameterWithName("sort").description("정렬 기준").optional(),
+                                        parameterWithName("lastBoardId").description("마지막 게시글 Id").optional(),
+                                        parameterWithName("lastBoardCreatedAt").description("마지막 게시글 생성 시각").optional(),
+                                        parameterWithName("lastBoardViews").description("마지막 게시글 조회수").optional(),
+                                        parameterWithName("lastBoardLikeCount").description("마지막 게시글 추천수").optional()
                                 )
                         ),
                         responseFields(
@@ -507,6 +500,8 @@ class BoardControllerTest extends After {
                                         fieldWithPath("content[].thumbnail").type(JsonFieldType.STRING).description("게시글 썸네일"),
                                         fieldWithPath("content[].title").type(JsonFieldType.STRING).description("게시글 제목"),
                                         fieldWithPath("content[].likeCount").type(JsonFieldType.NUMBER).description("게시글 좋아요 수"),
+                                        fieldWithPath("content[].views").type(JsonFieldType.NUMBER).description("게시글 조휘수"),
+                                        fieldWithPath("content[].createdAt").type(JsonFieldType.STRING).description("게시글 생성 시각"),
                                         fieldWithPath("content[].tags").type(JsonFieldType.ARRAY).description("게시글 태그"),
                                         fieldWithPath("content[].account").type(JsonFieldType.OBJECT).description("글쓴이"),
                                         fieldWithPath("content[].account.accountId").type(JsonFieldType.NUMBER).description("계정 식별자"),
@@ -593,6 +588,12 @@ class BoardControllerTest extends After {
                         pathParameters(
                                 parameterWithName("accountId").description("계정 식별자")
                         ),
+                        requestParameters(
+                                List.of(
+                                        parameterWithName("lastBoardId").description("마지막 게시글 Id").optional(),
+                                        parameterWithName("lastBoardCreatedAt").description("마지막 게시글 생성 시각").optional()
+                                )
+                        ),
                         responseFields(
                                 List.of(
                                         fieldWithPath("content[]").type(JsonFieldType.ARRAY).description("게시물 목록"),
@@ -600,6 +601,8 @@ class BoardControllerTest extends After {
                                         fieldWithPath("content[].thumbnail").type(JsonFieldType.STRING).description("게시글 썸네일"),
                                         fieldWithPath("content[].title").type(JsonFieldType.STRING).description("게시글 제목"),
                                         fieldWithPath("content[].likeCount").type(JsonFieldType.NUMBER).description("게시글 좋아요 수"),
+                                        fieldWithPath("content[].views").type(JsonFieldType.NUMBER).description("게시글 조회수/실제와 차이 있음"),
+                                        fieldWithPath("content[].createdAt").type(JsonFieldType.STRING).description("게시글 생성 시각"),
                                         fieldWithPath("content[].tags").type(JsonFieldType.ARRAY).description("게시글 태그"),
                                         fieldWithPath("content[].account").type(JsonFieldType.OBJECT).description("글쓴이"),
                                         fieldWithPath("content[].account.accountId").type(JsonFieldType.NUMBER).description("계정 식별자"),
@@ -641,6 +644,12 @@ class BoardControllerTest extends After {
                         pathParameters(
                                 parameterWithName("accountId").description("계정 식별자")
                         ),
+                        requestParameters(
+                                List.of(
+                                        parameterWithName("lastLikeId").description("마지막 게시글의 likeId").optional(),
+                                        parameterWithName("lastLikeId").description("마지막 게시글의 like 시각").optional()
+                                )
+                        ),
                         responseFields(
                                 List.of(
                                         fieldWithPath("content[]").type(JsonFieldType.ARRAY).description("게시물 목록"),
@@ -649,6 +658,8 @@ class BoardControllerTest extends After {
                                         fieldWithPath("content[].title").type(JsonFieldType.STRING).description("게시글 제목"),
                                         fieldWithPath("content[].likeCount").type(JsonFieldType.NUMBER).description("게시글 좋아요 수"),
                                         fieldWithPath("content[].tags").type(JsonFieldType.ARRAY).description("게시글 태그"),
+                                        fieldWithPath("content[].likeId").type(JsonFieldType.NUMBER).description("좋아요 Id"),
+                                        fieldWithPath("content[].likeCreatedAt").type(JsonFieldType.STRING).description("좋아요 시각"),
                                         fieldWithPath("content[].account").type(JsonFieldType.OBJECT).description("글쓴이"),
                                         fieldWithPath("content[].account.accountId").type(JsonFieldType.NUMBER).description("계정 식별자"),
                                         fieldWithPath("content[].account.profile").type(JsonFieldType.STRING).description("프로필 사진"),

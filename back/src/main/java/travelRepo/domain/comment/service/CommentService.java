@@ -18,6 +18,8 @@ import travelRepo.global.common.dto.SliceDto;
 import travelRepo.global.exception.BusinessLogicException;
 import travelRepo.global.exception.ExceptionCode;
 
+import java.time.LocalDateTime;
+
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -67,9 +69,15 @@ public class CommentService {
         commentRepository.delete(comment);
     }
     
-    public SliceDto<CommentDetailsRes> commentList(Long boardId, Pageable pageable) {
+    public SliceDto<CommentDetailsRes> commentList(Long boardId, Long lastCommentId, LocalDateTime lastCommentCreatedAt, Pageable pageable) {
 
-        Slice<Comment> comments = commentRepository.findAllByBoard_Id(boardId, pageable);
+        Slice<Comment> comments;
+
+        if (lastCommentId == null) {
+            comments = commentRepository.findAllByBoard_Id(boardId, pageable);
+        } else {
+            comments = commentRepository.findAllAfterLastByBoardId(boardId, lastCommentId, lastCommentCreatedAt, pageable);
+        }
 
         return new SliceDto<>(comments.map(CommentDetailsRes::of));
     }
