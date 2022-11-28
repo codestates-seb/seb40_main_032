@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import uuid from 'react-uuid';
 import { HiOutlineChevronLeft, HiOutlineChevronRight } from 'react-icons/hi';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const PageButtons = styled.div`
   display: flex;
@@ -55,59 +55,60 @@ const PageButtons = styled.div`
   }
 `;
 
-function Pagination({ totalPages, setCurrentPage }) {
-  const initialPages =
-    totalPages < 5
-      ? Array(totalPages)
-          .fill(1)
-          .map((el, idx) => el + idx)
-      : [1, 2, 3, 4, 5];
+function Pagination({ totalLists, currentPage, setCurrentPage }) {
+  const listPerPage = 5;
+  const totalPages = Math.ceil(totalLists / listPerPage);
+  // 전체 페이지 배열
+  const totalPageArr = Array(totalPages)
+    .fill(1)
+    .map((el, idx) => el + idx);
   // 현재 페이지그룹
-  const [pageGroup, setPageGroup] = useState(initialPages);
-
+  const [pageGroup, setPageGroup] = useState([]);
   // prev, next 버튼 활성화 여부
   const prevActive = pageGroup[0] !== 1;
   const nextActive = pageGroup[pageGroup.length - 1] < totalPages;
 
-  // 현재 활성화된 페이지
-  const [activePage, setActivePage] = useState(1);
+  useEffect(() => {
+    const pageGroupArr = totalPageArr.slice(
+      currentPage - (currentPage % 5),
+      currentPage - (currentPage % 5) + 5,
+    );
+    setPageGroup([...pageGroupArr]);
+  }, [totalPages]);
 
   // 이전 페이지 핸들러
   const handlePrev = () => {
     if (!prevActive) return;
 
-    if (pageGroup.length === 5) {
-      setPageGroup(pageGroup.map(el => el - 5));
-    } else {
-      setPageGroup(
-        Array(5)
-          .fill(pageGroup[0] - 5)
-          .map((el, idx) => el + idx),
-      );
-    }
+    // if (pageGroup.length === 5) {
+    //   setPageGroup(pageGroup.map(el => el - 5));
+    // } else {
+    //   setPageGroup(
+    //     Array(5)
+    //       .fill(pageGroup[0] - 5)
+    //       .map((el, idx) => el + idx),
+    //   );
+    // }
+    setPageGroup(totalPageArr.slice(pageGroup[0] - 5 - 1, pageGroup[0] - 1));
     setCurrentPage(pageGroup[0] - 5);
-    setActivePage(pageGroup[0] - 5);
   };
 
   // 페이지 핸들러
   const handlePage = e => {
     setCurrentPage(Number(e.target.value));
-    setActivePage(Number(e.target.value));
   };
 
   // 다음 페이지 핸들러
   const handleNext = () => {
     if (!nextActive) return;
 
-    if (pageGroup.length === 5) {
-      setPageGroup(
-        pageGroup
-          .map(el => (el + 5 <= totalPages ? el + 5 : null))
-          .filter(el => el !== null),
-      );
-      setCurrentPage(pageGroup[0] + 5);
-      setActivePage(pageGroup[0] + 5);
-    }
+    // setPageGroup(
+    //   pageGroup
+    //     .map(el => (el + 5 <= totalPages ? el + 5 : null))
+    //     .filter(el => el !== null),
+    // );
+    setPageGroup(totalPageArr.slice(pageGroup[4], pageGroup[4] + 5));
+    setCurrentPage(pageGroup[0] + 5);
   };
 
   return (
@@ -123,7 +124,7 @@ function Pagination({ totalPages, setCurrentPage }) {
       {/* 페이지 버튼 그룹 */}
       {pageGroup.map(el => (
         <button
-          className={el === activePage ? 'page__btn--active' : 'page__btn'}
+          className={el === currentPage ? 'page__btn--active' : 'page__btn'}
           key={uuid()}
           value={el}
           onClick={handlePage}
