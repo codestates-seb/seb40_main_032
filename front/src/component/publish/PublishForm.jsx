@@ -147,6 +147,7 @@ function PublishForm() {
           name="content"
           defaultValue={isPublishPage ? null : loc.post.content}
           rows="7"
+          maxLength="2000"
           onChange={event => {
             onChange(event);
           }}
