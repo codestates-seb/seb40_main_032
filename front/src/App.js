@@ -19,6 +19,7 @@ import MyFollower from './pages/myPages/MyFollower';
 import MyFollowing from './pages/myPages/MyFollowing';
 import MainPage from './pages/mainPages/MainPage';
 import MyInfoEdit from './pages/myPages/MyInfoEdit';
+import NotFound from './pages/NotFound';
 
 const PublishPage = React.lazy(() => import('./pages/PublishPage'));
 const PostDetailPage = React.lazy(() => import('./pages/PostDetailPage'));
@@ -78,6 +79,7 @@ function App() {
             <Route path="myfollowing" element={<MyFollowing />} />
           </Route>
           <Route path="/myinfoedit" element={<MyInfoEdit />} />
+          <Route path="/*" element={<NotFound />} />
         </Routes>
       </Suspense>
     </Router>
