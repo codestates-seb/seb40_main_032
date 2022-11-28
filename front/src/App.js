@@ -1,12 +1,12 @@
 import './App.css';
 import React, { Suspense } from 'react';
 import { Route, Routes, BrowserRouter as Router } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { ToastContainer, toast } from 'react-toastify';
-import { loginModalActions } from './redux/loginModalSlice';
+import { useSelector } from 'react-redux';
+import { ToastContainer } from 'react-toastify';
 import Loading from './component/common/Loading';
 import Header from './component/common/header/Header';
 import LoginModal from './component/common/modal/LoginModal';
+import SignupModal from './component/common/modal/SignupModal';
 import 'react-toastify/dist/ReactToastify.css';
 import MyPage from './pages/myPages/MyPage';
 import RestaurantPage from './pages/mainPages/RestaurantPage';
@@ -23,44 +23,20 @@ const PublishPage = React.lazy(() => import('./pages/PublishPage'));
 const PostDetailPage = React.lazy(() => import('./pages/PostDetailPage'));
 
 function App() {
-  const dispatch = useDispatch();
   const loginModalOpened = useSelector(
     state => state.loginModal.loginModalOpened,
   );
-
-  // 로그인 모달 여닫는 함수
-  // Slice로 관리함에 따른 Refactor
-  // const loginModalOpener = () => {
-  //   dispatch(loginModalActions.openLoginModal());
-  // };
-  const loginModalCloser = () => {
-    dispatch(loginModalActions.closeLoginModal());
-  };
-
-  // 로그인 성공 시, toastify 함수
-  const loginNotify = () =>
-    toast('로그인 성공!', {
-      position: 'top-center',
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: true,
-      progress: undefined,
-      theme: 'light',
-    });
+  const signupModalOpened = useSelector(
+    state => state.loginModal.signupModalOpened,
+  );
 
   return (
     <Router>
       <Suspense fallback={<Loading />}>
         <ToastContainer />
-        {loginModalOpened && (
-          <LoginModal
-            modalCloser={loginModalCloser}
-            loginNotify={loginNotify}
-          />
-        )}
-        <Header /> {/* loginModalOpener={loginModalOpener} */}
+        {loginModalOpened && <LoginModal />}
+        {signupModalOpened && <SignupModal />}
+        <Header />
         <Routes>
           <Route path="/" element={<MainPage />}>
             <Route index element={<AllThemePage />} />

@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
+import { loginModalActions } from '../../../redux/loginModalSlice';
 import ModalCard from './ModalCard';
 import Backdrop from './Backdrop';
 import { DefaultButton, TransparentButton } from '../button/ButtonStyle';
-import SignupModal from './SignupModal';
 import loginAsync from '../../../redux/action/loginAsync';
 import loginUserApi from '../../../api/loginUserApi';
 
@@ -59,16 +59,19 @@ const LoginModalStyle = styled.div`
   }
 `;
 
-function LoginModal({ modalCloser, loginNotify }) {
+function LoginModal() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [signupModalOpened, setSignupModalOpened] = useState(false);
   const [loginError, setLoginError] = useState(false);
   const [validationCorrect, setValidationCorrect] = useState({
     emailCorrect: true,
     passwordCorrect: true,
   });
   const dispatch = useDispatch();
+
+  const loginModalCloser = () => {
+    dispatch(loginModalActions.closeLoginModal());
+  };
 
   // 인풋값 상태 저장 함수
   const onChangeEmail = e => {
@@ -80,10 +83,8 @@ function LoginModal({ modalCloser, loginNotify }) {
 
   // 회원가입 버튼 클릭 시 회원가입 모달을 띄우기 위한 상태 변경 함수
   const signupModalOpener = () => {
-    setSignupModalOpened(true);
-  };
-  const signupModalCloser = () => {
-    setSignupModalOpened(false);
+    dispatch(loginModalActions.openSignupModal());
+    loginModalCloser();
   };
 
   // 로그인 요청, 모달은 로그인 요청이 성공했을 때에만 닫힘.
@@ -94,8 +95,7 @@ function LoginModal({ modalCloser, loginNotify }) {
       await dispatch(loginAsync(data)).unwrap();
       setLoginError(false);
       await loginUserApi();
-      loginNotify();
-      modalCloser();
+      loginModalCloser();
       window.location.reload();
     } catch (err) {
       console.log(err.response.data.code);
@@ -135,74 +135,67 @@ function LoginModal({ modalCloser, loginNotify }) {
   };
 
   return (
-    <>
-      <Backdrop onClick={modalCloser}>
-        <ModalCard
-          onStopPropagation={e => {
-            e.stopPropagation();
-          }}
-          onClick={modalCloser}
-        >
-          <LoginModalStyle>
-            <div className="title">로그인</div>
-            <form className="login__form">
-              <label htmlFor="email">아이디</label>
-              <input
-                id="email"
-                name="email"
-                type="text"
-                placeholder="이메일 주소를 입력하세요"
-                onChange={onChangeEmail}
-                value={email}
-              />
-              {!validationCorrect.emailCorrect && (
-                <div className="input__validation">
-                  아이디는 이메일 형식이여야 합니다.
-                </div>
-              )}
-              <label htmlFor="password">비밀번호</label>
-              <input
-                id="password"
-                name="password"
-                type="password"
-                placeholder="비밀번호를 입력하세요"
-                onChange={onChangePassword}
-                value={password}
-              />
-              {!validationCorrect.passwordCorrect && (
-                <div className="input__validation">
-                  비밀번호를 입력해주세요.
-                </div>
-              )}
-              {loginError && (
-                <div className="input__validation">
-                  아이디 혹은 비밀번호가 잘못되었습니다.
-                </div>
-              )}
-              <DefaultButton
-                width="100%"
-                height="4rem"
-                fontSize="1.7rem"
-                onClick={onSubmitHandler}
-                type="submit"
-                margin="1.5rem 0"
-              >
-                로그인
-              </DefaultButton>
-            </form>
-            <footer className="footer">
-              <div className="footer__content">아직 회원이 아니신가요?</div>
-              <TransparentButton fontSize="1.4rem" onClick={signupModalOpener}>
-                회원가입 &gt;
-              </TransparentButton>
-            </footer>
-          </LoginModalStyle>
-        </ModalCard>
-      </Backdrop>
-      {signupModalOpened && (
-        <SignupModal onSignupModalCloser={signupModalCloser} />
-      )}
-    </>
+    <Backdrop onClick={loginModalCloser}>
+      <ModalCard
+        onStopPropagation={e => {
+          e.stopPropagation();
+        }}
+        onClick={loginModalCloser}
+      >
+        <LoginModalStyle>
+          <div className="title">로그인</div>
+          <form className="login__form">
+            <label htmlFor="email">아이디</label>
+            <input
+              id="email"
+              name="email"
+              type="text"
+              placeholder="이메일 주소를 입력하세요"
+              onChange={onChangeEmail}
+              value={email}
+            />
+            {!validationCorrect.emailCorrect && (
+              <div className="input__validation">
+                아이디는 이메일 형식이여야 합니다.
+              </div>
+            )}
+            <label htmlFor="password">비밀번호</label>
+            <input
+              id="password"
+              name="password"
+              type="password"
+              placeholder="비밀번호를 입력하세요"
+              onChange={onChangePassword}
+              value={password}
+            />
+            {!validationCorrect.passwordCorrect && (
+              <div className="input__validation">비밀번호를 입력해주세요.</div>
+            )}
+            {loginError && (
+              <div className="input__validation">
+                아이디 혹은 비밀번호가 잘못되었습니다.
+              </div>
+            )}
+            <DefaultButton
+              width="100%"
+              height="4rem"
+              fontSize="1.7rem"
+              onClick={onSubmitHandler}
+              type="submit"
+              margin="1.5rem 0"
+            >
+              로그인
+            </DefaultButton>
+          </form>
+          <footer className="footer">
+            <div className="footer__content">아직 회원이 아니신가요?</div>
+            <TransparentButton fontSize="1.4rem" onClick={signupModalOpener}>
+              회원가입 &gt;
+            </TransparentButton>
+          </footer>
+        </LoginModalStyle>
+      </ModalCard>
+    </Backdrop>
   );
 }
 
