@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { loginModalActions } from '../../../redux/loginModalSlice';
@@ -66,6 +66,7 @@ const MenuContainer = styled.div`
 function HeaderDropDownBox({ active, activeHandler }) {
   const isLogin = useSelector(state => state.login.isLogin);
   const dispatch = useDispatch();
+  const closeFocus = useRef();
   const loginModalOpen = () => {
     dispatch(loginModalActions.openLoginModal());
   };
@@ -79,8 +80,25 @@ function HeaderDropDownBox({ active, activeHandler }) {
     setSignUpModal(false);
   };
 
+  const closeModal = e => {
+    if (
+      closeFocus &&
+      (!closeFocus.current || !closeFocus.current.contains(e.target))
+    ) {
+      activeHandler();
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', closeModal);
+
+    return () => {
+      document.removeEventListener('mousedown', closeModal);
+    };
+  }, []);
+
   return (
-    <MenuContainer>
+    <MenuContainer ref={closeFocus}>
       {signUpModal && <SignupModal onSignupModalCloser={signUpCloseHandler} />}
       <div className={`menu__dropdown ${active ? 'active' : 'inactive'}`}>
         <ul>

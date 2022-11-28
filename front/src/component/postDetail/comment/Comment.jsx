@@ -7,7 +7,7 @@ const CommentWrapper = styled.section`
   height: 100%;
   border: 1px solid var(--holder-base-color);
   border-radius: var(--radius-10);
-  max-height: 39rem;
+  max-height: 45rem;
   overflow: auto;
   flex-basis: 100%;
   @media screen and (max-width: 999px) {

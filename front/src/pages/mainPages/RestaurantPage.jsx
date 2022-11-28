@@ -22,7 +22,7 @@ function RestaurantPage() {
 
   console.log(`search ${search} Re! 변경 감지!!`);
 
-  const [target, page, hasNext] = useIntersect(
+  const [target, hasNext] = useIntersect(
     '/boards?category=RESTAURANT&',
     search,
     20,
@@ -42,7 +42,6 @@ function RestaurantPage() {
       setPosts([]);
     }
     target.current.style.display = 'flex';
-    page.current = 1;
   };
 
   useEffect(() => {

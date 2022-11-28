@@ -19,7 +19,6 @@ const useIntersect = (
   keyword = '',
 ) => {
   const target = useRef(null);
-  const page = useRef(1);
   const [hasNextPage, SetHasNextPage] = useState(true);
   const [lastData, setLastData] = useState('');
 
@@ -86,7 +85,7 @@ const useIntersect = (
     return () => io.disconnect();
   }, [hasNextPage, sort, query, lastData]);
 
-  return [target, page, SetHasNextPage];
+  return [target, SetHasNextPage];
 };
 
 export default useIntersect;
