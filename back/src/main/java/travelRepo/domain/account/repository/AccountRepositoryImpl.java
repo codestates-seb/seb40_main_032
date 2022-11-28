@@ -41,9 +41,15 @@ public class AccountRepositoryImpl implements AccountRepositoryCustom {
 
         sort(pageable, selectAccount, query);
 
+        int totalElement = jpaQueryFactory
+                .select(selectAccount)
+                .from(follow)
+                .where(whereAccount.id.eq(accountId))
+                .fetch().size();
+
         List<Account> accounts = query.fetch();
 
-        return new PageImpl<>(accounts, pageable, accounts.size());
+        return new PageImpl<>(accounts, pageable, totalElement);
     }
 
     private static void sort(Pageable pageable, QAccount account, JPAQuery<Account> query) {
