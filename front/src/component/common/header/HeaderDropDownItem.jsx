@@ -31,21 +31,14 @@ function HedaerDropDownItem({ linkText, link, activeHandler }) {
   const navigate = useNavigate();
 
   const cookieRemover = () => {
-    removeCookie('profile', {
+    const option = {
       path: '/',
       sameSite: 'None',
       secure: 'false',
-    });
-    removeCookie('accountId', {
-      path: '/',
-      sameSite: 'None',
-      secure: 'false',
-    });
-    removeCookie('accessToken', {
-      path: '/',
-      sameSite: 'None',
-      secure: 'false',
-    });
+    };
+    removeCookie('profile', option);
+    removeCookie('accountId', option);
+    removeCookie('accessToken', option);
   };
   // 로그아웃 핸들러
   const logoutHandler = () => {
