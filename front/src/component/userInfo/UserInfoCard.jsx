@@ -55,7 +55,7 @@ function UserInfoCard({ userdata }) {
         <UserInfoText>
           <div>
             <h1>{userdata.nickname}</h1>
-            <EditButton to="#">내 정보수정</EditButton>
+            <EditButton to="/myinfoedit">내 정보수정</EditButton>
           </div>
           <h5>{userdata.email}</h5>
           <p>{userdata.intro}</p>

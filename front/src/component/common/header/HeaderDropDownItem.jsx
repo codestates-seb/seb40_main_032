@@ -1,5 +1,7 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { useDispatch } from 'react-redux';
+import { loginActions } from '../../../redux/loginSlice';
 import { removeCookie } from '../../../util/cookie';
 
 const ItemWrapper = styled.li`
@@ -25,17 +27,24 @@ const ItemWrapper = styled.li`
 `;
 
 function HeaderDropDownItem({ linkText, link, activeHandler }) {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const cookieRemover = () => {
+    const option = {
+      path: '/',
+      sameSite: 'None',
+      secure: 'false',
+    };
+    removeCookie('profile', option);
+    removeCookie('accountId', option);
+    removeCookie('accessToken', option);
+  };
   // 로그아웃 핸들러
   const logoutHandler = () => {
-    console.log('로그아웃 핸들러 앞');
-    removeCookie('profile');
-    removeCookie('accountId');
-    removeCookie('accessToken');
-    console.log('로그아웃 핸들러 중간');
-    setTimeout(() => {
-      window.location.href = '/';
-    }, 500);
-    console.log('로그아웃 핸들러 끝');
+    cookieRemover();
+    dispatch(loginActions.logout());
+    navigate('/');
   };
 
   return (
