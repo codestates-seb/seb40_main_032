@@ -53,6 +53,22 @@ const PageButtons = styled.div`
       }
     }
   }
+
+  @media screen and (max-width: 549px) {
+    > button {
+      padding: 2px 1.2rem;
+      font-size: 1.2rem;
+
+      &.prev,
+      &.next {
+        margin: 0 1rem;
+        > svg {
+          width: 1.4rem;
+          height: 1.4rem;
+        }
+      }
+    }
+  }
 `;
 
 function Pagination({ totalLists, currentPage, setCurrentPage }) {
