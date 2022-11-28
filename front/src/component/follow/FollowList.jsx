@@ -23,6 +23,10 @@ const FollowListContainer = styled.div`
 
   .followList__leftside {
     padding: 0 5rem 0 1.2rem;
+
+    @media screen and (max-width: 549px) {
+      padding-right: 1.2rem;
+    }
     .followList__userinfo {
       display: flex;
       flex-direction: column;
@@ -65,6 +69,7 @@ const FollowListContainer = styled.div`
 `;
 
 function FollowList({ myFollowing }) {
+  console.log(myFollowing);
   return (
     <FollowListContainer>
       <div className="followList__leftside">

@@ -7,6 +7,10 @@ const MyPageMain = styled.main`
   padding-top: 23rem;
   max-width: 172rem;
   margin: 0 3rem;
+  @media screen and (max-width: 549px) {
+    padding-top: 15rem;
+    margin: 0 1rem;
+  }
 `;
 
 function MyFollowing() {

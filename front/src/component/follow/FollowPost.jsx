@@ -4,6 +4,35 @@ const FollowThumb = styled.li`
   flex-basis: 20%;
   padding: 0 1.2rem;
 
+  @media screen and (max-width: 1440px) {
+    flex-basis: 25%;
+    &:nth-child(5) {
+      display: none;
+    }
+  }
+
+  @media screen and (max-width: 1024px) {
+    flex-basis: 33.3%;
+    &:nth-child(4) {
+      display: none;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    flex-basis: 50%;
+    &:nth-child(3) {
+      display: none;
+    }
+  }
+
+  @media screen and (max-width: 549px) {
+    margin: 0 1rem;
+    flex-basis: 100%;
+    &:nth-child(2) {
+      display: none;
+    }
+  }
+
   .FollowThumb__container {
     display: flex;
     flex-direction: column;
@@ -44,7 +73,6 @@ const FollowThumb = styled.li`
 `;
 
 function FollowPost({ boards }) {
-  console.log(boards);
   return (
     <FollowThumb>
       <div className="FollowThumb__container">
