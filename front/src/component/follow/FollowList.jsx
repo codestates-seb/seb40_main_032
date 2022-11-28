@@ -1,6 +1,7 @@
 import styled from 'styled-components';
-import { DefaultButton } from '../common/button/ButtonStyle';
+
 import FollowPost from './FollowPost';
+import FollowUserCard from './FollowUserCard';
 
 const FollowListContainer = styled.div`
   display: flex;
@@ -69,24 +70,9 @@ const FollowListContainer = styled.div`
 `;
 
 function FollowList({ myFollowing }) {
-  console.log(myFollowing);
   return (
     <FollowListContainer>
-      <div className="followList__leftside">
-        <ul className="followList__userinfo">
-          <li className="followList__avatar">
-            <img src={myFollowing.profile} alt="아바타" />
-          </li>
-          <li className="followList__username">
-            <p>{myFollowing.nickname}</p>
-          </li>
-          <li className="followList__button">
-            <DefaultButton width="9rem" height="3rem">
-              팔로우
-            </DefaultButton>
-          </li>
-        </ul>
-      </div>
+      <FollowUserCard myFollowing={myFollowing} />
       <div className="followList__rightside">
         <ul className="followList__posts">
           {myFollowing &&
