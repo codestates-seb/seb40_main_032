@@ -52,7 +52,6 @@ const Header = styled.div`
     font-size: var(--font-20);
     overflow: hidden;
     text-overflow: ellipsis;
-    cursor: pointer;
     margin-left: ${props => (props.justify ? '-1.5rem' : '1rem')};
   }
   .follow__button {
@@ -101,13 +100,20 @@ const Body = styled.div`
     margin-bottom: 1rem;
   }
   .article__content {
+    resize: none;
+    border: none;
     font-size: var(--font-15);
     flex-basis: 50%;
     flex-grow: 2;
-    white-space: pre-line;
+    background-color: var(--base-white-color);
+    /* white-space: pre-line; */
     overflow: auto;
     ::-webkit-scrollbar {
       display: none;
+    }
+    min-height: 39rem;
+    &:focus {
+      outline: none;
     }
   }
   .article__location {
@@ -132,6 +138,7 @@ const Body = styled.div`
         flex-wrap: wrap;
         > li {
           cursor: pointer;
+          margin-right: 4px;
         }
       }
       .viewlike__wrapper {
@@ -187,6 +194,7 @@ function PostDetailArticle({ post, userLike, userFollow, self, board }) {
     account,
   } = post;
   console.log(self);
+  console.log(account);
   const date = new Date(createdAt).toISOString().split('T')[0];
   const [follow, setFollow] = useState(
     userFollow.follow !== '' ? userFollow.follow : false,
@@ -201,7 +209,7 @@ function PostDetailArticle({ post, userLike, userFollow, self, board }) {
   const navigate = useNavigate();
   // 해당회원 정보창으로 이동
   const userMovePageHandler = () => {
-    console.log('');
+    navigate(`/mypage/${account.accountId}`);
   };
 
   // 로그인 여부 체크
@@ -323,7 +331,7 @@ function PostDetailArticle({ post, userLike, userFollow, self, board }) {
       </Header>
       <Body>
         <p className="article__header">{title}</p>
-        <div className="article__content">{content}</div>
+        <textarea value={content} className="article__content" disabled />
         {location ? (
           <div className="article__location"> 위치 : {location}</div>
         ) : null}
@@ -332,7 +340,7 @@ function PostDetailArticle({ post, userLike, userFollow, self, board }) {
             <div className="footer__tags">
               <ul className="tags__list">
                 {tags.map(el => {
-                  return <li key={uuid()}>#{el} </li>;
+                  return <li key={uuid()}>#{el}</li>;
                 })}
               </ul>
             </div>

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import Search from './Search';
 import HeaderUser from './HeaderUser';
 
@@ -68,7 +68,8 @@ function Header() {
         {/* main Logo */}
         <div className="header__logo">
           <h1>
-            <Link to="/">Tripagram</Link>
+            {/* <Link to="/">Tripagram</Link> */}
+            <a href="/">Tripagram</a>
           </h1>
         </div>
         {/* Hedaer Search */}

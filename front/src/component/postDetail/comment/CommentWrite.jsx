@@ -19,11 +19,16 @@ const WriteWrapper = styled.article`
   border-radius: var(--radius-10);
   margin: 2rem auto 1rem auto;
   position: relative;
+  .comment__couunt {
+    text-align: right;
+    padding-right: 1rem;
+    width: 100%;
+    padding-bottom: 5px;
+  }
   .comment__sticky {
     display: flex;
-    /* border: 1px solid var(--font-base-grey); */
-    /* border-radius: var(--radius-10); */
-    justify-content: space-between;
+    flex-direction: column;
+    justify-content: flex-end;
     align-items: center;
     position: sticky;
     top: 0;
@@ -32,6 +37,11 @@ const WriteWrapper = styled.article`
     width: 100%;
     height: 10rem;
   }
+  .comment__form {
+    display: flex;
+    width: 100%;
+  }
+
   .comment__input {
     border-radius: 1rem 0 0 1rem;
     border: 1px solid var(--font-base-grey);
@@ -215,25 +225,29 @@ function CommentWrite() {
   return (
     <WriteWrapper className="comment__write">
       <div className="comment__sticky">
-        <input
-          className="comment__input"
-          placeholder="댓글을 입력 해주세요"
-          value={comment}
-          onChange={setComment}
-          onKeyUp={e => {
-            if (e.code === 'Enter') {
-              debounceSendHandler();
-            }
-          }}
-        />
-        <button
-          className="comment__button"
-          onClick={() => {
-            commentSendHandler();
-          }}
-        >
-          등록
-        </button>
+        <div className="comment__couunt">{comment.length}/250</div>
+        <div className="comment__form">
+          <input
+            className="comment__input"
+            placeholder="댓글을 입력 해주세요"
+            maxLength="250"
+            value={comment}
+            onChange={setComment}
+            onKeyUp={e => {
+              if (e.code === 'Enter') {
+                debounceSendHandler();
+              }
+            }}
+          />
+          <button
+            className="comment__button"
+            onClick={() => {
+              commentSendHandler();
+            }}
+          >
+            등록
+          </button>
+        </div>
       </div>
       {commentLoading ? (
         <Loading />

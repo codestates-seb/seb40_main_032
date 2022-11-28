@@ -19,7 +19,7 @@ function SpotPage() {
   );
 
   console.log(`search ${search} SPOT! 변경 감지!!`);
-  const [target, page, hasNext] = useIntersect(
+  const [target, hasNext] = useIntersect(
     '/boards?category=SPOT&',
     search,
     20,
@@ -38,7 +38,6 @@ function SpotPage() {
       setPosts([]);
     }
     target.current.style.display = 'flex';
-    page.current = 1;
   };
 
   useEffect(() => {
