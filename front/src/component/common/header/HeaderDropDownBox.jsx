@@ -85,7 +85,6 @@ function HeaderDropDownBox({ active, activeHandler }) {
       closeFocus &&
       (!closeFocus.current || !closeFocus.current.contains(e.target))
     ) {
-      // unfocus(false);
       activeHandler();
     }
   };
