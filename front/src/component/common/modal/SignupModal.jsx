@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { useDispatch } from 'react-redux';
+import { loginModalActions } from '../../../redux/loginModalSlice';
 import signupApi from '../../../api/signupApi';
 import ModalCard from './ModalCard';
 import Backdrop from './Backdrop';
@@ -62,7 +64,7 @@ const SignupModalStyle = styled.div`
   }
 `;
 
-function SignupModal({ onSignupModalCloser }) {
+function SignupModal() {
   const [nickname, setNickname] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -76,6 +78,7 @@ function SignupModal({ onSignupModalCloser }) {
     passwordCorrect: true,
     nicknameCorrect: true,
   });
+  const dispatch = useDispatch();
 
   // 인풋값 상태 저장 함수
   const onChangeNickname = e => {
@@ -176,15 +179,16 @@ function SignupModal({ onSignupModalCloser }) {
       return { ...prev, passwordCorrect: true };
     });
     postSingup();
-    // UX를 위해 여기서 회원가입 모달을 닫지 않고, 회원가입이 성공적으로 완료되었을 때 모달이 닫힌다.
-    // onSignupModalCloser();
   };
 
+  const signupModalCloser = () => {
+    dispatch(loginModalActions.closeSignupModal());
+  };
   // 컨펌 모달 닫기 함수
   // UX를 위해 회원가입 모달도 같이 닫힌다.
   const onConfirmModalCloser = () => {
     setSuccessSignup(false);
-    onSignupModalCloser();
+    signupModalCloser();
   };
 
   // 약관 모달 오프너
@@ -193,12 +197,12 @@ function SignupModal({ onSignupModalCloser }) {
   };
   return (
     <>
-      <Backdrop onClick={onSignupModalCloser}>
+      <Backdrop onClick={signupModalCloser}>
         <ModalCard
           onStopPropagation={e => {
             e.stopPropagation();
           }}
-          onClick={onSignupModalCloser}
+          onClick={signupModalCloser}
         >
           <SignupModalStyle>
             <div className="title">회원가입</div>

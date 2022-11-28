@@ -59,10 +59,11 @@ function MyPost() {
   const accountId = getCookie('accountId');
   const [target] = useIntersect(
     `/boards/account/${accountId}?`,
+    '',
     15,
     setMyPost,
     setIsPending,
-    1,
+    0,
   );
 
   return (

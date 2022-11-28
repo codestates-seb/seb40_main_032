@@ -19,7 +19,7 @@ function StayPage() {
   );
 
   console.log(`search ${search} STAY  변경 감지!!`);
-  const [target, page, hasNext] = useIntersect(
+  const [target, hasNext] = useIntersect(
     '/boards?category=STAY&',
     search,
     20,
@@ -38,7 +38,6 @@ function StayPage() {
       setPosts([]);
     }
     target.current.style.display = 'flex';
-    page.current = 1;
   };
 
   useEffect(() => {

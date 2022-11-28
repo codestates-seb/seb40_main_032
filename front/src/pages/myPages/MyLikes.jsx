@@ -59,9 +59,13 @@ function MyLikes() {
   const accountId = getCookie('accountId');
   const [target] = useIntersect(
     `/boards/like/account/${accountId}?`,
-    20,
+    '',
+    15,
     setMyLike,
     setIsPending,
+    '0',
+    'createdAt,desc',
+    'like',
   );
   return (
     <MyPageMain>

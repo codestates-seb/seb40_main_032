@@ -19,7 +19,7 @@ function AllThemePage() {
     pathname === path ? memorySort : 'createdAt,desc',
   );
 
-  const [target, page, hasNext] = useIntersect(
+  const [target, hasNext] = useIntersect(
     '/boards?',
     search,
     20,
@@ -39,7 +39,7 @@ function AllThemePage() {
       setPosts([]);
     }
     target.current.style.display = 'flex';
-    page.current = 1;
+    // page.current = 1;
   };
 
   useEffect(() => {

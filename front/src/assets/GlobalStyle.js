@@ -5,11 +5,12 @@ const global = createGlobalStyle`
         box-sizing: border-box;
         padding: 0px;
         margin: 0px;
+        font-family: 'Roboto', 'Noto Sans KR', sans-serif;
+
     }
     html, body {
         width: 100%;
         height: 100%;
-        font-family: 'Roboto', 'Noto Sans KR', sans-serif;
         font-size: 10px;
     }
     :root {
