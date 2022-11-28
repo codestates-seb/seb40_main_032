@@ -86,7 +86,7 @@ function PublishModalButton({ boardId, mandatory, formData, isPublishPage }) {
             setConfirmModalOpened(true);
             setTimeout(() => {
               navigate(`/postDetail/${res.data.id}`);
-            }, 2000);
+            }, 1000);
           }
         })
         .catch(error => console.log(error.response.data.message));
