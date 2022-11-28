@@ -4,7 +4,7 @@ import followDataApi from '../../api/followDataApi';
 import FollowList from '../../component/follow/FollowList';
 
 const MyPageMain = styled.main`
-  padding-top: 20rem;
+  padding-top: 22rem;
   max-width: 172rem;
   margin: 0 3rem;
   width: 90%;
