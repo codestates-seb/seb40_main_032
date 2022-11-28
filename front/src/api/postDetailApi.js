@@ -48,9 +48,9 @@ export const postDetailDeleteApi = async boardId => {
 };
 
 // 게시글 댓글 조회
-export const postDetailCommentApi = async (boardId, page = 1, size = 5) => {
+export const postDetailCommentApi = async (boardId, lastData, size = 5) => {
   const comment = await axios.get(
-    `/comments/board/${boardId}?page=${page}&size=${size}`,
+    `/comments/board/${boardId}?&size=${size}&${lastData}`,
   );
   return comment.data;
 };

@@ -1,15 +1,30 @@
 import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 import LoadingSpinner from '../../component/common/LoadingSpinner';
 import Post from '../../component/common/Post';
 import MainSort from '../../component/main/MainSort';
 import useIntersect from '../../hooks/useIntersect';
+import { searchActions } from '../../redux/searchSlice';
 
 function RestaurantPage() {
+  const { pathname } = useLocation();
+  const { search, path, memorySort } = useSelector(state => state.search);
+  const dispatch = useDispatch();
+
+  console.log(`memorySort : ${memorySort}`);
+
   const [isPending, setIsPending] = useState(true);
   const [posts, setPosts] = useState([]);
-  const [sort, setSort] = useState('createdAt,desc');
+  const [sort, setSort] = useState(
+    pathname === path ? memorySort : 'createdAt,desc',
+  );
+
+  console.log(`search ${search} Re! 변경 감지!!`);
+
   const [target, page, hasNext] = useIntersect(
     '/boards?category=RESTAURANT&',
+    search,
     20,
     setPosts,
     setIsPending,
@@ -19,18 +34,37 @@ function RestaurantPage() {
 
   const sortHandler = sorted => {
     console.log(sorted);
-    setSort(sorted);
+    if (sort !== sorted) {
+      setSort(sorted);
+      // dispatch(searchActions.setSort(sorted));
+    }
+    if (posts.length !== 0) {
+      setPosts([]);
+    }
     target.current.style.display = 'flex';
     page.current = 1;
-    setPosts([]);
   };
 
   useEffect(() => {
     hasNext(true);
+  }, [sort, search]);
+
+  useEffect(() => {
+    if (search) {
+      sortHandler(sort); // pathname === path ? memorySort : 'createdAt,desc'
+    }
+  }, [search]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(searchActions.setSort(sort));
+      dispatch(searchActions.setPath(pathname));
+    };
   }, [sort]);
+
   return (
     <>
-      <MainSort sortHandler={sortHandler} />
+      <MainSort sort={sort} sortHandler={sortHandler} />
       <div className="main__container">
         {posts.map(post => {
           return <Post key={post.boardId} post={post} />;
