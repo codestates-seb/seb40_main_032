@@ -104,6 +104,7 @@ const PostWrapper = styled.div`
             text-align: left;
             color: var(--font-tag-color);
             font-size: 1.3rem;
+            line-height: 1.5;
           }
         }
         .post__info {
