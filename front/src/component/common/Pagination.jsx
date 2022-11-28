@@ -80,15 +80,6 @@ function Pagination({ totalLists, currentPage, setCurrentPage }) {
   const handlePrev = () => {
     if (!prevActive) return;
 
-    // if (pageGroup.length === 5) {
-    //   setPageGroup(pageGroup.map(el => el - 5));
-    // } else {
-    //   setPageGroup(
-    //     Array(5)
-    //       .fill(pageGroup[0] - 5)
-    //       .map((el, idx) => el + idx),
-    //   );
-    // }
     setPageGroup(totalPageArr.slice(pageGroup[0] - 5 - 1, pageGroup[0] - 1));
     setCurrentPage(pageGroup[0] - 5);
   };
@@ -102,11 +93,6 @@ function Pagination({ totalLists, currentPage, setCurrentPage }) {
   const handleNext = () => {
     if (!nextActive) return;
 
-    // setPageGroup(
-    //   pageGroup
-    //     .map(el => (el + 5 <= totalPages ? el + 5 : null))
-    //     .filter(el => el !== null),
-    // );
     setPageGroup(totalPageArr.slice(pageGroup[4], pageGroup[4] + 5));
     setCurrentPage(pageGroup[0] + 5);
   };
