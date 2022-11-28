@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import travelRepo.domain.comment.entity.Comment;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 public interface CommentRepository extends JpaRepository<Comment, Long> {
@@ -30,6 +31,8 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
     Slice<Comment> findAllByBoard_Id(Long boardsId, Pageable pageable);
 
     @EntityGraph(attributePaths = {"account"})
-    @Query("select c from Comment c where c.board.id = :boardId and c.id < :lastCommentId")
-    Slice<Comment> findAllAfterLastByBoardId(@Param("boardId") Long boardId, @Param("lastCommentId") Long lastCommentId, Pageable pageable);
+    @Query("select c from Comment c where c.board.id = :boardId " +
+            "and (c.createdAt < :lastCommentCreatedAt or (c.createdAt = :lastCommentCreatedAt and c.id < :lastCommentId))")
+    Slice<Comment> findAllAfterLastByBoardId(@Param("boardId") Long boardId, @Param("lastCommentId") Long lastCommentId
+            , @Param("lastCommentCreatedAt") LocalDateTime lastCommentCreatedAt, Pageable pageable);
 }

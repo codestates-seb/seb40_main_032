@@ -37,7 +37,7 @@ public class BoardSummaryRes {
         boardSummaryRes.setTitle(board.getTitle());
         boardSummaryRes.setLikeCount(board.getLikeCount());
         boardSummaryRes.setViews(board.getViews());
-        boardSummaryRes.setCreatedAt(board.getCreatedAt());
+        boardSummaryRes.setCreatedAt(board.getCreatedAt().withNano(0));
         boardSummaryRes.setTags(
                 board.getBoardTags().stream()
                         .sorted(Comparator.comparing(BoardTag::getOrders))

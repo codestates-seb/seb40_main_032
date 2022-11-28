@@ -25,6 +25,7 @@ import travelRepo.global.common.dto.SliceDto;
 import travelRepo.global.exception.BusinessLogicException;
 import travelRepo.global.exception.ExceptionCode;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -124,16 +125,16 @@ public class BoardService {
         return response;
     }
 
-    public SliceDto<BoardSummaryRes> findBoardsByAccount(Long accountId, Long lastBoardId, Pageable pageable) {
+    public SliceDto<BoardSummaryRes> findBoardsByAccount(Long accountId, Long lastBoardId, LocalDateTime lastBoardCreatedAt, Pageable pageable) {
 
-        Slice<Board> boards = boardRepository.findAllByAccountIdWithBoardTagsAndAccount(accountId, lastBoardId, pageable);
+        Slice<Board> boards = boardRepository.findAllByAccountIdWithBoardTagsAndAccount(accountId, lastBoardId, lastBoardCreatedAt, pageable);
 
         return new SliceDto<>(boards.map(BoardSummaryRes::of));
     }
 
-    public SliceDto<BoardSummaryResWithLikeId> findBoardsByLikes(Long accountId, Long lastLikeId, Pageable pageable) {
+    public SliceDto<BoardSummaryResWithLikeId> findBoardsByLikes(Long accountId, Long lastLikeId, LocalDateTime lastLikeCreatedAt, Pageable pageable) {
 
-        Slice<Board> boards = boardRepository.findAllByAccountLikesWithBoardTagsAndAccount(accountId, lastLikeId, pageable);
+        Slice<Board> boards = boardRepository.findAllByAccountLikesWithBoardTagsAndAccount(accountId, lastLikeId, lastLikeCreatedAt, pageable);
 
         SliceDto<BoardSummaryResWithLikeId> response = new SliceDto<>(boards.map(BoardSummaryResWithLikeId::of));
 
@@ -212,7 +213,7 @@ public class BoardService {
 
         for (int i = 0; i < likes.size(); i++) {
             response.getContent().get(i).setLikeId(likes.get(i).getId());
-            response.getContent().get(i).setLikeCreatedAt(likes.get(i).getCreatedAt());
+            response.getContent().get(i).setLikeCreatedAt(likes.get(i).getCreatedAt().withNano(0));
         }
     }
 

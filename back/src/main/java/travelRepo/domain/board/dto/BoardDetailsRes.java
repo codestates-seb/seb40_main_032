@@ -65,7 +65,7 @@ public class BoardDetailsRes {
                         .map(BoardPhoto::getPhoto)
                         .collect(Collectors.toList())
         );
-        boardDetailsRes.setCreatedAt(board.getCreatedAt());
+        boardDetailsRes.setCreatedAt(board.getCreatedAt().withNano(0));
         boardDetailsRes.setAccount(AccountSummaryRes.of(board.getAccount()));
 
         return boardDetailsRes;
