@@ -22,7 +22,7 @@ public class CommentDetailsRes {
         CommentDetailsRes commentDetailsRes = new CommentDetailsRes();
         commentDetailsRes.setCommentId(comment.getId());
         commentDetailsRes.setContent(comment.getContent());
-        commentDetailsRes.setCreatedAt(comment.getCreatedAt());
+        commentDetailsRes.setCreatedAt(comment.getCreatedAt().withNano(0));
         commentDetailsRes.setAccount(AccountSummaryRes.of(comment.getAccount()));
 
         return commentDetailsRes;

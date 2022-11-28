@@ -11,9 +11,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Data
-public class BoardSummaryRes {
+public class BoardSummaryResWithLikeId {
 
     private Long boardId;
+
 
     private String thumbnail;
 
@@ -21,23 +22,21 @@ public class BoardSummaryRes {
 
     private int likeCount;
 
-    private int views;
-
-    private LocalDateTime createdAt;
-
     private List<String> tags;
+
+    private Long likeId;
+
+    private LocalDateTime likeCreatedAt;
 
     private AccountSummaryRes account;
 
-    static public BoardSummaryRes of(Board board) {
+    static public BoardSummaryResWithLikeId of(Board board) {
 
-        BoardSummaryRes boardSummaryRes = new BoardSummaryRes();
+        BoardSummaryResWithLikeId boardSummaryRes = new BoardSummaryResWithLikeId();
         boardSummaryRes.setBoardId(board.getId());
         boardSummaryRes.setThumbnail(board.getThumbnail());
         boardSummaryRes.setTitle(board.getTitle());
         boardSummaryRes.setLikeCount(board.getLikeCount());
-        boardSummaryRes.setViews(board.getViews());
-        boardSummaryRes.setCreatedAt(board.getCreatedAt().withNano(0));
         boardSummaryRes.setTags(
                 board.getBoardTags().stream()
                         .sorted(Comparator.comparing(BoardTag::getOrders))

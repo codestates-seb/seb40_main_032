@@ -1,4 +1,4 @@
-= stackOverFlow_Clone
+= Tripagram
 :sectnums:
 :toc: left
 :toclevels: 4
@@ -244,6 +244,9 @@ include::{snippets}/accountBoardList/http-request.adoc[]
 .path-parameters
 include::{snippets}/accountBoardList/path-parameters.adoc[]
 
+.request-parameters
+include::{snippets}/accountBoardList/request-parameters.adoc[]
+
 .http-response
 include::{snippets}/accountBoardList/http-response.adoc[]
 
@@ -259,6 +262,9 @@ include::{snippets}/likeBoardList/http-request.adoc[]
 
 .path-parameters
 include::{snippets}/likeBoardList/path-parameters.adoc[]
+
+.request-parameters
+include::{snippets}/likeBoardList/request-parameters.adoc[]
 
 .http-response
 include::{snippets}/likeBoardList/http-response.adoc[]
