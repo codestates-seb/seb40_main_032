@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import followDataApi from '../../api/followDataApi';
+import Pagination from '../../component/common/Pagination';
 import FollowList from '../../component/follow/FollowList';
 
 const MyPageMain = styled.main`
@@ -17,19 +18,31 @@ const MyPageMain = styled.main`
 
 function MyFollowing() {
   const [myFollowing, setMyFollowing] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalLists, setTotalLists] = useState(0);
+
   useEffect(() => {
-    followDataApi(1, 'following')
+    followDataApi(currentPage, 'following')
       .then(res => {
-        return setMyFollowing(res.data.content);
+        setMyFollowing(res.data.content);
+        setTotalLists(res.data.totalElements);
       })
       .catch(err => console.log(err));
-  }, []);
+  }, [currentPage]);
+
   return (
-    <MyPageMain>
-      {myFollowing.map(following => (
-        <FollowList key={following.id} myFollowing={following} />
-      ))}
-    </MyPageMain>
+    <>
+      <MyPageMain>
+        {myFollowing.map(following => (
+          <FollowList key={following.id} myFollowing={following} />
+        ))}
+      </MyPageMain>
+      <Pagination
+        totalLists={totalLists}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+      />
+    </>
   );
 }
 
