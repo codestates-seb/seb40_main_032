@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { DefaultButton, NegativeButton } from '../common/button/ButtonStyle';
+import { postDetailFollowApi } from '../../api/postDetailApi';
 
 const FollowListLeftSide = styled.div`
   padding: 0 5rem 0 1.2rem;
@@ -42,6 +43,13 @@ const FollowListLeftSide = styled.div`
 `;
 
 function FollowUserCard({ myFollowing }) {
+  console.log(myFollowing);
+
+  const followHandler = () => {
+    postDetailFollowApi(myFollowing.id);
+    window.location.reload();
+  };
+
   return (
     <FollowListLeftSide>
       <ul className="followList__userinfo">
@@ -53,11 +61,11 @@ function FollowUserCard({ myFollowing }) {
         </li>
         <li className="followList__button">
           {!myFollowing.follow ? (
-            <DefaultButton width="9rem" height="3rem">
+            <DefaultButton width="9rem" height="3rem" onClick={followHandler}>
               팔로우
             </DefaultButton>
           ) : (
-            <NegativeButton width="9rem" height="3rem">
+            <NegativeButton width="9rem" height="3rem" onClick={followHandler}>
               언팔로우
             </NegativeButton>
           )}
