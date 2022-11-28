@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import userDataApi from '../../api/userDataApi';
 import { DefaultButton, TransparentButton } from '../common/button/ButtonStyle';
 import myInfoEditApi from '../../api/myInfoEditApi';
+import ConfirmModal from '../common/modal/ConfirmModal';
 
 const Container = styled.div``;
 
@@ -82,6 +83,11 @@ function MyInfoEditContent({ formData, setFormData }) {
     nickname: '',
     password: '',
   });
+  const [confirmModalOpened, setConfirmModalOpened] = useState(false);
+
+  const confirmModalCloser = () => {
+    setConfirmModalOpened(false);
+  };
 
   const onChange = event => {
     const InputName = event.target.name;
@@ -118,7 +124,10 @@ function MyInfoEditContent({ formData, setFormData }) {
     myInfoEditApi(formData)
       .then(res => {
         if (res.status === 200) {
-          alert('editted');
+          setConfirmModalOpened(true);
+          setTimeout(() => {
+            navigate('/mypage');
+          }, 1000);
         }
       })
       .catch(error => {
@@ -229,6 +238,12 @@ function MyInfoEditContent({ formData, setFormData }) {
           취소
         </CancelButton>
       </ButtonGroup>
+      {confirmModalOpened ? (
+        <ConfirmModal
+          modalMessage={'프로필 수정이 완료되었습니다.'}
+          modalCloser={confirmModalCloser}
+        />
+      ) : null}
     </Container>
   );
 }
