@@ -22,7 +22,7 @@ const MainSortBar = styled.div`
 
       &::after {
         position: absolute;
-        top: 1px;
+        top: 4px;
         left: 4.2rem;
         content: '';
         width: 1px;
