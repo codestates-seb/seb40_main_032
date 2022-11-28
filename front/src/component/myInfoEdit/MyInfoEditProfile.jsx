@@ -11,7 +11,6 @@ const Wrapper = styled.div`
 const SectionProfile = styled.div`
   position: relative;
   text-align: center;
-  max-width: auto;
   margin: 0 6rem;
   margin-bottom: 9rem;
   @media screen and (max-width: 549px) {
@@ -91,7 +90,7 @@ function MyInfoEditProfile({ formData, setFormData }) {
     const targetFileSize = event.target.files[0].size; // 업로드 사진 크기 (단위:bytes)
     const targetFileSizeToMb = targetFileSize / (1024 * 1024); // bytes=>megabyte 변환
     const targetFileSizeToKb = targetFileSize / 1024; // b=>kilobyte 변환
-    const MAX_SIZE_MB = 3; // 최대 10mb <= 이 부분을 설정하시면 됩니다.
+    const MAX_SIZE_MB = 3; // 최대 3mb
     const MIN_SIZE_KB = 0; // 최소 0kb
 
     if (targetFileSizeToMb > MAX_SIZE_MB) {

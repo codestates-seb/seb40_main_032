@@ -10,7 +10,7 @@ const Container = styled.div`
   width: 100vw;
   font-size: 1.5rem;
   color: var(--font-base-grey);
-  margin-top: 8rem;
+  margin-top: 10vh;
   @media screen and (max-width: 549px) {
     flex-direction: column;
     margin-top: 4rem;
