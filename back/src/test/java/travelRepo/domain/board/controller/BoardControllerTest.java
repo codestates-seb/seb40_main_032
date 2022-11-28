@@ -647,7 +647,7 @@ class BoardControllerTest extends After {
                         requestParameters(
                                 List.of(
                                         parameterWithName("lastLikeId").description("마지막 게시글의 likeId").optional(),
-                                        parameterWithName("lastLikeId").description("마지막 게시글의 like 시각").optional()
+                                        parameterWithName("lastLikeCreatedAt").description("마지막 게시글의 like 시각").optional()
                                 )
                         ),
                         responseFields(
