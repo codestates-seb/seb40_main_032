@@ -16,6 +16,10 @@ const SignupModalStyle = styled.div`
   padding: 3rem;
   width: 40rem;
 
+  @media screen and (max-width: 550px) {
+    width: 100%;
+  }
+
   .title {
     display: flex;
     justify-content: center;
@@ -38,9 +42,6 @@ const SignupModalStyle = styled.div`
       border-bottom: 1px solid var(--font-base-grey);
       padding: 0.5rem 0.5rem 0.5rem 0;
       margin: 1rem 0;
-      @media screen and (max-width: 550px) {
-        //width: 100%;
-      }
     }
     .input__validation {
       color: red;
@@ -54,7 +55,9 @@ const SignupModalStyle = styled.div`
         margin-right: 0.5rem;
       }
       div {
+        display: flex;
         font-size: 1.2rem;
+        align-items: center;
       }
     }
     .termsbutton__wrapper {
@@ -64,11 +67,21 @@ const SignupModalStyle = styled.div`
   }
 `;
 
+const SignupButton = styled(DefaultButton)`
+  &:disabled {
+    background: var(--button-font-color);
+    color: var(--font-base-grey);
+    cursor: not-allowed;
+  }
+`;
+
 function SignupModal() {
   const [nickname, setNickname] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [checkbox, setCheckbox] = useState(false);
   const [successSignup, setSuccessSignup] = useState(false);
+  const [confirmTerms, setConfirmTerms] = useState(false);
   const [signupError, setSignupError] = useState({
     nicknameError: false,
     emailError: false,
@@ -90,6 +103,12 @@ function SignupModal() {
   const onChangePassword = e => {
     setPassword(e.target.value);
   };
+  const onChangerCheckbox = e => {
+    setCheckbox(e.target.checked);
+    console.log(e.target.checked);
+    console.log(e.target);
+  };
+  console.log(checkbox);
 
   // 랜덤 숫자 생성 함수 - 랜덤이미지 선택에 사용
   const ramdomNumber = Math.floor(Math.random() * 10);
@@ -191,10 +210,16 @@ function SignupModal() {
     signupModalCloser();
   };
 
-  // 약관 모달 오프너
-  const termsHandler = e => {
+  // 약관 모달 오프너 클로저
+  const termsOpener = e => {
     e.preventDefault();
+    setConfirmTerms(true);
   };
+  const termsCloser = e => {
+    e.preventDefault();
+    setConfirmTerms(false);
+  };
+
   return (
     <>
       <Backdrop onClick={signupModalCloser}>
@@ -256,26 +281,33 @@ function SignupModal() {
                 </div>
               )}
               <div className="checkbox__wrapper">
-                <input className="checkbox" type="checkbox" id="check" />
-                <label htmlFor="check">
-                  회원가입을 위해 이용약관에 동의해주세요.
-                </label>
+                <input
+                  className="checkbox"
+                  type="checkbox"
+                  onChange={onChangerCheckbox}
+                />
+                <div htmlFor="check">개인정보 이용방침에 동의합니다.</div>
               </div>
               <div className="termsbutton__wrapper">
-                <TransparentButton fontSize="1.2rem" onClick={termsHandler}>
+                <TransparentButton
+                  fontSize="1.2rem"
+                  onClick={termsOpener}
+                  type="button"
+                >
                   약관확인 &gt;
                 </TransparentButton>
               </div>
-              <DefaultButton
+              <SignupButton
                 width="100%"
                 height="4rem"
                 fontSize="1.7rem"
                 onClick={onSubmitHandler}
                 type="submit"
                 margin="1.5rem 0"
+                disabled={!checkbox}
               >
                 회원가입
-              </DefaultButton>
+              </SignupButton>
             </form>
           </SignupModalStyle>
         </ModalCard>
@@ -285,6 +317,9 @@ function SignupModal() {
           modalMessage="회원가입이 완료되었습니다."
           modalCloser={onConfirmModalCloser}
         />
+      )}
+      {confirmTerms && (
+        <ConfirmModal modalMessage="이용약관" modalCloser={termsCloser} />
       )}
     </>
   );
