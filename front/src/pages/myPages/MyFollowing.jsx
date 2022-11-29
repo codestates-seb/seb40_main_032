@@ -8,9 +8,15 @@ import FollowList from '../../component/follow/FollowList';
 
 const MyPageMain = styled.main`
   padding-top: 22rem;
-  max-width: 172rem;
-  margin: 0 3rem;
-  width: 90%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+
+  .following__container {
+    width: 100%;
+    max-width: 172rem;
+    margin: 0 3rem;
+  }
 
   .loading__container {
     width: 100%;
@@ -45,15 +51,17 @@ function MyFollowing() {
   return (
     <>
       <MyPageMain>
-        {isPending ? (
-          <div className="loading__container">
-            <LoadingSpinner />
-          </div>
-        ) : (
-          myFollowing.map(following => (
-            <FollowList key={following.id} myFollowing={following} />
-          ))
-        )}
+        <section className="following__container">
+          {isPending ? (
+            <div className="loading__container">
+              <LoadingSpinner />
+            </div>
+          ) : (
+            myFollowing.map(following => (
+              <FollowList key={following.id} myFollowing={following} />
+            ))
+          )}
+        </section>
       </MyPageMain>
       {!isPending && (
         <Pagination
