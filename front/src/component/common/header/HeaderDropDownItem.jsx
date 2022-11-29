@@ -55,8 +55,7 @@ function HeaderDropDownItem({ linkText, link, activeHandler, accountId }) {
 
   const myPageHandler = () => {
     activeHandler();
-    navigate(`/mypage/mypost/${accountId}`);
-    window.location.reload();
+    window.location.href = `/mypage/mypost/${accountId}`;
   };
 
   return (
