@@ -209,7 +209,7 @@ function PostDetailArticle({ post, userLike, userFollow, self, board }) {
   const navigate = useNavigate();
   // 해당회원 정보창으로 이동
   const userMovePageHandler = () => {
-    navigate(`/mypage/${account.accountId}`);
+    navigate(`/mypage/mypost/${account.accountId}`);
   };
 
   // 로그인 여부 체크
