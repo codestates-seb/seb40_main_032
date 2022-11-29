@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useCallback, useEffect, useRef, useState } from 'react';
-
+import * as Sentry from '@sentry/react';
 // 사용법: 반환되는 target을 옵저버의 target으로 하고자하는 요소의 ref 값에 할당
 // 파라미터 설명
 // api: 슬래시(/)부터 size 전까지의 특수문자(& or ?)까지 모두 포함
@@ -63,6 +63,7 @@ const useIntersect = (
           target.current.style.display = 'none';
         }
       } catch (err) {
+        Sentry.captureException(err);
         console.log('Error', err.message);
       }
     },
