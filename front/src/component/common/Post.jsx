@@ -48,7 +48,7 @@ const PostWrapper = styled.div`
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 5px 0 1rem;
+        padding-bottom: 1rem;
 
         .post__title {
           text-align: left;
@@ -90,34 +90,28 @@ const PostWrapper = styled.div`
         flex-direction: column;
 
         .post__tags {
-          display: flex;
-          justify-content: flex-start;
-          align-items: center;
+          height: 4rem;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          word-break: break-all;
 
           .post__tag {
+            display: inline;
             padding-right: 1rem;
             text-align: left;
             color: var(--font-tag-color);
             font-size: 1.3rem;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            display: -webkit-box;
-            -webkit-line-clamp: 1;
-            -webkit-box-orient: vertical;
-            word-break: break-all;
-
-            @media screen and (max-width: 1621px) {
-              &:nth-child(3) {
-                display: none;
-              }
-            }
+            line-height: 1.5;
           }
         }
         .post__info {
           display: flex;
           justify-content: flex-end;
           align-items: center;
-          padding: 1rem 0 5px;
+          padding: 5px 0;
 
           .post__avatar {
             display: block;
@@ -168,23 +162,25 @@ function Post({ post }) {
           <div className="post__tw">
             {/* tag && user */}
             <ul className="post__tags">
-              {post.tags.map((tag, idx) => {
-                return idx < 3 ? (
-                  <li key={uuid()} className="post__tag">
-                    #{tag}
-                  </li>
-                ) : null;
-              })}
+              {post.tags.map(tag => (
+                <li key={uuid()} className="post__tag">
+                  #{tag}
+                </li>
+              ))}
             </ul>
             <div className="post__info">
-              <span className="post__avatar">
-                <img
-                  className="post__user"
-                  src={post.account.profile}
-                  alt="유저"
-                />
-              </span>
-              <p className="post__writer">{post.account.nickname}</p>
+              <Link to={`/mypage/mypost/${post.account.accountId}`}>
+                <span className="post__avatar">
+                  <img
+                    className="post__user"
+                    src={post.account.profile}
+                    alt="유저"
+                  />
+                </span>
+              </Link>
+              <Link to={`/mypage/mypost/${post.account.accountId}`}>
+                <p className="post__writer">{post.account.nickname}</p>
+              </Link>
             </div>
           </div>
         </div>

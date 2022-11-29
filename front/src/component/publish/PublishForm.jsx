@@ -105,7 +105,7 @@ function PublishForm() {
     formData.title.length >= 5 &&
     formData.title.length <= 40 &&
     formData.content.length >= 5 &&
-    formData.category !== undefined;
+    formData.category !== '';
 
   return (
     <Container>
@@ -117,7 +117,7 @@ function PublishForm() {
       />
       <TitleContainer>
         <div className="title__label">
-          <label htmlFor="title">제목</label>
+          <label htmlFor="title">제목*</label>
         </div>
         <input
           className="title__input"
@@ -138,7 +138,7 @@ function PublishForm() {
       </TitleContainer>
       <ContentContainer>
         <div className="content__label">
-          <label htmlFor="content">스토리 공유</label>
+          <label htmlFor="content">스토리 공유*</label>
         </div>
         <textarea
           className="content__textarea"
@@ -147,6 +147,7 @@ function PublishForm() {
           name="content"
           defaultValue={isPublishPage ? null : loc.post.content}
           rows="7"
+          maxLength="2000"
           onChange={event => {
             onChange(event);
           }}
@@ -188,10 +189,13 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   color: var(--font-base-black);
-  gap: 4rem;
+  gap: 2rem;
   > h1 {
     font-size: 2.5rem;
     margin-top: 4vw;
+  }
+  input {
+    height: 3.5rem;
   }
   input,
   textarea {

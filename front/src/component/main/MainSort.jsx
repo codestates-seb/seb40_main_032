@@ -14,7 +14,7 @@ const MainSortBar = styled.div`
     justify-content: flex-end;
     width: 100%;
     max-width: 172rem;
-    margin: 2rem 3rem;
+    margin: 2rem 1vw;
 
     > li {
       margin-right: 1.5rem;
@@ -22,7 +22,7 @@ const MainSortBar = styled.div`
 
       &::after {
         position: absolute;
-        top: 1px;
+        top: 4px;
         left: 4.2rem;
         content: '';
         width: 1px;
@@ -41,6 +41,10 @@ const MainSortBar = styled.div`
           font-weight: 600;
           transition: all 0.3s;
         }
+        &.sort__active {
+          font-weight: bold;
+          color: var(--button-theme);
+        }
       }
     }
   }
@@ -52,6 +56,7 @@ function MainSort({ sort, sortHandler }) {
       <ul className="main__sortbar">
         <li>
           <button
+            className={sort === 'createdAt,desc' ? 'sort__active' : undefined}
             onClick={() => {
               if (sort !== 'createdAt,desc') {
                 sortHandler('createdAt,desc');
@@ -63,6 +68,7 @@ function MainSort({ sort, sortHandler }) {
         </li>
         <li>
           <button
+            className={sort === 'likeCount,desc' ? 'sort__active' : undefined}
             onClick={() => {
               if (sort !== 'likeCount,desc') {
                 sortHandler('likeCount,desc');
@@ -74,6 +80,7 @@ function MainSort({ sort, sortHandler }) {
         </li>
         <li>
           <button
+            className={sort === 'views,desc' ? 'sort__active' : undefined}
             onClick={() => {
               if (sort !== 'views,desc') {
                 sortHandler('views,desc');

@@ -70,6 +70,7 @@ function HeaderUser() {
   const isLogin = useSelector(state => state.login.isLogin);
   const dispatch = useDispatch();
   const target = useRef(null);
+  const dropdownTarget = useRef(null);
   const loginModalOpen = () => {
     dispatch(loginModalActions.openLoginModal());
   };
@@ -97,7 +98,7 @@ function HeaderUser() {
   }, []);
 
   return (
-    <HeaderUserWrapper>
+    <HeaderUserWrapper ref={dropdownTarget}>
       <DefaultButton
         onClick={() => {
           navigate('/publish');
@@ -174,7 +175,11 @@ function HeaderUser() {
           size="2.5rem"
         />
       </div>
-      <HeaderDropDownBox active={active} activeHandler={activeHandler} />
+      <HeaderDropDownBox
+        active={active}
+        activeHandler={activeHandler}
+        closeFocus={dropdownTarget}
+      />
     </HeaderUserWrapper>
   );
 }

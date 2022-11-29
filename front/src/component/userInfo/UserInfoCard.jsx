@@ -1,5 +1,6 @@
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import { getCookie } from '../../util/cookie';
 import UserInfoAvatar from './UserInfoAvatar';
 
 const Container = styled.div`
@@ -46,7 +47,8 @@ const EditButton = styled(Link)`
 `;
 
 function UserInfoCard({ userdata }) {
-  console.log(userdata);
+  const { paramAccountId } = useParams();
+  const cookieAccountId = getCookie('accountId');
 
   return (
     <Container>
@@ -55,7 +57,9 @@ function UserInfoCard({ userdata }) {
         <UserInfoText>
           <div>
             <h1>{userdata.nickname}</h1>
-            <EditButton to="#">내 정보수정</EditButton>
+            {paramAccountId === cookieAccountId && (
+              <EditButton to="/myinfoedit">내 정보수정</EditButton>
+            )}
           </div>
           <h5>{userdata.email}</h5>
           <p>{userdata.intro}</p>

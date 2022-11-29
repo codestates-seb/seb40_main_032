@@ -19,11 +19,16 @@ const WriteWrapper = styled.article`
   border-radius: var(--radius-10);
   margin: 2rem auto 1rem auto;
   position: relative;
+  .comment__couunt {
+    text-align: right;
+    padding-right: 1rem;
+    width: 100%;
+    padding-bottom: 5px;
+  }
   .comment__sticky {
     display: flex;
-    /* border: 1px solid var(--font-base-grey); */
-    /* border-radius: var(--radius-10); */
-    justify-content: space-between;
+    flex-direction: column;
+    justify-content: flex-end;
     align-items: center;
     position: sticky;
     top: 0;
@@ -32,6 +37,11 @@ const WriteWrapper = styled.article`
     width: 100%;
     height: 10rem;
   }
+  .comment__form {
+    display: flex;
+    width: 100%;
+  }
+
   .comment__input {
     border-radius: 1rem 0 0 1rem;
     border: 1px solid var(--font-base-grey);
@@ -95,6 +105,7 @@ function CommentWrite() {
   const dispatch = useDispatch();
   const boardId = useParams();
   const endPointRef = useRef(null);
+  const [lastData, setLastData] = useState('');
   // 무한 스크롤 옵저버
   const obsHandler = entries => {
     const target = entries[0];
@@ -104,17 +115,31 @@ function CommentWrite() {
     }
   };
   // 무한 스크롤 데이터 요청 핸들러
-  const commentListGetHandler = useCallback((board, val = 1) => {
-    postDetailCommentApi(board, val).then(res => {
-      setCommentLoading(true);
-      setCommentList(prev => {
-        // console.log(prev);
-        return [...prev, ...res.content];
-      });
-      setHasNext(res.hasNext);
-      setCommentLoading(false);
-    });
-  }, []);
+  const commentListGetHandler = useCallback(
+    board => {
+      postDetailCommentApi(board, lastData)
+        .then(res => {
+          // val
+          const lastContent = res.content[res.content.length - 1];
+          setCommentLoading(true);
+          setCommentList(prev => {
+            // console.log(prev);
+            return [...prev, ...res.content];
+          });
+          setHasNext(res.hasNext);
+          if (res.hasNext) {
+            setLastData(
+              `lastCommentId=${lastContent.commentId}&lastCommentCreatedAt=${lastContent.createdAt}`,
+            );
+          }
+          setCommentLoading(false);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    [lastData],
+  );
   // 무한 스크롤 useEffect
   useEffect(() => {
     const observer = new IntersectionObserver(obsHandler, {
@@ -131,15 +156,19 @@ function CommentWrite() {
   // 페이지 증가에 따른 데이터 요청
   useEffect(() => {
     if (page !== 0) {
-      commentListGetHandler(boardId.id, page);
+      commentListGetHandler(boardId.id);
     }
   }, [page]);
 
   // 댓글 삭제 및 수정 wather핸들러
   const deleteModifyWatcherHandler = () => {
-    postDetailCommentApi(boardId.id, 1, commentList.length)
+    postDetailCommentApi(boardId.id, '', commentList.length)
       .then(res => {
+        const lastContent = res.content[res.content.length - 1];
         setCommentList(res.content);
+        setLastData(
+          `lastCommentId=${lastContent.commentId}&lastCommentCreatedAt=${lastContent.createdAt}`,
+        );
       })
       .catch(err => {
         console.log(err);
@@ -163,6 +192,7 @@ function CommentWrite() {
           setCommentLoading(true);
           setHasNext(true);
           setPage(0);
+          setLastData('');
           setCommentList(prev => {
             console.log(prev);
             return [];
@@ -195,25 +225,29 @@ function CommentWrite() {
   return (
     <WriteWrapper className="comment__write">
       <div className="comment__sticky">
-        <input
-          className="comment__input"
-          placeholder="댓글을 입력 해주세요"
-          value={comment}
-          onChange={setComment}
-          onKeyUp={e => {
-            if (e.code === 'Enter') {
-              debounceSendHandler();
-            }
-          }}
-        />
-        <button
-          className="comment__button"
-          onClick={() => {
-            commentSendHandler();
-          }}
-        >
-          등록
-        </button>
+        <div className="comment__couunt">{comment.length}/250</div>
+        <div className="comment__form">
+          <input
+            className="comment__input"
+            placeholder="댓글을 입력 해주세요"
+            maxLength="250"
+            value={comment}
+            onChange={setComment}
+            onKeyUp={e => {
+              if (e.code === 'Enter') {
+                debounceSendHandler();
+              }
+            }}
+          />
+          <button
+            className="comment__button"
+            onClick={() => {
+              commentSendHandler();
+            }}
+          >
+            등록
+          </button>
+        </div>
       </div>
       {commentLoading ? (
         <Loading />

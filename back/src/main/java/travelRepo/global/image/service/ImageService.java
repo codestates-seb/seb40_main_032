@@ -85,6 +85,23 @@ public class ImageService {
         byte[] bytes = out.toByteArray();
 
         return new CustomMultipartFile(bytes, "image", fileName, contentType, bytes.length);
+
+    public void validationImage(MultipartFile image) {
+
+        if (image == null || image.isEmpty()) {
+            throw new BusinessLogicException(ExceptionCode.EMPTY_FILE);
+        }
+
+        String imageName = image.getOriginalFilename();
+
+        if (imageName == null) {
+            throw new BusinessLogicException(ExceptionCode.ILLEGAL_FILENAME);
+        }
+
+        boolean matches = imageName.matches("^\\S.*\\.(jpg|JPG|jpeg|JPEG|png|PNG)$");
+        if (!matches) {
+            throw new BusinessLogicException(ExceptionCode.ILLEGAL_FILENAME);
+        }
     }
 
     public void validationImage(MultipartFile image) {
