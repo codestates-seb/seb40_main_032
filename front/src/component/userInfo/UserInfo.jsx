@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { useParams } from 'react-router-dom';
 import UserInfoTab from './UserInfoTab';
 import UserInfoCard from './UserInfoCard';
 import userDataApi from '../../api/userDataApi';
@@ -29,10 +30,11 @@ function UserInfo() {
     following: '',
     follower: '',
   });
+  const { accountId } = useParams();
 
   // 내 정보 불러오기
   useEffect(() => {
-    userDataApi()
+    userDataApi(accountId)
       .then(res =>
         setMyProfile({
           email: res.data.email,

@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
+import { getCookie } from '../../../util/cookie';
 import { loginModalActions } from '../../../redux/loginModalSlice';
 import SignupModal from '../modal/SignupModal';
-import HedaerDropDownItem from './HeaderDropDownItem';
+import HeaderDropDownItem from './HeaderDropDownItem';
 
 const MenuContainer = styled.div`
   .menu__dropdown {
@@ -67,6 +68,7 @@ function HeaderDropDownBox({ active, activeHandler }) {
   const isLogin = useSelector(state => state.login.isLogin);
   const dispatch = useDispatch();
   const closeFocus = useRef();
+  const accountId = getCookie('accountId');
   const loginModalOpen = () => {
     dispatch(loginModalActions.openLoginModal());
   };
@@ -104,17 +106,17 @@ function HeaderDropDownBox({ active, activeHandler }) {
         <ul>
           {isLogin ? (
             <>
-              <HedaerDropDownItem
+              <HeaderDropDownItem
                 linkText="게시물 작성"
                 link="/publish"
                 activeHandler={activeHandler}
               />
-              <HedaerDropDownItem
+              <HeaderDropDownItem
                 linkText="마이 페이지"
-                link="/mypage"
+                link={`/mypage/mypost/${accountId}`}
                 activeHandler={activeHandler}
               />
-              <HedaerDropDownItem
+              <HeaderDropDownItem
                 linkText="로그아웃"
                 link="/"
                 activeHandler={activeHandler}
@@ -122,12 +124,12 @@ function HeaderDropDownBox({ active, activeHandler }) {
             </>
           ) : (
             <>
-              <HedaerDropDownItem
+              <HeaderDropDownItem
                 linkText="로그인"
                 link="/"
                 activeHandler={loginModalOpen}
               />
-              <HedaerDropDownItem
+              <HeaderDropDownItem
                 linkText="회원가입"
                 link="/"
                 activeHandler={signUpOpenHandler}

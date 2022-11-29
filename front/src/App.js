@@ -49,10 +49,10 @@ function App() {
         <Route path="/postDetail/:id" element={<PostDetailPage />} />
         <Route path="/publish" element={<PublishPage />} />
         <Route path="/mypage" element={<MyPage />}>
-          <Route index element={<MyPost />} />
-          <Route path="mylikes" element={<MyLikes />} />
-          <Route path="myfollower" element={<MyFollower />} />
-          <Route path="myfollowing" element={<MyFollowing />} />
+          <Route path="mypost/:accountId" element={<MyPost />} />
+          <Route path="mylikes/:accountId" element={<MyLikes />} />
+          <Route path="myfollower/:accountId" element={<MyFollower />} />
+          <Route path="myfollowing/:accountId" element={<MyFollowing />} />
         </Route>
         <Route path="/myinfoedit" element={<MyInfoEdit />} />
       </Routes>
