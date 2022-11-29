@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { loginModalActions } from '../../redux/loginModalSlice';
 import { DefaultButton, NegativeButton } from '../common/button/ButtonStyle';
 import { postDetailFollowApi } from '../../api/postDetailApi';
 
@@ -45,11 +47,18 @@ const FollowListLeftSide = styled.div`
 `;
 
 function FollowUserCard({ myFollowing }) {
+  const dispatch = useDispatch();
+  const isLogin = useSelector(state => state.login.isLogin);
   console.log(myFollowing);
+  console.log('로그인여부', isLogin);
 
   const followHandler = () => {
-    postDetailFollowApi(myFollowing.id);
-    window.location.reload();
+    if (isLogin) {
+      postDetailFollowApi(myFollowing.id);
+      window.location.reload();
+    } else {
+      dispatch(loginModalActions.openLoginModal());
+    }
   };
 
   return (
