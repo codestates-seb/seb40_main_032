@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import { DefaultButton, NegativeButton } from '../common/button/ButtonStyle';
 import { postDetailFollowApi } from '../../api/postDetailApi';
 
@@ -21,7 +22,7 @@ const FollowListLeftSide = styled.div`
       border-radius: 50%;
       background: #eee;
       overflow: hidden;
-      > img {
+      > a > img {
         width: 100%;
         height: 100%;
       }
@@ -29,7 +30,8 @@ const FollowListLeftSide = styled.div`
 
     .followList__username {
       margin: 1rem 0 2rem;
-      > p {
+      > a > p {
+        color: var(--font-base-black);
         font-size: 1.4rem;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -54,10 +56,14 @@ function FollowUserCard({ myFollowing }) {
     <FollowListLeftSide>
       <ul className="followList__userinfo">
         <li className="followList__avatar">
-          <img src={myFollowing.profile} alt="아바타" />
+          <Link to={`/mypage/mypost/${myFollowing.id}`}>
+            <img src={myFollowing.profile} alt="아바타" />
+          </Link>
         </li>
         <li className="followList__username">
-          <p>{myFollowing.nickname}</p>
+          <Link to={`/mypage/mypost/${myFollowing.id}`}>
+            <p>{myFollowing.nickname}</p>
+          </Link>
         </li>
         <li className="followList__button">
           {!myFollowing.follow ? (

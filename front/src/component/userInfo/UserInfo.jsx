@@ -46,7 +46,7 @@ function UserInfo() {
         }),
       )
       .catch(err => console.log(err));
-  }, []);
+  }, [accountId]);
 
   return (
     <UserWrapper>
