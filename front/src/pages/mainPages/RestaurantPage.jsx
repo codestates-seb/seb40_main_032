@@ -22,7 +22,7 @@ function RestaurantPage() {
 
   console.log(`search ${search} Re! 변경 감지!!`);
 
-  const [target, hasNext] = useIntersect(
+  const [target, hasNext, setLastData] = useIntersect(
     '/boards?category=RESTAURANT&',
     search,
     20,
@@ -36,11 +36,11 @@ function RestaurantPage() {
     console.log(sorted);
     if (sort !== sorted) {
       setSort(sorted);
-      // dispatch(searchActions.setSort(sorted));
     }
     if (posts.length !== 0) {
       setPosts([]);
     }
+    setLastData('');
     target.current.style.display = 'flex';
   };
 
@@ -49,9 +49,7 @@ function RestaurantPage() {
   }, [sort, search]);
 
   useEffect(() => {
-    if (search) {
-      sortHandler(sort); // pathname === path ? memorySort : 'createdAt,desc'
-    }
+    sortHandler(sort);
   }, [search]);
 
   useEffect(() => {

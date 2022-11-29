@@ -19,7 +19,7 @@ function AllThemePage() {
     pathname === path ? memorySort : 'createdAt,desc',
   );
 
-  const [target, hasNext] = useIntersect(
+  const [target, hasNext, setLastData] = useIntersect(
     '/boards?',
     search,
     20,
@@ -33,13 +33,12 @@ function AllThemePage() {
     console.log(sorted);
     if (sort !== sorted) {
       setSort(sorted);
-      // dispatch(searchActions.setSort(sorted));
     }
     if (posts.length !== 0) {
       setPosts([]);
     }
+    setLastData('');
     target.current.style.display = 'flex';
-    // page.current = 1;
   };
 
   useEffect(() => {
@@ -47,9 +46,7 @@ function AllThemePage() {
   }, [sort, search]);
 
   useEffect(() => {
-    if (search) {
-      sortHandler(sort);
-    }
+    sortHandler(sort);
   }, [search]);
 
   useEffect(() => {
