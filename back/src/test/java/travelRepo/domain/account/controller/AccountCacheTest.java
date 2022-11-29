@@ -1,7 +1,6 @@
 package travelRepo.domain.account.controller;
 
 import com.google.gson.Gson;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +44,7 @@ public class AccountCacheTest extends After {
     private JwtProcessor jwtProcessor;
 
     @Test
-    @DisplayName("회원 조회 캐싱_성공")
+    @DisplayName("회원 단일 조회 캐싱_성공")
     void accountAddCache_Success() throws Exception {
 
         //given
