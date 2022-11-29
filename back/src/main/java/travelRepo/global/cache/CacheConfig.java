@@ -1,4 +1,4 @@
-package travelRepo.global.config;
+package travelRepo.global.cache;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.CacheManager;
@@ -23,7 +23,6 @@ import javax.annotation.PostConstruct;
 public class CacheConfig {
 
     public final RedisConnectionFactory connectionFactory;
-    public final Init init;
 
     @Bean
     public CacheManager redisCacheManager() {
@@ -40,27 +39,4 @@ public class CacheConfig {
                 .fromConnectionFactory(connectionFactory)
                 .cacheDefaults(redisCacheConfiguration).build();
     }
-
-    @PostConstruct
-    public void init() {
-        init.flushRedis();
-    }
-
-    @Component
-    @RequiredArgsConstructor
-    static class Init {
-
-        private final RedisTemplate<String, String> redisTemplate;
-
-        public void flushRedis() {
-            redisTemplate.execute(new RedisCallback<Object>() {
-                @Override
-                public Object doInRedis(RedisConnection connection) throws DataAccessException {
-                    connection.flushAll();
-                    return null;
-                }
-            });
-        }
-    }
-
 }

@@ -16,11 +16,10 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class CacheProcessor {
 
-    RedisTemplate<String, String> redisTemplate;
-    BoardRepository boardRepository;
+    private final RedisTemplate<String, String> redisTemplate;
+    private final BoardRepository boardRepository;
 
     @Transactional
-    @Scheduled(cron = "0 0 0/1 * * ?")
     public void updateViewToMySql() {
 
         Set<String> keys = redisTemplate.keys("boardView*");
@@ -32,8 +31,6 @@ public class CacheProcessor {
             int views = Integer.parseInt(redisTemplate.opsForValue().get(key));
             boardRepository.updateViews(boardId, views);
         }
-
-        flushRedis();
     }
 
     public void flushRedis() {
