@@ -28,7 +28,7 @@ const ItemWrapper = styled.li`
   }
 `;
 
-function HeaderDropDownItem({ linkText, link, activeHandler }) {
+function HeaderDropDownItem({ linkText, link, activeHandler, accountId }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -53,6 +53,12 @@ function HeaderDropDownItem({ linkText, link, activeHandler }) {
     });
   };
 
+  const myPageHandler = () => {
+    activeHandler();
+    navigate(`/mypage/mypost/${accountId}`);
+    window.location.reload();
+  };
+
   return (
     <ItemWrapper>
       {link === '/' ? (
@@ -64,6 +70,8 @@ function HeaderDropDownItem({ linkText, link, activeHandler }) {
         >
           {linkText}
         </button>
+      ) : linkText === '마이 페이지' ? (
+        <button onClick={myPageHandler}>{linkText}</button>
       ) : (
         <Link to={link} onClick={activeHandler}>
           {linkText}

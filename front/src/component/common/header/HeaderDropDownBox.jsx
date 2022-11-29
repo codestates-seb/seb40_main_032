@@ -114,6 +114,7 @@ function HeaderDropDownBox({ active, activeHandler, closeFocus }) {
                 linkText="마이 페이지"
                 link={`/mypage/mypost/${accountId}`}
                 activeHandler={activeHandler}
+                accountId={accountId}
               />
               <HeaderDropDownItem
                 linkText="로그아웃"
