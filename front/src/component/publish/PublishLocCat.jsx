@@ -59,10 +59,10 @@ function PublishLocCat({
       </LocationContainer>
       <CategoryContainer>
         <label htmlFor="category">
-          <span className="category__label">테마</span>
+          <span className="category__label">테마*</span>
           <CategoryLabel
             theme={displayColor}
-          >{` - ${displayText}`}</CategoryLabel>
+          >{` ${displayText}`}</CategoryLabel>
         </label>
         <div id="categories">
           {categoryData.map((item, index) => {
@@ -125,25 +125,27 @@ const CategoryLabel = styled.span`
 `;
 
 const Category = styled.button`
-  background-color: ${props => props.theme.background};
-  color: ${props => props.theme.color};
+  color: ${props => props.theme.background};
+  background-color: ${props => props.theme.color};
   text-align: center;
   width: 31%;
-  border: none;
+  border: 1px solid ${props => props.theme.background};
   border-radius: var(--radius-10);
   font-weight: var(--font-semi-bold);
-  font-size: 15px;
+  font-size: 1.4rem;
   opacity: 0.7;
-  padding: 0.5rem;
+  padding: 2px;
   cursor: pointer;
-  &:hover,
-  &.isSelected {
+  &.isSelected,
+  &:hover {
+    background-color: ${props => props.theme.background};
+    color: ${props => props.theme.color};
     opacity: 1;
     font-weight: var(--font-bold);
     transition: 0.2s all ease-in-out;
-    box-shadow: var(--bx-sh-four);
+    scale: calc(1.03);
   }
   @media screen and (max-width: 549px) {
-    font-size: 10px;
+    font-size: 1rem;
   }
 `;

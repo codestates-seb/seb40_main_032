@@ -109,7 +109,7 @@ function PublishForm() {
 
   return (
     <Container>
-      <h1>{isPublishPage ? '새 게시물' : '내 글 수정'}</h1>
+      <h1>{isPublishPage ? '새 게시물*' : '내 글 수정'}</h1>
       <PublishPhoto
         setPhotoUrl={setPhotoUrl}
         deleteImages={deleteImages}
@@ -117,7 +117,7 @@ function PublishForm() {
       />
       <TitleContainer>
         <div className="title__label">
-          <label htmlFor="title">제목</label>
+          <label htmlFor="title">제목*</label>
         </div>
         <input
           className="title__input"
@@ -138,7 +138,7 @@ function PublishForm() {
       </TitleContainer>
       <ContentContainer>
         <div className="content__label">
-          <label htmlFor="content">스토리 공유</label>
+          <label htmlFor="content">스토리 공유*</label>
         </div>
         <textarea
           className="content__textarea"
