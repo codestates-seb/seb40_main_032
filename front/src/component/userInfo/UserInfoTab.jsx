@@ -1,4 +1,4 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { AiFillHeart, AiFillPicture } from 'react-icons/ai';
 
@@ -143,17 +143,20 @@ const PostIcon = styled(AiFillPicture)`
 
 function UserInfoTab({ userdata }) {
   const { pathname } = useLocation();
+  const { accountId } = useParams();
 
   return (
     <MainThemeBar>
       <ul className="theme__lists">
         <li
           className={
-            pathname === '/mypage' ? 'theme__mypost active' : 'theme__mypost'
+            pathname === `/mypage/mypost/${accountId}`
+              ? 'theme__mypost active'
+              : 'theme__mypost'
           }
         >
           <button>
-            <Link to="/mypage">
+            <Link to={`/mypage/mypost/${accountId}`}>
               <PostIcon />
               <span>게시글</span>
             </Link>
@@ -161,13 +164,13 @@ function UserInfoTab({ userdata }) {
         </li>
         <li
           className={
-            pathname === '/mypage/mylikes'
+            pathname === `/mypage/mylikes/${accountId}`
               ? 'theme__mylikes active'
               : 'theme__mylikes'
           }
         >
           <button>
-            <Link to="/mypage/mylikes">
+            <Link to={`/mypage/mylikes/${accountId}`}>
               <HeartIcon />
               <span>좋아요</span>
             </Link>
@@ -175,13 +178,13 @@ function UserInfoTab({ userdata }) {
         </li>
         <li
           className={
-            pathname === '/mypage/myfollower'
+            pathname === `/mypage/myfollower/${accountId}`
               ? 'theme__myfollower active'
               : 'theme__myfollower'
           }
         >
           <button>
-            <Link to="/mypage/myfollower">
+            <Link to={`/mypage/myfollower/${accountId}`}>
               <CircleIcon>{userdata.follower}</CircleIcon>
               <span>팔로워 </span>
             </Link>
@@ -189,13 +192,13 @@ function UserInfoTab({ userdata }) {
         </li>
         <li
           className={
-            pathname === '/mypage/myfollowing'
+            pathname === `/mypage/myfollowing/${accountId}`
               ? 'theme__myfollowing active'
               : 'theme__myfollowing'
           }
         >
           <button>
-            <Link to="/mypage/myfollowing">
+            <Link to={`/mypage/myfollowing/${accountId}`}>
               <CircleIcon>{userdata.following}</CircleIcon>
               <span>팔로잉</span>
             </Link>
