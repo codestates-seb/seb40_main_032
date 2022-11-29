@@ -45,7 +45,7 @@ public class AccountCacheTest extends After {
 
     @Test
     @DisplayName("회원 단일 조회 캐싱_성공")
-    void accountAddCache_Success() throws Exception {
+    void accountDetailsCache_Success() throws Exception {
 
         //given
         Long accountId = 10001L;
@@ -62,6 +62,30 @@ public class AccountCacheTest extends After {
         actions.andExpect(status().isOk());
 
         assertThat(findAccount).isNotNull();
+    }
+
+    @Test
+    @DisplayName("로그인 회원 조회 캐싱_성공")
+    void loginAccountDetailsCache_Success() throws Exception {
+
+        //given
+        Long accountId = 10001L;
+        Account account = accountRepository.findById(accountId).get();
+        ValueOperations<String, String> valueOperations = redisTemplate.opsForValue();
+        String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
+
+        //when
+        ResultActions actions = mockMvc.perform(
+                get("/accounts/login")
+                        .header("Authorization", jwt)
+        );
+
+        String findLoginAccount = valueOperations.get("findLoginAccount::" + accountId);
+
+        //then
+        actions.andExpect(status().isOk());
+
+        assertThat(findLoginAccount).isNotNull();
     }
 
     @Test
@@ -88,6 +112,10 @@ public class AccountCacheTest extends After {
                 get("/accounts/{accountId}", accountId)
         );
         mockMvc.perform(
+                get("/accounts/login")
+                        .header("Authorization", jwt)
+        );
+        mockMvc.perform(
                 get("/boards/{boardId}", boardId1)
         );
         mockMvc.perform(
@@ -105,11 +133,13 @@ public class AccountCacheTest extends After {
 
         //then
         String findAccount = valueOperations.get("findAccount::" + accountId);
+        String findLoginAccount = valueOperations.get("findLoginAccount::" + accountId);
         String findBoard1 = valueOperations.get("findBoard::" + boardId1);
         String findBoard2 = valueOperations.get("findBoard::" + boardId2);
 
         actions.andExpect(status().isOk());
         assertThat(findAccount).isNull();
+        assertThat(findLoginAccount).isNull();
         assertThat(findBoard1).isNull();
         assertThat(findBoard2).isNull();
     }
@@ -138,6 +168,10 @@ public class AccountCacheTest extends After {
                 get("/accounts/{accountId}", accountId)
         );
         mockMvc.perform(
+                get("/accounts/login")
+                        .header("Authorization", jwt)
+        );
+        mockMvc.perform(
                 get("/boards/{boardId}", boardId1)
         );
         mockMvc.perform(
@@ -155,11 +189,13 @@ public class AccountCacheTest extends After {
 
         //then
         String findAccount = valueOperations.get("findAccount::" + accountId);
+        String findLoginAccount = valueOperations.get("findLoginAccount::" + accountId);
         String findBoard1 = valueOperations.get("findBoard::" + boardId1);
         String findBoard2 = valueOperations.get("findBoard::" + boardId2);
 
         actions.andExpect(status().isBadRequest());
         assertThat(findAccount).isNotNull();
+        assertThat(findLoginAccount).isNotNull();
         assertThat(findBoard1).isNotNull();
         assertThat(findBoard2).isNotNull();
     }
@@ -180,6 +216,10 @@ public class AccountCacheTest extends After {
                 get("/accounts/{accountId}", accountId)
         );
         mockMvc.perform(
+                get("/accounts/login")
+                        .header("Authorization", jwt)
+        );
+        mockMvc.perform(
                 get("/boards/{boardId}", boardId1)
         );
         mockMvc.perform(
@@ -194,11 +234,13 @@ public class AccountCacheTest extends After {
 
         //then
         String findAccount = valueOperations.get("findAccount::" + accountId);
+        String findLoginAccount = valueOperations.get("findLoginAccount::" + accountId);
         String findBoard1 = valueOperations.get("findBoard::" + boardId1);
         String findBoard2 = valueOperations.get("findBoard::" + boardId2);
 
         actions.andExpect(status().isOk());
         assertThat(findAccount).isNull();
+        assertThat(findLoginAccount).isNull();
         assertThat(findBoard1).isNull();
         assertThat(findBoard2).isNull();
     }
@@ -213,10 +255,15 @@ public class AccountCacheTest extends After {
         Long boardId2 = 12004L;
         ValueOperations<String, String> valueOperations = redisTemplate.opsForValue();
         Account account = accountRepository.findById(accountId).get();
-        String jwt = "Bea " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
+        String illegalJwt = "Bea " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
+        String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
 
         mockMvc.perform(
                 get("/accounts/{accountId}", accountId)
+        );
+        mockMvc.perform(
+                get("/accounts/login")
+                        .header("Authorization", jwt)
         );
         mockMvc.perform(
                 get("/boards/{boardId}", boardId1)
@@ -228,16 +275,18 @@ public class AccountCacheTest extends After {
         //when
         ResultActions actions = mockMvc.perform(
                 delete("/accounts")
-                        .header("Authorization", jwt)
+                        .header("Authorization", illegalJwt)
         );
 
         //then
         String findAccount = valueOperations.get("findAccount::" + accountId);
+        String findLoginAccount = valueOperations.get("findLoginAccount::" + accountId);
         String findBoard1 = valueOperations.get("findBoard::" + boardId1);
         String findBoard2 = valueOperations.get("findBoard::" + boardId2);
 
         actions.andExpect(status().isUnauthorized());
         assertThat(findAccount).isNotNull();
+        assertThat(findLoginAccount).isNotNull();
         assertThat(findBoard1).isNotNull();
         assertThat(findBoard2).isNotNull();
     }

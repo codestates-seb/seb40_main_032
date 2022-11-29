@@ -47,7 +47,7 @@ public class BoardCacheTest {
 
     @Test
     @DisplayName("게시물 단일 조회 캐싱_성공")
-    void boardAddCache_Success() throws Exception {
+    void boardDetailsCache_Success() throws Exception {
 
         // given
         Long boardId = 12001L;
@@ -169,9 +169,11 @@ public class BoardCacheTest {
 
         //then
         String findBoard = valueOperations.get("findBoard::" + boardId);
+        String boardView = valueOperations.get("boardView::" + boardId);
 
         actions.andExpect(status().isOk());
         assertThat(findBoard).isNull();
+        assertThat(boardView).isNull();
     }
 
     @Test
@@ -198,8 +200,10 @@ public class BoardCacheTest {
 
         //then
         String findBoard = valueOperations.get("findBoard::" + boardId);
+        String boardView = valueOperations.get("boardView::" + boardId);
 
         actions.andExpect(status().isUnauthorized());
         assertThat(findBoard).isNotNull();
+        assertThat(boardView).isNotNull();
     }
 }
