@@ -6,8 +6,6 @@ import travelRepo.domain.board.dto.FollowBoardDetailsRes;
 import travelRepo.domain.board.entity.Board;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 @Data
@@ -33,7 +31,7 @@ public class FollowAccountDetailsRes {
         List<Board> accountBoards = account.getBoards();
 
         accountBoards.sort((a, b) -> a.getCreatedAt().isAfter(b.getCreatedAt()) ? -1 : 1);
-        int size = Math.min(5, accountBoards.size());
+        int size = Math.min(6, accountBoards.size());
         for (int i = 0; i < size; i++) {
             Board board = accountBoards.get(i);
             followAccountDetailsRes.getBoards().add(FollowBoardDetailsRes.of(board));
