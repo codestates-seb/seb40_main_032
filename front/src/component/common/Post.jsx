@@ -128,6 +128,7 @@ const PostWrapper = styled.div`
 
           .post__writer {
             font-size: 1.3rem;
+            color: var(--font-base-black);
           }
         }
       }
