@@ -1,5 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { loginModalActions } from '../../redux/loginModalSlice';
 import { DefaultButton, NegativeButton } from '../common/button/ButtonStyle';
 import { postDetailFollowApi } from '../../api/postDetailApi';
 
@@ -21,7 +24,7 @@ const FollowListLeftSide = styled.div`
       border-radius: 50%;
       background: #eee;
       overflow: hidden;
-      > img {
+      > a > img {
         width: 100%;
         height: 100%;
       }
@@ -29,7 +32,8 @@ const FollowListLeftSide = styled.div`
 
     .followList__username {
       margin: 1rem 0 2rem;
-      > p {
+      > a > p {
+        color: var(--font-base-black);
         font-size: 1.4rem;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -43,21 +47,32 @@ const FollowListLeftSide = styled.div`
 `;
 
 function FollowUserCard({ myFollowing }) {
+  const dispatch = useDispatch();
+  const isLogin = useSelector(state => state.login.isLogin);
   console.log(myFollowing);
+  console.log('로그인여부', isLogin);
 
   const followHandler = () => {
-    postDetailFollowApi(myFollowing.id);
-    window.location.reload();
+    if (isLogin) {
+      postDetailFollowApi(myFollowing.id);
+      window.location.reload();
+    } else {
+      dispatch(loginModalActions.openLoginModal());
+    }
   };
 
   return (
     <FollowListLeftSide>
       <ul className="followList__userinfo">
         <li className="followList__avatar">
-          <img src={myFollowing.profile} alt="아바타" />
+          <Link to={`/mypage/mypost/${myFollowing.id}`}>
+            <img src={myFollowing.profile} alt="아바타" />
+          </Link>
         </li>
         <li className="followList__username">
-          <p>{myFollowing.nickname}</p>
+          <Link to={`/mypage/mypost/${myFollowing.id}`}>
+            <p>{myFollowing.nickname}</p>
+          </Link>
         </li>
         <li className="followList__button">
           {!myFollowing.follow ? (
