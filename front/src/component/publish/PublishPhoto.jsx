@@ -80,15 +80,23 @@ const Container = styled.section`
 
 const CameraIcon = styled(BsCamera)`
   color: var(--holder-base-color);
-  font-size: 3.3rem;
+  font-size: 3.5rem;
   cursor: pointer;
+  opacity: 0.8;
   @keyframes scaler {
+    25% {
+      font-size: 3.25rem;
+    }
     50% {
       font-size: 3rem;
+    }
+    75% {
+      font-size: 3.25rem;
     }
   }
   &:hover {
     animation: scaler 1s linear infinite;
+    opacity: 1;
   }
 `;
 
