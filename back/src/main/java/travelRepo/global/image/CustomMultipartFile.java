@@ -1,4 +1,4 @@
-package travelRepo.global.image.service;
+package travelRepo.global.image;
 
 import org.springframework.web.multipart.MultipartFile;
 

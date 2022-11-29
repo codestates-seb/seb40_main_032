@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import travelRepo.global.exception.BusinessLogicException;
 import travelRepo.global.exception.ExceptionCode;
+import travelRepo.global.image.CustomMultipartFile;
 import travelRepo.global.image.repository.ImageRepository;
 
 import javax.imageio.ImageIO;
