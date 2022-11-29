@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { useParams } from 'react-router-dom';
 import Post from '../../component/common/Post';
 import useIntersect from '../../hooks/useIntersect';
-import { getCookie } from '../../util/cookie';
 import LoadingSpinner from '../../component/common/LoadingSpinner';
 
 const MyPageMain = styled.main`
@@ -56,7 +56,7 @@ const MyPageMain = styled.main`
 function MyPost() {
   const [myPost, setMyPost] = useState([]);
   const [isPending, setIsPending] = useState(false);
-  const accountId = getCookie('accountId');
+  const { accountId } = useParams();
   const [target] = useIntersect(
     `/boards/account/${accountId}?`,
     '',

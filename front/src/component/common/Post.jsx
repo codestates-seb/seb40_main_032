@@ -169,14 +169,18 @@ function Post({ post }) {
               ))}
             </ul>
             <div className="post__info">
-              <span className="post__avatar">
-                <img
-                  className="post__user"
-                  src={post.account.profile}
-                  alt="유저"
-                />
-              </span>
-              <p className="post__writer">{post.account.nickname}</p>
+              <Link to={`/mypage/mypost/${post.account.accountId}`}>
+                <span className="post__avatar">
+                  <img
+                    className="post__user"
+                    src={post.account.profile}
+                    alt="유저"
+                  />
+                </span>
+              </Link>
+              <Link to={`/mypage/mypost/${post.account.accountId}`}>
+                <p className="post__writer">{post.account.nickname}</p>
+              </Link>
             </div>
           </div>
         </div>
