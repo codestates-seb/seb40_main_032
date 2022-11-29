@@ -50,7 +50,7 @@ const Container = styled.main`
     justify-content: center;
   }
 
-  @media screen and (max-width: 999px) {
+  @media screen and (max-width: 1100px) {
     .detail__body {
       width: 100%;
       height: auto;
