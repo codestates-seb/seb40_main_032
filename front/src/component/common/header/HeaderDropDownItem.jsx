@@ -1,8 +1,10 @@
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
+import ReactGA from 'react-ga';
 import { loginActions } from '../../../redux/loginSlice';
 import { removeCookie } from '../../../util/cookie';
+import GaEvent from '../../../util/eventGaTracking';
 
 const ItemWrapper = styled.li`
   display: flex;
@@ -45,6 +47,10 @@ function HeaderDropDownItem({ linkText, link, activeHandler }) {
     cookieRemover();
     dispatch(loginActions.logout());
     navigate('/');
+    ReactGA.event({
+      category: GaEvent.Category.auth,
+      action: GaEvent.Action.auth.logout,
+    });
   };
 
   return (
