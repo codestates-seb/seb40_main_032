@@ -122,6 +122,9 @@ const CategoryContainer = styled.div`
 const CategoryLabel = styled.span`
   font-size: var(--font-15);
   color: ${props => props.theme.background};
+  @media screen and (max-width: 549px) {
+    font-size: 13px;
+  }
 `;
 
 const Category = styled.button`

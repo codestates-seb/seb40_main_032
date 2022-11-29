@@ -109,7 +109,7 @@ function PublishForm() {
 
   return (
     <Container>
-      <h1>{isPublishPage ? '새 게시물*' : '내 글 수정'}</h1>
+      <h1>{isPublishPage ? '새 게시물' : '내 글 수정'}</h1>
       <PublishPhoto
         setPhotoUrl={setPhotoUrl}
         deleteImages={deleteImages}
@@ -189,7 +189,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   color: var(--font-base-black);
-  gap: 4rem;
+  gap: 2rem;
   > h1 {
     font-size: 2.5rem;
     margin-top: 4vw;

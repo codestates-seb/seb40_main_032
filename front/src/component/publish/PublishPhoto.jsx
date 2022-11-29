@@ -8,27 +8,19 @@ import postPhotoApi from '../../api/postPhotoApi';
 const Container = styled.section`
   display: flex;
   flex-direction: column;
-  flex-wrap: nowrap;
 
   .uploader__container {
     display: flex;
     width: 100%;
     height: 100%;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     > div {
       display: flex;
     }
   }
 
-  .uploader__default {
-    display: flex;
-    width: 10rem;
-    height: 10rem;
-    border: 2px dashed var(--holder-base-color);
-    border-radius: 1rem;
-  }
-
   #uploader__preview {
+    flex-wrap: wrap;
     position: relative;
   }
 
@@ -48,6 +40,7 @@ const Container = styled.section`
 
   .upload__button--wrapper {
     width: 10rem;
+    height: 10rem;
     border-radius: 1rem;
     border: 2px dashed var(--holder-base-color);
     display: flex;
@@ -58,6 +51,9 @@ const Container = styled.section`
       display: flex;
       justify-content: center;
       align-items: center;
+    }
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.02);
     }
   }
 
@@ -72,14 +68,10 @@ const Container = styled.section`
   .message__error {
     color: red;
   }
+
   @media screen and (max-width: 549px) {
     width: 100%;
     justify-content: space-between;
-    .uploader__default,
-    .upload__button--wrapper {
-      width: 10rem;
-      height: 10rem;
-    }
     .uploader__preview {
       margin-right: 0;
     }
@@ -88,7 +80,16 @@ const Container = styled.section`
 
 const CameraIcon = styled(BsCamera)`
   color: var(--holder-base-color);
-  font-size: 3rem;
+  font-size: 3.3rem;
+  cursor: pointer;
+  @keyframes scaler {
+    50% {
+      font-size: 3rem;
+    }
+  }
+  &:hover {
+    animation: scaler 1s linear infinite;
+  }
 `;
 
 const RemoveIcon = styled(IoIosRemoveCircleOutline)`
@@ -177,10 +178,8 @@ const PublishPhoto = forwardRef(({ setPhotoUrl, deleteImages }, ref) => {
   return (
     <Container>
       <div className="uploader__container">
-        {photos.length === 0 ? (
-          <div className="uploader__default" />
-        ) : (
-          <div>
+        {photos.length === 0 ? null : (
+          <>
             {photos.map((url, index) => (
               <div id="uploader__preview" key={uuid()}>
                 <img src={url} alt="photos" className="uploader__preview" />
@@ -190,7 +189,7 @@ const PublishPhoto = forwardRef(({ setPhotoUrl, deleteImages }, ref) => {
                 />
               </div>
             ))}
-          </div>
+          </>
         )}
         <div
           className="upload__button--wrapper"
