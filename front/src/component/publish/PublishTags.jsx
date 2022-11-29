@@ -41,17 +41,18 @@ function PublishTags({ formData, setFormData, tags, setTags }) {
             <button onClick={() => handleTagRemove(index)}>❌</button>
           </li>
         ))}
-        <input
-          className="tag__input--create"
-          id="tag"
-          type="text"
-          value={newTag || ''}
-          maxLength="6"
-          onChange={event => setNewTag(event.target.value)}
-          onKeyDown={event => handleTagAdd(event)}
-          placeholder="# 태그를 입력하세요"
-          disabled={tags.length === 5}
-        />
+        {tags.length === 5 ? null : (
+          <input
+            className="tag__input--create"
+            id="tag"
+            type="text"
+            value={newTag || ''}
+            maxLength="6"
+            onChange={event => setNewTag(event.target.value)}
+            onKeyDown={event => handleTagAdd(event)}
+            placeholder="태그를 입력하세요"
+          />
+        )}
       </ul>
     </TagContainer>
   );
@@ -73,6 +74,7 @@ const TagContainer = styled.section`
     flex-wrap: wrap;
     .tag {
       display: flex;
+      height: 3.5rem;
       align-items: center;
       white-space: nowrap;
       margin: 0 0.5rem 0 1rem;
@@ -97,7 +99,8 @@ const TagContainer = styled.section`
     .tag__input--create {
       border: none;
       flex: 1;
-      margin-top: 0;
+      margin-top: 0px;
+      width: 12.3rem;
     }
   }
 `;

@@ -112,7 +112,8 @@ const CategoryContainer = styled.div`
     justify-content: space-around;
     border: 1px solid var(--holder-base-color);
     border-radius: var(--radius-10);
-    padding: 0.5rem;
+    height: 3.5rem;
+    padding: 0.3rem;
   }
   @media screen and (max-width: 549px) {
     width: 70%;
@@ -137,7 +138,6 @@ const Category = styled.button`
   font-weight: var(--font-semi-bold);
   font-size: 1.4rem;
   opacity: 0.7;
-  padding: 2px;
   cursor: pointer;
   &.isSelected,
   &:hover {

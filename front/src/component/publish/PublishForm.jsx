@@ -194,6 +194,9 @@ const Container = styled.div`
     font-size: 2.5rem;
     margin-top: 4vw;
   }
+  input {
+    height: 3.5rem;
+  }
   input,
   textarea {
     width: 100%;
