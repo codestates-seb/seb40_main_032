@@ -71,7 +71,7 @@ const PageButtons = styled.div`
   }
 `;
 
-function Pagination({ totalLists, currentPage, setCurrentPage }) {
+function Pagination({ totalLists, currentPage, setCurrentPage, setIsPending }) {
   const listPerPage = 5;
   const totalPages = Math.ceil(totalLists / listPerPage);
   // 전체 페이지 배열
@@ -96,12 +96,14 @@ function Pagination({ totalLists, currentPage, setCurrentPage }) {
   const handlePrev = () => {
     if (!prevActive) return;
 
+    setIsPending(true);
     setPageGroup(totalPageArr.slice(pageGroup[0] - 5 - 1, pageGroup[0] - 1));
     setCurrentPage(pageGroup[0] - 5);
   };
 
   // 페이지 핸들러
   const handlePage = e => {
+    setIsPending(true);
     setCurrentPage(Number(e.target.value));
   };
 
@@ -109,6 +111,7 @@ function Pagination({ totalLists, currentPage, setCurrentPage }) {
   const handleNext = () => {
     if (!nextActive) return;
 
+    setIsPending(true);
     setPageGroup(totalPageArr.slice(pageGroup[4], pageGroup[4] + 5));
     setCurrentPage(pageGroup[0] + 5);
   };
