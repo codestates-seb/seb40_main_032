@@ -18,6 +18,7 @@ import travelRepo.domain.board.dto.BoardModifyReq;
 import travelRepo.domain.board.entity.Category;
 import travelRepo.global.security.authentication.UserAccount;
 import travelRepo.global.security.jwt.JwtProcessor;
+import travelRepo.util.After;
 
 import java.util.List;
 
@@ -28,7 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Transactional
 @SpringBootTest
 @AutoConfigureMockMvc
-public class BoardCacheTest {
+public class BoardCacheTest extends After {
 
     @Autowired
     private MockMvc mockMvc;
