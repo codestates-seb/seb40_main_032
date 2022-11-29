@@ -105,7 +105,7 @@ function PublishForm() {
     formData.title.length >= 5 &&
     formData.title.length <= 40 &&
     formData.content.length >= 5 &&
-    formData.category !== undefined;
+    formData.category !== '';
 
   return (
     <Container>

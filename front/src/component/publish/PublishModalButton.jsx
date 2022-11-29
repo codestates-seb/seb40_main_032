@@ -65,13 +65,25 @@ function PublishModalButton({ boardId, mandatory, formData, isPublishPage }) {
     });
   };
 
+  const mandatoryAlert = () => {
+    toast('필수 정보를 입력하세요', {
+      position: 'top-right',
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      progress: undefined,
+      theme: 'light',
+    });
+  };
+
   const showAlert = () => {
     if (formData.images.length === 0) {
       photoAlert();
-    }
-    if (formData.category === '') {
+    } else if (formData.category === '') {
       categoryAlert();
-    }
+    } else mandatoryAlert();
   };
 
   // 게시글 등록 요청
