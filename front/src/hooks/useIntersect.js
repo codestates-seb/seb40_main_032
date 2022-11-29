@@ -85,7 +85,7 @@ const useIntersect = (
     return () => io.disconnect();
   }, [hasNextPage, sort, query, lastData]);
 
-  return [target, SetHasNextPage];
+  return [target, SetHasNextPage, setLastData];
 };
 
 export default useIntersect;
