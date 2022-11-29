@@ -12,7 +12,7 @@ const MyPageWrapper = styled.div`
 
 function MyPage() {
   return (
-    <MyPageWrapper className="mypagewrapper">
+    <MyPageWrapper>
       <UserInfo />
       <Outlet />
     </MyPageWrapper>
