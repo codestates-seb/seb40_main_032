@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { getCookie } from '../../../util/cookie';
@@ -64,10 +64,9 @@ const MenuContainer = styled.div`
   }
 `;
 
-function HeaderDropDownBox({ active, activeHandler }) {
+function HeaderDropDownBox({ active, activeHandler, closeFocus }) {
   const isLogin = useSelector(state => state.login.isLogin);
   const dispatch = useDispatch();
-  const closeFocus = useRef();
   const accountId = getCookie('accountId');
   const loginModalOpen = () => {
     dispatch(loginModalActions.openLoginModal());
@@ -100,7 +99,7 @@ function HeaderDropDownBox({ active, activeHandler }) {
   }, []);
 
   return (
-    <MenuContainer ref={closeFocus}>
+    <MenuContainer>
       {signUpModal && <SignupModal onSignupModalCloser={signUpCloseHandler} />}
       <div className={`menu__dropdown ${active ? 'active' : 'inactive'}`}>
         <ul>
