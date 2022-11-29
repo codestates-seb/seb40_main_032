@@ -45,6 +45,4 @@ public class ImageController {
 
         return new ResponseEntity<>(ImageUploadRes.of(imagePaths), HttpStatus.OK);
     }
-
-
 }
