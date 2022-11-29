@@ -17,7 +17,7 @@ public class After {
         }
 
         for (File file : files) {
-            if (file.getName().equals(".gitkeep")) {
+            if (file.getName().equals(".gitkeep") || file.getName().equals("test.jpeg")) {
                 continue;
             }
             file.delete();

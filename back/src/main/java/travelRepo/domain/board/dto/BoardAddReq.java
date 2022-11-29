@@ -22,6 +22,8 @@ public class BoardAddReq {
 
     private String location;
 
+    private String thumbnail;
+
     @NotNull
     private Category category;
 
@@ -36,7 +38,7 @@ public class BoardAddReq {
                 .title(title)
                 .content(content)
                 .location(location)
-                .thumbnail(images.get(0))
+                .thumbnail(thumbnail)
                 .category(category)
                 .build();
 

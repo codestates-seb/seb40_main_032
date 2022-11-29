@@ -18,6 +18,8 @@ public class BoardModifyReq {
 
     private String location;
 
+    private String thumbnail;
+
     private Category category;
 
     private List<String> tags;
@@ -26,16 +28,12 @@ public class BoardModifyReq {
 
     public Board toBoard() {
 
-        Board.BoardBuilder builder = Board.builder()
+        return Board.builder()
                 .title(title)
                 .content(content)
                 .location(location)
-                .category(category);
-
-        if (images != null) {
-            builder.thumbnail(images.get(0));
-        }
-
-        return builder.build();
+                .thumbnail(thumbnail)
+                .category(category)
+                .build();
     }
 }
