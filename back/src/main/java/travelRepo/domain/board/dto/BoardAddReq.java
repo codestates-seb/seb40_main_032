@@ -17,7 +17,7 @@ public class BoardAddReq {
     private String title;
 
     @NotNull
-    @Length(min = 5)
+    @Length(min = 5, max = 2000)
     private String content;
 
     private String location;

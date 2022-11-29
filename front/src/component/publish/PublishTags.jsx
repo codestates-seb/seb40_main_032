@@ -3,21 +3,30 @@ import styled from 'styled-components';
 
 function PublishTags({ formData, setFormData, tags, setTags }) {
   const [newTag, setNewTag] = useState();
+  const [message, setMessage] = useState();
+  const [error, setError] = useState(false);
 
   // 해쉬태그 추가
-  const handleTagAdd = async event => {
-    const { value } = event.target;
-    const filtered = tags.filter(el => el === value);
-
+  const handleTagAdd = event => {
     if (event.key === 'Enter' || event.key === ',') {
-      if (value !== '' && filtered.indexOf(value) === -1 && value.length <= 6) {
-        if (tags.length <= 4) {
-          setTags([...tags, value]);
-          setFormData({ ...formData, tags: [...tags, value] });
-          setTimeout(() => {
-            setNewTag('');
-          }, 0);
-        }
+      const { value } = event.target;
+      const filtered = tags.filter(el => el === value);
+
+      if (value === '') {
+        setMessage('빈 태그는 입력할 수 없습니다.');
+        setError(true);
+      }
+      if (filtered.length !== 0) {
+        setMessage('중복된 태그는 입력할 수 없습니다.');
+        setError(true);
+      }
+      if (value !== '' && filtered.length === 0 && value.length <= 6) {
+        setTags([...tags, value]);
+        setFormData({ ...formData, tags: [...tags, value] });
+        setTimeout(() => {
+          setNewTag('');
+          setError(false);
+        }, 0);
       }
     }
   };
@@ -41,18 +50,20 @@ function PublishTags({ formData, setFormData, tags, setTags }) {
             <button onClick={() => handleTagRemove(index)}>❌</button>
           </li>
         ))}
-        <input
-          className="tag__input--create"
-          id="tag"
-          type="text"
-          value={newTag || ''}
-          maxLength="6"
-          onChange={event => setNewTag(event.target.value)}
-          onKeyDown={event => handleTagAdd(event)}
-          placeholder="# 태그를 입력하세요"
-          disabled={tags.length === 5}
-        />
+        {tags.length === 5 ? null : (
+          <input
+            className="tag__input--create"
+            id="tag"
+            type="text"
+            value={newTag || ''}
+            maxLength="6"
+            onChange={event => setNewTag(event.target.value)}
+            onKeyDown={event => handleTagAdd(event)}
+            placeholder="태그를 입력하세요 (최대 5개)"
+          />
+        )}
       </ul>
+      {error ? <ErrorMessage>{message}</ErrorMessage> : null}
     </TagContainer>
   );
 }
@@ -73,6 +84,7 @@ const TagContainer = styled.section`
     flex-wrap: wrap;
     .tag {
       display: flex;
+      height: 3.5rem;
       align-items: center;
       white-space: nowrap;
       margin: 0 0.5rem 0 1rem;
@@ -97,7 +109,13 @@ const TagContainer = styled.section`
     .tag__input--create {
       border: none;
       flex: 1;
-      margin-top: 0;
+      margin-top: 0px;
+      width: 12.3rem;
     }
   }
+`;
+
+// 에러 메세지
+const ErrorMessage = styled.span`
+  color: red;
 `;

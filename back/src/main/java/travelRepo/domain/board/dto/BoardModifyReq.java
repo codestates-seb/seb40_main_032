@@ -13,7 +13,7 @@ public class BoardModifyReq {
     @Length(min = 5, max = 40)
     private String title;
 
-    @Length(min = 5)
+    @Length(min = 5, max = 2000)
     private String content;
 
     private String location;

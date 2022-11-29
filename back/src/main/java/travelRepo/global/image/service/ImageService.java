@@ -19,9 +19,7 @@ public class ImageService {
 
     public String uploadImage(MultipartFile image, String path) {
 
-        if (image == null || image.isEmpty()) {
-            throw new BusinessLogicException(ExceptionCode.EMPTY_FILE);
-        }
+        validationImage(image);
 
         try {
             return imageRepository.save(image, path);
@@ -35,5 +33,23 @@ public class ImageService {
         return images.stream()
                 .map(image -> uploadImage(image, path))
                 .collect(Collectors.toList());
+    }
+
+    public void validationImage(MultipartFile image) {
+
+        if (image == null || image.isEmpty()) {
+            throw new BusinessLogicException(ExceptionCode.EMPTY_FILE);
+        }
+
+        String imageName = image.getOriginalFilename();
+
+        if (imageName == null) {
+            throw new BusinessLogicException(ExceptionCode.ILLEGAL_FILENAME);
+        }
+
+        boolean matches = imageName.matches("^\\S.*\\.(jpg|JPG|jpeg|JPEG|png|PNG)$");
+        if (!matches) {
+            throw new BusinessLogicException(ExceptionCode.ILLEGAL_FILENAME);
+        }
     }
 }
