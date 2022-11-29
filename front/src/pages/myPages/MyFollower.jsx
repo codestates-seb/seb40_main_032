@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import FollowList from '../../component/follow/FollowList';
 import followDataApi from '../../api/followDataApi';
@@ -20,9 +21,10 @@ function MyFollower() {
   const [myFollowing, setMyFollowing] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalLists, setTotalLists] = useState(0);
+  const { accountId } = useParams();
 
   useEffect(() => {
-    followDataApi(currentPage, 'follower')
+    followDataApi(accountId, currentPage, 'follower')
       .then(res => {
         setMyFollowing(res.data.content);
         setTotalLists(res.data.totalElements);
