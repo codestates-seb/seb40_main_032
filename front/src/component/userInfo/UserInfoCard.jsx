@@ -47,7 +47,7 @@ const EditButton = styled(Link)`
 `;
 
 function UserInfoCard({ userdata }) {
-  const { paramAccountId } = useParams();
+  const { accountId } = useParams();
   const cookieAccountId = getCookie('accountId');
 
   return (
@@ -57,7 +57,7 @@ function UserInfoCard({ userdata }) {
         <UserInfoText>
           <div>
             <h1>{userdata.nickname}</h1>
-            {paramAccountId === cookieAccountId && (
+            {accountId === cookieAccountId && (
               <EditButton to="/myinfoedit">내 정보수정</EditButton>
             )}
           </div>
