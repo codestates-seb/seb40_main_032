@@ -11,24 +11,22 @@ function PublishTags({ formData, setFormData, tags, setTags }) {
     if (event.key === 'Enter' || event.key === ',') {
       const { value } = event.target;
       const filtered = tags.filter(el => el === value);
+
       if (value === '') {
         setMessage('빈 태그는 입력할 수 없습니다.');
         setError(true);
       }
-      if (filtered.indexOf(value) !== -1) {
+      if (filtered.length !== 0) {
         setMessage('중복된 태그는 입력할 수 없습니다.');
         setError(true);
       }
-
-      if (value !== '' && filtered.indexOf(value) === -1 && value.length <= 6) {
-        if (tags.length <= 4) {
-          setTags([...tags, value]);
-          setFormData({ ...formData, tags: [...tags, value] });
-          setTimeout(() => {
-            setNewTag('');
-          }, 0);
-        }
-        setError(false);
+      if (value !== '' && filtered.length === 0 && value.length <= 6) {
+        setTags([...tags, value]);
+        setFormData({ ...formData, tags: [...tags, value] });
+        setTimeout(() => {
+          setNewTag('');
+          setError(false);
+        }, 0);
       }
     }
   };
