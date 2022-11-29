@@ -5,11 +5,11 @@ import FollowUserCard from './FollowUserCard';
 const FollowListContainer = styled.div`
   display: flex;
   align-items: center;
-  padding-bottom: 4vw;
+  padding-bottom: 2vw;
   position: relative;
   &::after {
     position: absolute;
-    bottom: 2vw;
+    bottom: 1vw;
     left: 50%;
     transform: translateX(-50%);
     width: 95%;
