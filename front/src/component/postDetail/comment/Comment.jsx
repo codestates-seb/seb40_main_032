@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import CommentWrite from './CommentWrite';
-// import CommentDetail from './CommentDetail';
 
 const CommentWrapper = styled.section`
   width: 100%;
@@ -10,7 +9,7 @@ const CommentWrapper = styled.section`
   max-height: 45rem;
   overflow: auto;
   flex-basis: 100%;
-  @media screen and (max-width: 999px) {
+  @media screen and (max-width: 1100px) {
     flex-basis: 93%;
   }
   @media screen and (max-width: 549px) {
