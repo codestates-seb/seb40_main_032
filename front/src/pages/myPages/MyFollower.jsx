@@ -11,11 +11,11 @@ const MyPageMain = styled.main`
   width: 100%;
   display: flex;
   justify-content: center;
+  margin: 0 3rem;
 
   .follower__container {
     width: 100%;
     max-width: 172rem;
-    margin: 0 3rem;
   }
 
   .loading__container {
