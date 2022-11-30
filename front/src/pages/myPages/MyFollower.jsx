@@ -11,7 +11,7 @@ const MyPageMain = styled.main`
   width: 100%;
   display: flex;
   justify-content: center;
-  margin: 0 3rem;
+  margin: 0 3rem 3rem;
 
   .follower__container {
     width: 100%;
@@ -27,7 +27,7 @@ const MyPageMain = styled.main`
 
   @media screen and (max-width: 549px) {
     padding-top: 15rem;
-    margin: 0 1rem;
+    margin-bottom: 1rem;
   }
 `;
 
