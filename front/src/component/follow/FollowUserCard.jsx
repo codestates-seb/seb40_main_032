@@ -50,14 +50,10 @@ const FollowListLeftSide = styled.div`
     }
   }
 
-  @media screen and (max-width: 1440px) {
-    .followList__userinfo {
-      padding: 3.5rem 0;
-    }
-  }
-
   @media screen and (max-width: 1024px) {
     .followList__userinfo {
+      padding: 3.5rem 0;
+
       .followList__avatar {
         width: 10rem;
         height: 10rem;
