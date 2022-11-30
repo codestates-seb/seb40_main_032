@@ -9,7 +9,6 @@ import travelRepo.domain.account.dto.AccountSummaryRes;
 import travelRepo.domain.board.entity.Board;
 import travelRepo.domain.board.entity.BoardPhoto;
 import travelRepo.domain.board.entity.BoardTag;
-import travelRepo.domain.board.entity.Category;
 
 import java.time.LocalDateTime;
 import java.util.Comparator;
@@ -27,7 +26,7 @@ public class BoardDetailsRes {
 
     private String location;
 
-    private Category category;
+    private String category;
 
     private int likeCount;
 
@@ -50,7 +49,7 @@ public class BoardDetailsRes {
         boardDetailsRes.setTitle(board.getTitle());
         boardDetailsRes.setContent(board.getContent());
         boardDetailsRes.setLocation(board.getLocation());
-        boardDetailsRes.setCategory(board.getCategory());
+        boardDetailsRes.setCategory(board.getCategory().getName());
         boardDetailsRes.setLikeCount(board.getLikeCount());
         boardDetailsRes.setViews(board.getViews() + 1);
         boardDetailsRes.setTags(
