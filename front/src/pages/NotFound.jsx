@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import notFound from '../assets/notFound.png';
 
 const Container = styled.main`
@@ -74,16 +74,8 @@ const LinkToMain = styled(Link)`
   }
 `;
 
-// 임시 구현 (뒤로 가기)
-const LinkToTemp = styled(Link)`
-  color: var(--button-theme-hv);
-  :hover {
-    text-decoration: underline;
-  }
-`;
-
 function NotFound() {
-  const navigate = useNavigate();
+  const location = useLocation();
   return (
     <Container>
       <ErrorIcon src={notFound} alt="notfound" />
@@ -91,17 +83,10 @@ function NotFound() {
         <TextGroup>
           <h1>죄송합니다.</h1>
           <h2>원하시는 페이지를 찾을 수 없습니다.</h2>
-          <h6>오류코드 : 404</h6>
+          <h6>오류코드 : {location.state === null ? 404 : location.state}</h6>
         </TextGroup>
         <LinkGroup>
           <LinkToMain to="/">메인으로 가기</LinkToMain>
-          <LinkToTemp
-            onClick={() => {
-              navigate(-1);
-            }}
-          >
-            뒤로 가기
-          </LinkToTemp>
         </LinkGroup>
       </ContainerRight>
     </Container>

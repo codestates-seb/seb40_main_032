@@ -29,6 +29,7 @@ const Container = styled.section`
     width: 10rem;
     height: 10rem;
     border-radius: 1rem;
+    object-fit: cover;
   }
 
   .remove__button {
@@ -141,6 +142,18 @@ const PublishPhoto = forwardRef(({ setPhotoUrl, deleteImages }, ref) => {
     }
   };
 
+  const typeCheck = event => {
+    const targetFileType = event.target.files[0].type; // 업로드 파일 유형
+    const targetFileTypeShort = targetFileType.slice(
+      targetFileType.indexOf('/') + 1,
+      targetFileType.length,
+    ); // 확장자명 text추출
+    const onlyAccept = ['image/jpeg', 'image/png', 'image/jpg']; // 허용할 확장자명 설정
+    if (onlyAccept.indexOf(targetFileType) === -1) {
+      setErrorMessage(`${targetFileTypeShort} 형식은 업로드할 수 없습니다.`);
+    } else validatePhotos(event);
+  };
+
   // 수정페이지 진입시 미리보기 불러오는 함수
   const preview = data => {
     return data.map(el => photos.push(el));
@@ -210,7 +223,7 @@ const PublishPhoto = forwardRef(({ setPhotoUrl, deleteImages }, ref) => {
             <input
               id="upload__button"
               type="file"
-              onChange={validatePhotos}
+              onChange={typeCheck}
               onClick={handleClick}
               accept="image/jpg, image/png, image/jpeg"
             />
@@ -223,7 +236,10 @@ const PublishPhoto = forwardRef(({ setPhotoUrl, deleteImages }, ref) => {
         )}
       </div>
       <div className="message">
-        업로드 가능한 파일 포맷은 jpg, jpeg, png입니다.
+        <span>
+          사진은 최대 5개까지 등록할 수 있으며, 지원하는 파일 형식은 jpg, jpeg,
+          png입니다.
+        </span>
       </div>
     </Container>
   );

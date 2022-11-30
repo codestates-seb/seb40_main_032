@@ -79,27 +79,27 @@ const MainThemeBar = styled.div`
       > button {
         height: 4rem;
         > a > span {
-          font-size: 1.4rem;
+          font-size: 1.2rem;
         }
       }
 
       &.theme__mypost.active ~ .bar {
         width: 6rem;
-        left: 1rem;
+        left: 1.2rem;
       }
       &.theme__mylikes.active ~ .bar {
         width: 6rem;
-        left: 9rem;
+        left: 8.8rem;
       }
 
       &.theme__myfollower.active ~ .bar {
         width: 6rem;
-        left: 17.5rem;
+        left: 16.5rem;
       }
 
       &.theme__myfollowing.active ~ .bar {
         width: 6rem;
-        left: 26rem;
+        left: 24.6rem;
       }
     }
   }
@@ -108,16 +108,18 @@ const MainThemeBar = styled.div`
 const CircleIcon = styled.div`
   background-color: var(--font-tag-color);
   color: var(--base-white-color);
-  width: 1.7rem;
-  height: 1.7rem;
+  width: 2rem;
+  height: 2rem;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
   margin-right: 5px;
+  font-size: 1.2rem;
   @media screen and (max-width: 549px) {
-    width: 1.5rem;
-    height: 1.5rem;
+    width: 1.7rem;
+    height: 1.7rem;
+    font-size: 1rem;
   }
 `;
 

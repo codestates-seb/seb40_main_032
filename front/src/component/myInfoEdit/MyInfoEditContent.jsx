@@ -5,7 +5,7 @@ import userDataApi from '../../api/userDataApi';
 import { DefaultButton, TransparentButton } from '../common/button/ButtonStyle';
 import editUserApi from '../../api/editUserApi';
 import ConfirmModal from '../common/modal/ConfirmModal';
-import { getCookie } from '../../util/cookie';
+import { getCookie, setCookie } from '../../util/cookie';
 import MyinfoEditDelete from './MyinfoEditDelete';
 
 const Container = styled.div``;
@@ -131,6 +131,11 @@ function MyInfoEditContent({ formData, setFormData }) {
       .then(res => {
         if (res.status === 200) {
           setConfirmModalOpened(true);
+          setCookie('profile', formData.profile, {
+            path: '/',
+            sameSite: 'None',
+            secure: 'false',
+          });
           setTimeout(() => {
             navigate(`/mypage/mypost/${accountId}`);
           }, 1000);
