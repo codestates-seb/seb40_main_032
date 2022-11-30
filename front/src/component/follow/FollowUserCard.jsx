@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { loginModalActions } from '../../redux/loginModalSlice';
 import { DefaultButton, NegativeButton } from '../common/button/ButtonStyle';
 import { postDetailFollowApi } from '../../api/postDetailApi';
+import { getCookie } from '../../util/cookie';
 
 const FollowListLeftSide = styled.div`
   padding: 0 5rem 0 1.2rem;
@@ -49,8 +50,8 @@ const FollowListLeftSide = styled.div`
 function FollowUserCard({ myFollowing }) {
   const dispatch = useDispatch();
   const isLogin = useSelector(state => state.login.isLogin);
-  console.log(myFollowing);
-  console.log('로그인여부', isLogin);
+  const cookieAccountId = Number(getCookie('accountId'));
+  console.log(cookieAccountId, myFollowing.id);
 
   const followHandler = () => {
     if (isLogin) {
@@ -75,7 +76,9 @@ function FollowUserCard({ myFollowing }) {
           </Link>
         </li>
         <li className="followList__button">
-          {!myFollowing.follow ? (
+          {cookieAccountId === myFollowing.id ? (
+            <div />
+          ) : !myFollowing.follow ? (
             <DefaultButton width="9rem" height="3rem" onClick={followHandler}>
               팔로우
             </DefaultButton>

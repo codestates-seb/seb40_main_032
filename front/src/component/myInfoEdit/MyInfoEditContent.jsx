@@ -6,6 +6,8 @@ import { DefaultButton, TransparentButton } from '../common/button/ButtonStyle';
 import editUserApi from '../../api/editUserApi';
 import ConfirmModal from '../common/modal/ConfirmModal';
 import { getCookie, setCookie } from '../../util/cookie';
+import MyinfoEditDelete from './MyinfoEditDelete';
+
 
 const Container = styled.div``;
 
@@ -231,6 +233,7 @@ function MyInfoEditContent({ formData, setFormData }) {
         </Item>
       </SectionContent>
       <ButtonGroup>
+        <MyinfoEditDelete />
         <SubmitButton
           width="6rem"
           height="3rem"
