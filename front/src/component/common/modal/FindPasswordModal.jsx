@@ -60,10 +60,12 @@ function FindPasswordModal() {
   const [email, setEmail] = useState('');
   const [validation, setValidation] = useState(true);
   const [confirmModalOpened, setConfirmModalOpened] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const dispatch = useDispatch();
+
   const onChangeEmail = e => {
     setEmail(e.target.value);
   };
-  const dispatch = useDispatch();
 
   const findPasswordModalCloser = () => {
     dispatch(loginModalActions.closeFindPasswordModal());
@@ -74,7 +76,6 @@ function FindPasswordModal() {
     dispatch(loginModalActions.closeFindPasswordModal());
   };
 
-  // submit 버튼 클릭시 작동 함수
   const onSubmitHandler = e => {
     e.preventDefault();
     if (email.trim().length === 0 || !email.includes('@')) {
@@ -88,17 +89,17 @@ function FindPasswordModal() {
       })
       .catch(err => {
         console.log(err);
-        setValidation(false);
+        if (err.response.data.code === '013') {
+          setErrorMessage(err.response.data.message);
+          setValidation(false);
+        } else {
+          setErrorMessage('올바른 이메일을 입력해주세요.');
+          setValidation(false);
+        }
       });
   };
   return (
     <>
-      {confirmModalOpened && (
-        <ConfirmModal
-          modalMessage="입력하신 이메일로 임시비밀번호가 발송되었습니다."
-          modalCloser={confirmModalCloser}
-        />
-      )}
       <Backdrop onClick={findPasswordModalCloser}>
         <ModalCard
           onStopPropagation={e => {
@@ -122,9 +123,7 @@ function FindPasswordModal() {
                 value={email}
               />
               {!validation && (
-                <div className="input__validation">
-                  올바른 이메일을 입력해주세요.
-                </div>
+                <div className="input__validation">{errorMessage}</div>
               )}
               <DefaultButton
                 width="100%"
@@ -140,6 +139,12 @@ function FindPasswordModal() {
           </FindPasswordModalStyle>
         </ModalCard>
       </Backdrop>
+      {confirmModalOpened && (
+        <ConfirmModal
+          modalMessage="입력하신 이메일을 확인해주세요."
+          modalCloser={confirmModalCloser}
+        />
+      )}
     </>
   );
 }
