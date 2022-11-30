@@ -1,6 +1,5 @@
 package travelRepo.global.image.repository;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;

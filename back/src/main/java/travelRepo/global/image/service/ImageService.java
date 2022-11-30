@@ -2,7 +2,6 @@ package travelRepo.global.image.service;
 
 import lombok.RequiredArgsConstructor;
 import net.coobird.thumbnailator.Thumbnails;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import travelRepo.global.exception.BusinessLogicException;
