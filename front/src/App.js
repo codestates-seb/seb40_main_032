@@ -20,6 +20,7 @@ import MyFollowing from './pages/myPages/MyFollowing';
 import MainPage from './pages/mainPages/MainPage';
 import MyInfoEdit from './pages/myPages/MyInfoEdit';
 import PageTracking from './util/PageGaTracking';
+import NotFound from './pages/NotFound';
 
 const PublishPage = React.lazy(() => import('./pages/PublishPage'));
 const PostDetailPage = React.lazy(() => import('./pages/PostDetailPage'));
@@ -53,8 +54,9 @@ function App() {
           <Route path="mylikes/:accountId" element={<MyLikes />} />
           <Route path="myfollower/:accountId" element={<MyFollower />} />
           <Route path="myfollowing/:accountId" element={<MyFollowing />} />
+          <Route path="myinfoedit/:accountId" element={<MyInfoEdit />} />
         </Route>
-        <Route path="/myinfoedit" element={<MyInfoEdit />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Suspense>
   );
