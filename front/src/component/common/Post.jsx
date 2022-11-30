@@ -138,7 +138,7 @@ const PostWrapper = styled.div`
     }
   }
   @media screen and (max-width: 549px) {
-    padding: 3rem 2rem 0;
+    padding: 0 2rem 3rem;
   }
 `;
 // { image, title, like, tag, user }

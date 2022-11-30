@@ -19,7 +19,7 @@ const Main = styled.main`
 
     @media screen and (max-width: 549px) {
       padding: 0;
-      padding-top: 4rem;
+      padding-top: 7.5rem;
     }
 
     .main__container {
