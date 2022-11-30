@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import UserInfoTab from './UserInfoTab';
 import UserInfoCard from './UserInfoCard';
 import userDataApi from '../../api/userDataApi';
@@ -31,6 +31,7 @@ function UserInfo() {
     follower: '',
   });
   const { accountId } = useParams();
+  const navigate = useNavigate();
 
   // 내 정보 불러오기
   useEffect(() => {
@@ -45,8 +46,11 @@ function UserInfo() {
           follower: res.data.follower,
         }),
       )
-      .catch(err => console.log(err));
-  }, [accountId]);
+      .catch(err => {
+        console.log(err);
+        navigate('../../*');
+      });
+  }, []);
 
   return (
     <UserWrapper>
