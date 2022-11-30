@@ -9,9 +9,9 @@ import {
 } from '../../../api/postDetailApi';
 import CommentMore from './CommentMore';
 import { loginModalActions } from '../../../redux/loginModalSlice';
-import Loading from '../../common/Loading';
 import useInput from '../../../hooks/useInput';
 import debounce from '../../../util/debounce';
+import LoadingSpinner from '../../common/LoadingSpinner';
 
 const WriteWrapper = styled.article`
   width: 90%;
@@ -93,6 +93,12 @@ const WriteWrapper = styled.article`
       right: 3rem;
     }
   }
+`;
+
+const LoadingWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 function CommentWrite() {
@@ -250,7 +256,9 @@ function CommentWrite() {
         </div>
       </div>
       {commentLoading ? (
-        <Loading />
+        <LoadingWrapper>
+          <LoadingSpinner />
+        </LoadingWrapper>
       ) : (
         <>
           {!commentList.length && (
