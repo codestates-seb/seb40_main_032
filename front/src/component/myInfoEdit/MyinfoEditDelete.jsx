@@ -6,6 +6,7 @@ import { TransparentButton } from '../common/button/ButtonStyle';
 import deleteUserApi from '../../api/deleteUserApi';
 import YesNoModal from '../common/modal/YesNoModal';
 import ConfirmModal from '../common/modal/ConfirmModal';
+import { removeCookie } from '../../util/cookie';
 
 const DeleteButton = styled(TransparentButton)`
   color: var(--holder-base-color);
@@ -52,12 +53,24 @@ function MyinfoEditDelete() {
     setReReconfirmModalOpened(false);
   };
 
+  const cookieRemover = () => {
+    const option = {
+      path: '/',
+      sameSite: 'None',
+      secure: 'false',
+    };
+    removeCookie('profile', option);
+    removeCookie('accountId', option);
+    removeCookie('accessToken', option);
+  };
+
   const deleteRequest = event => {
     event.preventDefault();
 
     deleteUserApi()
       .then(res => {
         if (res.status === 200) {
+          cookieRemover();
           openFarewellModal();
           setTimeout(() => {
             toast('회원 탈퇴가 완료되었습니다.', {
@@ -71,6 +84,7 @@ function MyinfoEditDelete() {
               theme: 'light',
             });
             navigate('/');
+            window.location.reload();
           }, 1000);
         }
       })
