@@ -52,9 +52,9 @@ function App() {
           <Route path="mypost/:accountId" element={<MyPost />} />
           <Route path="mylikes/:accountId" element={<MyLikes />} />
           <Route path="myfollower/:accountId" element={<MyFollower />} />
-          <Route path="myfollowing/:accountId" element={<MyFollowing />} />
+          <Route path="myfollowing/:accountId" element={<MyFollowing />} />{' '}
+          <Route path="myinfoedit/:accountId" element={<MyInfoEdit />} />
         </Route>
-        <Route path="/myinfoedit" element={<MyInfoEdit />} />
       </Routes>
     </Suspense>
   );

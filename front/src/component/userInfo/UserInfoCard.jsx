@@ -58,7 +58,9 @@ function UserInfoCard({ userdata }) {
           <div>
             <h1>{userdata.nickname}</h1>
             {accountId === cookieAccountId && (
-              <EditButton to="/myinfoedit">내 정보수정</EditButton>
+              <EditButton to={`/mypage/myinfoedit/${accountId}`}>
+                내 정보수정
+              </EditButton>
             )}
           </div>
           <h5>{userdata.email}</h5>
