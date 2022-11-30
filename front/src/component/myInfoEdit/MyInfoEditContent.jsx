@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import userDataApi from '../../api/userDataApi';
 import { DefaultButton, TransparentButton } from '../common/button/ButtonStyle';
-import myInfoEditApi from '../../api/myInfoEditApi';
+import editUserApi from '../../api/editUserApi';
 import ConfirmModal from '../common/modal/ConfirmModal';
 import { getCookie } from '../../util/cookie';
 
@@ -126,7 +126,7 @@ function MyInfoEditContent({ formData, setFormData }) {
     /* eslint-disable */
     if (formData.nickname === defaultNickname) delete formData.nickname;
 
-    myInfoEditApi(formData)
+    editUserApi(formData)
       .then(res => {
         if (res.status === 200) {
           setConfirmModalOpened(true);
