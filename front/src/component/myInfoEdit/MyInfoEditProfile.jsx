@@ -35,6 +35,7 @@ const ProfileDefault = styled.div`
 const ProfilePreview = styled.img`
   ${ProfileStyle}
   border:0.5px solid var(--holder-base-color);
+  object-fit: cover;
 `;
 
 const ProfileEdit = styled.label`
@@ -103,6 +104,18 @@ function MyInfoEditProfile({ formData, setFormData }) {
     }
   };
 
+  const typeCheck = event => {
+    const targetFileType = event.target.files[0].type; // 업로드 파일 유형
+    const targetFileTypeShort = targetFileType.slice(
+      targetFileType.indexOf('/') + 1,
+      targetFileType.length,
+    ); // 확장자명 text추출
+    const onlyAccept = ['image/jpeg', 'image/png', 'image/jpg']; // 허용할 확장자명 설정
+    if (onlyAccept.indexOf(targetFileType) === -1) {
+      setErrorMessage(`${targetFileTypeShort} 형식은 업로드할 수 없습니다.`);
+    } else validatePhotos(event);
+  };
+
   // 미리보기 렌더링
   useEffect(() => {
     const reader = new FileReader();
@@ -148,7 +161,7 @@ function MyInfoEditProfile({ formData, setFormData }) {
           type="file"
           id="profile"
           name="profile"
-          onChange={validatePhotos}
+          onChange={typeCheck}
           onClick={handleClick}
           accept="image/png, image/jpg, image/jpeg"
         />

@@ -34,7 +34,14 @@ const HeaderUserWrapper = styled.nav`
     position: relative;
     .profile__image {
       width: 3.5rem;
+      height: 3.5rem;
+      overflow: hidden;
       border-radius: var(--radius-50);
+      > img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
     }
     > :last-child {
       transition: transform 300ms;
@@ -137,6 +144,7 @@ function HeaderUser() {
               <div
                 role="button"
                 tabIndex={0}
+                className="profile__image"
                 onClick={() => setActive(prev => !prev)}
                 onKeyDown={e => {
                   if (e.code === 'Enter') {
@@ -145,7 +153,7 @@ function HeaderUser() {
                 }}
               >
                 <img
-                  className="profile__image"
+                  // className="profile__image"
                   src={profileImg}
                   alt="프로필 이미지"
                 />

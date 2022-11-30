@@ -11,6 +11,7 @@ const Container = styled.div`
   width: 100%;
   > div {
     display: flex;
+    margin: 0 2rem;
   }
 `;
 
@@ -19,35 +20,68 @@ const UserInfoText = styled.div`
   display: flex;
   flex-direction: column;
   align-items: baseline;
+  justify-content: center;
   margin: 0 2rem;
   gap: 5px;
   > div {
     display: flex;
     width: 100%;
+    align-items: center;
     > h1 {
-      margin-right: 1rem;
-
-      @media screen and (max-width: 549px) {
-        font-size: 1.5rem;
-      }
+      margin-right: 2rem;
+      font-size: 2.4rem;
+      font-weight: 500;
     }
   }
+
+  > h5 {
+    font-size: 1.6rem;
+    font-weight: 400;
+  }
+
   > p {
     text-align: start;
+    font-size: 1.2rem;
+    height: 2rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    word-break: break-all;
+  }
+
+  @media screen and (max-width: 549px) {
+    gap: 0;
+
+    div {
+      > h1 {
+        font-size: 2rem;
+      }
+    }
+
+    > h5 {
+      font-size: 1.5rem;
+      line-height: 1.5;
+    }
   }
 `;
 
 const EditButton = styled(Link)`
+  font-size: 1.4rem;
   color: var(--button-theme);
   text-decoration: none;
   cursor: pointer;
   &:active {
     font-weight: var(--font-semi-bold);
   }
+  @media screen and (max-width: 549px) {
+    font-size: 1.2rem;
+  }
 `;
 
 function UserInfoCard({ userdata }) {
-  const { paramAccountId } = useParams();
+  const { accountId } = useParams();
   const cookieAccountId = getCookie('accountId');
 
   return (
@@ -57,8 +91,10 @@ function UserInfoCard({ userdata }) {
         <UserInfoText>
           <div>
             <h1>{userdata.nickname}</h1>
-            {paramAccountId === cookieAccountId && (
-              <EditButton to="/myinfoedit">내 정보수정</EditButton>
+            {accountId === cookieAccountId && (
+              <EditButton to={`/mypage/myinfoedit/${accountId}`}>
+                내 정보수정
+              </EditButton>
             )}
           </div>
           <h5>{userdata.email}</h5>

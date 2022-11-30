@@ -46,8 +46,6 @@ cloud:
 
 dir:
 
-tempRepo: ./tempImg
-
 domain:
   front: localhost:3000
   back: 13.125.238.70:8080
