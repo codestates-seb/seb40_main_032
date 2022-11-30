@@ -11,7 +11,7 @@ const FooterWrapper = styled.footer`
     width: 100%;
     display: flex;
     justify-content: center;
-    margin-top: 7rem;
+    margin-top: 4rem;
     border-top: 1px solid #ddd;
     background: #f7f7f7;
 
