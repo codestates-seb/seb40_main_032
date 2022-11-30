@@ -46,6 +46,4 @@ cloud:
 
 dir:
 
-tempRepo: ./tempImg
-
 mod: server

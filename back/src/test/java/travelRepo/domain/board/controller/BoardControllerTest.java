@@ -403,7 +403,7 @@ class BoardControllerTest extends After {
                 .andExpect(jsonPath("$.title").value("testTitle"))
                 .andExpect(jsonPath("$.content").value("testContents"))
                 .andExpect(jsonPath("$.location").value("test-location"))
-                .andExpect(jsonPath("$.category").value("RESTAURANT"))
+                .andExpect(jsonPath("$.category").value("맛집"))
                 .andExpect(jsonPath("$.likeCount").value(1))
                 .andExpect(jsonPath("$.views").value(102))
                 .andExpect(jsonPath("$.tags", hasSize(2)))

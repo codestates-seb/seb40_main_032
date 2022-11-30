@@ -54,6 +54,4 @@ cloud:
 
 dir: ./testImg/
 
-tempRepo: ./tempImg/
-
 mod: local
