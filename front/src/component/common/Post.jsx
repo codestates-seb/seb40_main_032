@@ -33,6 +33,7 @@ const PostWrapper = styled.div`
         width: 100%;
         height: 100%;
         transition: all 300ms linear;
+        object-fit: cover;
         &:hover {
           transform: scale(1.03);
         }
@@ -128,6 +129,7 @@ const PostWrapper = styled.div`
 
           .post__writer {
             font-size: 1.3rem;
+            color: var(--font-base-black);
           }
         }
       }

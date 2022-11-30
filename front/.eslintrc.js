@@ -20,6 +20,7 @@ module.exports = {
     'react/button-has-type': 'off',
     'react/react-in-jsx-scope': 'off',
     'react/prop-types': 0,
+    'no-nested-ternary': 'off',
     'no-param-reassign': [
       'error',
       { props: true, ignorePropertyModificationsFor: ['state'] },

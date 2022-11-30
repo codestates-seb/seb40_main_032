@@ -27,7 +27,7 @@ const Container = styled.div`
   .post__category {
     color: var(--font-base-grey);
   }
-  @media screen and (max-width: 999px) {
+  @media screen and (max-width: 1100px) {
     border-radius: 0 0 1rem 1rem;
   }
 `;
@@ -74,7 +74,7 @@ const Header = styled.div`
     background-color: var(--button-font-color);
   }
 
-  @media screen and (max-width: 999px) {
+  @media screen and (max-width: 1100px) {
     .writer__name {
       margin-left: 1rem;
       font-size: 2rem;

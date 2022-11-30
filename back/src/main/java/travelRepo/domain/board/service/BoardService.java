@@ -82,7 +82,7 @@ public class BoardService {
     }
 
     @Transactional
-    @CacheEvict(key = "#boardId", value = "{findBoard, boardView}")
+    @CacheEvict(key = "#boardId", value = {"findBoard", "boardView"})
     public void removeBoard(Long loginAccountId, Long boardId) {
 
         Board board = boardRepository.findByIdWithBoardTagsAndAccount(boardId)

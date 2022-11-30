@@ -64,7 +64,7 @@ const Container = styled.div`
   .image__dot--current {
     background: var(--base-white-color);
   }
-  @media screen and (max-width: 999px) {
+  @media screen and (max-width: 1100px) {
     border-radius: 1rem 1rem 0 0;
     .image__container {
       padding-bottom: calc(600 / 1000 * 100%);

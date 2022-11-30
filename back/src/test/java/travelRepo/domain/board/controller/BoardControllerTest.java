@@ -69,7 +69,7 @@ class BoardControllerTest extends After {
         boardAddReq.setLocation("board location");
         boardAddReq.setCategory(Category.STAY);
         boardAddReq.setTags(List.of("tag1", "tag2", "tag3"));
-        boardAddReq.setImages(List.of("https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg"));
+        boardAddReq.setImages(List.of("test.jpeg"));
         String content = gson.toJson(boardAddReq);
 
         //when
@@ -198,7 +198,7 @@ class BoardControllerTest extends After {
         boardModifyReq.setLocation("modified board location");
         boardModifyReq.setCategory(Category.RESTAURANT);
         boardModifyReq.setTags(List.of("tag3", "tag2", "tag1"));
-        boardModifyReq.setImages(List.of("https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg"));
+        boardModifyReq.setImages(List.of("test.jpeg"));
         String content = gson.toJson(boardModifyReq);
 
         //when
@@ -403,7 +403,7 @@ class BoardControllerTest extends After {
                 .andExpect(jsonPath("$.title").value("testTitle"))
                 .andExpect(jsonPath("$.content").value("testContents"))
                 .andExpect(jsonPath("$.location").value("test-location"))
-                .andExpect(jsonPath("$.category").value("RESTAURANT"))
+                .andExpect(jsonPath("$.category").value("맛집"))
                 .andExpect(jsonPath("$.likeCount").value(1))
                 .andExpect(jsonPath("$.views").value(102))
                 .andExpect(jsonPath("$.tags", hasSize(2)))

@@ -3,8 +3,10 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import userDataApi from '../../api/userDataApi';
 import { DefaultButton, TransparentButton } from '../common/button/ButtonStyle';
-import myInfoEditApi from '../../api/myInfoEditApi';
+import editUserApi from '../../api/editUserApi';
 import ConfirmModal from '../common/modal/ConfirmModal';
+import { getCookie } from '../../util/cookie';
+import MyinfoEditDelete from './MyinfoEditDelete';
 
 const Container = styled.div``;
 
@@ -12,7 +14,7 @@ const SectionContent = styled.div`
   display: flex;
   flex-direction: column;
   width: 30rem;
-  gap: 5rem 0;
+  gap: 4vh 0;
   @media screen and (max-width: 549px) {
     justify-content: center;
     width: 80vw;
@@ -76,6 +78,7 @@ const ErrorMsg = styled.span`
 `;
 
 function MyInfoEditContent({ formData, setFormData }) {
+  const accountId = getCookie('accountId');
   const navigate = useNavigate();
   const [nicknameError, setNicknameError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
@@ -124,13 +127,14 @@ function MyInfoEditContent({ formData, setFormData }) {
     /* eslint-disable */
     if (formData.nickname === defaultNickname) delete formData.nickname;
 
-    myInfoEditApi(formData)
+    editUserApi(formData)
       .then(res => {
         if (res.status === 200) {
           setConfirmModalOpened(true);
           setTimeout(() => {
-            navigate('/mypage');
+            navigate(`/mypage/mypost/${accountId}`);
           }, 1000);
+          window.location.reload();
         }
       })
       .catch(error => {
@@ -149,7 +153,7 @@ function MyInfoEditContent({ formData, setFormData }) {
   const [defaultNickname, setDefaultNickname] = useState();
 
   useEffect(() => {
-    userDataApi()
+    userDataApi(accountId)
       .then(res => {
         setFormData({
           password: res.data.password,
@@ -160,14 +164,13 @@ function MyInfoEditContent({ formData, setFormData }) {
         setDefaultNickname(res.data.nickname);
       })
       .catch(err => console.log(err));
-    return () => {};
   }, []);
 
   return (
     <Container>
       <SectionContent>
         <Item>
-          <Label htmlFor="nickname">닉네임</Label>
+          <Label htmlFor="nickname">닉네임 &nbsp;</Label>
           <InputContainer>
             <Input
               id="nickname"
@@ -224,19 +227,20 @@ function MyInfoEditContent({ formData, setFormData }) {
         </Item>
       </SectionContent>
       <ButtonGroup>
+        <MyinfoEditDelete />
         <SubmitButton
-          width="75px"
-          height="35px"
+          width="6rem"
+          height="3rem"
           onClick={editRequest}
           disabled={nicknameError || passwordError}
         >
           적용
         </SubmitButton>
         <CancelButton
-          width="75px"
-          height="35px"
+          width="6rem"
+          height="3rem"
           onClick={() => {
-            navigate('/mypage');
+            navigate(`/mypage/mypost/${accountId}`);
           }}
         >
           취소

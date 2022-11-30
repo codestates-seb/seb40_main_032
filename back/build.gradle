@@ -56,6 +56,8 @@ dependencies {
     asciidoctorExtensions 'org.springframework.restdocs:spring-restdocs-asciidoctor'
 
     implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
+
+    implementation group: 'net.coobird', name: 'thumbnailator', version: '0.4.1'    /* thumbnailator */
 }
 
 tasks.named('test') {

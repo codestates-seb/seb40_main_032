@@ -13,10 +13,12 @@ public class BoardModifyReq {
     @Length(min = 5, max = 40)
     private String title;
 
-    @Length(min = 5)
+    @Length(min = 5, max = 2000)
     private String content;
 
     private String location;
+
+    private String thumbnail;
 
     private Category category;
 
@@ -26,16 +28,12 @@ public class BoardModifyReq {
 
     public Board toBoard() {
 
-        Board.BoardBuilder builder = Board.builder()
+        return Board.builder()
                 .title(title)
                 .content(content)
                 .location(location)
-                .category(category);
-
-        if (images != null) {
-            builder.thumbnail(images.get(0));
-        }
-
-        return builder.build();
+                .thumbnail(thumbnail)
+                .category(category)
+                .build();
     }
 }

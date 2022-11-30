@@ -1,6 +1,7 @@
 package travelRepo.domain.board.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -13,9 +14,11 @@ import travelRepo.domain.board.service.BoardService;
 import travelRepo.global.argumentresolver.LoginAccountId;
 import travelRepo.global.common.dto.IdDto;
 import travelRepo.global.common.dto.SliceDto;
+import travelRepo.global.image.service.ImageService;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/boards")
@@ -23,11 +26,16 @@ import java.time.LocalDateTime;
 public class BoardController {
 
     private final BoardService boardService;
+    private final ImageService imageService;
+
+    @Value("${dir}")
+    private String path;
 
     @PostMapping
     public ResponseEntity<IdDto> boardAdd(@LoginAccountId Long loginAccountId,
                                           @Valid @RequestBody BoardAddReq boardAddReq) {
 
+        boardAddReq.setThumbnail(imageService.getThumbnail(boardAddReq.getImages().get(0), path));
         IdDto response = boardService.addBoard(loginAccountId, boardAddReq);
 
         return new ResponseEntity<>(response, HttpStatus.CREATED);
@@ -37,6 +45,9 @@ public class BoardController {
     public ResponseEntity<IdDto> boardModify(@LoginAccountId Long loginAccountId,
                                              @Valid @RequestBody BoardModifyReq boardModifyReq,
                                              @PathVariable Long boardId) {
+
+        Optional.ofNullable(boardModifyReq.getImages()).ifPresent(images ->
+                boardModifyReq.setThumbnail(imageService.getThumbnail(images.get(0), path)));
 
         IdDto response = boardService.modifyBoard(loginAccountId, boardModifyReq, boardId);
 

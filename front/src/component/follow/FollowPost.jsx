@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const FollowThumb = styled.li`
@@ -30,6 +31,7 @@ const FollowThumb = styled.li`
     width: 100%;
     padding: 5px 5px 0;
     > p {
+      color: var(--font-base-black);
       font-size: 1.6rem;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -70,14 +72,16 @@ const FollowThumb = styled.li`
 function FollowPost({ boards }) {
   return (
     <FollowThumb>
-      <div className="FollowThumb__container">
-        <div className="followThumb__img">
-          <img src={boards.thumbnail} alt="팔로우썸네일이미지" />
+      <Link to={`/postdetail/${boards.id}`}>
+        <div className="FollowThumb__container">
+          <div className="followThumb__img">
+            <img src={boards.thumbnail} alt="팔로우썸네일이미지" />
+          </div>
+          <div className="followThumb__title">
+            <p>{boards.title}</p>
+          </div>
         </div>
-        <div className="followThumb__title">
-          <p>{boards.title}</p>
-        </div>
-      </div>
+      </Link>
     </FollowThumb>
   );
 }

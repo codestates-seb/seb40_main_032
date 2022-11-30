@@ -35,6 +35,7 @@ const ProfileDefault = styled.div`
 const ProfilePreview = styled.img`
   ${ProfileStyle}
   border:0.5px solid var(--holder-base-color);
+  object-fit: cover;
 `;
 
 const ProfileEdit = styled.label`

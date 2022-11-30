@@ -17,10 +17,12 @@ public class BoardAddReq {
     private String title;
 
     @NotNull
-    @Length(min = 5)
+    @Length(min = 5, max = 2000)
     private String content;
 
     private String location;
+
+    private String thumbnail;
 
     @NotNull
     private Category category;
@@ -36,7 +38,7 @@ public class BoardAddReq {
                 .title(title)
                 .content(content)
                 .location(location)
-                .thumbnail(images.get(0))
+                .thumbnail(thumbnail)
                 .category(category)
                 .build();
 
