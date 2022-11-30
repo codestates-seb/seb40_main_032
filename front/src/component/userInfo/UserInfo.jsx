@@ -50,7 +50,7 @@ function UserInfo() {
         console.log(err);
         navigate('../../*');
       });
-  }, []);
+  }, [accountId]);
 
   return (
     <UserWrapper>
