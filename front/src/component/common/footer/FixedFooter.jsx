@@ -16,7 +16,7 @@ const FooterWrapper = styled.footer`
   }
 `;
 
-function Footer() {
+function FixedFooter() {
   return (
     <FooterWrapper>
       <CommonFooter />
@@ -24,4 +24,4 @@ function Footer() {
   );
 }
 
-export default Footer;
+export default FixedFooter;
