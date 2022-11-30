@@ -133,6 +133,7 @@ function MyInfoEditContent({ formData, setFormData }) {
           setTimeout(() => {
             navigate(`/mypage/mypost/${accountId}`);
           }, 1000);
+          window.location.reload();
         }
       })
       .catch(error => {
@@ -162,10 +163,6 @@ function MyInfoEditContent({ formData, setFormData }) {
         setDefaultNickname(res.data.nickname);
       })
       .catch(err => console.log(err));
-    return () => {
-      //// 프로필 수정 후 userinfo탭에도 반영되게 하기 위
-      window.location.reload();
-    };
   }, []);
 
   return (
