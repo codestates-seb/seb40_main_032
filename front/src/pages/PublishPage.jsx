@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import Footer from '../component/common/footer/Footer';
 import PublishForm from '../component/publish/PublishForm';
 
 const Publish = styled.main`
@@ -10,9 +11,12 @@ const Publish = styled.main`
 
 function PublishPage() {
   return (
-    <Publish>
-      <PublishForm />
-    </Publish>
+    <>
+      <Publish>
+        <PublishForm />
+      </Publish>
+      <Footer />
+    </>
   );
 }
 
