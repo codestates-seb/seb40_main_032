@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import PostDetailPhoto from './PostDetailPhoto';
 import PostDetailArticle from './PostDetailArticle';
 import Comment from './comment/Comment';
@@ -102,6 +102,7 @@ function PostDetailMain() {
   const [postDetail, setPostDetail] = useState('');
   const [loading, setLoading] = useState(true);
   const accountId = getCookie('accountId');
+  const navigate = useNavigate();
   useEffect(() => {
     if (accountId) {
       postDetailUserApi(boardId.id, accountId)
@@ -115,6 +116,7 @@ function PostDetailMain() {
           setLoading(false);
         })
         .catch(err => {
+          navigate('*');
           console.log(err);
         });
     } else {
@@ -129,6 +131,7 @@ function PostDetailMain() {
           setLoading(false);
         })
         .catch(err => {
+          navigate('*');
           console.log(err);
         });
     }
