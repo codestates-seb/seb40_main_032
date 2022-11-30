@@ -9,7 +9,7 @@ const Avatar = styled.img`
   min-height: 7.8rem;
   display: flex;
   flex-direction: column;
-  object-fit: fill;
+  object-fit: cover;
 
   @media screen and (max-width: 549px) {
     width: 5rem;
