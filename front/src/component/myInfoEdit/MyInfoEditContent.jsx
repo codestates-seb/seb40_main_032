@@ -163,7 +163,7 @@ function MyInfoEditContent({ formData, setFormData }) {
       })
       .catch(err => console.log(err));
     return () => {
-      //// 프로필 수정 후 userinfo탭에도 반영되게 하기 위해
+      //// 프로필 수정 후 userinfo탭에도 반영되게 하기 위
       window.location.reload();
     };
   }, []);
