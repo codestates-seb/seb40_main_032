@@ -108,16 +108,18 @@ const MainThemeBar = styled.div`
 const CircleIcon = styled.div`
   background-color: var(--font-tag-color);
   color: var(--base-white-color);
-  width: 1.7rem;
-  height: 1.7rem;
+  width: 2rem;
+  height: 2rem;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
   margin-right: 5px;
+  font-size: 1.2rem;
   @media screen and (max-width: 549px) {
-    width: 1.5rem;
-    height: 1.5rem;
+    width: 1.7rem;
+    height: 1.7rem;
+    font-size: 1rem;
   }
 `;
 
