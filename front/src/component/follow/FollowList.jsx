@@ -27,6 +27,16 @@ const FollowListContainer = styled.div`
       display: flex;
     }
   }
+
+  @media screen and (max-width: 549px) {
+    padding-bottom: 3rem;
+    &::after {
+      bottom: 1.5rem;
+    }
+    .followList__rightside {
+      display: none;
+    }
+  }
 `;
 
 function FollowList({ myFollowing }) {
