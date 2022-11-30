@@ -5,9 +5,9 @@ import lombok.Getter;
 @Getter
 public enum Category {
 
-    RESTAURANT("레스토랑"),
-    SPOT("명소"),
-    STAY("숙박 시설");
+    RESTAURANT("맛집"),
+    SPOT("여행지"),
+    STAY("숙소");
 
     private final String name;
 
