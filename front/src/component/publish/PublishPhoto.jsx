@@ -235,7 +235,10 @@ const PublishPhoto = forwardRef(({ setPhotoUrl, deleteImages }, ref) => {
         )}
       </div>
       <div className="message">
-        업로드 가능한 파일 포맷은 jpg, jpeg, png입니다.
+        <span>
+          사진은 최대 5개까지 등록할 수 있으며, 지원하는 파일 형식은 jpg, jpeg,
+          png입니다.
+        </span>
       </div>
     </Container>
   );
