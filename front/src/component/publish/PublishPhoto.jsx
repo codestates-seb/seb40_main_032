@@ -29,6 +29,7 @@ const Container = styled.section`
     width: 10rem;
     height: 10rem;
     border-radius: 1rem;
+    object-fit: cover;
   }
 
   .remove__button {
