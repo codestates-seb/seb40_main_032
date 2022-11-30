@@ -25,7 +25,7 @@ import travelRepo.global.exception.ExceptionCode;
 import travelRepo.global.security.authentication.UserAccount;
 import travelRepo.global.security.dto.LoginDto;
 import travelRepo.global.security.jwt.JwtProcessor;
-import travelRepo.util.After;
+import travelRepo.util.Treatment;
 
 import java.util.List;
 
@@ -44,7 +44,7 @@ import static travelRepo.util.ApiDocumentUtils.getResponsePreProcessor;
 @SpringBootTest
 @AutoConfigureMockMvc
 @AutoConfigureRestDocs
-class AccountControllerTest extends After {
+class AccountControllerTest extends Treatment {
 
     @Autowired
     private MockMvc mockMvc;
