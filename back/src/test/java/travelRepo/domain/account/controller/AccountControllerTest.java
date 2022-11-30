@@ -9,8 +9,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.restdocs.payload.JsonFieldType;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +18,7 @@ import org.springframework.validation.BindException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import travelRepo.domain.account.dto.AccountModifyReq;
 import travelRepo.domain.account.entity.Account;
+import travelRepo.domain.account.entity.Role;
 import travelRepo.domain.account.repository.AccountRepository;
 import travelRepo.global.exception.BusinessLogicException;
 import travelRepo.global.exception.ExceptionCode;
@@ -28,6 +29,7 @@ import travelRepo.util.After;
 
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.restdocs.headers.HeaderDocumentation.*;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
@@ -56,9 +58,12 @@ class AccountControllerTest extends After {
     @Autowired
     private JwtProcessor jwtProcessor;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Test
     @DisplayName("로그인_성공")
-    void accountLogin() throws Exception {
+    void accountLogin_Success() throws Exception {
 
         //given
         String email = "test1@test.com";
@@ -99,6 +104,41 @@ class AccountControllerTest extends After {
     }
 
     @Test
+    @DisplayName("로그인_실패")
+    void accountLogin_Fail() throws Exception {
+
+        //given
+        String failPasswordForm = gson.toJson(new LoginDto("test1@test.com", "1"));
+        String illegalParameterForm = gson.toJson(new LoginDto(" ", ""));
+
+
+        //when
+        ResultActions failPassword = mockMvc.perform(
+                post("/login")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(failPasswordForm)
+        );
+        ResultActions illegalForm = mockMvc.perform(
+                post("/login")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(illegalParameterForm)
+        );
+
+
+        //then
+        failPassword
+                .andExpect(status().isUnauthorized())
+                .andExpect(jsonPath("$.exception").value("FailToAuthentication"))
+                .andExpect(jsonPath("$.message").value(ExceptionCode.FAIL_AUTHENTICATION.getMessage()));
+        illegalForm
+                .andExpect(status().isUnauthorized())
+                .andExpect(jsonPath("$.exception").value("FailToAuthentication"))
+                .andExpect(jsonPath("$.message").value(ExceptionCode.FAIL_AUTHENTICATION.getMessage()));
+    }
+
+    @Test
     @DisplayName("회원 생성_성공")
     public void accountAdd_Success() throws Exception {
 
@@ -119,8 +159,12 @@ class AccountControllerTest extends After {
         );
 
         //then
+        Account account = accountRepository.findByEmail("test@test.com")
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_ACCOUNT));
+
         actions
                 .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.id").value(account.getId()))
                 .andDo(document(
                         "accountAdd",
                         getRequestPreProcessor(),
@@ -143,6 +187,12 @@ class AccountControllerTest extends After {
                                 )
                         )
                 ));
+
+        assertThat(account.getEmail()).isEqualTo(email);
+        assertThat(account.getNickname()).isEqualTo(nickname);
+        assertThat(passwordEncoder.matches(password, account.getPassword())).isTrue();
+        assertThat(account.getProfile()).isNotNull();
+        assertThat(account.getRole()).isEqualTo(Role.USER);
     }
 
     @Test
@@ -258,8 +308,12 @@ class AccountControllerTest extends After {
         );
 
         //then
+        Account modifiedAccount = accountRepository.findById(accountId)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_ACCOUNT));
+
         actions
                 .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(accountId))
                 .andDo(document(
                         "accountModify",
                         getRequestPreProcessor(),
@@ -283,6 +337,11 @@ class AccountControllerTest extends After {
                                 )
                         )
                 ));
+
+        assertThat(passwordEncoder.matches(accountModifyReq.getPassword(), modifiedAccount.getPassword())).isTrue();
+        assertThat(modifiedAccount.getNickname()).isEqualTo(accountModifyReq.getNickname());
+        assertThat(modifiedAccount.getIntro()).isEqualTo(accountModifyReq.getIntro());
+        assertThat(modifiedAccount.getProfile()).isEqualTo(accountModifyReq.getProfile());
     }
 
     @Test
@@ -310,8 +369,15 @@ class AccountControllerTest extends After {
         );
 
         //then
+        Account modifiedAccount = accountRepository.findById(accountId)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_ACCOUNT));
+
         actions
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(accountId));
+
+        assertThat(modifiedAccount.getIntro()).isEqualTo(accountModifyReq.getIntro());
+        assertThat(modifiedAccount.getProfile()).isEqualTo(accountModifyReq.getProfile());
     }
 
     @Test
@@ -410,7 +476,7 @@ class AccountControllerTest extends After {
 
         //when
         ResultActions actions = mockMvc.perform(
-                RestDocumentationRequestBuilders.delete("/accounts")
+                delete("/accounts")
                         .header("Authorization", jwt)
         );
 
@@ -430,6 +496,31 @@ class AccountControllerTest extends After {
     }
 
     @Test
+    @DisplayName("회원 삭제_중복")
+    public void accountRemove_Double() throws Exception {
+
+        //given
+        Account account = accountRepository.findById(10001L).get();
+        String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
+
+        mockMvc.perform(
+                delete("/accounts")
+                        .header("Authorization", jwt));
+
+        //when
+        ResultActions actions = mockMvc.perform(
+                delete("/accounts")
+                        .header("Authorization", jwt)
+        );
+
+        //then
+        actions
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.exception").value(BusinessLogicException.class.getSimpleName()))
+                .andExpect(jsonPath("$.message").value(ExceptionCode.FAIL_REMOVE_ACCOUNT.getMessage()));
+    }
+
+    @Test
     @DisplayName("회원 단일 조회_성공")
     public void accountDetails_Success() throws Exception {
 
@@ -442,15 +533,18 @@ class AccountControllerTest extends After {
         );
 
         //then
+        Account account = accountRepository.findById(accountId)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_ACCOUNT));
+
         actions
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(accountId))
-                .andExpect(jsonPath("$.email").value( "test1@test.com"))
-                .andExpect(jsonPath("$.nickname").value("testNickname1"))
-                .andExpect(jsonPath("$.intro").value("testIntro"))
-                .andExpect(jsonPath("$.profile").value("https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg"))
-                .andExpect(jsonPath("$.following").value(2))
-                .andExpect(jsonPath("$.follower").value(1))
+                .andExpect(jsonPath("$.email").value(account.getEmail()))
+                .andExpect(jsonPath("$.nickname").value(account.getNickname()))
+                .andExpect(jsonPath("$.intro").value(account.getIntro()))
+                .andExpect(jsonPath("$.profile").value(account.getProfile()))
+                .andExpect(jsonPath("$.following").value(6))
+                .andExpect(jsonPath("$.follower").value(6))
                 .andDo(document(
                         "accountDetails",
                         getRequestPreProcessor(),
@@ -474,11 +568,31 @@ class AccountControllerTest extends After {
     }
 
     @Test
+    @DisplayName("회원 단일 조회_잘못된 Id")
+    public void accountDetails_IllegalId() throws Exception {
+
+        //given
+        Long accountId = 101021L;
+
+        //when
+        ResultActions actions = mockMvc.perform(
+                get("/accounts/{accountId}", accountId)
+        );
+
+        //then
+        actions
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.exception").value(BusinessLogicException.class.getSimpleName()))
+                .andExpect(jsonPath("$.message").value(ExceptionCode.NOT_FOUND_ACCOUNT.getMessage()));
+    }
+
+    @Test
     @DisplayName("로그인한 회원 조회_성공")
     public void loginAccountDetails_Success() throws Exception {
 
         //given
-        Account account = accountRepository.findById(10001L).get();
+        Long accountId = 10001L;
+        Account account = accountRepository.findById(accountId).get();
         String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
 
         //when
@@ -490,10 +604,10 @@ class AccountControllerTest extends After {
         //then
         actions
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(10001))
-                .andExpect(jsonPath("$.email").value( "test1@test.com"))
-                .andExpect(jsonPath("$.nickname").value("testNickname1"))
-                .andExpect(jsonPath("$.profile").value("https://main-image-repo.s3.ap-northeast-2.amazonaws.com/39c10d6d-2765-479d-a45f-662e619fd006.jpeg"))
+                .andExpect(jsonPath("$.id").value(accountId))
+                .andExpect(jsonPath("$.email").value( account.getEmail()))
+                .andExpect(jsonPath("$.nickname").value(account.getNickname()))
+                .andExpect(jsonPath("$.profile").value(account.getProfile()))
                 .andDo(document(
                         "loginAccountDetails",
                         getRequestPreProcessor(),
@@ -516,6 +630,39 @@ class AccountControllerTest extends After {
     }
 
     @Test
+    @DisplayName("로그인한 회원 조회_잘못된 요청")
+    public void loginAccountDetails_IllegalRequest() throws Exception {
+
+        //given
+        Long accountId = 10001L;
+        Account account = accountRepository.findById(accountId).get();
+        String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
+        String illegalJwt = "Bea " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
+
+        accountRepository.delete(account);
+
+        //when
+        ResultActions removedAccount = mockMvc.perform(
+                get("/accounts/login")
+                        .header("Authorization", jwt)
+        );
+        ResultActions illegalAction = mockMvc.perform(
+                get("/accounts/login")
+                        .header("Authorization", illegalJwt)
+        );
+
+        //then
+        removedAccount
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.exception").value(BusinessLogicException.class.getSimpleName()))
+                .andExpect(jsonPath("$.message").value(ExceptionCode.NOT_FOUND_ACCOUNT.getMessage()));
+        illegalAction
+                .andExpect(status().isUnauthorized())
+                .andExpect(jsonPath("$.exception").value("UnAuthentication"))
+                .andExpect(jsonPath("$.message").value(ExceptionCode.UN_AUTHENTICATION.getMessage()));
+    }
+
+    @Test
     @DisplayName("팔로우 회원 조회_성공")
     public void followAccountDetails_Success() throws Exception {
 
@@ -526,18 +673,40 @@ class AccountControllerTest extends After {
         String status = "following";
 
         //when
-        ResultActions actions = mockMvc.perform(
+        ResultActions followingActions = mockMvc.perform(
                 get("/accounts/follow/{accountId}", accountId)
                         .param("page", "1")
                         .param("size", "5")
-                        .param("sort", "createdAt,desc")
+                        .param("sort", "")
                         .param("status", status)
+                        .header("Authorization", jwt)
+        );
+        ResultActions followerActions = mockMvc.perform(
+                get("/accounts/follow/{accountId}", accountId)
+                        .param("page", "1")
+                        .param("size", "5")
+                        .param("sort", "")
+                        .param("status", "follower")
                         .header("Authorization", jwt)
         );
 
         //then
-        actions
+        followingActions
                 .andExpect(status().isOk())
+                .andExpect(jsonPath("$.content[0].id").value(10002L))
+                .andExpect(jsonPath("$.content[0].nickname").value("testNickname2"))
+                .andExpect(jsonPath("$.content[0].follow").value(true))
+                .andExpect(jsonPath("$.content[0].boards[0].id").value(12011L))
+                .andExpect(jsonPath("$.content[0].boards[0].title").value("testTitle"))
+                .andExpect(jsonPath("$.content[0].boards.size()").value(6))
+                .andExpect(jsonPath("$.totalPages").value(2))
+                .andExpect(jsonPath("$.totalElements").value(6))
+                .andExpect(jsonPath("$.first").value(true))
+                .andExpect(jsonPath("$.last").value(false))
+                .andExpect(jsonPath("$.sorted").value(false))
+                .andExpect(jsonPath("$.size").value(5))
+                .andExpect(jsonPath("$.pageNumber").value(1))
+                .andExpect(jsonPath("$.numberOfElements").value(5))
                 .andDo(document(
                         "followAccountDetails",
                         getRequestPreProcessor(),
@@ -565,6 +734,7 @@ class AccountControllerTest extends After {
                                         fieldWithPath("content[].nickname").type(JsonFieldType.STRING).description("닉네임"),
                                         fieldWithPath("content[].profile").type(JsonFieldType.STRING).description("프로필 이미지"),
                                         fieldWithPath("content[].follow").type(JsonFieldType.BOOLEAN).description("팔로잉 상태"),
+                                        fieldWithPath("content[].boards[]").type(JsonFieldType.ARRAY).description("게시글"),
                                         fieldWithPath("content[].boards[].id").type(JsonFieldType.NUMBER).description("Board 식별자"),
                                         fieldWithPath("content[].boards[].thumbnail").type(JsonFieldType.STRING).description("Board 썸네일"),
                                         fieldWithPath("content[].boards[].title").type(JsonFieldType.STRING).description("Board 제목"),
@@ -580,6 +750,84 @@ class AccountControllerTest extends After {
                         )
 
                 ));
+        followerActions
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.content[0].id").value(10002L))
+                .andExpect(jsonPath("$.content[0].nickname").value("testNickname2"))
+                .andExpect(jsonPath("$.content[0].follow").value(true))
+                .andExpect(jsonPath("$.content[0].boards[0].id").value(12011L))
+                .andExpect(jsonPath("$.content[0].boards[0].title").value("testTitle"))
+                .andExpect(jsonPath("$.content[0].boards.size()").value(6))
+                .andExpect(jsonPath("$.totalPages").value(2))
+                .andExpect(jsonPath("$.totalElements").value(6))
+                .andExpect(jsonPath("$.first").value(true))
+                .andExpect(jsonPath("$.last").value(false))
+                .andExpect(jsonPath("$.sorted").value(false))
+                .andExpect(jsonPath("$.size").value(5))
+                .andExpect(jsonPath("$.pageNumber").value(1))
+                .andExpect(jsonPath("$.numberOfElements").value(5));
     }
 
+    @Test
+    @DisplayName("팔로우 회원 조회_다른 회원")
+    public void followAccountDetails_differentAccount() throws Exception {
+
+        //given
+        Account account = accountRepository.findById(10002L).get();
+        String jwt = "Bearer " + jwtProcessor.createAuthJwtToken(new UserAccount(account));
+        Long accountId = 10001L;
+        String status = "following";
+
+        //when
+        ResultActions followingActions = mockMvc.perform(
+                get("/accounts/follow/{accountId}", accountId)
+                        .param("page", "1")
+                        .param("size", "5")
+                        .param("sort", "")
+                        .param("status", status)
+                        .header("Authorization", jwt)
+        );
+        ResultActions followerActions = mockMvc.perform(
+                get("/accounts/follow/{accountId}", accountId)
+                        .param("page", "1")
+                        .param("size", "5")
+                        .param("sort", "")
+                        .param("status", "follower")
+                        .header("Authorization", jwt)
+        );
+
+        //then
+        followingActions
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.content[1].id").value(10003L))
+                .andExpect(jsonPath("$.content[1].nickname").value("testNickname3"))
+                .andExpect(jsonPath("$.content[1].follow").value(false))
+                .andExpect(jsonPath("$.content[0].boards[0].id").value(12011L))
+                .andExpect(jsonPath("$.content[0].boards[0].title").value("testTitle"))
+                .andExpect(jsonPath("$.content[0].boards.size()").value(6))
+                .andExpect(jsonPath("$.totalPages").value(2))
+                .andExpect(jsonPath("$.totalElements").value(6))
+                .andExpect(jsonPath("$.first").value(true))
+                .andExpect(jsonPath("$.last").value(false))
+                .andExpect(jsonPath("$.sorted").value(false))
+                .andExpect(jsonPath("$.size").value(5))
+                .andExpect(jsonPath("$.pageNumber").value(1))
+                .andExpect(jsonPath("$.numberOfElements").value(5));
+        followerActions
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.content[0].id").value(10002L))
+                .andExpect(jsonPath("$.content[0].nickname").value("testNickname2"))
+                .andExpect(jsonPath("$.content[0].follow").value(false))
+                .andExpect(jsonPath("$.content[0].boards[0].id").value(12011L))
+                .andExpect(jsonPath("$.content[0].boards[0].title").value("testTitle"))
+                .andExpect(jsonPath("$.content[0].boards.size()").value(6))
+                .andExpect(jsonPath("$.totalPages").value(2))
+                .andExpect(jsonPath("$.totalElements").value(6))
+                .andExpect(jsonPath("$.first").value(true))
+                .andExpect(jsonPath("$.last").value(false))
+                .andExpect(jsonPath("$.sorted").value(false))
+                .andExpect(jsonPath("$.size").value(5))
+                .andExpect(jsonPath("$.pageNumber").value(1))
+                .andExpect(jsonPath("$.numberOfElements").value(5));
+    }
 }

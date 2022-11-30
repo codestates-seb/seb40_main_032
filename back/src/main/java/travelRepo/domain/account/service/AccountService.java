@@ -90,14 +90,18 @@ public class AccountService {
         removeBoardsFromRedis(loginAccountId, "findBoard");
         removeBoardsFromRedis(loginAccountId, "boardView");
 
-        likesRepository.deleteByAccountId(loginAccountId);
-        commentRepository.deleteByAccountId(loginAccountId);
-        boardPhotoRepository.deleteByAccountId(loginAccountId);
-        boardTagRepository.deleteByAccountId(loginAccountId);
-        boardRepository.deleteByAccountId(loginAccountId);
+        try {
+            likesRepository.deleteByAccountId(loginAccountId);
+            commentRepository.deleteByAccountId(loginAccountId);
+            boardPhotoRepository.deleteByAccountId(loginAccountId);
+            boardTagRepository.deleteByAccountId(loginAccountId);
+            boardRepository.deleteByAccountId(loginAccountId);
 
-        followRepository.deleteByAccountId(loginAccountId);
-        accountRepository.deleteById(loginAccountId);
+            followRepository.deleteByAccountId(loginAccountId);
+            accountRepository.deleteById(loginAccountId);
+        } catch (Exception e) {
+            throw new BusinessLogicException(ExceptionCode.FAIL_REMOVE_ACCOUNT);
+        }
 
     }
 
