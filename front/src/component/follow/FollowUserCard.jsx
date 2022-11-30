@@ -72,7 +72,7 @@ const FollowListLeftSide = styled.div`
 
   @media screen and (max-width: 549px) {
     width: 100%;
-    padding: 0 1.5rem;
+    padding: 0 2rem;
     .followList__userinfo {
       width: 100%;
       flex-direction: row;

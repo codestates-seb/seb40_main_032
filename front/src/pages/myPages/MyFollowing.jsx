@@ -26,7 +26,7 @@ const MyPageMain = styled.main`
   }
 
   @media screen and (max-width: 549px) {
-    padding-top: 15rem;
+    padding-top: 15.5rem;
     margin-bottom: 1rem;
   }
 `;
