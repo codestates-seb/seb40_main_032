@@ -18,6 +18,22 @@ const FooterWrapper = styled.footer`
     .footer__container {
       height: 6rem;
     }
+
+    @media screen and (max-width: 549px) {
+      .footer__container {
+        height: 8rem;
+        margin: 0 2rem;
+        > div {
+          flex-direction: column;
+          padding-right: 5px;
+
+          .copyright {
+            padding: 7px 0 0;
+            font-size: 1.2rem;
+          }
+        }
+      }
+    }
   }
 `;
 
