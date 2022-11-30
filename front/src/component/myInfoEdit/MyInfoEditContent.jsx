@@ -8,7 +8,6 @@ import ConfirmModal from '../common/modal/ConfirmModal';
 import { getCookie, setCookie } from '../../util/cookie';
 import MyinfoEditDelete from './MyinfoEditDelete';
 
-
 const Container = styled.div``;
 
 const SectionContent = styled.div`
