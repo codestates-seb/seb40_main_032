@@ -149,7 +149,7 @@ const PublishPhoto = forwardRef(({ setPhotoUrl, deleteImages }, ref) => {
     ); // 확장자명 text추출
     const onlyAccept = ['image/jpeg', 'image/png', 'image/jpg']; // 허용할 확장자명 설정
     if (onlyAccept.indexOf(targetFileType) === -1) {
-      setErrorMessage(`${targetFileTypeShort} 형식은 업로드 할 수 없습니다.`);
+      setErrorMessage(`${targetFileTypeShort} 형식은 업로드할 수 없습니다.`);
     } else validatePhotos(event);
   };
 
