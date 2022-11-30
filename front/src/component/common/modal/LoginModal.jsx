@@ -15,6 +15,10 @@ const LoginModalStyle = styled.div`
   padding: 3rem;
   width: 40rem;
 
+  @media screen and (max-width: 550px) {
+    width: 100%;
+  }
+
   .title {
     display: flex;
     justify-content: center;
@@ -54,7 +58,9 @@ const LoginModalStyle = styled.div`
     font-size: 1.3rem;
 
     .footer__content {
-      margin-right: 0.5rem;
+      > div {
+        margin: 0.5rem 0 0 0;
+      }
     }
   }
 `;
@@ -81,9 +87,15 @@ function LoginModal() {
     setPassword(e.target.value);
   };
 
-  // 회원가입 버튼 클릭 시 회원가입 모달을 띄우기 위한 상태 변경 함수
+  // 회원가입 모달
   const signupModalOpener = () => {
     dispatch(loginModalActions.openSignupModal());
+    loginModalCloser();
+  };
+
+  // 비밀번호 찾기 모달
+  const findPasswordModalOpener = () => {
+    dispatch(loginModalActions.openFindPasswordModal());
     loginModalCloser();
   };
 
@@ -182,16 +194,34 @@ function LoginModal() {
               fontSize="1.7rem"
               onClick={onSubmitHandler}
               type="submit"
-              margin="1.5rem 0"
+              margin="1.5rem 0 0 0"
             >
               로그인
             </DefaultButton>
           </form>
           <footer className="footer">
-            <div className="footer__content">아직 회원이 아니신가요?</div>
-            <TransparentButton fontSize="1.4rem" onClick={signupModalOpener}>
-              회원가입 &gt;
-            </TransparentButton>
+            <div className="footer__content">
+              <div>
+                아직 회원이 아니신가요?{' '}
+                <TransparentButton
+                  fontSize="1.4rem"
+                  onClick={signupModalOpener}
+                  margin="0 0 0 0.5rem"
+                >
+                  회원가입 &gt;
+                </TransparentButton>
+              </div>
+              <div>
+                비밀번호를 잊으셨나요?{' '}
+                <TransparentButton
+                  fontSize="1.4rem"
+                  onClick={findPasswordModalOpener}
+                  margin="0 0 0 0.5rem"
+                >
+                  비밀번호찾기 &gt;
+                </TransparentButton>
+              </div>
+            </div>
           </footer>
         </LoginModalStyle>
       </ModalCard>
