@@ -12,8 +12,9 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.FileOutputStream;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.UUID;
 
@@ -24,9 +25,6 @@ public class S3ImageRepository implements ImageRepository{
 
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
-
-    @Value("${tempRepo}")
-    private String tempRepo;
 
     private final AmazonS3 amazonS3;
 
@@ -45,7 +43,7 @@ public class S3ImageRepository implements ImageRepository{
     }
 
     @Override
-    public File download(String fileName, String path) throws IOException {
+    public BufferedImage download(String fileName, String path) throws IOException {
 
         String fullFileName = path + fileName;
 
@@ -53,11 +51,8 @@ public class S3ImageRepository implements ImageRepository{
         S3ObjectInputStream objectInputStream = o.getObjectContent();
         byte[] bytes = IOUtils.toByteArray(objectInputStream);
 
-        File file = new File(tempRepo + fileName);
-        FileOutputStream fileOutputStream = new FileOutputStream(file);
-        fileOutputStream.write(bytes);
-
-        return file;
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(bytes);
+        return ImageIO.read(inputStream);
     }
 
     private String createS3Filename(MultipartFile image) {

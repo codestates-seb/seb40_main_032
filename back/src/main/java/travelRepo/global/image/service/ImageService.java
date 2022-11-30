@@ -13,7 +13,6 @@ import travelRepo.global.image.repository.ImageRepository;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,9 +20,6 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class ImageService {
-
-    @Value("${tempRepo}")
-    private String tempRepo;
 
     private final ImageRepository imageRepository;
 
@@ -50,22 +46,15 @@ public class ImageService {
         String fileName = imageAddress.substring(imageAddress.lastIndexOf("/") + 1);
 
         try {
-            File file = imageRepository.download(fileName, path);
+            BufferedImage image = imageRepository.download(fileName, path);
 
-            BufferedImage image = ImageIO.read(file);
-
-            if (image.getWidth() < 510 && image.getHeight() < 376) {
+            if (image.getWidth() <= 510 && image.getHeight() <= 376) {
                 return imageAddress;
             }
 
-            File thumbnail = new File(tempRepo + "S_" + fileName);
+            BufferedImage thumbnail = Thumbnails.of(image).size(510, 376).asBufferedImage();
 
-            Thumbnails.of(image).size(510, 376).toFile(thumbnail);
-
-            String address = uploadImage(convertBufferedImageToMultipartFile(ImageIO.read(thumbnail), fileName), path);
-
-            file.delete();
-            thumbnail.delete();
+            String address = uploadImage(convertBufferedImageToMultipartFile(thumbnail, fileName), path);
 
             return address;
 
