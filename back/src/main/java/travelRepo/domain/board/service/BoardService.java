@@ -192,13 +192,15 @@ public class BoardService {
 
         Set<String> keys = redisTemplate.keys("boardView*");
 
-        for (String key : keys) {
-            long boardId = Long.parseLong(key.split("::")[1]);
-            int views = Integer.parseInt(redisTemplate.opsForValue().get(key));
-            int index = boardIds.indexOf(boardId);
+        if (keys != null) {
+            for (String key : keys) {
+                long boardId = Long.parseLong(key.split("::")[1]);
+                int views = Integer.parseInt(redisTemplate.opsForValue().get(key));
+                int index = boardIds.indexOf(boardId);
 
-            if (index >= 0) {
-                response.getContent().get(index).setViews(views);
+                if (index >= 0) {
+                    response.getContent().get(index).setViews(views);
+                }
             }
         }
     }
