@@ -63,7 +63,7 @@ function MyFollower() {
           )}
         </section>
       </MyPageMain>
-      {!isPending && (
+      {!isPending && myFollowing.length !== 0 && (
         <Pagination
           totalLists={totalLists}
           currentPage={currentPage}
