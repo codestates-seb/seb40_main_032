@@ -2,6 +2,7 @@ import styled from 'styled-components';
 // import { Link } from 'react-router-dom';
 import Search from './Search';
 import HeaderUser from './HeaderUser';
+import TripaLogo from '../../../assets/favicon.png';
 
 const HeaderWrapper = styled.header`
   display: flex;
@@ -22,6 +23,10 @@ const HeaderWrapper = styled.header`
     height: 100%;
     max-width: 172rem;
     margin: 0 4rem;
+    > img {
+      display: none;
+      padding: 1.5rem 0rem;
+    }
   }
 
   .header__logo {
@@ -30,6 +35,7 @@ const HeaderWrapper = styled.header`
       display: flex;
       align-items: center;
       > a {
+        width: 20rem;
         font-family: 'Lobster', cursive;
         color: var(--button-theme);
         font-size: 3.5rem;
@@ -41,7 +47,7 @@ const HeaderWrapper = styled.header`
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 0 2rem 0 4rem;
+    margin: 0 2rem 0 2rem;
   }
 
   @media screen and (max-width: 549px) {
@@ -49,9 +55,12 @@ const HeaderWrapper = styled.header`
 
     .header__container {
       margin: 0 2rem;
-
+      > img {
+        display: block;
+      }
       .header__logo > h1 > a {
         font-size: 2.5rem;
+        display: none;
       }
 
       .header__search {
@@ -66,13 +75,14 @@ function Header() {
     <HeaderWrapper className="header">
       <section className="header__container">
         {/* main Logo */}
+        <img src={TripaLogo} alt="responsivelogo" />
         <div className="header__logo">
           <h1>
             {/* <Link to="/">Tripagram</Link> */}
             <a href="/">Tripagram</a>
           </h1>
         </div>
-        {/* Hedaer Search */}
+        {/* Header Search */}
         <div className="header__search">
           <Search />
         </div>
