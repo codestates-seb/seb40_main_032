@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 const EmptyTextBox = styled.div`
   display: flex;
+  align-items: center;
   font-size: 3rem;
   color: var(--holder-base-color);
   > span {
