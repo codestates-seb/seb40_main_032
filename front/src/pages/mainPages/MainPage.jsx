@@ -5,6 +5,8 @@ import FixedFooter from '../../component/common/footer/FixedFooter';
 
 const Main = styled.main`
   padding: 8rem 0 4rem;
+  display: flex;
+  justify-content: center;
   @media screen and (max-width: 549px) {
     padding-top: 6rem;
   }
@@ -25,26 +27,27 @@ const Main = styled.main`
 
   .main__wrapper {
     width: 100%;
+    max-width: 172rem;
     padding: 5rem 0 1rem;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    margin: 0 2rem;
 
     @media screen and (max-width: 549px) {
       padding: 0;
       padding-top: 7.5rem;
+      margin: 0;
       .search__result {
         display: none;
       }
     }
 
     .main__container {
-      max-width: 172rem;
-      margin: 0 3rem;
+      width: 100%;
       display: flex;
       flex-wrap: wrap;
-      width: 100%;
 
       @media screen and (max-width: 1440px) {
         .post,
