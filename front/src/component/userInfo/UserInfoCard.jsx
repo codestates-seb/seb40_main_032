@@ -21,16 +21,31 @@ const UserInfoText = styled.div`
   flex-direction: column;
   align-items: baseline;
   justify-content: center;
-  margin: 0 2rem;
+  margin-left: 2rem;
   gap: 5px;
+
+  > div > h1,
+  > h5,
+  > p {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    word-break: break-all;
+  }
+
   > div {
     display: flex;
     width: 100%;
     align-items: center;
     > h1 {
       margin-right: 2rem;
-      font-size: 2.4rem;
+      font-size: 2rem;
       font-weight: 500;
+    }
+    > a {
+      min-width: 7rem;
     }
   }
 
@@ -43,12 +58,6 @@ const UserInfoText = styled.div`
     text-align: start;
     font-size: 1.2rem;
     height: 2rem;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
-    word-break: break-all;
   }
 
   @media screen and (max-width: 549px) {
@@ -56,7 +65,11 @@ const UserInfoText = styled.div`
 
     div {
       > h1 {
-        font-size: 2rem;
+        margin-right: 1rem;
+        font-size: 1.6rem;
+      }
+      > a {
+        min-width: 6rem;
       }
     }
 

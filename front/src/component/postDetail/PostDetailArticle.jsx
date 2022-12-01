@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import uuid from 'react-uuid';
+import { GrMap } from 'react-icons/gr';
 import {
   postDetailDeleteApi,
   postDetailFollowApi,
@@ -118,6 +119,13 @@ const Body = styled.div`
   }
   .article__location {
     margin: 1rem 0;
+    display: flex;
+    align-items: center;
+    > svg {
+      width: 2rem;
+      height: 2rem;
+      margin-right: 5px;
+    }
   }
   .article__footer {
     flex-wrap: wrap;
@@ -333,7 +341,10 @@ function PostDetailArticle({ post, userLike, userFollow, self, board }) {
         <p className="article__header">{title}</p>
         <textarea value={content} className="article__content" disabled />
         {location ? (
-          <div className="article__location"> 위치 : {location}</div>
+          <div className="article__location">
+            <GrMap />
+            {location}
+          </div>
         ) : null}
         <div className="article__footer">
           <div className="footer__first">

@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react';
 
 const PageButtons = styled.div`
   display: flex;
-  margin-bottom: 20rem;
   > button {
     padding: 2px 1.4rem;
     margin: 0 3px;
