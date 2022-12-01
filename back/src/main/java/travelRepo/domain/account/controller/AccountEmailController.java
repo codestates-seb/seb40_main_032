@@ -27,7 +27,11 @@ public class AccountEmailController {
     @GetMapping("/tempPassword/{accountId}")
     public String TempPasswordApply(@PathVariable Long accountId, @RequestParam String tempPassword) {
 
-        accountEmailService.applyTempPassword(accountId, tempPassword);
+        try {
+            accountEmailService.applyTempPassword(accountId, tempPassword);
+        } catch (Exception e){
+            return "/mail/passwordEx";
+        }
         return "redirect:http://" + frontDomain;
     }
 }
