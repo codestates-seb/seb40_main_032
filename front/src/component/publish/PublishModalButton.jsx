@@ -136,8 +136,8 @@ function PublishModalButton({ boardId, mandatory, formData, isPublishPage }) {
     <>
       <ButtonContainer>
         <PublishButton
-          width="8vw"
-          height="4vh"
+          width="10rem"
+          height="3.5rem"
           fontSize="var(--font-15)"
           fontWeight="var(--font-bold)"
           onClick={isPublishPage ? publishRequest : editRequest}
@@ -145,7 +145,7 @@ function PublishModalButton({ boardId, mandatory, formData, isPublishPage }) {
           <span>{isPublishPage ? '등록' : '수정'}</span>
         </PublishButton>
         <CancelButton
-          width="8vw"
+          width="10rem"
           fontSize="var(—font-15)"
           fontWeight="var(—font-bold)"
           onClick={yesNoModalOpener}
@@ -189,8 +189,8 @@ const ButtonContainer = styled.form`
 // 등록 버튼 스타일링
 const PublishButton = styled(DefaultButton)`
   @media screen and (max-width: 549px) {
-    width: 20vw;
-    height: 3vh;
+    width: 6rem;
+    height: 3rem;
   }
   &:hover {
     background: var(—-button-theme-hv);
@@ -206,7 +206,7 @@ const CancelButton = styled(TransparentButton)`
     transition: 0.1s ease-in-out;
   }
   @media screen and (max-width: 549px) {
-    width: 20vw;
-    height: 3vh;
+    width: 6rem;
+    height: 3rem;
   }
 `;
