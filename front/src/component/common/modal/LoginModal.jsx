@@ -15,7 +15,7 @@ const LoginModalStyle = styled.div`
   padding: 3rem;
   width: 40rem;
 
-  @media screen and (max-width: 550px) {
+  @media screen and (max-width: 549px) {
     width: 100%;
   }
 
@@ -41,7 +41,7 @@ const LoginModalStyle = styled.div`
       border-bottom: 1px solid var(--font-base-grey);
       padding: 0.5rem 0.5rem 0.5rem 0;
       margin: 1rem 0;
-      @media screen and (max-width: 550px) {
+      @media screen and (max-width: 549px) {
         width: 100%;
       }
     }

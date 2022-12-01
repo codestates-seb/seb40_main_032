@@ -16,7 +16,7 @@ const SignupModalStyle = styled.div`
   padding: 3rem;
   width: 40rem;
 
-  @media screen and (max-width: 550px) {
+  @media screen and (max-width: 549px) {
     width: 100%;
   }
 
