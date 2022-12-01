@@ -79,7 +79,7 @@ const MyPageMain = styled.main`
 
 function MyPost() {
   const [myPost, setMyPost] = useState([]);
-  const [isPending, setIsPending] = useState(false);
+  const [isPending, setIsPending] = useState(true);
   const { accountId } = useParams();
   const [target] = useIntersect(
     `/boards/account/${accountId}?`,
