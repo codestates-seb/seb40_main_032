@@ -21,7 +21,7 @@ const UserInfoText = styled.div`
   flex-direction: column;
   align-items: baseline;
   justify-content: center;
-  margin: 0 2rem;
+  margin-left: 2rem;
   gap: 5px;
 
   > div > h1,
@@ -44,6 +44,9 @@ const UserInfoText = styled.div`
       font-size: 2rem;
       font-weight: 500;
     }
+    > a {
+      min-width: 7rem;
+    }
   }
 
   > h5 {
@@ -62,7 +65,11 @@ const UserInfoText = styled.div`
 
     div {
       > h1 {
-        font-size: 2rem;
+        margin-right: 1rem;
+        font-size: 1.6rem;
+      }
+      > a {
+        min-width: 6rem;
       }
     }
 
