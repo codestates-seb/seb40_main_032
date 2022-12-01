@@ -111,7 +111,7 @@ function HeaderUser() {
         }}
         className="header__write"
         fontSize="1.6rem"
-        width="9.5rem"
+        width="10rem"
         height="4.3rem"
         fontWeight="500"
       >
