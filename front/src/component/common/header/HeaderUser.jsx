@@ -15,7 +15,6 @@ const HeaderUserWrapper = styled.nav`
   height: 100%;
   display: flex;
   align-items: center;
-  min-width: 20rem;
   position: relative;
   .header__write {
     flex: 1;
@@ -112,7 +111,7 @@ function HeaderUser() {
         }}
         className="header__write"
         fontSize="1.6rem"
-        width="9.5rem"
+        width="10rem"
         height="4.3rem"
         fontWeight="500"
       >

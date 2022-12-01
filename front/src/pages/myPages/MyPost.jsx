@@ -8,9 +8,9 @@ import LoadingSpinner from '../../component/common/LoadingSpinner';
 import EmptyText from '../../component/common/EmptyText';
 
 const MyPageMain = styled.main`
-  padding-top: 23rem;
-  max-width: 172rem;
-  margin: 0 3rem;
+  /* padding-top: 23rem; */
+  max-width: 175rem;
+  padding: 23rem 2rem 0;
   display: flex;
   flex-wrap: wrap;
   width: 100%;
@@ -68,7 +68,7 @@ const MyPageMain = styled.main`
   }
 
   @media screen and (max-width: 549px) {
-    padding-top: 16.5rem;
+    padding: 16.5rem 0 0;
     margin: 0 1rem;
     .post,
     .post__skeleton {
