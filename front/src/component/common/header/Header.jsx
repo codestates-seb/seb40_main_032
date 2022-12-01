@@ -30,7 +30,6 @@ const HeaderWrapper = styled.header`
 
   .header__logo {
     > h1 {
-      width: 20rem;
       height: 100%;
       display: flex;
       align-items: center;
