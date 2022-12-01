@@ -8,21 +8,19 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.UUID;
 
 @Repository
 @ConditionalOnProperty(value = "mod", havingValue = "local")
 public class FolderImageRepository implements ImageRepository {
 
     @Override
-    public String save(MultipartFile image, String path) throws IOException {
+    public String save(MultipartFile image, String filename, String path) throws IOException {
 
-        String localFilename = createLocalFilename(image);
-        String fullPath = path + localFilename;
+        String fullPath = path + filename;
 
         image.transferTo(new File(fullPath));
 
-        return "http://localhost:8080/image-files/" + localFilename;
+        return "http://localhost:8080/image-files/" + filename;
     }
 
     @Override
@@ -31,12 +29,6 @@ public class FolderImageRepository implements ImageRepository {
         File file = new File(path + fileName);
 
         return ImageIO.read(file);
-    }
-
-    private String createLocalFilename(MultipartFile image) {
-
-        int pos = image.getOriginalFilename().lastIndexOf(".");
-        return UUID.randomUUID() + image.getOriginalFilename().substring(pos);
     }
 }
 
