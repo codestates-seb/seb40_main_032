@@ -125,11 +125,9 @@ function CommentWrite() {
     board => {
       postDetailCommentApi(board, lastData)
         .then(res => {
-          // val
           const lastContent = res.content[res.content.length - 1];
           setCommentLoading(true);
           setCommentList(prev => {
-            // console.log(prev);
             return [...prev, ...res.content];
           });
           setHasNext(res.hasNext);
@@ -261,7 +259,7 @@ function CommentWrite() {
         </LoadingWrapper>
       ) : (
         <>
-          {!commentList.length && (
+          {commentList.length === 0 && (
             <div className="comment__zero">
               <p>현재 댓글이 없습니다. 첫 댓글을 달아주세요!😀</p>
             </div>
