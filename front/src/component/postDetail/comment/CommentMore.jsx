@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import {
   postDetailCommentModifyApi,
@@ -27,10 +28,12 @@ const MoreWrapper = styled.div`
     flex: 0.1;
     min-width: 6rem;
 
-    > img {
-      cursor: pointer;
-      border-radius: 50%;
-      object-fit: cover;
+    > div {
+      > img {
+        cursor: pointer;
+        border-radius: 50%;
+        object-fit: cover;
+      }
     }
   }
   .comment__info {
@@ -85,6 +88,7 @@ function CommentMore({
   const userId = Number(getCookie('accountId'));
   const [modifyComment, setModifyComment] = useState(comment);
   const [modifyFlag, setModifyFlag] = useState(false);
+  const navigate = useNavigate();
   // 댓글 삭제 핸들러
   const commentDeleteHandler = () => {
     postDetaulCommentDeleteApi(commentId)
@@ -109,11 +113,26 @@ function CommentMore({
       });
   };
 
+  const userMovePageHandler = () => {
+    navigate(`/mypage/mypost/${accountId}`);
+  };
+
   return (
     <MoreWrapper>
       <div className="comment__avatar">
         {/* user avatar */}
-        <img src={profile} width="30rem" height="30rem" alt="" />
+        <div
+          onClick={userMovePageHandler}
+          onKeyUp={e => {
+            if (e.code === 'Enter') {
+              userMovePageHandler();
+            }
+          }}
+          tabIndex={0}
+          role="button"
+        >
+          <img src={profile} width="30rem" height="30rem" alt="" />
+        </div>
       </div>
       <div className="comment__user">
         <div className="comment__info">
