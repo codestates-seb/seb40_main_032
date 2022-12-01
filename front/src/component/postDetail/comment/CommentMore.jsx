@@ -30,7 +30,7 @@ const MoreWrapper = styled.div`
     > img {
       cursor: pointer;
       border-radius: 50%;
-      object-fit: contain;
+      object-fit: cover;
     }
   }
   .comment__info {
