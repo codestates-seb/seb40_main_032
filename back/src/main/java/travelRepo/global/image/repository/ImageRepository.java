@@ -7,7 +7,7 @@ import java.io.IOException;
 
 public interface ImageRepository {
 
-    String save(MultipartFile image, String path) throws IOException;
+    String save(MultipartFile image, String fileName, String path) throws IOException;
 
     BufferedImage download(String fileName, String path) throws IOException;
 }
