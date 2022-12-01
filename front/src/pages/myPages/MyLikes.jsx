@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
+import { HiOutlineHeart } from 'react-icons/hi';
 import Post from '../../component/common/Post';
 import useIntersect from '../../hooks/useIntersect';
 import LoadingSpinner from '../../component/common/LoadingSpinner';
+import EmptyText from '../../component/common/EmptyText';
 
 const MyPageMain = styled.main`
   padding-top: 23rem;
@@ -12,6 +14,28 @@ const MyPageMain = styled.main`
   display: flex;
   flex-wrap: wrap;
   width: 100%;
+
+  .empty__like {
+    width: 100%;
+    height: calc(100vh - 41.1rem);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    > div {
+      padding-bottom: 3rem;
+    }
+
+    @media screen and (max-width: 549px) {
+      height: calc(100vh - 8rem - 16.5rem - 16.6rem);
+      > div {
+        font-size: 2rem;
+        > span {
+          width: 4rem;
+          height: 4rem;
+        }
+      }
+    }
+  }
 
   .target {
     width: 100%;
@@ -55,7 +79,7 @@ const MyPageMain = styled.main`
 
 function MyLikes() {
   const [myLike, setMyLike] = useState([]);
-  const [isPending, setIsPending] = useState(false);
+  const [isPending, setIsPending] = useState(true);
   const { accountId } = useParams();
   const [target] = useIntersect(
     `/boards/like/account/${accountId}?`,
@@ -72,6 +96,14 @@ function MyLikes() {
       {myLike.map(like => {
         return <Post key={like.boardId} post={like} />;
       })}
+      {!isPending && myLike.length === 0 && (
+        <div className="empty__like">
+          <EmptyText
+            icon={<HiOutlineHeart />}
+            text="스토리에 좋아요를 해보세요."
+          />
+        </div>
+      )}
       <div ref={target} className="target">
         {isPending && <LoadingSpinner />}
       </div>
