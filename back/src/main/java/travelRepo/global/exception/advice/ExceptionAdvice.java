@@ -19,6 +19,7 @@ public class ExceptionAdvice {
 
          ErrorResponse errorResponse =
                  new ErrorResponse(e.getClass().getSimpleName(), e.getMessage(), ExceptionCode.GLOBAL_EXCEPTION.getCode());
+
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
@@ -28,6 +29,7 @@ public class ExceptionAdvice {
         ExceptionCode exceptionCode = e.getExceptionCode();
         ErrorResponse errorResponse =
                 new ErrorResponse(e.getClass().getSimpleName(), exceptionCode.getMessage(), exceptionCode.getCode());
+
         return new ResponseEntity<>(errorResponse, HttpStatus.valueOf(exceptionCode.getStatus()));
     }
 
