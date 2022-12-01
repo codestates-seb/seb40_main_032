@@ -23,19 +23,18 @@ const HeaderWrapper = styled.header`
     height: 100%;
     max-width: 172rem;
     margin: 0 4rem;
-    > img {
+    div > a > img {
       display: none;
-      padding: 1.5rem 0rem;
     }
   }
 
   .header__logo {
     > h1 {
+      width: 20rem;
       height: 100%;
       display: flex;
       align-items: center;
       > a {
-        width: 20rem;
         font-family: 'Lobster', cursive;
         color: var(--button-theme);
         font-size: 3.5rem;
@@ -55,14 +54,16 @@ const HeaderWrapper = styled.header`
 
     .header__container {
       margin: 0 2rem;
-      > img {
-        display: block;
+      > div {
+        padding: 1.5rem 0rem;
+        > a > img {
+          display: block;
+          width: 3rem;
+        }
       }
-      .header__logo > h1 > a {
-        font-size: 2.5rem;
+      .header__logo > h1 {
         display: none;
       }
-
       .header__search {
         margin: 0 1.5rem;
       }
@@ -75,7 +76,11 @@ function Header() {
     <HeaderWrapper className="header">
       <section className="header__container">
         {/* main Logo */}
-        <img src={TripaLogo} alt="responsivelogo" />
+        <div>
+          <a href="/">
+            <img src={TripaLogo} alt="responsive logo" />
+          </a>
+        </div>
         <div className="header__logo">
           <h1>
             {/* <Link to="/">Tripagram</Link> */}
