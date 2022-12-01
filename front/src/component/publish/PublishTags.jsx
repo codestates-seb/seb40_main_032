@@ -90,7 +90,7 @@ const TagContainer = styled.section`
       margin: 0 0.5rem 0 1rem;
       border-radius: var(--radius-10);
       color: var(--font-base-black);
-      font-size: 1.5rem;
+      font-size: 1.3rem;
       > button {
         text-align: center;
         font-size: 1rem;

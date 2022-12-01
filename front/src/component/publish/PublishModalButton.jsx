@@ -183,14 +183,14 @@ export default PublishModalButton;
 // 버튼 - 등록, 취소
 const ButtonContainer = styled.form`
   display: flex;
-  justify-content: start;
+  justify-content: end;
 `;
 
 // 등록 버튼 스타일링
 const PublishButton = styled(DefaultButton)`
   @media screen and (max-width: 549px) {
-    width: 25vw;
-    height: 4vh;
+    width: 20vw;
+    height: 3vh;
   }
   &:hover {
     background: var(—-button-theme-hv);
@@ -206,7 +206,7 @@ const CancelButton = styled(TransparentButton)`
     transition: 0.1s ease-in-out;
   }
   @media screen and (max-width: 549px) {
-    width: 28vw;
-    height: 4vh;
+    width: 20vw;
+    height: 3vh;
   }
 `;
