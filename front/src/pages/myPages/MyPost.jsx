@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
+import { BsCamera } from 'react-icons/bs';
 import Post from '../../component/common/Post';
 import useIntersect from '../../hooks/useIntersect';
 import LoadingSpinner from '../../component/common/LoadingSpinner';
+import EmptyText from '../../component/common/EmptyText';
 
 const MyPageMain = styled.main`
   padding-top: 23rem;
@@ -12,6 +14,28 @@ const MyPageMain = styled.main`
   display: flex;
   flex-wrap: wrap;
   width: 100%;
+
+  .empty__post {
+    width: 100%;
+    height: calc(100vh - 41.1rem);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    > div {
+      padding-bottom: 3rem;
+    }
+
+    @media screen and (max-width: 549px) {
+      height: calc(100vh - 8rem - 16.5rem - 16.6rem);
+      > div {
+        font-size: 2rem;
+        > span {
+          width: 4rem;
+          height: 4rem;
+        }
+      }
+    }
+  }
 
   .target {
     width: 100%;
@@ -71,6 +95,11 @@ function MyPost() {
       {myPost.map(post => {
         return <Post key={post.boardId} post={post} />;
       })}
+      {!isPending && myPost.length === 0 && (
+        <div className="empty__post">
+          <EmptyText icon={<BsCamera />} text="스토리를 공유해보세요." />
+        </div>
+      )}
       <div ref={target} className="target">
         {isPending && <LoadingSpinner />}
       </div>
