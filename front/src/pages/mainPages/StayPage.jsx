@@ -58,7 +58,14 @@ function StayPage() {
 
   return (
     <>
-      <MainSort sort={sort} sortHandler={sortHandler} />
+      <div className="search__sort">
+        {search && (
+          <div className="search__result">
+            검색결과 : {search === '' ? '없음' : `"${search}"의 검색`}
+          </div>
+        )}
+        <MainSort sort={sort} sortHandler={sortHandler} />
+      </div>
       <div className="main__container">
         {posts.map(post => {
           return <Post key={post.boardId} post={post} />;
