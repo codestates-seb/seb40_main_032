@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { BiUserCircle } from 'react-icons/bi';
 
 const Avatar = styled.div`
   > span {
@@ -23,11 +24,21 @@ const Avatar = styled.div`
   }
 `;
 
+const DefaultImage = styled(BiUserCircle)`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+`;
+
 function UserInfoAvatar({ profileimg }) {
   return (
     <Avatar>
       <span>
-        <img src={profileimg} alt="프로필이미지" />
+        {profileimg ? (
+          <img src={profileimg} alt="프로필이미지" />
+        ) : (
+          <DefaultImage size="4.3rem" />
+        )}
       </span>
     </Avatar>
   );
