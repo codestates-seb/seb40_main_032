@@ -21,6 +21,7 @@ import MainPage from './pages/mainPages/MainPage';
 import MyInfoEdit from './pages/myPages/MyInfoEdit';
 import PageTracking from './util/PageGaTracking';
 import NotFound from './pages/NotFound';
+import MetaTag from './util/MetaTag';
 
 const PublishPage = React.lazy(() => import('./pages/PublishPage'));
 const PostDetailPage = React.lazy(() => import('./pages/PostDetailPage'));
@@ -36,6 +37,11 @@ function App() {
 
   return (
     <Suspense fallback={<Loading />}>
+      <MetaTag
+        title="여행 공유의 즐거움을 느끼다 Tripagram"
+        keywords="여행, 사진, 소셜미디어, 공유, Travel, Photo, Social Media, Share"
+        description="여행에서 느꼈던 감정 사진들을 다른 사람들과 공유하며 소통하는 공간입니다"
+      />
       <ToastContainer />
       {loginModalOpened && <LoginModal />}
       {signupModalOpened && <SignupModal />}
