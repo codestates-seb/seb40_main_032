@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 
 const PageButtons = styled.div`
   display: flex;
+  margin-bottom: 20rem;
   > button {
     padding: 2px 1.4rem;
     margin: 0 3px;
@@ -86,8 +87,8 @@ function Pagination({ totalLists, currentPage, setCurrentPage, setIsPending }) {
 
   useEffect(() => {
     const pageGroupArr = totalPageArr.slice(
-      currentPage - (currentPage % 5),
-      currentPage - (currentPage % 5) + 5,
+      currentPage - 1 - ((currentPage - 1) % 5),
+      currentPage - 1 - ((currentPage - 1) % 5) + 5,
     );
     setPageGroup([...pageGroupArr]);
   }, [totalPages]);
@@ -97,7 +98,6 @@ function Pagination({ totalLists, currentPage, setCurrentPage, setIsPending }) {
     if (!prevActive) return;
 
     setIsPending(true);
-    setPageGroup(totalPageArr.slice(pageGroup[0] - 5 - 1, pageGroup[0] - 1));
     setCurrentPage(pageGroup[0] - 5);
   };
 
@@ -112,7 +112,6 @@ function Pagination({ totalLists, currentPage, setCurrentPage, setIsPending }) {
     if (!nextActive) return;
 
     setIsPending(true);
-    setPageGroup(totalPageArr.slice(pageGroup[4], pageGroup[4] + 5));
     setCurrentPage(pageGroup[0] + 5);
   };
 
