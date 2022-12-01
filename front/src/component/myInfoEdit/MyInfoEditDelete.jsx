@@ -10,13 +10,17 @@ import ConfirmModal from '../common/modal/ConfirmModal';
 import { removeCookie } from '../../util/cookie';
 import { loginActions } from '../../redux/loginSlice';
 
-const DeleteButton = styled(TransparentButton)`
-  color: var(--holder-base-color);
+const DeleteButtonWrapper = styled.div`
+  display: flex;
   flex: 1;
-  text-align: left;
+  align-items: center;
   @media screen and (max-width: 549px) {
     margin-left: 2rem;
   }
+`;
+
+const DeleteButton = styled(TransparentButton)`
+  color: var(--holder-base-color);
 `;
 
 const ReconfirmYesNoModal = styled(YesNoModal)``;
@@ -50,6 +54,20 @@ function MyinfoEditDelete() {
     setFarewellModalOpened(true);
   };
 
+  const closeFarewellModal = () => {
+    navigate('/');
+    toast('회원 탈퇴가 완료되었습니다.', {
+      position: 'top-right',
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      progress: undefined,
+      theme: 'light',
+    });
+  };
+
   const closeConfirmModal = () => {
     setConfirmModalOpened(false);
     setReconfirmModalOpened(false);
@@ -75,20 +93,7 @@ function MyinfoEditDelete() {
         if (res.status === 200) {
           cookieRemover();
           openFarewellModal();
-          setTimeout(() => {
-            toast('회원 탈퇴가 완료되었습니다.', {
-              position: 'top-right',
-              autoClose: 1000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: false,
-              draggable: true,
-              progress: undefined,
-              theme: 'light',
-            });
-            navigate('/');
-            dispatch(loginActions.logout());
-          }, 1000);
+          dispatch(loginActions.logout());
         }
       })
       .catch(error => {
@@ -98,9 +103,11 @@ function MyinfoEditDelete() {
 
   return (
     <>
-      <DeleteButton onClick={openConfirmModal}>
-        <small>회원탈퇴 &gt;</small>
-      </DeleteButton>
+      <DeleteButtonWrapper>
+        <DeleteButton onClick={openConfirmModal}>
+          <small>회원탈퇴 &gt;</small>
+        </DeleteButton>
+      </DeleteButtonWrapper>
       {confirmModalOpened ? (
         <YesNoModal
           modalMessage="회원 탈퇴를 진행하시겠습니까?"
@@ -125,7 +132,7 @@ function MyinfoEditDelete() {
       {farewellModalOpened ? (
         <FarewellModal
           modalMessage="이용해주셔서 감사합니다."
-          modalCloser={closeConfirmModal}
+          modalCloser={closeFarewellModal}
         />
       ) : null}
     </>

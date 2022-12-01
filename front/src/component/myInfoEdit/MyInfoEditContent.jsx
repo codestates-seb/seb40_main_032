@@ -90,6 +90,12 @@ function MyInfoEditContent({ formData, setFormData }) {
 
   const confirmModalCloser = () => {
     setConfirmModalOpened(false);
+    navigate(`/mypage/mypost/${accountId}`);
+    window.location.reload();
+  };
+
+  const openConfirmModal = () => {
+    setConfirmModalOpened(true);
   };
 
   const onChange = event => {
@@ -130,16 +136,12 @@ function MyInfoEditContent({ formData, setFormData }) {
     editUserApi(formData)
       .then(res => {
         if (res.status === 200) {
-          setConfirmModalOpened(true);
           setCookie('profile', formData.profile, {
             path: '/',
             sameSite: 'None',
             secure: 'false',
           });
-          setTimeout(() => {
-            navigate(`/mypage/mypost/${accountId}`);
-          }, 1000);
-          window.location.reload();
+          openConfirmModal();
         }
       })
       .catch(error => {
