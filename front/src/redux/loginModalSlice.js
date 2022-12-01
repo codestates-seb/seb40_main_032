@@ -5,6 +5,7 @@ const loginModalSlice = createSlice({
   initialState: {
     loginModalOpened: false,
     signupModalOpened: false,
+    passwordModalOpened: false,
   },
   reducers: {
     openLoginModal(state) {
@@ -18,6 +19,12 @@ const loginModalSlice = createSlice({
     },
     closeSignupModal(state) {
       state.signupModalOpened = false;
+    },
+    openFindPasswordModal(state) {
+      state.passwordModalOpened = true;
+    },
+    closeFindPasswordModal(state) {
+      state.passwordModalOpened = false;
     },
   },
 });
