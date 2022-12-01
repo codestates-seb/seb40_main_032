@@ -2,10 +2,13 @@ import styled from 'styled-components';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { TransparentButton } from '../common/button/ButtonStyle';
 import deleteUserApi from '../../api/deleteUserApi';
 import YesNoModal from '../common/modal/YesNoModal';
 import ConfirmModal from '../common/modal/ConfirmModal';
+import { removeCookie } from '../../util/cookie';
+import { loginActions } from '../../redux/loginSlice';
 
 const DeleteButton = styled(TransparentButton)`
   color: var(--holder-base-color);
@@ -21,6 +24,7 @@ const ReReconfirmYesNoModal = styled(YesNoModal)``;
 const FarewellModal = styled(ConfirmModal)``;
 
 function MyinfoEditDelete() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [confirmModalOpened, setConfirmModalOpened] = useState(false);
   const [reconfirmModalOpened, setReconfirmModalOpened] = useState(false);
@@ -52,12 +56,24 @@ function MyinfoEditDelete() {
     setReReconfirmModalOpened(false);
   };
 
+  const cookieRemover = () => {
+    const option = {
+      path: '/',
+      sameSite: 'None',
+      secure: 'false',
+    };
+    removeCookie('profile', option);
+    removeCookie('accountId', option);
+    removeCookie('accessToken', option);
+  };
+
   const deleteRequest = event => {
     event.preventDefault();
 
     deleteUserApi()
       .then(res => {
         if (res.status === 200) {
+          cookieRemover();
           openFarewellModal();
           setTimeout(() => {
             toast('회원 탈퇴가 완료되었습니다.', {
@@ -71,6 +87,7 @@ function MyinfoEditDelete() {
               theme: 'light',
             });
             navigate('/');
+            dispatch(loginActions.logout());
           }, 1000);
         }
       })
