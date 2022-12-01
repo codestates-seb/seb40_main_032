@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 import * as Sentry from '@sentry/react';
 import { Integrations } from '@sentry/tracing';
+import { HelmetProvider } from 'react-helmet-async';
 import store from './redux/store';
 import App from './App';
 import GlobalStyle from './assets/GlobalStyle';
@@ -24,7 +25,9 @@ root.render(
   <Provider store={store}>
     <GlobalStyle />
     <Router>
-      <App />
+      <HelmetProvider>
+        <App />
+      </HelmetProvider>
     </Router>
   </Provider>,
 );
