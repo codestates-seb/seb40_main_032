@@ -22,7 +22,7 @@ const MyPageMain = styled.main`
     justify-content: center;
     align-items: center;
     > div {
-      padding-bottom: 3rem;
+      padding-bottom: 6rem;
     }
 
     @media screen and (max-width: 549px) {
