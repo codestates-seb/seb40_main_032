@@ -142,9 +142,7 @@ class AccountEmailControllerTest {
 
         //then
         mailDelayEx
-                .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.exception").value(BusinessLogicException.class.getSimpleName()))
-                .andExpect(jsonPath("$.message").value(ExceptionCode.TEMP_PASSWORD_DELAY.getMessage()));
+                .andExpect(status().isOk());
     }
 
 }

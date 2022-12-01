@@ -34,7 +34,6 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom{
                 .selectFrom(board).distinct()
                 .leftJoin(board.boardTags, boardTag)
                 .leftJoin(boardTag.tag, tag)
-                .offset(pageable.getOffset()) // 삭제 예정
                 .limit(pageable.getPageSize());
 
         for (String q : queries) {
@@ -60,7 +59,6 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom{
                 .where(board.account.id.eq(accountId))
                 .where(startPointByCreatedAt(lastBoardId, lastBoardCreatedAt))
                 .orderBy(board.createdAt.desc(), board.id.desc())
-                .offset(pageable.getOffset()) // 삭제 예정
                 .limit(pageable.getPageSize());
 
         List<Board> boards = query.fetch();
@@ -77,7 +75,6 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom{
                 .where(likes.account.id.eq(accountId))
                 .where(startPointByLikeCreatedAt(lastLikeId, lastLikeCreatedAt))
                 .orderBy(likes.createdAt.desc(), likes.id.desc())
-                .offset(pageable.getOffset()) // 삭제 예정
                 .limit(pageable.getPageSize());
 
         List<Board> boards = query.fetch();
