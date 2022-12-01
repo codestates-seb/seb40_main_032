@@ -7,6 +7,7 @@ import Comment from './comment/Comment';
 import Loading from '../common/Loading';
 import { postDetailApi, postDetailUserApi } from '../../api/postDetailApi';
 import { getCookie } from '../../util/cookie';
+import MetaTag from '../../util/MetaTag';
 
 const Container = styled.main`
   height: 100%;
@@ -142,25 +143,33 @@ function PostDetailMain() {
       {loading ? (
         <Loading />
       ) : (
-        <div className="detail__container">
-          <div className="detail__body">
-            <div className="detail__box">
-              <PostDetailPhoto photos={postDetail.post.photos} />
-              <PostDetailArticle
-                post={postDetail.post}
-                userLike={postDetail.userlike}
-                userFollow={postDetail.userfollow}
-                self={postDetail.self}
-                board={boardId.id}
-              />
+        <>
+          <MetaTag
+            title={postDetail.post.title}
+            keywords={postDetail.post.category}
+            imgsrc={postDetail.post.photos[0]}
+            description={postDetail.post.content}
+          />
+          <div className="detail__container">
+            <div className="detail__body">
+              <div className="detail__box">
+                <PostDetailPhoto photos={postDetail.post.photos} />
+                <PostDetailArticle
+                  post={postDetail.post}
+                  userLike={postDetail.userlike}
+                  userFollow={postDetail.userfollow}
+                  self={postDetail.self}
+                  board={boardId.id}
+                />
+              </div>
+            </div>
+            <div className="detail__comment">
+              <div className="comment__box">
+                <Comment />
+              </div>
             </div>
           </div>
-          <div className="detail__comment">
-            <div className="comment__box">
-              <Comment />
-            </div>
-          </div>
-        </div>
+        </>
       )}
     </Container>
   );
