@@ -23,6 +23,7 @@ import MyInfoEdit from './pages/myPages/MyInfoEdit';
 import PageTracking from './util/PageGaTracking';
 import NotFound from './pages/NotFound';
 import MetaTag from './util/MetaTag';
+import TopButton from './component/common/button/TopButton';
 
 const PublishPage = React.lazy(() => import('./pages/PublishPage'));
 const PostDetailPage = React.lazy(() => import('./pages/PostDetailPage'));
@@ -51,6 +52,7 @@ function App() {
       {signupModalOpened && <SignupModal />}
       {passwordModalOpened && <FindPasswordModal />}
       <Header />
+      <TopButton />
       <Routes>
         <Route path="/" element={<MainPage />}>
           <Route index element={<AllThemePage />} />
