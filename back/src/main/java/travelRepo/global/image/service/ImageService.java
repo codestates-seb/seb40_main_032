@@ -39,13 +39,8 @@ public class ImageService {
         try {
             metadata = ImageMetadataReader.readMetadata(image.getInputStream());
             directory = metadata.getFirstDirectoryOfType(ExifIFD0Directory.class);
-
-            if (directory != null) {
-                orientation = directory.getInt(ExifIFD0Directory.TAG_ORIENTATION);
-            }
-
+            orientation = directory.getInt(ExifIFD0Directory.TAG_ORIENTATION);
         } catch (Exception e) {
-            throw new BusinessLogicException(ExceptionCode.UPLOAD_FAILED);
         }
 
         String filename = orientation + createFilename(image);
