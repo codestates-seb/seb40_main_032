@@ -92,6 +92,9 @@ const WriteWrapper = styled.article`
       height: 5.5rem;
       right: 3rem;
     }
+    .comment__zero {
+      font-size: 1.4rem;
+    }
   }
 `;
 
