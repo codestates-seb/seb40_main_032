@@ -47,6 +47,7 @@ const Header = styled.div`
     height: 100%;
     border-radius: 50%;
     cursor: pointer;
+    object-fit: cover;
   }
   .writer__name {
     flex-basis: 60%;
