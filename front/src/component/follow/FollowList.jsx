@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { BsCamera } from 'react-icons/bs';
 import FollowPost from './FollowPost';
 import FollowUserCard from './FollowUserCard';
+import EmptyText from '../common/EmptyText';
 
 const FollowListContainer = styled.div`
   display: flex;
@@ -31,26 +32,6 @@ const FollowListContainer = styled.div`
         width: 100%;
         display: flex;
         justify-content: center;
-        > div {
-          display: flex;
-          font-size: 3rem;
-          color: var(--holder-base-color);
-          > span {
-            position: relative;
-            display: block;
-            width: 5rem;
-            height: 5rem;
-            border-radius: 50%;
-            border: 1px solid var(--holder-base-color);
-            margin-right: 1rem;
-            > svg {
-              position: absolute;
-              top: 50%;
-              left: 50%;
-              transform: translate(-50%, -50%);
-            }
-          }
-        }
       }
     }
   }
@@ -79,12 +60,7 @@ function FollowList({ myFollowing }) {
             ))
           ) : (
             <li className="followList__empty">
-              <div>
-                <span>
-                  <BsCamera />
-                </span>
-                <p>스토리가 없습니다.</p>
-              </div>
+              <EmptyText icon={<BsCamera />} text="스토리가 없습니다." />
             </li>
           )}
         </ul>
