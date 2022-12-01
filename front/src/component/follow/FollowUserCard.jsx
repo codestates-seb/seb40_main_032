@@ -32,6 +32,8 @@ const FollowListLeftSide = styled.div`
     .followList__username {
       margin: 1rem 0 2rem;
       > a > p {
+        width: 12rem;
+        text-align: center;
         color: var(--font-base-black);
         font-size: 1.4rem;
         overflow: hidden;
@@ -58,6 +60,12 @@ const FollowListLeftSide = styled.div`
         width: 10rem;
         height: 10rem;
       }
+
+      .followList__username {
+        > a > p {
+          width: 10rem;
+        }
+      }
     }
   }
 
@@ -66,6 +74,11 @@ const FollowListLeftSide = styled.div`
       .followList__avatar {
         width: 9rem;
         height: 9rem;
+      }
+      .followList__username {
+        > a > p {
+          width: 9rem;
+        }
       }
     }
   }
@@ -80,10 +93,15 @@ const FollowListLeftSide = styled.div`
       .followList__avatar {
         width: 6rem;
         height: 6rem;
+        min-width: 6rem;
+        min-height: 6rem;
       }
       .followList__username {
-        padding-left: 1rem;
+        padding: 0 1rem;
         margin: 0;
+        > a > p {
+          width: auto;
+        }
       }
 
       .followList__button {
