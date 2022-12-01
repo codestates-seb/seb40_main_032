@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { getCookie } from '../../../util/cookie';
@@ -68,17 +68,17 @@ function HeaderDropDownBox({ active, activeHandler, closeFocus }) {
   const isLogin = useSelector(state => state.login.isLogin);
   const dispatch = useDispatch();
   const accountId = getCookie('accountId');
+  const signUpModal = useSelector(state => state.loginModal.signupModalOpened);
   const loginModalOpen = () => {
     dispatch(loginModalActions.openLoginModal());
   };
-  const [signUpModal, setSignUpModal] = useState(false);
 
   const signUpOpenHandler = () => {
-    setSignUpModal(true);
+    dispatch(loginModalActions.openSignupModal());
   };
 
   const signUpCloseHandler = () => {
-    setSignUpModal(false);
+    dispatch(loginModalActions.closeSignupModal());
   };
 
   const closeModal = e => {
