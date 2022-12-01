@@ -21,7 +21,8 @@ public enum ExceptionCode {
     TEMP_PASSWORD_DELAY(400, "임시 비밀번호 발급은 1시간에 한번 가능합니다.", "013"),
     DUPLICATION_NICKNAME(400, "동일한 닉네임의 계정이 존재합니다.", "014"),
     EMPTY_FILE(400, "파일이 비어있습니다.", "015"),
-    ILLEGAL_FILENAME(400, "잘못된 형식의 파일 이름입니다.", "016");
+    ILLEGAL_FILENAME(400, "잘못된 형식의 파일 이름입니다.", "016"),
+    FAIL_REMOVE_ACCOUNT(400, "회원을 삭제 할 수 없습니다.", "017");
 
     private int status;
 
