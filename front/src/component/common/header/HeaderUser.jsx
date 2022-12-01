@@ -15,7 +15,6 @@ const HeaderUserWrapper = styled.nav`
   height: 100%;
   display: flex;
   align-items: center;
-  min-width: 20rem;
   position: relative;
   .header__write {
     flex: 1;
