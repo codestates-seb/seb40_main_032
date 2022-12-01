@@ -1,6 +1,7 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 import styled from 'styled-components';
+import Footer from '../../component/common/footer/Footer';
 import UserInfo from '../../component/userInfo/UserInfo';
 import MetaTag from '../../util/MetaTag';
 
@@ -9,6 +10,7 @@ const MyPageWrapper = styled.div`
   flex-direction: column;
   padding: 8rem 0 0 0;
   align-items: center;
+  min-height: 100vh;
 `;
 
 function MyPage() {
@@ -21,6 +23,7 @@ function MyPage() {
       />
       <UserInfo />
       <Outlet />
+      <Footer />
     </MyPageWrapper>
   );
 }

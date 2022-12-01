@@ -124,6 +124,8 @@ const PostWrapper = styled.div`
 
             .post__user {
               width: 100%;
+              height: 100%;
+              object-fit: cover;
             }
           }
 
@@ -136,7 +138,7 @@ const PostWrapper = styled.div`
     }
   }
   @media screen and (max-width: 549px) {
-    padding-top: 2.2rem;
+    padding: 0 2rem 3rem;
   }
 `;
 // { image, title, like, tag, user }

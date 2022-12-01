@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router-dom';
 import styled from 'styled-components';
 import MainTheme from '../../component/main/MainTheme';
-import Footer from '../../component/common/footer/Footer';
+import FixedFooter from '../../component/common/footer/FixedFooter';
 
 const Main = styled.main`
   padding: 8rem 0 4rem;
@@ -19,7 +19,7 @@ const Main = styled.main`
 
     @media screen and (max-width: 549px) {
       padding: 0;
-      padding-top: 4rem;
+      padding-top: 7.5rem;
     }
 
     .main__container {
@@ -78,7 +78,7 @@ function MainPage() {
           <Outlet />
         </section>
       </Main>
-      <Footer />
+      <FixedFooter />
     </>
   );
 }

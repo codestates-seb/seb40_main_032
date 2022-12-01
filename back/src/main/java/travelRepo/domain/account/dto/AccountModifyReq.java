@@ -2,7 +2,6 @@ package travelRepo.domain.account.dto;
 
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
-import org.springframework.web.multipart.MultipartFile;
 import travelRepo.domain.account.entity.Account;
 
 @Data
@@ -19,7 +18,6 @@ public class AccountModifyReq {
     private String profile;
 
     public Account toAccount(String password) {
-
         return Account.builder()
                 .password(password)
                 .nickname(this.nickname)

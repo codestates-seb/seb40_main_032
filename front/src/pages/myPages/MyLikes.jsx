@@ -45,7 +45,7 @@ const MyPageMain = styled.main`
 
   @media screen and (max-width: 549px) {
     margin: 0 1rem;
-    padding-top: 13rem;
+    padding-top: 16.5rem;
     .post,
     .post__skeleton {
       flex-basis: 100%;

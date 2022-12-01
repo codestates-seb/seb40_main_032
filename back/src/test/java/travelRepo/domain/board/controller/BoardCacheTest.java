@@ -18,18 +18,19 @@ import travelRepo.domain.board.dto.BoardModifyReq;
 import travelRepo.domain.board.entity.Category;
 import travelRepo.global.security.authentication.UserAccount;
 import travelRepo.global.security.jwt.JwtProcessor;
-import travelRepo.util.After;
+import travelRepo.util.Treatment;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @Transactional
 @SpringBootTest
 @AutoConfigureMockMvc
-public class BoardCacheTest extends After {
+public class BoardCacheTest extends Treatment {
 
     @Autowired
     private MockMvc mockMvc;
@@ -206,5 +207,32 @@ public class BoardCacheTest extends After {
         actions.andExpect(status().isUnauthorized());
         assertThat(findBoard).isNotNull();
         assertThat(boardView).isNotNull();
+    }
+
+    @Test
+    @DisplayName("게시글 조회수 상승_성공")
+    public void boardDetails_View() throws Exception {
+
+        // given
+        Long boardId = 12001L;
+        int size = 10;
+
+        // when
+        for (int i = 0; i < size; i++) {
+            mockMvc.perform(
+                    get("/boards/{boardId}", boardId)
+                            .accept(MediaType.APPLICATION_JSON)
+            );
+        }
+
+        ResultActions actions = mockMvc.perform(
+                get("/boards/{boardId}", boardId)
+                        .accept(MediaType.APPLICATION_JSON)
+        );
+
+        //then
+        actions
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.views").value(10 + size + 1));
     }
 }

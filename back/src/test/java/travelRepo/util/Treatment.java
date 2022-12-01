@@ -7,7 +7,7 @@ import travelRepo.global.cache.CacheProcessor;
 
 import java.io.File;
 
-public class After {
+public class Treatment {
 
     @Autowired
     CacheProcessor cacheProcessor;

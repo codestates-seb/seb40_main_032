@@ -7,9 +7,13 @@ import java.util.UUID;
 
 @Getter
 public class TraceStatus {
+
     private String id;
+
     private int level;
+
     private Stack<String> messageStack = new Stack<>();
+
     private Stack<Long> startTimeMsStack = new Stack<>();
 
     public TraceStatus(String message) {

@@ -1,6 +1,7 @@
 package travelRepo.domain.account.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +19,9 @@ import travelRepo.global.mail.EmailService;
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class AccountEmailService {
+
+    @Value("${domain.back}")
+    private String backDomain;
 
     private final AccountRepository accountRepository;
     private final EmailService emailService;
@@ -43,7 +47,7 @@ public class AccountEmailService {
         context.setVariable("linkName", "임시 비밀번호 발급");
         context.setVariable("message", "임시 비밀번호로 변경하려면 링크를 클릭하세요");
         context.setVariable("tempPassword", account.getTempPassword());
-        context.setVariable("host", "http://localhost:8080");
+        context.setVariable("host", "http://" + backDomain);
 
         String message = templateEngine.process("mail/simple-link", context);
 

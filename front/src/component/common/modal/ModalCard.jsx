@@ -9,7 +9,7 @@ const ModalBaseCard = styled.div`
   position: fixed;
   top: 25%;
 
-  @media screen and (max-width: 550px) {
+  @media screen and (max-width: 549px) {
     width: 90%;
     display: flex;
     justify-content: center;

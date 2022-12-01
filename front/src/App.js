@@ -7,6 +7,7 @@ import Loading from './component/common/Loading';
 import Header from './component/common/header/Header';
 import LoginModal from './component/common/modal/LoginModal';
 import SignupModal from './component/common/modal/SignupModal';
+import FindPasswordModal from './component/common/modal/FindPasswordModal';
 import 'react-toastify/dist/ReactToastify.css';
 import MyPage from './pages/myPages/MyPage';
 import RestaurantPage from './pages/mainPages/RestaurantPage';
@@ -34,6 +35,9 @@ function App() {
   const signupModalOpened = useSelector(
     state => state.loginModal.signupModalOpened,
   );
+  const passwordModalOpened = useSelector(
+    state => state.loginModal.passwordModalOpened,
+  );
 
   return (
     <Suspense fallback={<Loading />}>
@@ -45,6 +49,7 @@ function App() {
       <ToastContainer />
       {loginModalOpened && <LoginModal />}
       {signupModalOpened && <SignupModal />}
+      {passwordModalOpened && <FindPasswordModal />}
       <Header />
       <Routes>
         <Route path="/" element={<MainPage />}>

@@ -58,6 +58,9 @@ dependencies {
     implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
 
     implementation group: 'net.coobird', name: 'thumbnailator', version: '0.4.1'    /* thumbnailator */
+
+    implementation group: 'com.drewnoakes', name: 'metadata-extractor', version: '2.17.0'
+
 }
 
 tasks.named('test') {

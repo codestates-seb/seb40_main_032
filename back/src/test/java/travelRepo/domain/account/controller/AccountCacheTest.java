@@ -17,7 +17,7 @@ import travelRepo.domain.account.entity.Account;
 import travelRepo.domain.account.repository.AccountRepository;
 import travelRepo.global.security.authentication.UserAccount;
 import travelRepo.global.security.jwt.JwtProcessor;
-import travelRepo.util.After;
+import travelRepo.util.Treatment;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
@@ -26,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Transactional
 @SpringBootTest
 @AutoConfigureMockMvc
-public class AccountCacheTest extends After {
+public class AccountCacheTest extends Treatment {
 
     @Autowired
     private MockMvc mockMvc;
