@@ -9,6 +9,20 @@ const Main = styled.main`
     padding-top: 6rem;
   }
 
+  .search__sort {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+    max-width: 172rem;
+  }
+  .search__result {
+    font-size: 1.6rem;
+    width: 100%;
+    font-weight: 400;
+    margin-left: 2rem;
+  }
+
   .main__wrapper {
     width: 100%;
     padding: 5rem 0 1rem;
@@ -20,6 +34,9 @@ const Main = styled.main`
     @media screen and (max-width: 549px) {
       padding: 0;
       padding-top: 7.5rem;
+      .search__result {
+        display: none;
+      }
     }
 
     .main__container {
