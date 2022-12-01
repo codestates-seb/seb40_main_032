@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const tempPasswordApi = async email => {
-  const tempPassword = await axios.post('accounts/tempPassword/email', {
+  const tempPassword = await axios.post('/accounts/tempPassword/email', {
     email,
   });
 
