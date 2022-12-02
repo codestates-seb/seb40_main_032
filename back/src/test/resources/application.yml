@@ -59,7 +59,7 @@ cloud:
 dir: ./testImg/
 
 domain:
-  front: localhost:3000
-  back: localhost:8080
+  front: localhost:3000/
+  back: localhost:8080/
 
 mod: local
