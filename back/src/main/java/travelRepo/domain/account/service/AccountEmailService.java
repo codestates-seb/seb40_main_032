@@ -41,7 +41,7 @@ public class AccountEmailService {
         account.createTempPassword();
 
         Context context = new Context();
-        context.setVariable("link", "/accounts/tempPassword/" + account.getId() +
+        context.setVariable("link", "accounts/tempPassword/" + account.getId() +
                 "?tempPassword=" + account.getTempPassword());
         context.setVariable("nickname", account.getNickname());
         context.setVariable("linkName", "임시 비밀번호 발급");
