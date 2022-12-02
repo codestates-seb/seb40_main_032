@@ -7,7 +7,6 @@ import { TransparentButton } from '../common/button/ButtonStyle';
 import deleteUserApi from '../../api/deleteUserApi';
 import YesNoModal from '../common/modal/YesNoModal';
 import ConfirmModal from '../common/modal/ConfirmModal';
-import { removeCookie } from '../../util/cookie';
 import { loginActions } from '../../redux/loginSlice';
 
 const DeleteButtonWrapper = styled.div`
@@ -80,9 +79,9 @@ function MyinfoEditDelete() {
       sameSite: 'None',
       secure: 'false',
     };
-    removeCookie('profile', option);
-    removeCookie('accountId', option);
-    removeCookie('accessToken', option);
+    localStorage.removeItem('profile', option);
+    localStorage.removeItem('accountId', option);
+    localStorage.removeItem('accessToken', option);
   };
 
   const deleteRequest = event => {

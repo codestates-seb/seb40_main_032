@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import ReactGA from 'react-ga';
 import { loginActions } from '../../../redux/loginSlice';
-import { removeCookie } from '../../../util/cookie';
 import GaEvent from '../../../util/eventGaTracking';
 
 const ItemWrapper = styled.li`
@@ -38,9 +37,9 @@ function HeaderDropDownItem({ linkText, link, activeHandler, accountId }) {
       sameSite: 'None',
       secure: 'false',
     };
-    removeCookie('profile', option);
-    removeCookie('accountId', option);
-    removeCookie('accessToken', option);
+    localStorage.removeItem('profile', option);
+    localStorage.removeItem('accountId', option);
+    localStorage.removeItem('accessToken', option);
   };
   // 로그아웃 핸들러
   const logoutHandler = () => {

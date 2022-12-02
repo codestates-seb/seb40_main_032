@@ -1,8 +1,7 @@
 import axios from 'axios';
-import { getCookie } from '../util/cookie';
 // 게시글 단일 조회시 필요한 정보 요청 API
 
-const jwt = getCookie('accessToken');
+const jwt = localStorage.getItem('accessToken');
 const authHeader = {
   headers: {
     Authorization: jwt,

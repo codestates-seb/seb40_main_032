@@ -5,7 +5,6 @@ import {
   postDetailCommentModifyApi,
   postDetaulCommentDeleteApi,
 } from '../../../api/postDetailApi';
-import { getCookie } from '../../../util/cookie';
 
 const MoreWrapper = styled.div`
   width: 100%;
@@ -85,7 +84,7 @@ function CommentMore({
   create,
 }) {
   const createAt = new Date(create).toISOString().split('T')[0];
-  const userId = Number(getCookie('accountId'));
+  const userId = Number(localStorage.getItem('accountId'));
   const [modifyComment, setModifyComment] = useState(comment);
   const [modifyFlag, setModifyFlag] = useState(false);
   const navigate = useNavigate();

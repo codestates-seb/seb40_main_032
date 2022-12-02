@@ -1,8 +1,7 @@
 import axios from 'axios';
-import { getCookie } from '../util/cookie';
 
 const deleteUserApi = () => {
-  const jwt = getCookie('accessToken');
+  const jwt = localStorage.getItem('accessToken');
 
   return axios.delete('/accounts', {
     headers: { baseURL: '/', Authorization: jwt },

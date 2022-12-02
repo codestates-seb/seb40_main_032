@@ -1,8 +1,7 @@
 import axios from 'axios';
-import { getCookie } from '../util/cookie';
 
 const publishApi = formData => {
-  const jwt = getCookie('accessToken');
+  const jwt = localStorage.getItem('accessToken');
 
   return axios.post('/boards', JSON.stringify(formData), {
     headers: {

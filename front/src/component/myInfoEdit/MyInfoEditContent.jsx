@@ -5,7 +5,6 @@ import userDataApi from '../../api/userDataApi';
 import { DefaultButton, TransparentButton } from '../common/button/ButtonStyle';
 import editUserApi from '../../api/editUserApi';
 import ConfirmModal from '../common/modal/ConfirmModal';
-import { getCookie, setCookie } from '../../util/cookie';
 import MyInfoEditDelete from './MyInfoEditDelete';
 
 const Container = styled.div``;
@@ -78,7 +77,7 @@ const ErrorMsg = styled.span`
 `;
 
 function MyInfoEditContent({ formData, setFormData }) {
-  const accountId = getCookie('accountId');
+  const accountId = localStorage.getItem('accountId');
   const navigate = useNavigate();
   const [nicknameError, setNicknameError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
@@ -136,7 +135,7 @@ function MyInfoEditContent({ formData, setFormData }) {
     editUserApi(formData)
       .then(res => {
         if (res.status === 200) {
-          setCookie('profile', formData.profile, {
+          localStorage.setItem('profile', formData.profile, {
             path: '/',
             sameSite: 'None',
             secure: 'false',
