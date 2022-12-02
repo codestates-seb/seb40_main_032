@@ -47,7 +47,7 @@ cloud:
 dir:
 
 domain:
-  front: seb40-mainproject.s3-website.ap-northeast-2.amazonaws.com/
-  back: http://43.201.25.87:8080/
+  front: localhost:3000/
+  back: http://13.125.238.70:8080/
 
 mod: server
