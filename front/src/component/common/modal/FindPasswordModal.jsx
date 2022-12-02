@@ -83,12 +83,10 @@ function FindPasswordModal() {
       return;
     }
     tempPasswordApi(email)
-      .then(res => {
-        console.log(res);
+      .then(() => {
         setConfirmModalOpened(true);
       })
       .catch(err => {
-        console.log(err);
         if (err.response.data.code === '013') {
           setErrorMessage(err.response.data.message);
           setValidation(false);

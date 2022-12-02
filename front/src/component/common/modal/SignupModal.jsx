@@ -33,7 +33,7 @@ const SignupModalStyle = styled.div`
     color: var(--font-base-black);
     display: flex;
     flex-direction: column;
-    label {
+    > div {
       font-size: 1.7rem;
       margin-top: 1rem;
     }
@@ -93,7 +93,6 @@ function SignupModal() {
   });
   const dispatch = useDispatch();
 
-  // 인풋값 상태 저장 함수
   const onChangeNickname = e => {
     setNickname(e.target.value);
   };
@@ -105,15 +104,10 @@ function SignupModal() {
   };
   const onChangerCheckbox = e => {
     setCheckbox(e.target.checked);
-    console.log(e.target.checked);
-    console.log(e.target);
   };
-  console.log(checkbox);
 
-  // 랜덤 숫자 생성 함수 - 랜덤이미지 선택에 사용
   const ramdomNumber = Math.floor(Math.random() * 10);
 
-  // 이미지 포멧
   const dataURLtoFile = (dataurl, fileName) => {
     const arr = dataurl.split(',');
     const mime = arr[0].match(/:(.*?);/)[1];
@@ -134,7 +128,6 @@ function SignupModal() {
     return imagefile;
   };
 
-  // 회원가입 axios 요청
   async function postSingup() {
     const formData = new FormData();
     const profileImg = await getImage();
@@ -143,20 +136,16 @@ function SignupModal() {
     formData.append('password', password);
     formData.append('nickname', nickname);
     await signupApi(formData)
-      .then(res => {
+      .then(() => {
         setSignupError('');
         setSuccessSignup(true);
-        console.log(res);
       })
       .catch(err => {
-        console.log(err);
-        // 백엔드에서 받은 중복이메일 유효성 검사 표시
         if (err.response.data.code === '005') {
           setSignupError(prev => {
             return { ...prev, emailError: true, nicknameError: false };
           });
         }
-        // 백엔드에서 받은 중복닉네임 유효성 검사 표시
         if (err.response.data.code === '014') {
           setSignupError(prev => {
             return { ...prev, emailError: false, nicknameError: true };
@@ -167,7 +156,6 @@ function SignupModal() {
 
   const onSubmitHandler = e => {
     e.preventDefault();
-    // 닉네임 유효성 검사
     if (nickname.trim().length === 0) {
       setValidationCorrect(prev => {
         return { ...prev, nicknameCorrect: false };
@@ -177,7 +165,6 @@ function SignupModal() {
     setValidationCorrect(prev => {
       return { ...prev, nicknameCorrect: true };
     });
-    // 이메일 유효성 검사
     if (email.trim().length === 0 || !email.includes('@')) {
       setValidationCorrect(prev => {
         return { ...prev, emailCorrect: false };
@@ -187,7 +174,6 @@ function SignupModal() {
     setValidationCorrect(prev => {
       return { ...prev, emailCorrect: true };
     });
-    // 비밀번호 유효성 검사
     if (password.length < 8) {
       setValidationCorrect(prev => {
         return { ...prev, passwordCorrect: false };
@@ -203,14 +189,12 @@ function SignupModal() {
   const signupModalCloser = () => {
     dispatch(loginModalActions.closeSignupModal());
   };
-  // 컨펌 모달 닫기 함수
-  // UX를 위해 회원가입 모달도 같이 닫힌다.
+
   const onConfirmModalCloser = () => {
     setSuccessSignup(false);
     signupModalCloser();
   };
 
-  // 약관 모달 오프너 클로저
   const termsOpener = e => {
     e.preventDefault();
     setConfirmTerms(true);
@@ -232,9 +216,8 @@ function SignupModal() {
           <SignupModalStyle>
             <div className="title">회원가입</div>
             <form className="login__form">
-              <label htmlFor="nickname">닉네임</label>
+              <div>닉네임</div>
               <input
-                id="nickname"
                 name="nickname"
                 type="text"
                 placeholder="닉네임을 입력하세요"
@@ -249,9 +232,8 @@ function SignupModal() {
               {signupError.nicknameError && (
                 <div className="input__validation">중복 닉네임 입니다.</div>
               )}
-              <label htmlFor="email">아이디</label>
+              <div>아이디</div>
               <input
-                id="email"
                 name="email"
                 type="text"
                 placeholder="이메일 주소를 입력하세요"
@@ -266,9 +248,8 @@ function SignupModal() {
               {signupError.emailError && (
                 <div className="input__validation">중복 이메일 입니다.</div>
               )}
-              <label htmlFor="password">비밀번호</label>
+              <div>비밀번호</div>
               <input
-                id="password"
                 name="password"
                 type="password"
                 placeholder="비밀번호를 입력하세요"

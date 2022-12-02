@@ -52,7 +52,6 @@ const MainThemeBar = styled.div`
       transition: all 0.5s;
     }
 
-    /* TODO: left 값 화면 너비에 따라 달라지게 해야할 것 같음 */
     .theme__mypost.active ~ .bar {
       left: 1.5rem;
       opacity: 1;

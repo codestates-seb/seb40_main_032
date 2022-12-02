@@ -18,7 +18,6 @@ function StayPage() {
     pathname === path ? memorySort : 'createdAt,desc',
   );
 
-  console.log(`search ${search} STAY  변경 감지!!`);
   const [target, hasNext, setLastData] = useIntersect(
     '/boards?category=STAY&',
     search,
@@ -30,7 +29,6 @@ function StayPage() {
   );
 
   const sortHandler = sorted => {
-    console.log(sorted);
     if (sort !== sorted) {
       setSort(sorted);
     }

@@ -144,7 +144,6 @@ function MyInfoEditContent({ formData, setFormData }) {
         }
       })
       .catch(error => {
-        console.log(error.response.data.message);
         if (error.response.data.code === '014') {
           setErrorMessage(prev => ({
             ...prev,
@@ -155,7 +154,6 @@ function MyInfoEditContent({ formData, setFormData }) {
       });
   };
 
-  // 닉네임을 변경하지 않고 제출할때 서버의 닉네임 중복검사 테스트를 통과시키기 위한 목적
   const [defaultNickname, setDefaultNickname] = useState();
 
   useEffect(() => {

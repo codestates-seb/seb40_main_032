@@ -11,7 +11,6 @@ function AllThemePage() {
   const { pathname } = useLocation();
   const { search, path, memorySort } = useSelector(state => state.search);
   const dispatch = useDispatch();
-  console.log(`ALL pathname : ${pathname} path : ${path}`);
 
   const [isPending, setIsPending] = useState(true);
   const [posts, setPosts] = useState([]);
@@ -30,7 +29,6 @@ function AllThemePage() {
   );
 
   const sortHandler = sorted => {
-    console.log(sorted);
     if (sort !== sorted) {
       setSort(sorted);
     }

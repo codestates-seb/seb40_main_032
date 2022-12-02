@@ -115,7 +115,6 @@ function CommentWrite() {
   const boardId = useParams();
   const endPointRef = useRef(null);
   const [lastData, setLastData] = useState('');
-  // 무한 스크롤 옵저버
   const obsHandler = entries => {
     const target = entries[0];
 
@@ -123,7 +122,6 @@ function CommentWrite() {
       setPage(prev => prev + 1);
     }
   };
-  // 무한 스크롤 데이터 요청 핸들러
   const commentListGetHandler = useCallback(
     board => {
       postDetailCommentApi(board, lastData)
@@ -147,7 +145,6 @@ function CommentWrite() {
     },
     [lastData],
   );
-  // 무한 스크롤 useEffect
   useEffect(() => {
     const observer = new IntersectionObserver(obsHandler, {
       root: document.getElementsByClassName('comment')[0],
@@ -160,14 +157,12 @@ function CommentWrite() {
     };
   }, [hasNext]);
 
-  // 페이지 증가에 따른 데이터 요청
   useEffect(() => {
     if (page !== 0) {
       commentListGetHandler(boardId.id);
     }
   }, [page]);
 
-  // 댓글 삭제 및 수정 wather핸들러
   const deleteModifyWatcherHandler = () => {
     postDetailCommentApi(boardId.id, '', commentList.length)
       .then(res => {
@@ -182,7 +177,6 @@ function CommentWrite() {
       });
   };
 
-  // 로그인 여부 체크 핸들러
   const modalOpenHandler = () => {
     if (!login) {
       dispatch(loginModalActions.openLoginModal());
@@ -191,7 +185,6 @@ function CommentWrite() {
     return true;
   };
 
-  // 댓글 작성 핸들러
   const commentSendHandler = () => {
     if (modalOpenHandler() && comment !== '') {
       postDetailCommentSubmitApi(boardId.id, comment)
@@ -200,8 +193,7 @@ function CommentWrite() {
           setHasNext(true);
           setPage(0);
           setLastData('');
-          setCommentList(prev => {
-            console.log(prev);
+          setCommentList(() => {
             return [];
           });
           resetComment('');
@@ -219,12 +211,10 @@ function CommentWrite() {
           setCommentLoading(false);
         })
         .catch(err => {
-          // toast
           console.log(err);
         });
     }
   };
-  // 디바운스 적용 댓글 등록 핸들러
   const debounceSendHandler = debounce(() => {
     commentSendHandler();
   }, 200);

@@ -78,21 +78,21 @@ const ErrorMsg = styled.p`
 `;
 
 function MyInfoEditProfile({ formData, setFormData }) {
-  const [blob, setBlob] = useState(); // 이미지
-  const [previewUrl, setPreviewUrl] = useState(); // 미리보기 url 주소
-  const [resURL, setResURL] = useState(''); // 서버 저장 url 주소
-  const [errorMessage, setErrorMessage] = useState(''); // 용량 제한 메시지
+  const [blob, setBlob] = useState();
+  const [previewUrl, setPreviewUrl] = useState();
+  const [resURL, setResURL] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   const uploadImage = async event => {
-    setBlob(...event.target.files); // 이미지 등록
+    setBlob(...event.target.files);
   };
 
   const validatePhotos = event => {
-    const targetFileSize = event.target.files[0].size; // 업로드 사진 크기 (단위:bytes)
-    const targetFileSizeToMb = targetFileSize / (1024 * 1024); // bytes=>megabyte 변환
-    const targetFileSizeToKb = targetFileSize / 1024; // b=>kilobyte 변환
-    const MAX_SIZE_MB = 3; // 최대 3mb
-    const MIN_SIZE_KB = 0; // 최소 0kb
+    const targetFileSize = event.target.files[0].size;
+    const targetFileSizeToMb = targetFileSize / (1024 * 1024);
+    const targetFileSizeToKb = targetFileSize / 1024;
+    const MAX_SIZE_MB = 3;
+    const MIN_SIZE_KB = 0;
 
     if (targetFileSizeToMb > MAX_SIZE_MB) {
       setErrorMessage(`${MAX_SIZE_MB}MB 미만의 사진을 업로드하세요.`);
@@ -100,23 +100,22 @@ function MyInfoEditProfile({ formData, setFormData }) {
       setErrorMessage(`최소 업로드 크기는 ${MIN_SIZE_KB}KB 입니다.`);
     } else {
       setErrorMessage('');
-      uploadImage(event); // 조건 통과시 상단의 미리보기 업로드 함수 실행
+      uploadImage(event);
     }
   };
 
   const typeCheck = event => {
-    const targetFileType = event.target.files[0].type; // 업로드 파일 유형
+    const targetFileType = event.target.files[0].type;
     const targetFileTypeShort = targetFileType.slice(
       targetFileType.indexOf('/') + 1,
       targetFileType.length,
-    ); // 확장자명 text추출
-    const onlyAccept = ['image/jpeg', 'image/png', 'image/jpg']; // 허용할 확장자명 설정
+    );
+    const onlyAccept = ['image/jpeg', 'image/png', 'image/jpg'];
     if (onlyAccept.indexOf(targetFileType) === -1) {
       setErrorMessage(`${targetFileTypeShort} 형식은 업로드할 수 없습니다.`);
     } else validatePhotos(event);
   };
 
-  // 미리보기 렌더링
   useEffect(() => {
     const reader = new FileReader();
     if (blob) {
@@ -127,7 +126,6 @@ function MyInfoEditProfile({ formData, setFormData }) {
     }
   }, [blob]);
 
-  // 이미지 서버 전송
   useEffect(() => {
     const blobFormData = new FormData();
     if (blob) {
@@ -146,7 +144,7 @@ function MyInfoEditProfile({ formData, setFormData }) {
 
   /* eslint-disable */
   const handleClick = event => {
-    event.target.value = ''; // 동일한 사진을 여러번 올릴수 있게 해줌
+    event.target.value = '';
   };
 
   useEffect(() => {

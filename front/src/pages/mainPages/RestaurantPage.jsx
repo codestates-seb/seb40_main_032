@@ -12,15 +12,11 @@ function RestaurantPage() {
   const { search, path, memorySort } = useSelector(state => state.search);
   const dispatch = useDispatch();
 
-  console.log(`memorySort : ${memorySort}`);
-
   const [isPending, setIsPending] = useState(true);
   const [posts, setPosts] = useState([]);
   const [sort, setSort] = useState(
     pathname === path ? memorySort : 'createdAt,desc',
   );
-
-  console.log(`search ${search} Re! 변경 감지!!`);
 
   const [target, hasNext, setLastData] = useIntersect(
     '/boards?category=RESTAURANT&',
@@ -33,7 +29,6 @@ function RestaurantPage() {
   );
 
   const sortHandler = sorted => {
-    console.log(sorted);
     if (sort !== sorted) {
       setSort(sorted);
     }

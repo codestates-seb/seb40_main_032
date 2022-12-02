@@ -14,7 +14,6 @@ function MetaTag({ title, description, keywords, imgsrc, url }) {
       <meta property="og:site_name" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={imgsrc} />
-      {/* 추후 배포 주소 넣으면 될듯함 */}
       <meta property="og:url" content={url} />
     </Helmet>
   );

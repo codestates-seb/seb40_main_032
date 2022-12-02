@@ -6,7 +6,6 @@ function PublishTags({ formData, setFormData, tags, setTags }) {
   const [message, setMessage] = useState();
   const [error, setError] = useState(false);
 
-  // 해쉬태그 추가
   const handleTagAdd = event => {
     if (event.key === 'Enter' || event.key === ',') {
       const { value } = event.target;
@@ -31,7 +30,6 @@ function PublishTags({ formData, setFormData, tags, setTags }) {
     }
   };
 
-  // 해쉬태그 삭제
   const handleTagRemove = indexRemove => {
     setTags(prev => {
       const filtered = [...prev.filter((_, index) => index !== indexRemove)];
@@ -70,7 +68,6 @@ function PublishTags({ formData, setFormData, tags, setTags }) {
 
 export default PublishTags;
 
-// 태그 - 입력, 삭제
 const TagContainer = styled.section`
   width: auto;
   .tag__wrapper {
@@ -115,7 +112,6 @@ const TagContainer = styled.section`
   }
 `;
 
-// 에러 메세지
 const ErrorMessage = styled.span`
   color: red;
 `;

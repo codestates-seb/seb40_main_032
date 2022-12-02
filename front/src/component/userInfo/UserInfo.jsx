@@ -33,7 +33,6 @@ function UserInfo() {
   const { accountId } = useParams();
   const navigate = useNavigate();
 
-  // 내 정보 불러오기
   useEffect(() => {
     userDataApi(accountId)
       .then(res =>

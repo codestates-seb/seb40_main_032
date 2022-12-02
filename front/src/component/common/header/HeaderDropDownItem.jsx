@@ -41,7 +41,6 @@ function HeaderDropDownItem({ linkText, link, activeHandler, accountId }) {
     localStorage.removeItem('accountId', option);
     localStorage.removeItem('accessToken', option);
   };
-  // 로그아웃 핸들러
   const logoutHandler = () => {
     cookieRemover();
     dispatch(loginActions.logout());

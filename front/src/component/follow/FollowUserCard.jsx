@@ -121,7 +121,6 @@ function FollowUserCard({ myFollowing }) {
   const dispatch = useDispatch();
   const isLogin = useSelector(state => state.login.isLogin);
   const cookieAccountId = Number(localStorage.getItem('accountId'));
-  console.log(cookieAccountId, myFollowing.id);
 
   const followHandler = () => {
     if (isLogin) {

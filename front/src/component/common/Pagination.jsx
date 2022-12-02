@@ -32,12 +32,10 @@ const PageButtons = styled.div`
       color: var(--button-theme);
     }
 
-    /* 페이지 활성화 */
     &.page__btn--active {
       background-color: var(--button-theme);
       color: var(--button-font-color);
     }
-    /* prev, next 버튼 활성화 */
     &.arrow__active {
       border: none;
       box-shadow: 0 4px 8px 0 rgb(15 41 77 / 8%);
@@ -74,13 +72,10 @@ const PageButtons = styled.div`
 function Pagination({ totalLists, currentPage, setCurrentPage, setIsPending }) {
   const listPerPage = 5;
   const totalPages = Math.ceil(totalLists / listPerPage);
-  // 전체 페이지 배열
   const totalPageArr = Array(totalPages)
     .fill(1)
     .map((el, idx) => el + idx);
-  // 현재 페이지그룹
   const [pageGroup, setPageGroup] = useState([]);
-  // prev, next 버튼 활성화 여부
   const prevActive = pageGroup[0] !== 1;
   const nextActive = pageGroup[pageGroup.length - 1] < totalPages;
 
@@ -92,7 +87,6 @@ function Pagination({ totalLists, currentPage, setCurrentPage, setIsPending }) {
     setPageGroup([...pageGroupArr]);
   }, [totalPages]);
 
-  // 이전 페이지 핸들러
   const handlePrev = () => {
     if (!prevActive) return;
 
@@ -100,7 +94,6 @@ function Pagination({ totalLists, currentPage, setCurrentPage, setIsPending }) {
     setCurrentPage(pageGroup[0] - 5);
   };
 
-  // 페이지 핸들러
   const handlePage = e => {
     if (Number(e.target.value) === currentPage) return;
 
@@ -108,7 +101,6 @@ function Pagination({ totalLists, currentPage, setCurrentPage, setIsPending }) {
     setCurrentPage(Number(e.target.value));
   };
 
-  // 다음 페이지 핸들러
   const handleNext = () => {
     if (!nextActive) return;
 
@@ -118,7 +110,6 @@ function Pagination({ totalLists, currentPage, setCurrentPage, setIsPending }) {
 
   return (
     <PageButtons>
-      {/* 이전 페이지 버튼 */}
       <button
         className={prevActive ? 'prev arrow__active' : 'prev'}
         onClick={handlePrev}
@@ -127,7 +118,6 @@ function Pagination({ totalLists, currentPage, setCurrentPage, setIsPending }) {
         <HiOutlineChevronLeft />
       </button>
 
-      {/* 페이지 버튼 그룹 */}
       {pageGroup.map(el => (
         <button
           className={el === currentPage ? 'page__btn--active' : 'page__btn'}
@@ -139,7 +129,6 @@ function Pagination({ totalLists, currentPage, setCurrentPage, setIsPending }) {
         </button>
       ))}
 
-      {/* 다음 페이지 버튼 */}
       <button
         className={nextActive ? 'next arrow__active' : 'next'}
         onClick={handleNext}

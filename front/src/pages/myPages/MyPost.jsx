@@ -8,7 +8,6 @@ import LoadingSpinner from '../../component/common/LoadingSpinner';
 import EmptyText from '../../component/common/EmptyText';
 
 const MyPageMain = styled.main`
-  /* padding-top: 23rem; */
   max-width: 175rem;
   padding: 23rem 2rem 0;
   display: flex;

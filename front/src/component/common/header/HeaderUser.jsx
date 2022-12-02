@@ -67,7 +67,6 @@ const HeaderUserWrapper = styled.nav`
     }
   }
 `;
-// { loginModalOpener }
 function HeaderUser() {
   const navigate = useNavigate();
   const [active, setActive] = useState(false);
@@ -80,7 +79,6 @@ function HeaderUser() {
     dispatch(loginModalActions.openLoginModal());
   };
 
-  // 프로필 이미지 가져오기
   const profile = localStorage.getItem('profile');
   useEffect(() => {
     if (profile) {
@@ -150,11 +148,7 @@ function HeaderUser() {
                   }
                 }}
               >
-                <img
-                  // className="profile__image"
-                  src={profileImg}
-                  alt="프로필 이미지"
-                />
+                <img src={profileImg} alt="프로필 이미지" />
               </div>
             ) : (
               <BiUserCircle size="4.3rem" />

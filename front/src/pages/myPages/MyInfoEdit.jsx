@@ -21,7 +21,6 @@ function MyInfoEdit() {
   const accountIdCookie = localStorage.getItem('accountId');
 
   useEffect(() => {
-    // 본인 외 url 접근시 에러페이지
     if (accountId !== accountIdCookie) {
       navigate('*');
     }

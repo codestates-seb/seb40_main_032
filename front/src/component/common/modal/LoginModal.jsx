@@ -79,7 +79,6 @@ function LoginModal() {
     dispatch(loginModalActions.closeLoginModal());
   };
 
-  // 인풋값 상태 저장 함수
   const onChangeEmail = e => {
     setEmail(e.target.value);
   };
@@ -87,41 +86,33 @@ function LoginModal() {
     setPassword(e.target.value);
   };
 
-  // 회원가입 모달
   const signupModalOpener = () => {
     dispatch(loginModalActions.openSignupModal());
     loginModalCloser();
   };
 
-  // 비밀번호 찾기 모달
   const findPasswordModalOpener = () => {
     dispatch(loginModalActions.openFindPasswordModal());
     loginModalCloser();
   };
 
-  // 로그인 요청, 모달은 로그인 요청이 성공했을 때에만 닫힘.
   async function login() {
     const data = { email, password };
     try {
-      // unwrap()을 해줘야만 비동기 처리가 제대로 작동함.
       await dispatch(loginAsync(data)).unwrap();
       setLoginError(false);
       await loginUserApi();
       loginModalCloser();
       window.location.reload();
     } catch (err) {
-      console.log(err.response.data.code);
-      // 유효성 검사
       if (err.response.data.code === '002') {
         setLoginError(true);
       }
     }
   }
 
-  // submit 버튼 클릭시 작동 함수
   const onSubmitHandler = e => {
     e.preventDefault();
-    // 이메일 유효성 검사
     if (email.trim().length === 0 || !email.includes('@')) {
       setValidationCorrect(prev => {
         return { ...prev, emailCorrect: false, passwordCorrect: true };
@@ -132,7 +123,6 @@ function LoginModal() {
     setValidationCorrect(prev => {
       return { ...prev, emailCorrect: true };
     });
-    // 비밀번호 유효성 검사
     if (password.trim().length === 0) {
       setValidationCorrect(prev => {
         return { ...prev, passwordCorrect: false };

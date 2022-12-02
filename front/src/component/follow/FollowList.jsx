@@ -48,7 +48,6 @@ const FollowListContainer = styled.div`
 `;
 
 function FollowList({ myFollowing }) {
-  console.log(myFollowing.boards);
   return (
     <FollowListContainer>
       <FollowUserCard myFollowing={myFollowing} />

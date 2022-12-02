@@ -108,7 +108,6 @@ const Body = styled.div`
     flex-basis: 50%;
     flex-grow: 2;
     background-color: var(--base-white-color);
-    /* white-space: pre-line; */
     overflow: auto;
     ::-webkit-scrollbar {
       display: none;
@@ -202,8 +201,6 @@ function PostDetailArticle({ post, userLike, userFollow, self, board }) {
     createdAt,
     account,
   } = post;
-  console.log(self);
-  console.log(account);
   const date = new Date(createdAt).toISOString().split('T')[0];
   const [follow, setFollow] = useState(
     userFollow.follow !== '' ? userFollow.follow : false,
@@ -216,12 +213,10 @@ function PostDetailArticle({ post, userLike, userFollow, self, board }) {
   const login = useSelector(state => state.login.isLogin);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // 해당회원 정보창으로 이동
   const userMovePageHandler = () => {
     navigate(`/mypage/mypost/${account.accountId}`);
   };
 
-  // 로그인 여부 체크
   const loginCheck = () => {
     if (!login) {
       dispatch(loginModalActions.openLoginModal());
@@ -230,7 +225,6 @@ function PostDetailArticle({ post, userLike, userFollow, self, board }) {
     return true;
   };
 
-  // 좋아요 및 좋아요 취소 핸들러
   const likeHandler = () => {
     if (loginCheck()) {
       postDetailLikeApi(board)
@@ -248,7 +242,6 @@ function PostDetailArticle({ post, userLike, userFollow, self, board }) {
         });
     }
   };
-  // 팔로우 및 팔로우 취소 핸들러
   const followHandler = () => {
     if (loginCheck()) {
       postDetailFollowApi(account.accountId)
@@ -264,15 +257,12 @@ function PostDetailArticle({ post, userLike, userFollow, self, board }) {
         });
     }
   };
-  // deleteModal open Handler
   const openDeleteModal = () => {
     setDeleteModal(true);
   };
-  // deleteModal close Handler
   const closeDeleteModal = () => {
     setDeleteModal(false);
   };
-  // post delete Handler
   const postDeleteHandler = () => {
     postDetailDeleteApi(board).then(() => {
       toast('삭제 되었습니다.', {
@@ -288,12 +278,10 @@ function PostDetailArticle({ post, userLike, userFollow, self, board }) {
       navigate('/');
     });
   };
-  // 게시글 수정 페이지 이동 핸들러
   const postModifyHandler = () => {
     navigate('/publish', { replace: false, state: { post } });
   };
 
-  // tab시 keydown 이벤트 Enter 제어 핸들러
   const keyDownHandler = (e, handler) => {
     if (e.key === 'Enter') {
       handler();

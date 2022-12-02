@@ -141,20 +141,17 @@ const PostWrapper = styled.div`
     padding: 0 2rem 3rem;
   }
 `;
-// { image, title, like, tag, user }
 function Post({ post }) {
   return (
     <PostWrapper className="post">
       <div className="post__container">
         <div className="post__thumb">
-          {/* post Image */}
           <Link to={`/postDetail/${post.boardId}`}>
             <img className="post__img" src={post.thumbnail} alt="게시글" />
           </Link>
         </div>
         <div className="post__card">
           <div className="post__tl">
-            {/* title && like */}
             <p className="post__title">
               <Link to={`/postDetail/${post.boardId}`}>{post.title}</Link>
             </p>
@@ -164,7 +161,6 @@ function Post({ post }) {
             </p>
           </div>
           <div className="post__tw">
-            {/* tag && user */}
             <ul className="post__tags">
               {post.tags.map(tag => (
                 <li key={uuid()} className="post__tag">
