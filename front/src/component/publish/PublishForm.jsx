@@ -91,11 +91,23 @@ function PublishForm() {
     }
     if (!isPublishPage) {
       const data = loc.post;
+      // 카테고리 변경없이 수정 등록할 경우 formData에 영문을 담아주기 위해 변환
+      const originalCategory = data.category;
+      let translatedCategory;
+      if (originalCategory === '맛집') {
+        translatedCategory = 'RESTAURANT';
+      }
+      if (originalCategory === '숙소') {
+        translatedCategory = 'STAY';
+      }
+      if (originalCategory === '여행지') {
+        translatedCategory = 'SPOT';
+      }
       setFormData({
         title: data.title,
         content: data.content,
         location: data.location,
-        category: data.category,
+        category: translatedCategory,
         tags: [...data.tags],
       });
       setImages([...data.photos]);
