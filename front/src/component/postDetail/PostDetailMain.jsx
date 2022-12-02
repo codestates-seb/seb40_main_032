@@ -6,7 +6,6 @@ import PostDetailArticle from './PostDetailArticle';
 import Comment from './comment/Comment';
 import Loading from '../common/Loading';
 import { postDetailApi, postDetailUserApi } from '../../api/postDetailApi';
-import { getCookie } from '../../util/cookie';
 import MetaTag from '../../util/MetaTag';
 
 const Container = styled.main`
@@ -102,7 +101,7 @@ function PostDetailMain() {
   const boardId = useParams();
   const [postDetail, setPostDetail] = useState('');
   const [loading, setLoading] = useState(true);
-  const accountId = getCookie('accountId');
+  const accountId = localStorage.getItem('accountId');
   const navigate = useNavigate();
   useEffect(() => {
     if (accountId) {

@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { getCookie } from '../../util/cookie';
 import MyInfoEditForm from '../../component/myInfoEdit/MyInfoEditForm';
 
 const MyPageMain = styled.main`
@@ -19,7 +18,7 @@ const MyPageMain = styled.main`
 function MyInfoEdit() {
   const navigate = useNavigate();
   const { accountId } = useParams();
-  const accountIdCookie = getCookie('accountId');
+  const accountIdCookie = localStorage.getItem('accountId');
 
   useEffect(() => {
     // 본인 외 url 접근시 에러페이지

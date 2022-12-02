@@ -5,7 +5,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { loginModalActions } from '../../redux/loginModalSlice';
 import { DefaultButton, NegativeButton } from '../common/button/ButtonStyle';
 import { postDetailFollowApi } from '../../api/postDetailApi';
-import { getCookie } from '../../util/cookie';
 
 const FollowListLeftSide = styled.div`
   padding: 0 4rem 0 2rem;
@@ -121,7 +120,7 @@ const FollowListLeftSide = styled.div`
 function FollowUserCard({ myFollowing }) {
   const dispatch = useDispatch();
   const isLogin = useSelector(state => state.login.isLogin);
-  const cookieAccountId = Number(getCookie('accountId'));
+  const cookieAccountId = Number(localStorage.getItem('accountId'));
   console.log(cookieAccountId, myFollowing.id);
 
   const followHandler = () => {

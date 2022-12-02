@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { getCookie } from '../../../util/cookie';
 import { loginModalActions } from '../../../redux/loginModalSlice';
 import SignupModal from '../modal/SignupModal';
 import HeaderDropDownItem from './HeaderDropDownItem';
@@ -67,7 +66,7 @@ const MenuContainer = styled.div`
 function HeaderDropDownBox({ active, activeHandler, closeFocus }) {
   const isLogin = useSelector(state => state.login.isLogin);
   const dispatch = useDispatch();
-  const accountId = getCookie('accountId');
+  const accountId = localStorage.getItem('accountId');
   const signUpModal = useSelector(state => state.loginModal.signupModalOpened);
   const loginModalOpen = () => {
     dispatch(loginModalActions.openLoginModal());

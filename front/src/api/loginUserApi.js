@@ -1,10 +1,9 @@
 import axios from 'axios';
-import { getCookie, setCookie } from '../util/cookie';
 
 const loginUserApi = async () => {
-  const jwt = getCookie('accessToken');
-  const accountId = getCookie('accountId');
-  const profile = getCookie('profile');
+  const jwt = localStorage.getItem('accessToken');
+  const accountId = localStorage.getItem('accountId');
+  const profile = localStorage.getItem('profile');
   const login = await axios.get('/accounts/login', {
     headers: {
       Authorization: jwt,
@@ -12,12 +11,12 @@ const loginUserApi = async () => {
   });
 
   if (!accountId && !profile) {
-    setCookie('accountId', login.data.id, {
+    localStorage.setItem('accountId', login.data.id, {
       path: '/',
       sameSite: 'None',
       secure: 'false',
     });
-    setCookie('profile', login.data.profile, {
+    localStorage.setItem('profile', login.data.profile, {
       path: '/',
       sameSite: 'None',
       secure: 'false',

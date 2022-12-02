@@ -1,8 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import loginAsync from './action/loginAsync';
-import { setCookie, getCookie } from '../util/cookie';
 
-const accessToken = getCookie('accessToken');
+const accessToken = localStorage.getItem('accessToken');
 const loginSlice = createSlice({
   name: 'login',
   initialState: {
@@ -26,11 +25,7 @@ const loginSlice = createSlice({
       // chrome 정책에 의해 .com과 같은 일반적인 도메인 주소에서만 사용 가능.
       // httpOnly 옵션을 설정할 경우 클라이언트측에서 쿠키를 저장, 사용할 수 없음.
       // sameSite 옵션은 서버와 클라이언트의 주소가 다르므로 None으로 설정했음.
-      setCookie('accessToken', action.payload.headers.authorization, {
-        path: '/',
-        sameSite: 'None',
-        secure: 'false',
-      });
+      localStorage.setItem('accessToken', action.payload.headers.authorization);
     },
     [loginAsync.rejected]: () => {},
   },

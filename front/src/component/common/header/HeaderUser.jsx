@@ -7,7 +7,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { MdOutlineArrowDropDown, MdOutlineArrowDropUp } from 'react-icons/md';
 import { DefaultButton } from '../button/ButtonStyle';
 import HeaderDropDownBox from './HeaderDropDownBox';
-import { getCookie } from '../../../util/cookie';
 import { loginModalActions } from '../../../redux/loginModalSlice';
 
 const HeaderUserWrapper = styled.nav`
@@ -82,7 +81,7 @@ function HeaderUser() {
   };
 
   // 프로필 이미지 가져오기
-  const profile = getCookie('profile');
+  const profile = localStorage.getItem('profile');
   useEffect(() => {
     if (profile) {
       setProfileImg(profile);

@@ -1,6 +1,5 @@
 import { Link, useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { getCookie } from '../../util/cookie';
 import UserInfoAvatar from './UserInfoAvatar';
 
 const Container = styled.div`
@@ -95,7 +94,7 @@ const EditButton = styled(Link)`
 
 function UserInfoCard({ userdata }) {
   const { accountId } = useParams();
-  const cookieAccountId = getCookie('accountId');
+  const cookieAccountId = localStorage.getItem('accountId');
 
   return (
     <Container>

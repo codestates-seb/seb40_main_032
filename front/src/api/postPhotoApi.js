@@ -1,8 +1,7 @@
 import axios from 'axios';
-import { getCookie } from '../util/cookie';
 
 const postPhotoApi = formData => {
-  const jwt = getCookie('accessToken');
+  const jwt = localStorage.getItem('accessToken');
 
   return axios.post('image-files', formData, {
     baseURL: '/',
