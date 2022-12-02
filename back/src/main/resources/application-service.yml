@@ -58,6 +58,8 @@ cloud:
 
 dir: ./testImg/
 
-tempRepo: ./tempImg/
+domain:
+  front: localhost:3000/
+  back: localhost:8080/
 
 mod: local
