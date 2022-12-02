@@ -16,11 +16,11 @@ public class WebConfig implements WebMvcConfigurer {
         resolvers.add(new LoginAccountIdArgumentResolver());
     }
 
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry
-                .addMapping("/**")
-                .allowedOrigins("http://seb40-mainproject.s3-website.ap-northeast-2.amazonaws.com")
-                .allowedMethods("*");
-    }
+//    @Override
+//    public void addCorsMappings(CorsRegistry registry) {
+//        registry
+//                .addMapping("/**")
+//                .allowedOrigins("http://seb40-mainproject.s3-website.ap-northeast-2.amazonaws.com")
+//                .allowedMethods("*");
+//    }
 }
