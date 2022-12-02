@@ -16,10 +16,12 @@ function PublishModalButton({ boardId, mandatory, formData, isPublishPage }) {
   const login = useSelector(state => state.login.isLogin);
   const [confirmModalOpened, setConfirmModalOpened] = useState(false);
   const [yesNoModalOpened, setYesNoModalOpened] = useState(false);
+  const [resBoardId, setResBoardId] = useState();
 
   // 모달 닫는 함수
   const confirmModalCloser = () => {
     setConfirmModalOpened(false);
+    navigate(`/postDetail/${resBoardId}`);
   };
 
   const yesNoModalOpener = event => {
@@ -93,12 +95,8 @@ function PublishModalButton({ boardId, mandatory, formData, isPublishPage }) {
       await publishApi(formData)
         .then(res => {
           if (res.status === 201) {
-            console.log(res);
-            console.log(res.data.id);
+            setResBoardId(res.data.id);
             setConfirmModalOpened(true);
-            setTimeout(() => {
-              navigate(`/postDetail/${res.data.id}`);
-            }, 1000);
           }
         })
         .catch(error => console.log(error.response.data.message));
@@ -112,10 +110,8 @@ function PublishModalButton({ boardId, mandatory, formData, isPublishPage }) {
       await postEditApi(boardId, formData)
         .then(res => {
           if (res.status === 200) {
+            setResBoardId(res.data.id);
             setConfirmModalOpened(true);
-            setTimeout(() => {
-              navigate(`/postDetail/${res.data.id}`);
-            }, 1000);
           }
         })
         .catch(error => console.log(error.response.data.message));
