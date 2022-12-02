@@ -21,7 +21,7 @@ public class JwtProcessor {
     String secretKey;
 
     @Value("${jwt.expiration}")
-    int expiration;
+    long expiration;
 
     @Value("${jwt.prefix}")
     String prefix;
