@@ -48,6 +48,6 @@ dir:
 
 domain:
   front: seb40-mainproject.s3-website.ap-northeast-2.amazonaws.com/
-  back: http://43.201.25.87:8080/
+  back: 43.201.25.87:8080/
 
 mod: server
