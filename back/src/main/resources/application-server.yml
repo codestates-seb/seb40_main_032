@@ -6,7 +6,7 @@ spring:
     password: ${RDS_PASSWORD}
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
   mail:
     host: smtp.gmail.com
     port: 587
@@ -44,10 +44,15 @@ cloud:
     stack:
       auto: false
 
-dir:
+decorator:
+  datasource:
+    p6spy:
+      enable-logging: false
 
 domain:
   front: seb40-mainproject.s3-website.ap-northeast-2.amazonaws.com/
   back: 43.201.25.87:8080/
+
+dir:
 
 mod: server
