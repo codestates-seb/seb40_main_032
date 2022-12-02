@@ -84,7 +84,9 @@ public class SecurityConfig {
     CorsConfigurationSource corsConfigurationSource() {
 
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://seb40-mainproject.s3-website.ap-northeast-2.amazonaws.com"));
+        configuration.setAllowedOrigins(Arrays.asList("http://seb40-mainproject.s3-website.ap-northeast-2.amazonaws.com"
+                ,"http://localhost:3000"));
+
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "DELETE", "OPTIONS", "PUT"));
         configuration.addAllowedHeader(CorsConfiguration.ALL);
         configuration.setExposedHeaders(Arrays.asList("Authorization"));
