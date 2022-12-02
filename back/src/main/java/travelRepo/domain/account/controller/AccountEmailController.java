@@ -30,7 +30,7 @@ public class AccountEmailController {
         try {
             accountEmailService.applyTempPassword(accountId, tempPassword);
         } catch (Exception e){
-            return "/mail/passwordEx";
+            return "./mail/passwordEx";
         }
         return "redirect:http://" + frontDomain;
     }
