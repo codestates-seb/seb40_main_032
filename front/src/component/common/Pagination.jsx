@@ -102,6 +102,8 @@ function Pagination({ totalLists, currentPage, setCurrentPage, setIsPending }) {
 
   // 페이지 핸들러
   const handlePage = e => {
+    if (Number(e.target.value) === currentPage) return;
+
     setIsPending(true);
     setCurrentPage(Number(e.target.value));
   };
