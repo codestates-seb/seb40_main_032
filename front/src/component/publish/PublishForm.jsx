@@ -50,7 +50,12 @@ function PublishForm() {
       if (InputLength < 5) {
         setContentMessage('5글자 이상 입력하세요');
         setContentValid(false);
-      } else setContentValid(true);
+      } else if (InputLength >= 5 && InputLength <= 2000) {
+        setContentValid(true);
+      } else {
+        setContentMessage('2000자 이하로 입력해주세요');
+        setContentValid(false);
+      }
     setFormData({ ...formData, [event.target.name]: event.target.value });
   };
 
@@ -86,11 +91,23 @@ function PublishForm() {
     }
     if (!isPublishPage) {
       const data = loc.post;
+      // 카테고리 변경없이 수정 등록할 경우 formData에 영문을 담아주기 위해 변환
+      const originalCategory = data.category;
+      let translatedCategory;
+      if (originalCategory === '맛집') {
+        translatedCategory = 'RESTAURANT';
+      }
+      if (originalCategory === '숙소') {
+        translatedCategory = 'STAY';
+      }
+      if (originalCategory === '여행지') {
+        translatedCategory = 'SPOT';
+      }
       setFormData({
         title: data.title,
         content: data.content,
         location: data.location,
-        category: data.category,
+        category: translatedCategory,
         tags: [...data.tags],
       });
       setImages([...data.photos]);
@@ -109,7 +126,7 @@ function PublishForm() {
 
   return (
     <Container>
-      <h1>{isPublishPage ? '새 게시물' : '내 글 수정'}</h1>
+      <h1>{isPublishPage ? '새 스토리' : '내 글 수정'}</h1>
       <PublishPhoto
         setPhotoUrl={setPhotoUrl}
         deleteImages={deleteImages}

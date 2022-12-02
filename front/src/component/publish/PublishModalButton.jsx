@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -16,10 +16,13 @@ function PublishModalButton({ boardId, mandatory, formData, isPublishPage }) {
   const login = useSelector(state => state.login.isLogin);
   const [confirmModalOpened, setConfirmModalOpened] = useState(false);
   const [yesNoModalOpened, setYesNoModalOpened] = useState(false);
+  const [resBoardId, setResBoardId] = useState();
+  const buttonRef = useRef(null);
 
   // 모달 닫는 함수
   const confirmModalCloser = () => {
     setConfirmModalOpened(false);
+    navigate(`/postDetail/${resBoardId}`);
   };
 
   const yesNoModalOpener = event => {
@@ -87,18 +90,14 @@ function PublishModalButton({ boardId, mandatory, formData, isPublishPage }) {
   };
 
   // 게시글 등록 요청
-  const publishRequest = async event => {
-    event.preventDefault();
+  const publishRequest = () => {
+    buttonRef.current.disabled = true;
     if (mandatory) {
-      await publishApi(formData)
+      publishApi(formData)
         .then(res => {
           if (res.status === 201) {
-            console.log(res);
-            console.log(res.data.id);
+            setResBoardId(res.data.id);
             setConfirmModalOpened(true);
-            setTimeout(() => {
-              navigate(`/postDetail/${res.data.id}`);
-            }, 1000);
           }
         })
         .catch(error => console.log(error.response.data.message));
@@ -112,10 +111,8 @@ function PublishModalButton({ boardId, mandatory, formData, isPublishPage }) {
       await postEditApi(boardId, formData)
         .then(res => {
           if (res.status === 200) {
+            setResBoardId(res.data.id);
             setConfirmModalOpened(true);
-            setTimeout(() => {
-              navigate(`/postDetail/${res.data.id}`);
-            }, 1000);
           }
         })
         .catch(error => console.log(error.response.data.message));
@@ -136,16 +133,17 @@ function PublishModalButton({ boardId, mandatory, formData, isPublishPage }) {
     <>
       <ButtonContainer>
         <PublishButton
-          width="8vw"
-          height="4vh"
+          width="10rem"
+          height="3.5rem"
           fontSize="var(--font-15)"
           fontWeight="var(--font-bold)"
           onClick={isPublishPage ? publishRequest : editRequest}
+          ref={buttonRef}
         >
           <span>{isPublishPage ? '등록' : '수정'}</span>
         </PublishButton>
         <CancelButton
-          width="8vw"
+          width="10rem"
           fontSize="var(—font-15)"
           fontWeight="var(—font-bold)"
           onClick={yesNoModalOpener}
@@ -183,14 +181,14 @@ export default PublishModalButton;
 // 버튼 - 등록, 취소
 const ButtonContainer = styled.form`
   display: flex;
-  justify-content: start;
+  justify-content: end;
 `;
 
 // 등록 버튼 스타일링
 const PublishButton = styled(DefaultButton)`
   @media screen and (max-width: 549px) {
-    width: 25vw;
-    height: 4vh;
+    width: 6rem;
+    height: 3rem;
   }
   &:hover {
     background: var(—-button-theme-hv);
@@ -206,7 +204,7 @@ const CancelButton = styled(TransparentButton)`
     transition: 0.1s ease-in-out;
   }
   @media screen and (max-width: 549px) {
-    width: 28vw;
-    height: 4vh;
+    width: 6rem;
+    height: 3rem;
   }
 `;

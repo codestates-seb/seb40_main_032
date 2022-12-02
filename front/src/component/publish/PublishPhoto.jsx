@@ -28,8 +28,27 @@ const Container = styled.section`
     background-size: cover;
     width: 10rem;
     height: 10rem;
-    border-radius: 1rem;
+    border-radius: var(--radius-10);
     object-fit: cover;
+  }
+
+  #uploader__thumbnail {
+    display: none;
+    width: 3.5rem;
+    padding: 3px;
+    text-align: center;
+    background-color: #40bf77;
+    color: white;
+    border-radius: 1rem 0 1rem 0;
+  }
+
+  #uploader__preview:first-child {
+    #uploader__thumbnail {
+      position: absolute;
+      display: block;
+      left: 0;
+    }
+    border-radius: 1rem;
   }
 
   .remove__button {
@@ -204,6 +223,7 @@ const PublishPhoto = forwardRef(({ setPhotoUrl, deleteImages }, ref) => {
             {photos.map((url, index) => (
               <div id="uploader__preview" key={uuid()}>
                 <img src={url} alt="photos" className="uploader__preview" />
+                <div id="uploader__thumbnail">대표</div>
                 <RemoveIcon
                   className="remove__button"
                   onClick={() => removePhotos(index)}
