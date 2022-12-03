@@ -8,17 +8,20 @@
 
 - 화면 Figma & 유저 플로우 : https://www.figma.com/file/ZLtS8TKRJeKtvpv9FQ4Too/%EB%A9%94%EC%9D%B8-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8?node-id=0%3A1&t=etWL7NhnHgdX8Gn1-0
 
-- color Table
-  | Code | Color |
-  |----------|:----------:|
-  | #3FBF77 | green |
-  | #F2A444 | orange |
-  | #F2F0EB | light gray |
-  | #D9D9D9 | bold-gray |
-  | #969696 | dark-gray |
-  | #333333 | dark |
+- Color Table
+  | Color |
+  |:----------:|
+  | ![#3fbf77](https://placehold.co/15x15/3fbf77/3fbf77.png) `#3FBF77` |
+  | ![#F2A444](https://placehold.co/15x15/F2A444/F2A444.png) `#F2A444` |
+  | ![#F2F0EB](https://placehold.co/15x15/F2F0EB/F2F0EB.png) `#F2F0EB` |
+  | ![#D9D9D9](https://placehold.co/15x15/D9D9D9/D9D9D9.png) `#F2F0EB` |
+  | ![#D9D9D9](https://placehold.co/15x15/969696/969696.png) `#969696` |
+  | ![#333333](https://placehold.co/15x15/33333/33333.png) `#333333` |
 
-- 폰트 스타일 : Roboto, Noto Sans Korean
+- 폰트 스타일
+  | 영문 | 한글 |
+  | :---: | :---: |
+  | Roboto | Noto Sans KR |
 
 - CSS Style 규칙</br>
   1. BEM 사용
@@ -44,12 +47,12 @@
 - Airbnb : https://github.com/airbnb/javascript
 
 ### ✨ 기술 스택
-![image](https://user-images.githubusercontent.com/107888594/205426063-376b034d-0765-4f47-bf16-b26c0e5456e7.png)
+<img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white"> <img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white"> <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"> <img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black"> <img src="https://img.shields.io/badge/Axios-181717?style=for-the-badge&logo=Axios&logoColor=white"> ![Styled Components](https://img.shields.io/badge/styled--components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white) <img src="https://img.shields.io/badge/Redux-764ABC?style=for-the-badge&logo=Redux&logoColor=white"> <img src="https://img.shields.io/badge/Amazon S3-569A31?style=for-the-badge&logo=Amazon S3&logoColor=white"> <img src="https://img.shields.io/badge/Sentry-362D59?style=for-the-badge&logo=Sentry&logoColor=white"> <img src="https://img.shields.io/badge/Google Analytics-E37400?style=for-the-badge&logo=Google Analytics&logoColor=white">
 
 ### 👀 주요 기능
 - 무한스크롤
 - 사진 업로드
-- 회원가입, 로그인, 로그아웃, 비밀번호 찾기
+- 회원가입, 로그인, 로그아웃
 - 검색(제목, 본문)
 - 게시글, 댓글, 태그, 사진 CRUD
 - 타회원 팔로우, 게시글 좋아요
