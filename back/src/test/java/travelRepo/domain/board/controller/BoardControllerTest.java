@@ -477,6 +477,7 @@ class BoardControllerTest extends Treatment {
                 .andExpect(jsonPath("$.size").value(20))
                 .andExpect(jsonPath("$.hasNext").value(true))
                 .andExpect(jsonPath("$.numberOfElements").value(20))
+                .andExpect(jsonPath("$.content[0].commentCount").value(3))
                 .andDo(document(
                         "boardList",
                         getRequestPreProcessor(),
@@ -582,6 +583,7 @@ class BoardControllerTest extends Treatment {
                 .andExpect(jsonPath("$.size").value(20))
                 .andExpect(jsonPath("$.hasNext").value(false))
                 .andExpect(jsonPath("$.numberOfElements").value(7))
+                .andExpect(jsonPath("$.content[0].commentCount").value(4))
                 .andDo(document(
                         "accountBoardList",
                         getRequestPreProcessor(),
@@ -639,6 +641,7 @@ class BoardControllerTest extends Treatment {
                 .andExpect(jsonPath("$.size").value(20))
                 .andExpect(jsonPath("$.hasNext").value(false))
                 .andExpect(jsonPath("$.numberOfElements").value(7))
+                .andExpect(jsonPath("$.content[0].commentCount").value(2))
                 .andDo(document(
                         "likeBoardList",
                         getRequestPreProcessor(),

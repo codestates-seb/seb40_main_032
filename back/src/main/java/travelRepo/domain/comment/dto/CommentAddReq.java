@@ -21,10 +21,6 @@ public class CommentAddReq {
 
     public Comment toComment(Account account, Board board) {
 
-        return Comment.builder()
-                .account(account)
-                .board(board)
-                .content(content)
-                .build();
+        return new Comment(account, board, this.content);
     }
 }

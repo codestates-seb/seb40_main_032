@@ -144,3 +144,14 @@ INSERT INTO Likes(likes_id, createdAt, modifiedAt, account_id, board_id) VALUES(
 INSERT INTO Likes(likes_id, createdAt, modifiedAt, account_id, board_id) VALUES('26005', '2022-11-14 13:00:05', '2022-11-14 13:00:05', '20001', '21013');
 INSERT INTO Likes(likes_id, createdAt, modifiedAt, account_id, board_id) VALUES('26006', '2022-11-14 13:00:06', '2022-11-14 13:00:06', '20001', '21016');
 INSERT INTO Likes(likes_id, createdAt, modifiedAt, account_id, board_id) VALUES('26007', '2022-11-14 13:00:07', '2022-11-14 13:00:07', '20001', '21019');
+
+-- commentCount
+INSERT INTO Comment(comment_id, createdAt, modifiedAt, content, account_id, board_id) VALUES('15004', '2022-12-14 14:00:01', '2022-12-14 14:00:01', 'testComment', '20003', '21021');
+INSERT INTO Comment(comment_id, createdAt, modifiedAt, content, account_id, board_id) VALUES('15005', '2022-12-14 14:00:01', '2022-12-14 14:00:01', 'testComment', '20003', '21021');
+INSERT INTO Comment(comment_id, createdAt, modifiedAt, content, account_id, board_id) VALUES('15006', '2022-12-14 14:00:01', '2022-12-14 14:00:01', 'testComment', '20003', '21021');
+INSERT INTO Comment(comment_id, createdAt, modifiedAt, content, account_id, board_id) VALUES('15007', '2022-12-14 14:00:01', '2022-12-14 14:00:01', 'testComment', '20003', '21020');
+INSERT INTO Comment(comment_id, createdAt, modifiedAt, content, account_id, board_id) VALUES('15008', '2022-12-14 14:00:01', '2022-12-14 14:00:01', 'testComment', '20003', '21020');
+INSERT INTO Comment(comment_id, createdAt, modifiedAt, content, account_id, board_id) VALUES('15009', '2022-12-14 14:00:01', '2022-12-14 14:00:01', 'testComment', '20003', '21020');
+INSERT INTO Comment(comment_id, createdAt, modifiedAt, content, account_id, board_id) VALUES('15010', '2022-12-14 14:00:01', '2022-12-14 14:00:01', 'testComment', '20003', '21020');
+INSERT INTO Comment(comment_id, createdAt, modifiedAt, content, account_id, board_id) VALUES('15011', '2022-12-14 14:00:01', '2022-12-14 14:00:01', 'testComment', '20003', '21019');
+INSERT INTO Comment(comment_id, createdAt, modifiedAt, content, account_id, board_id) VALUES('15012', '2022-12-14 14:00:01', '2022-12-14 14:00:01', 'testComment', '20003', '21019');
