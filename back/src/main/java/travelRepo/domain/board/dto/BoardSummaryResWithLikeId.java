@@ -22,6 +22,8 @@ public class BoardSummaryResWithLikeId {
 
     private int likeCount;
 
+    private int commentCount;
+
     private List<String> tags;
 
     private Long likeId;
@@ -37,6 +39,7 @@ public class BoardSummaryResWithLikeId {
         boardSummaryRes.setThumbnail(board.getThumbnail());
         boardSummaryRes.setTitle(board.getTitle());
         boardSummaryRes.setLikeCount(board.getLikeCount());
+        boardSummaryRes.setCommentCount(board.getComments().size());
         boardSummaryRes.setTags(
                 board.getBoardTags().stream()
                         .sorted(Comparator.comparing(BoardTag::getOrders))

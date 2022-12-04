@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import travelRepo.domain.account.entity.Account;
+import travelRepo.domain.comment.entity.Comment;
 import travelRepo.global.auditing.BaseTime;
 
 import javax.persistence.*;
@@ -49,6 +50,9 @@ public class Board extends BaseTime {
 
     @OneToMany(mappedBy = "board", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private  final List<BoardPhoto> boardPhotos = new ArrayList<>();
+
+    @OneToMany(mappedBy = "board")
+    private final List<Comment> comments = new ArrayList<>();
 
     public void addAccount(Account account) {
         this.account = account;
