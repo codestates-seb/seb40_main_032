@@ -477,6 +477,7 @@ class BoardControllerTest extends Treatment {
                 .andExpect(jsonPath("$.size").value(20))
                 .andExpect(jsonPath("$.hasNext").value(true))
                 .andExpect(jsonPath("$.numberOfElements").value(20))
+                .andExpect(jsonPath("$.content[0].commentCount").value(3))
                 .andDo(document(
                         "boardList",
                         getRequestPreProcessor(),
@@ -500,6 +501,7 @@ class BoardControllerTest extends Treatment {
                                         fieldWithPath("content[].thumbnail").type(JsonFieldType.STRING).description("게시글 썸네일"),
                                         fieldWithPath("content[].title").type(JsonFieldType.STRING).description("게시글 제목"),
                                         fieldWithPath("content[].likeCount").type(JsonFieldType.NUMBER).description("게시글 좋아요 수"),
+                                        fieldWithPath("content[].commentCount").type(JsonFieldType.NUMBER).description("댓글 수"),
                                         fieldWithPath("content[].views").type(JsonFieldType.NUMBER).description("게시글 조휘수"),
                                         fieldWithPath("content[].createdAt").type(JsonFieldType.STRING).description("게시글 생성 시각"),
                                         fieldWithPath("content[].tags").type(JsonFieldType.ARRAY).description("게시글 태그"),
@@ -581,6 +583,7 @@ class BoardControllerTest extends Treatment {
                 .andExpect(jsonPath("$.size").value(20))
                 .andExpect(jsonPath("$.hasNext").value(false))
                 .andExpect(jsonPath("$.numberOfElements").value(7))
+                .andExpect(jsonPath("$.content[0].commentCount").value(4))
                 .andDo(document(
                         "accountBoardList",
                         getRequestPreProcessor(),
@@ -601,6 +604,7 @@ class BoardControllerTest extends Treatment {
                                         fieldWithPath("content[].thumbnail").type(JsonFieldType.STRING).description("게시글 썸네일"),
                                         fieldWithPath("content[].title").type(JsonFieldType.STRING).description("게시글 제목"),
                                         fieldWithPath("content[].likeCount").type(JsonFieldType.NUMBER).description("게시글 좋아요 수"),
+                                        fieldWithPath("content[].commentCount").type(JsonFieldType.NUMBER).description("댓글 수"),
                                         fieldWithPath("content[].views").type(JsonFieldType.NUMBER).description("게시글 조회수/실제와 차이 있음"),
                                         fieldWithPath("content[].createdAt").type(JsonFieldType.STRING).description("게시글 생성 시각"),
                                         fieldWithPath("content[].tags").type(JsonFieldType.ARRAY).description("게시글 태그"),
@@ -637,6 +641,7 @@ class BoardControllerTest extends Treatment {
                 .andExpect(jsonPath("$.size").value(20))
                 .andExpect(jsonPath("$.hasNext").value(false))
                 .andExpect(jsonPath("$.numberOfElements").value(7))
+                .andExpect(jsonPath("$.content[0].commentCount").value(2))
                 .andDo(document(
                         "likeBoardList",
                         getRequestPreProcessor(),
@@ -657,6 +662,7 @@ class BoardControllerTest extends Treatment {
                                         fieldWithPath("content[].thumbnail").type(JsonFieldType.STRING).description("게시글 썸네일"),
                                         fieldWithPath("content[].title").type(JsonFieldType.STRING).description("게시글 제목"),
                                         fieldWithPath("content[].likeCount").type(JsonFieldType.NUMBER).description("게시글 좋아요 수"),
+                                        fieldWithPath("content[].commentCount").type(JsonFieldType.NUMBER).description("댓글 수"),
                                         fieldWithPath("content[].tags").type(JsonFieldType.ARRAY).description("게시글 태그"),
                                         fieldWithPath("content[].likeId").type(JsonFieldType.NUMBER).description("좋아요 Id"),
                                         fieldWithPath("content[].likeCreatedAt").type(JsonFieldType.STRING).description("좋아요 시각"),

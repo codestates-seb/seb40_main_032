@@ -23,6 +23,8 @@ public class BoardSummaryRes {
 
     private int views;
 
+    private int commentCount;
+
     private LocalDateTime createdAt;
 
     private List<String> tags;
@@ -37,6 +39,7 @@ public class BoardSummaryRes {
         boardSummaryRes.setTitle(board.getTitle());
         boardSummaryRes.setLikeCount(board.getLikeCount());
         boardSummaryRes.setViews(board.getViews());
+        boardSummaryRes.setCommentCount(board.getComments().size());
         boardSummaryRes.setCreatedAt(board.getCreatedAt().withNano(0));
         boardSummaryRes.setTags(
                 board.getBoardTags().stream()

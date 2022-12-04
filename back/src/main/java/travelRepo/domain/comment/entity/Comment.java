@@ -1,7 +1,5 @@
 package travelRepo.domain.comment.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import travelRepo.domain.account.entity.Account;
@@ -12,9 +10,7 @@ import javax.persistence.*;
 
 @Entity
 @Getter
-@Builder
 @NoArgsConstructor
-@AllArgsConstructor
 public class Comment extends BaseTime {
 
     @Id
@@ -31,6 +27,13 @@ public class Comment extends BaseTime {
     private Board board;
 
     private String content;
+
+    public Comment(Account account, Board board, String content) {
+        this.account = account;
+        this.board = board;
+        this.content = content;
+        board.getComments().add(this);
+    }
 
     public void modify(String content) {
         this.content = content;
