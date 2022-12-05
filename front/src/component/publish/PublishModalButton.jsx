@@ -119,6 +119,7 @@ function PublishModalButton({ boardId, mandatory, formData, isPublishPage }) {
         .catch(error => {
           networkAlert();
           console.log(error.response.data.message);
+          setIsLoading(false);
         });
     }
   };
