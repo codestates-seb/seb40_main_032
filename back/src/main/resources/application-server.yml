@@ -25,6 +25,16 @@ spring:
   redis:
     host: localhost
     port: 6379
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            clientId: ${GOOGLE_ID}
+            clientSecret: ${GOOGLE_SECRET}
+            scope:
+              - email
+              - profile
 
 jwt:
   secret-key: ${JWT_SECRET_KEY}
@@ -49,10 +59,10 @@ decorator:
     p6spy:
       enable-logging: false
 
+dir:
+
 domain:
   front: seb40-mainproject.s3-website.ap-northeast-2.amazonaws.com/
   back: 43.201.25.87:8080/
-
-dir:
 
 mod: server

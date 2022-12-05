@@ -37,6 +37,13 @@ spring:
   redis:
     host: localhost
     port: 6379
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            clientId: 505644841365-ki0tcn8m7409ml629u9cgvhu7coli217.apps.googleusercontent.com
+            clientSecret: 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
 
 jwt:
   secret-key: 28d93268-a80b-4594-918b-5926a79a49ed

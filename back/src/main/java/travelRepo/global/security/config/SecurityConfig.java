@@ -1,11 +1,7 @@
 package travelRepo.global.security.config;
 
-import travelRepo.global.security.handler.AccountAccessDeniedHandler;
-import travelRepo.global.security.handler.AccountAuthenticationEntryPoint;
-import travelRepo.global.security.filter.JwtAuthenticationFilter;
-import travelRepo.global.security.filter.JwtAuthorizationFilter;
-import travelRepo.global.security.jwt.JwtProcessor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
@@ -16,21 +12,33 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import travelRepo.domain.account.repository.AccountRepository;
+import travelRepo.global.security.filter.JwtAuthenticationFilter;
+import travelRepo.global.security.filter.JwtAuthorizationFilter;
+import travelRepo.global.security.handler.AccountAccessDeniedHandler;
+import travelRepo.global.security.handler.AccountAuthenticationEntryPoint;
+import travelRepo.global.security.handler.OauthAccountSuccessHandler;
+import travelRepo.global.security.jwt.JwtProcessor;
 
 import java.util.Arrays;
 
-import static org.springframework.security.config.Customizer.*;
+import static org.springframework.security.config.Customizer.withDefaults;
 
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
 
+    @Value("${domain.front}")
+    private String frontDomain;
+
     private final JwtProcessor jwtProcessor;
     private final AuthenticationConfiguration authenticationConfiguration;
+    private final AccountRepository accountRepository;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -58,12 +66,17 @@ public class SecurityConfig {
 
         http
                 .addFilter(new JwtAuthenticationFilter(authenticationManager, jwtProcessor))
-                .addFilter(new JwtAuthorizationFilter(authenticationManager, jwtProcessor));
+                .addFilterAfter(new JwtAuthorizationFilter(authenticationManager, jwtProcessor), OAuth2LoginAuthenticationFilter.class);
 
         http
                 .exceptionHandling()
                 .accessDeniedHandler(new AccountAccessDeniedHandler())
                 .authenticationEntryPoint(new AccountAuthenticationEntryPoint());
+
+        http
+                .oauth2Login(oauth2 -> oauth2
+                        .successHandler(new OauthAccountSuccessHandler(jwtProcessor, accountRepository,
+                                passwordEncoder(), frontDomain)));
 
         return http.build();
     }
