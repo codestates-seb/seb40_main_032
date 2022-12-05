@@ -120,7 +120,7 @@ function LoginModal() {
 
   // 구글 소셜 로그인
   const oauthHandler = () => {
-    window.location.assign(
+    window.location.replace(
       'http://ec2-13-125-238-70.ap-northeast-2.compute.amazonaws.com:8080/oauth2/authorization/google',
     );
   };
