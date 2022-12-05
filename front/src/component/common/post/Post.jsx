@@ -64,25 +64,6 @@ const PostWrapper = styled.div`
             color: #333;
           }
         }
-
-        .post__heart {
-          display: flex;
-          align-items: center;
-          padding-left: 5px;
-
-          .heart__icon {
-            width: 2rem;
-            height: 2rem;
-            fill: var(--button-theme);
-          }
-
-          .heart__count {
-            font-size: 1.4rem;
-            color: var(--button-theme);
-            padding-left: 2px;
-            margin-top: -1px;
-          }
-        }
       }
 
       .post__tw {
