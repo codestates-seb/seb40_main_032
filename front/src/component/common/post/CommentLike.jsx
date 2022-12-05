@@ -3,17 +3,18 @@ import styled from 'styled-components';
 
 const CommentLikeBox = styled.div``;
 
-function CommentLike() {
+function CommentLike({ like, comment }) {
+  console.log(like, comment);
   return (
     <CommentLikeBox>
       <ul>
         <li>
           <BiHeart />
-          <span>243k</span>
+          <span>{like}</span>
         </li>
         <li>
           <BiMessageDetail />
-          <span>2434k</span>
+          <span>{comment}</span>
         </li>
       </ul>
     </CommentLikeBox>
