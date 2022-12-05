@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import uuid from 'react-uuid';
 import { Link } from 'react-router-dom';
+import CommentLike from './CommentLike';
 
 const PostWrapper = styled.div`
   display: flex;
@@ -123,6 +124,7 @@ const PostWrapper = styled.div`
 `;
 // { image, title, like, tag, user }
 function Post({ post }) {
+  console.log(post);
   return (
     <PostWrapper className="post">
       <div className="post__container">
@@ -131,6 +133,7 @@ function Post({ post }) {
           <Link to={`/postDetail/${post.boardId}`}>
             <img className="post__img" src={post.thumbnail} alt="게시글" />
           </Link>
+          <CommentLike like={post.likeCount} comment={post.commentCount} />
         </div>
         <div className="post__card">
           <div className="post__tl">
