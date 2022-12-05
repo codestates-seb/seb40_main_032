@@ -118,6 +118,13 @@ function LoginModal() {
     }
   }
 
+  // 구글 소셜 로그인
+  const oauthHandler = () => {
+    window.location.replace(
+      'http://ec2-13-125-238-70.ap-northeast-2.compute.amazonaws.com:8080/oauth2/authorization/google',
+    );
+  };
+
   // submit 버튼 클릭시 작동 함수
   const onSubmitHandler = e => {
     e.preventDefault();
@@ -202,9 +209,19 @@ function LoginModal() {
           <footer className="footer">
             <div className="footer__content">
               <div>
-                아직 회원이 아니신가요?{' '}
+                구글 계정으로 로그인
                 <TransparentButton
-                  fontSize="1.4rem"
+                  fontSize="1.3rem"
+                  onClick={oauthHandler}
+                  margin="0 0 0 0.5rem"
+                >
+                  바로가기 &gt;
+                </TransparentButton>
+              </div>
+              <div>
+                아직 회원이 아니신가요?
+                <TransparentButton
+                  fontSize="1.3rem"
                   onClick={signupModalOpener}
                   margin="0 0 0 0.5rem"
                 >
@@ -212,9 +229,9 @@ function LoginModal() {
                 </TransparentButton>
               </div>
               <div>
-                비밀번호를 잊으셨나요?{' '}
+                비밀번호를 잊으셨나요?
                 <TransparentButton
-                  fontSize="1.4rem"
+                  fontSize="1.3rem"
                   onClick={findPasswordModalOpener}
                   margin="0 0 0 0.5rem"
                 >

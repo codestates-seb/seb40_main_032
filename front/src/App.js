@@ -14,6 +14,7 @@ import RestaurantPage from './pages/mainPages/RestaurantPage';
 import StayPage from './pages/mainPages/StayPage';
 import SpotPage from './pages/mainPages/SpotPage';
 import AllThemePage from './pages/mainPages/AllThemePage';
+import OauthPage from './pages/OauthPage';
 import MyPost from './pages/myPages/MyPost';
 import MyLikes from './pages/myPages/MyLikes';
 import MyFollower from './pages/myPages/MyFollower';
@@ -69,6 +70,7 @@ function App() {
           <Route path="myfollowing/:accountId" element={<MyFollowing />} />
           <Route path="myinfoedit/:accountId" element={<MyInfoEdit />} />
         </Route>
+        <Route path="/oauth" element={<OauthPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Suspense>
