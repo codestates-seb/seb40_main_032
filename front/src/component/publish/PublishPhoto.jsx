@@ -2,7 +2,7 @@ import { useEffect, useState, forwardRef, useImperativeHandle } from 'react';
 import styled from 'styled-components';
 import { BsCamera } from 'react-icons/bs';
 import uuid from 'react-uuid';
-import { IoIosRemoveCircleOutline } from 'react-icons/io';
+import { MdRemoveCircleOutline } from 'react-icons/md';
 import postPhotoApi from '../../api/postPhotoApi';
 
 const Container = styled.section`
@@ -120,8 +120,12 @@ const CameraIcon = styled(BsCamera)`
   }
 `;
 
-const RemoveIcon = styled(IoIosRemoveCircleOutline)`
+const RemoveIcon = styled(MdRemoveCircleOutline)`
   font-size: 1.5rem;
+  color: var(--base-white-color);
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: var(--radius-10);
+  cursor: pointer;
   &:hover {
     color: red;
   }
