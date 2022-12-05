@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import LoadingSpinner from '../../component/common/LoadingSpinner';
-import Post from '../../component/common/Post';
+import Post from '../../component/common/post/Post';
 import MainSort from '../../component/main/MainSort';
 import useIntersect from '../../hooks/useIntersect';
 import { searchActions } from '../../redux/searchSlice';
