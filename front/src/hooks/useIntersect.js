@@ -29,12 +29,12 @@ const useIntersect = (
         console.log(
           // boardId createdAt likecounts views likeboardId
           `${api}${
-            search !== '' ? `query=${search}&` : ''
+            search !== '' ? `query=${encodeURIComponent(search)}&` : ''
           }size=${size}&sort=${sort}&${lastData}`,
         );
         const { data } = await axios(
           `${api}${
-            search !== '' ? `query=${search}&` : ''
+            search !== '' ? `query=${encodeURIComponent(search)}&` : ''
           }size=${size}&sort=${sort}&${lastData}`,
         );
         setPosts(prev => [...prev, ...data.content]);
