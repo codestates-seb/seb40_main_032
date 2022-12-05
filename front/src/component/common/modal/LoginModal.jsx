@@ -202,9 +202,19 @@ function LoginModal() {
           <footer className="footer">
             <div className="footer__content">
               <div>
-                아직 회원이 아니신가요?{' '}
+                구글 계정으로 로그인
                 <TransparentButton
-                  fontSize="1.4rem"
+                  fontSize="1.3rem"
+                  onClick={signupModalOpener}
+                  margin="0 0 0 0.5rem"
+                >
+                  바로가기 &gt;
+                </TransparentButton>
+              </div>
+              <div>
+                아직 회원이 아니신가요?
+                <TransparentButton
+                  fontSize="1.3rem"
                   onClick={signupModalOpener}
                   margin="0 0 0 0.5rem"
                 >
@@ -212,9 +222,9 @@ function LoginModal() {
                 </TransparentButton>
               </div>
               <div>
-                비밀번호를 잊으셨나요?{' '}
+                비밀번호를 잊으셨나요?
                 <TransparentButton
-                  fontSize="1.4rem"
+                  fontSize="1.3rem"
                   onClick={findPasswordModalOpener}
                   margin="0 0 0 0.5rem"
                 >
