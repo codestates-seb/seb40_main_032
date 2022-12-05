@@ -10,7 +10,7 @@ import {
 import CommentMore from './CommentMore';
 import { loginModalActions } from '../../../redux/loginModalSlice';
 import useInput from '../../../hooks/useInput';
-import debounce from '../../../util/debounce';
+// import debounce from '../../../util/debounce';
 import LoadingSpinner from '../../common/LoadingSpinner';
 
 const WriteWrapper = styled.article`
@@ -229,9 +229,9 @@ function CommentWrite() {
     }
   };
   // 디바운스 적용 댓글 등록 핸들러
-  const debounceSendHandler = debounce(() => {
-    commentSendHandler();
-  }, 200);
+  // const debounceSendHandler = debounce(() => {
+  //   commentSendHandler();
+  // }, 200);
 
   return (
     <WriteWrapper className="comment__write">
@@ -252,7 +252,8 @@ function CommentWrite() {
             onChange={setComment}
             onKeyUp={e => {
               if (e.code === 'Enter' && !commentLoading) {
-                debounceSendHandler();
+                commentSendHandler();
+                // debounceSendHandler();
               }
             }}
           />
