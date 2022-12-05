@@ -22,7 +22,7 @@ const MainSortBar = styled.div`
 
       &::after {
         position: absolute;
-        top: 4px;
+        top: 2px;
         left: 4.2rem;
         content: '';
         width: 1px;
@@ -38,11 +38,12 @@ const MainSortBar = styled.div`
         border: none;
         cursor: pointer;
         &:hover {
-          font-weight: 600;
-          transition: all 0.3s;
+          color: var(--button-theme);
+          font-weight: 500;
+          transition: all 0.2s;
         }
         &.sort__active {
-          font-weight: bold;
+          font-weight: 600;
           color: var(--button-theme);
         }
       }
