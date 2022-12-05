@@ -11,16 +11,8 @@ const loginUserApi = async () => {
   });
 
   if (!accountId && !profile) {
-    localStorage.setItem('accountId', login.data.id, {
-      path: '/',
-      sameSite: 'None',
-      secure: 'false',
-    });
-    localStorage.setItem('profile', login.data.profile, {
-      path: '/',
-      sameSite: 'None',
-      secure: 'false',
-    });
+    localStorage.setItem('accountId', login.data.id);
+    localStorage.setItem('profile', login.data.profile);
   }
   return login;
 };
