@@ -143,7 +143,11 @@ function Post({ post }) {
           <Link to={`/postDetail/${post.boardId}`}>
             <img className="post__img" src={post.thumbnail} alt="게시글" />
           </Link>
-          <CommentLike like={post.likeCount} comment={post.commentCount} />
+          <CommentLike
+            view={post.views}
+            like={post.likeCount}
+            comment={post.commentCount}
+          />
         </div>
         <div className="post__card">
           <div className="post__tl">

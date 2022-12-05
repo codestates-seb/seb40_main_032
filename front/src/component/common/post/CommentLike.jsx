@@ -1,4 +1,5 @@
 import { BiHeart, BiMessageDetail } from 'react-icons/bi';
+import { AiOutlineEye } from 'react-icons/ai';
 import styled from 'styled-components';
 
 const CommentLikeBox = styled.div`
@@ -7,7 +8,7 @@ const CommentLikeBox = styled.div`
   right: 5px;
   > ul {
     display: flex;
-    background: rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.1);
     border-radius: 5px;
     > li {
       display: flex;
@@ -24,7 +25,10 @@ const CommentLikeBox = styled.div`
   }
 `;
 
-function CommentLike({ like, comment }) {
+function CommentLike({ view, like, comment }) {
+  const viewCount = new Intl.NumberFormat('en-US', {
+    notation: 'compact',
+  }).format(view);
   const likeCount = new Intl.NumberFormat('en-US', {
     notation: 'compact',
   }).format(like);
@@ -42,6 +46,10 @@ function CommentLike({ like, comment }) {
         <li className="post__comment">
           <BiMessageDetail />
           <span>{commentCount}</span>
+        </li>
+        <li className="post__view">
+          <AiOutlineEye />
+          <span>{viewCount}</span>
         </li>
       </ul>
     </CommentLikeBox>
