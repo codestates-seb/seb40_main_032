@@ -33,8 +33,8 @@ const SignupModalStyle = styled.div`
     color: var(--font-base-black);
     display: flex;
     flex-direction: column;
-    label {
-      font-size: 1.7rem;
+    > div {
+      font-size: 1.5rem;
       margin-top: 1rem;
     }
     input {
@@ -168,7 +168,7 @@ function SignupModal() {
   const onSubmitHandler = e => {
     e.preventDefault();
     // 닉네임 유효성 검사
-    if (nickname.trim().length === 0) {
+    if (nickname.trim().length < 2 || nickname.trim().length > 20) {
       setValidationCorrect(prev => {
         return { ...prev, nicknameCorrect: false };
       });
@@ -232,9 +232,8 @@ function SignupModal() {
           <SignupModalStyle>
             <div className="title">회원가입</div>
             <form className="login__form">
-              <label htmlFor="nickname">닉네임</label>
+              <div>닉네임</div>
               <input
-                id="nickname"
                 name="nickname"
                 type="text"
                 placeholder="닉네임을 입력하세요"
@@ -243,15 +242,14 @@ function SignupModal() {
               />
               {!validationCorrect.nicknameCorrect && (
                 <div className="input__validation">
-                  닉네임은 반드시 입력해야 합니다.
+                  닉네임은 2자이상 20자이하만 가능합니다.
                 </div>
               )}
               {signupError.nicknameError && (
                 <div className="input__validation">중복 닉네임 입니다.</div>
               )}
-              <label htmlFor="email">아이디</label>
+              <div>아이디</div>
               <input
-                id="email"
                 name="email"
                 type="text"
                 placeholder="이메일 주소를 입력하세요"
@@ -266,9 +264,8 @@ function SignupModal() {
               {signupError.emailError && (
                 <div className="input__validation">중복 이메일 입니다.</div>
               )}
-              <label htmlFor="password">비밀번호</label>
+              <div>비밀번호</div>
               <input
-                id="password"
                 name="password"
                 type="password"
                 placeholder="비밀번호를 입력하세요"
