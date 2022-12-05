@@ -116,8 +116,9 @@ function PostDetailMain() {
           setLoading(false);
         })
         .catch(err => {
-          navigate('*');
-          console.log(err);
+          if (err.response.data.code === '009') {
+            navigate('*');
+          }
         });
     } else {
       postDetailApi(boardId.id)
@@ -131,8 +132,9 @@ function PostDetailMain() {
           setLoading(false);
         })
         .catch(err => {
-          navigate('*');
-          console.log(err);
+          if (err.response.data.code === '009') {
+            navigate('*');
+          }
         });
     }
   }, []);
