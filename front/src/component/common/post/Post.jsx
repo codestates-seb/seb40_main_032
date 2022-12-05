@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import uuid from 'react-uuid';
-import { GoHeart } from 'react-icons/go';
 import { Link } from 'react-router-dom';
 
 const PostWrapper = styled.div`
@@ -157,10 +156,6 @@ function Post({ post }) {
             {/* title && like */}
             <p className="post__title">
               <Link to={`/postDetail/${post.boardId}`}>{post.title}</Link>
-            </p>
-            <p className="post__heart">
-              <GoHeart className="heart__icon" />
-              <span className="heart__count">{post.likeCount}</span>
             </p>
           </div>
           <div className="post__tw">
