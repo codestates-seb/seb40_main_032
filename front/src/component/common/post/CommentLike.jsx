@@ -24,17 +24,23 @@ const CommentLikeBox = styled.div`
 `;
 
 function CommentLike({ like, comment }) {
-  console.log(like, comment);
+  const likeCount = new Intl.NumberFormat('en-US', {
+    notation: 'compact',
+  }).format(like);
+  const commentCount = new Intl.NumberFormat('en-US', {
+    notation: 'compact',
+  }).format(comment);
+
   return (
     <CommentLikeBox>
       <ul>
         <li className="post__like">
           <BiHeart />
-          <span>{like}</span>
+          <span>{likeCount}</span>
         </li>
         <li className="post__comment">
           <BiMessageDetail />
-          <span>{comment}</span>
+          <span>{commentCount}</span>
         </li>
       </ul>
     </CommentLikeBox>
