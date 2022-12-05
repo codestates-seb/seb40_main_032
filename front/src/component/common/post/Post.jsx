@@ -111,8 +111,15 @@ const PostWrapper = styled.div`
           }
 
           .post__writer {
+            max-width: 18rem;
             font-size: 1.3rem;
             color: var(--font-base-black);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            word-break: break-all;
           }
         }
       }
