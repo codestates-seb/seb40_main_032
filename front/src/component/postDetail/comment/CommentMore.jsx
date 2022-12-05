@@ -8,7 +8,6 @@ import {
 
 const MoreWrapper = styled.div`
   width: 100%;
-  /* height: auto; */
   border-radius: var(--radius-10);
   border: 1px solid var(--font-base-grey);
   margin: 2rem auto;
@@ -48,7 +47,12 @@ const MoreWrapper = styled.div`
     > ul {
       display: flex;
       justify-content: space-between;
+      align-items: center;
+      > div {
+        margin-right: 3px;
+      }
       > li {
+        margin-left: 3px;
         cursor: pointer;
         color: var(--font-base-grey);
         &:hover {
@@ -142,6 +146,13 @@ function CommentMore({
               <ul>
                 {modifyFlag && (
                   <>
+                    <div
+                      className={
+                        modifyComment.length === 250 ? 'comment__max' : ''
+                      }
+                    >
+                      {modifyComment.length}/250
+                    </div>
                     <li
                       role="tab"
                       tabIndex={0}
@@ -197,6 +208,7 @@ function CommentMore({
             <input
               className="modify__input"
               value={modifyComment}
+              maxLength="250"
               onChange={e => setModifyComment(e.target.value)}
             />
           ) : (
