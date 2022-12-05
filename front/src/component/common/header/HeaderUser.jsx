@@ -152,6 +152,7 @@ function HeaderUser() {
               >
                 <img
                   // className="profile__image"
+                  referrerPolicy="no-referrer"
                   src={profileImg}
                   alt="프로필 이미지"
                 />
