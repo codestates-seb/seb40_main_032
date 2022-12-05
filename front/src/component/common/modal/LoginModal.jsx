@@ -118,6 +118,13 @@ function LoginModal() {
     }
   }
 
+  // 구글 소셜 로그인
+  const oauthHandler = () => {
+    window.location.assign(
+      'http://ec2-13-125-238-70.ap-northeast-2.compute.amazonaws.com:8080/oauth2/authorization/google',
+    );
+  };
+
   // submit 버튼 클릭시 작동 함수
   const onSubmitHandler = e => {
     e.preventDefault();
@@ -205,7 +212,7 @@ function LoginModal() {
                 구글 계정으로 로그인
                 <TransparentButton
                   fontSize="1.3rem"
-                  onClick={signupModalOpener}
+                  onClick={oauthHandler}
                   margin="0 0 0 0.5rem"
                 >
                   바로가기 &gt;
