@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -17,7 +17,7 @@ function PublishModalButton({ boardId, mandatory, formData, isPublishPage }) {
   const [confirmModalOpened, setConfirmModalOpened] = useState(false);
   const [yesNoModalOpened, setYesNoModalOpened] = useState(false);
   const [resBoardId, setResBoardId] = useState();
-  const buttonRef = useRef(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   // 모달 닫는 함수
   const confirmModalCloser = () => {
@@ -103,21 +103,24 @@ function PublishModalButton({ boardId, mandatory, formData, isPublishPage }) {
   };
 
   // 게시글 등록 요청
-  const publishRequest = () => {
-    buttonRef.current.disabled = true;
-    if (mandatory) {
+  const publishRequest = event => {
+    event.preventDefault();
+    if (!mandatory) showAlert();
+    if (!isLoading && mandatory) {
+      setIsLoading(true);
       publishApi(formData)
         .then(res => {
           if (res.status === 201) {
             setResBoardId(res.data.id);
             setConfirmModalOpened(true);
           }
+          setIsLoading(false);
         })
         .catch(error => {
           networkAlert();
           console.log(error.response.data.message);
         });
-    } else showAlert();
+    }
   };
 
   // 게시글 수정 요청
@@ -157,7 +160,6 @@ function PublishModalButton({ boardId, mandatory, formData, isPublishPage }) {
           fontSize="var(--font-15)"
           fontWeight="var(--font-bold)"
           onClick={isPublishPage ? publishRequest : editRequest}
-          ref={buttonRef}
         >
           <span>{isPublishPage ? '등록' : '수정'}</span>
         </PublishButton>
