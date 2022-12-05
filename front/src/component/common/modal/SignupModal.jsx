@@ -168,7 +168,7 @@ function SignupModal() {
   const onSubmitHandler = e => {
     e.preventDefault();
     // 닉네임 유효성 검사
-    if (nickname.trim().length === 0) {
+    if (nickname.trim().length < 2 || nickname.trim().length > 10) {
       setValidationCorrect(prev => {
         return { ...prev, nicknameCorrect: false };
       });
@@ -243,7 +243,7 @@ function SignupModal() {
               />
               {!validationCorrect.nicknameCorrect && (
                 <div className="input__validation">
-                  닉네임은 반드시 입력해야 합니다.
+                  닉네임은 2자이상 10자이하만 가능합니다.
                 </div>
               )}
               {signupError.nicknameError && (
