@@ -17,6 +17,7 @@ const CommentLikeBox = styled.div`
       padding: 5px;
       > span {
         font-size: 1.4rem;
+        font-weight: 300;
         padding-left: 2px;
       }
     }

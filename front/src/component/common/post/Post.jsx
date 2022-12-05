@@ -53,7 +53,7 @@ const PostWrapper = styled.div`
 
         .post__title {
           text-align: left;
-          font-weight: bold;
+          font-weight: 500;
           font-size: 1.6rem;
           overflow: hidden;
           text-overflow: ellipsis;
@@ -63,6 +63,9 @@ const PostWrapper = styled.div`
           word-break: break-all;
           > a {
             color: #333;
+            &:hover {
+              font-weight: 600;
+            }
           }
         }
       }
@@ -113,6 +116,7 @@ const PostWrapper = styled.div`
             max-width: 18rem;
             font-size: 1.3rem;
             color: var(--font-base-black);
+            font-weight: 500;
             overflow: hidden;
             text-overflow: ellipsis;
             display: -webkit-box;
