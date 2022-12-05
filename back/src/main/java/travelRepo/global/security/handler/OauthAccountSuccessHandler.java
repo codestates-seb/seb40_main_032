@@ -93,6 +93,6 @@ public class OauthAccountSuccessHandler extends SimpleUrlAuthenticationSuccessHa
 
         String jwt = jwtProcessor.createAuthJwtToken(new UserAccount(account));
 
-        response.sendRedirect("http://" + frontDomain + "?jwt=" + jwt);
+        response.sendRedirect("http://" + frontDomain + "oauth" + "?jwt=" + jwt);
     }
 }
