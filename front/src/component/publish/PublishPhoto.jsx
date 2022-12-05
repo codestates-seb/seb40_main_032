@@ -127,7 +127,7 @@ const RemoveIcon = styled(MdRemoveCircleOutline)`
   border-radius: var(--radius-10);
   cursor: pointer;
   &:hover {
-    color: red;
+    color: #f33f3f;
   }
 `;
 

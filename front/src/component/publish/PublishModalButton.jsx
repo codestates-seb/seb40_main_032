@@ -43,7 +43,7 @@ function PublishModalButton({ boardId, mandatory, formData, isPublishPage }) {
   };
 
   const photoAlert = () => {
-    toast('사진을 1장 이상 업로드 하세요', {
+    toast('사진을 1장 이상 업로드 하세요.', {
       position: 'top-right',
       autoClose: 1000,
       hideProgressBar: false,
@@ -56,7 +56,7 @@ function PublishModalButton({ boardId, mandatory, formData, isPublishPage }) {
   };
 
   const categoryAlert = () => {
-    toast('테마를 선택하세요', {
+    toast('테마를 선택하세요.', {
       position: 'top-right',
       autoClose: 1000,
       hideProgressBar: false,
@@ -69,9 +69,22 @@ function PublishModalButton({ boardId, mandatory, formData, isPublishPage }) {
   };
 
   const mandatoryAlert = () => {
-    toast('필수 정보를 입력하세요', {
+    toast('필수 정보를 입력하세요.', {
       position: 'top-right',
       autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      progress: undefined,
+      theme: 'light',
+    });
+  };
+
+  const networkAlert = () => {
+    toast('네트워크 오류가 발생했습니다.', {
+      position: 'top-right',
+      autoClose: 2000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: false,
@@ -100,7 +113,10 @@ function PublishModalButton({ boardId, mandatory, formData, isPublishPage }) {
             setConfirmModalOpened(true);
           }
         })
-        .catch(error => console.log(error.response.data.message));
+        .catch(error => {
+          networkAlert();
+          console.log(error.response.data.message);
+        });
     } else showAlert();
   };
 
@@ -115,7 +131,10 @@ function PublishModalButton({ boardId, mandatory, formData, isPublishPage }) {
             setConfirmModalOpened(true);
           }
         })
-        .catch(error => console.log(error.response.data.message));
+        .catch(error => {
+          networkAlert();
+          console.log(error.response.data.message);
+        });
     } else showAlert();
   };
 
