@@ -35,7 +35,11 @@ function UserInfoAvatar({ profileimg }) {
     <Avatar>
       <span>
         {profileimg ? (
-          <img src={profileimg} alt="프로필이미지" />
+          <img
+            referrerPolicy="no-referrer"
+            src={profileimg}
+            alt="프로필이미지"
+          />
         ) : (
           <DefaultImage size="4.3rem" />
         )}
