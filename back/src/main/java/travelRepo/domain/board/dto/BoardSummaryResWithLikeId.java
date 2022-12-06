@@ -15,12 +15,13 @@ public class BoardSummaryResWithLikeId {
 
     private Long boardId;
 
-
     private String thumbnail;
 
     private String title;
 
     private int likeCount;
+
+    private int views;
 
     private int commentCount;
 
@@ -39,6 +40,7 @@ public class BoardSummaryResWithLikeId {
         boardSummaryRes.setThumbnail(board.getThumbnail());
         boardSummaryRes.setTitle(board.getTitle());
         boardSummaryRes.setLikeCount(board.getLikeCount());
+        boardSummaryRes.setViews(board.getViews());
         boardSummaryRes.setCommentCount(board.getComments().size());
         boardSummaryRes.setTags(
                 board.getBoardTags().stream()

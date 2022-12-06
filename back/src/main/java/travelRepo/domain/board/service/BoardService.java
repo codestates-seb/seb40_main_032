@@ -129,7 +129,11 @@ public class BoardService {
 
         Slice<Board> boards = boardRepository.findAllByAccountIdWithBoardTagsAndAccount(accountId, lastBoardId, lastBoardCreatedAt, pageable);
 
-        return new SliceDto<>(boards.map(BoardSummaryRes::of));
+        SliceDto<BoardSummaryRes> response = new SliceDto<>(boards.map(BoardSummaryRes::of));
+
+        setRedisBoardViewsToRes(response);
+
+        return response;
     }
 
     public SliceDto<BoardSummaryResWithLikeId> findBoardsByLikes(Long accountId, Long lastLikeId, LocalDateTime lastLikeCreatedAt, Pageable pageable) {
@@ -137,6 +141,8 @@ public class BoardService {
         Slice<Board> boards = boardRepository.findAllByAccountLikesWithBoardTagsAndAccount(accountId, lastLikeId, lastLikeCreatedAt, pageable);
 
         SliceDto<BoardSummaryResWithLikeId> response = new SliceDto<>(boards.map(BoardSummaryResWithLikeId::of));
+
+        setRedisBoardViewsToResWithLikes(response);
 
         setLikesDataToRes(accountId, boards, response);
 
@@ -190,17 +196,26 @@ public class BoardService {
                 .map(BoardSummaryRes::getBoardId)
                 .collect(Collectors.toList());
 
-        Set<String> keys = redisTemplate.keys("boardView*");
+        for (int i = 0; i < boardIds.size(); i++) {
+            String value = redisTemplate.opsForValue().get("boardView::" + boardIds.get(i));
 
-        if (keys != null) {
-            for (String key : keys) {
-                long boardId = Long.parseLong(key.split("::")[1]);
-                int views = Integer.parseInt(redisTemplate.opsForValue().get(key));
-                int index = boardIds.indexOf(boardId);
+            if (value != null) {
+                response.getContent().get(i).setViews(Integer.parseInt(value));
+            }
+        }
+    }
 
-                if (index >= 0) {
-                    response.getContent().get(index).setViews(views);
-                }
+    private void setRedisBoardViewsToResWithLikes(SliceDto<BoardSummaryResWithLikeId> response) {
+
+        List<Long> boardIds = response.getContent().stream()
+                .map(BoardSummaryResWithLikeId::getBoardId)
+                .collect(Collectors.toList());
+
+        for (int i = 0; i < boardIds.size(); i++) {
+            String value = redisTemplate.opsForValue().get("boardView::" + boardIds.get(i));
+
+            if (value != null) {
+                response.getContent().get(i).setViews(Integer.parseInt(value));
             }
         }
     }

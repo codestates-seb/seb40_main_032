@@ -169,6 +169,7 @@ function Post({ post }) {
               <Link to={`/mypage/mypost/${post.account.accountId}`}>
                 <span className="post__avatar">
                   <img
+                    referrerPolicy="no-referrer"
                     className="post__user"
                     src={post.account.profile}
                     alt="유저"

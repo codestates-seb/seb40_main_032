@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -17,7 +17,7 @@ function PublishModalButton({ boardId, mandatory, formData, isPublishPage }) {
   const [confirmModalOpened, setConfirmModalOpened] = useState(false);
   const [yesNoModalOpened, setYesNoModalOpened] = useState(false);
   const [resBoardId, setResBoardId] = useState();
-  const buttonRef = useRef(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   // 모달 닫는 함수
   const confirmModalCloser = () => {
@@ -43,7 +43,7 @@ function PublishModalButton({ boardId, mandatory, formData, isPublishPage }) {
   };
 
   const photoAlert = () => {
-    toast('사진을 1장 이상 업로드 하세요', {
+    toast('사진을 1장 이상 업로드 하세요.', {
       position: 'top-right',
       autoClose: 1000,
       hideProgressBar: false,
@@ -56,7 +56,7 @@ function PublishModalButton({ boardId, mandatory, formData, isPublishPage }) {
   };
 
   const categoryAlert = () => {
-    toast('테마를 선택하세요', {
+    toast('테마를 선택하세요.', {
       position: 'top-right',
       autoClose: 1000,
       hideProgressBar: false,
@@ -69,9 +69,22 @@ function PublishModalButton({ boardId, mandatory, formData, isPublishPage }) {
   };
 
   const mandatoryAlert = () => {
-    toast('필수 정보를 입력하세요', {
+    toast('필수 정보를 입력하세요.', {
       position: 'top-right',
       autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      progress: undefined,
+      theme: 'light',
+    });
+  };
+
+  const networkAlert = () => {
+    toast('네트워크 오류가 발생했습니다.', {
+      position: 'top-right',
+      autoClose: 2000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: false,
@@ -90,18 +103,25 @@ function PublishModalButton({ boardId, mandatory, formData, isPublishPage }) {
   };
 
   // 게시글 등록 요청
-  const publishRequest = () => {
-    buttonRef.current.disabled = true;
-    if (mandatory) {
+  const publishRequest = event => {
+    event.preventDefault();
+    if (!mandatory) showAlert();
+    if (!isLoading && mandatory) {
+      setIsLoading(true);
       publishApi(formData)
         .then(res => {
           if (res.status === 201) {
             setResBoardId(res.data.id);
             setConfirmModalOpened(true);
           }
+          setIsLoading(false);
         })
-        .catch(error => console.log(error.response.data.message));
-    } else showAlert();
+        .catch(error => {
+          networkAlert();
+          console.log(error.response.data.message);
+          setIsLoading(false);
+        });
+    }
   };
 
   // 게시글 수정 요청
@@ -115,7 +135,10 @@ function PublishModalButton({ boardId, mandatory, formData, isPublishPage }) {
             setConfirmModalOpened(true);
           }
         })
-        .catch(error => console.log(error.response.data.message));
+        .catch(error => {
+          networkAlert();
+          console.log(error.response.data.message);
+        });
     } else showAlert();
   };
 
@@ -138,7 +161,6 @@ function PublishModalButton({ boardId, mandatory, formData, isPublishPage }) {
           fontSize="var(--font-15)"
           fontWeight="var(--font-bold)"
           onClick={isPublishPage ? publishRequest : editRequest}
-          ref={buttonRef}
         >
           <span>{isPublishPage ? '등록' : '수정'}</span>
         </PublishButton>

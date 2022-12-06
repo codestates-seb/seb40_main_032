@@ -55,11 +55,19 @@ const FindPasswordModalStyle = styled.div`
     }
   }
 `;
+const FindPasswordButton = styled(DefaultButton)`
+  &:disabled {
+    background: var(--button-font-color);
+    color: var(--font-base-grey);
+    cursor: not-allowed;
+  }
+`;
 
 function FindPasswordModal() {
   const [email, setEmail] = useState('');
   const [validation, setValidation] = useState(true);
   const [confirmModalOpened, setConfirmModalOpened] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const dispatch = useDispatch();
 
@@ -82,10 +90,12 @@ function FindPasswordModal() {
       setValidation(false);
       return;
     }
+    setIsLoading(true);
     tempPasswordApi(email)
       .then(res => {
         console.log(res);
         setConfirmModalOpened(true);
+        setIsLoading(false);
       })
       .catch(err => {
         console.log(err);
@@ -96,6 +106,7 @@ function FindPasswordModal() {
           setErrorMessage('올바른 이메일을 입력해주세요.');
           setValidation(false);
         }
+        setIsLoading(false);
       });
   };
   return (
@@ -125,16 +136,17 @@ function FindPasswordModal() {
               {!validation && (
                 <div className="input__validation">{errorMessage}</div>
               )}
-              <DefaultButton
+              <FindPasswordButton
                 width="100%"
                 height="4rem"
                 fontSize="1.7rem"
                 onClick={onSubmitHandler}
                 type="submit"
                 margin="1.5rem 0 0 0"
+                disabled={isLoading}
               >
-                비밀번호찾기
-              </DefaultButton>
+                {isLoading ? '찾는중' : '비밀번호찾기'}
+              </FindPasswordButton>
             </form>
           </FindPasswordModalStyle>
         </ModalCard>

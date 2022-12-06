@@ -321,6 +321,7 @@ function PostDetailArticle({ post, userLike, userFollow, self, board }) {
           }}
         >
           <img
+            referrerPolicy="no-referrer"
             className="writer__avatar"
             src={`${account.profile}`}
             alt="avatar"
