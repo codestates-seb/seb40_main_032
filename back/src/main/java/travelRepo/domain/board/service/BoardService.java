@@ -142,6 +142,8 @@ public class BoardService {
 
         SliceDto<BoardSummaryResWithLikeId> response = new SliceDto<>(boards.map(BoardSummaryResWithLikeId::of));
 
+        setRedisBoardViewsToResWithLikes(response);
+
         setLikesDataToRes(accountId, boards, response);
 
         return response;
@@ -192,6 +194,27 @@ public class BoardService {
 
         List<Long> boardIds = response.getContent().stream()
                 .map(BoardSummaryRes::getBoardId)
+                .collect(Collectors.toList());
+
+        Set<String> keys = redisTemplate.keys("boardView*");
+
+        if (keys != null) {
+            for (String key : keys) {
+                long boardId = Long.parseLong(key.split("::")[1]);
+                int views = Integer.parseInt(redisTemplate.opsForValue().get(key));
+                int index = boardIds.indexOf(boardId);
+
+                if (index >= 0) {
+                    response.getContent().get(index).setViews(views);
+                }
+            }
+        }
+    }
+
+    private void setRedisBoardViewsToResWithLikes(SliceDto<BoardSummaryResWithLikeId> response) {
+
+        List<Long> boardIds = response.getContent().stream()
+                .map(BoardSummaryResWithLikeId::getBoardId)
                 .collect(Collectors.toList());
 
         Set<String> keys = redisTemplate.keys("boardView*");
