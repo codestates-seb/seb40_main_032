@@ -125,7 +125,7 @@ function LoginModal() {
 
   const oauthHandler = () => {
     window.location.replace(
-      'http://ec2-43-201-25-87.ap-northeast-2.compute.amazonaws.com:8080/login/oauth2/code/google',
+      'http://ec2-43-201-25-87.ap-northeast-2.compute.amazonaws.com:8080/oauth2/authorization/google',
     );
   };
 
