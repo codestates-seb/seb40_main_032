@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 import { BsCamera } from 'react-icons/bs';
-import Post from '../../component/common/Post';
+import Post from '../../component/common/post/Post';
 import useIntersect from '../../hooks/useIntersect';
 import LoadingSpinner from '../../component/common/LoadingSpinner';
 import EmptyText from '../../component/common/EmptyText';

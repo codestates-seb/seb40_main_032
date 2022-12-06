@@ -38,6 +38,7 @@ const MainThemeBar = styled.div`
           > span {
             font-size: 1.6rem;
             padding-left: 5px;
+            font-weight: 500;
           }
         }
       }

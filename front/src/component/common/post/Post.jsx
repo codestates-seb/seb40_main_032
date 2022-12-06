@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import uuid from 'react-uuid';
-import { GoHeart } from 'react-icons/go';
 import { Link } from 'react-router-dom';
+import CommentLike from './CommentLike';
 
 const PostWrapper = styled.div`
   display: flex;
@@ -49,11 +49,11 @@ const PostWrapper = styled.div`
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding-bottom: 1rem;
+        padding-bottom: 5px;
 
         .post__title {
           text-align: left;
-          font-weight: bold;
+          font-weight: 500;
           font-size: 1.6rem;
           overflow: hidden;
           text-overflow: ellipsis;
@@ -63,25 +63,9 @@ const PostWrapper = styled.div`
           word-break: break-all;
           > a {
             color: #333;
-          }
-        }
-
-        .post__heart {
-          display: flex;
-          align-items: center;
-          padding-left: 5px;
-
-          .heart__icon {
-            width: 2rem;
-            height: 2rem;
-            fill: var(--button-theme);
-          }
-
-          .heart__count {
-            font-size: 1.4rem;
-            color: var(--button-theme);
-            padding-left: 2px;
-            margin-top: -1px;
+            &:hover {
+              font-weight: 600;
+            }
           }
         }
       }
@@ -112,7 +96,6 @@ const PostWrapper = styled.div`
           display: flex;
           justify-content: flex-end;
           align-items: center;
-          padding: 5px 0;
 
           .post__avatar {
             display: block;
@@ -130,8 +113,16 @@ const PostWrapper = styled.div`
           }
 
           .post__writer {
+            max-width: 18rem;
             font-size: 1.3rem;
             color: var(--font-base-black);
+            font-weight: 500;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            word-break: break-all;
           }
         }
       }
@@ -143,6 +134,7 @@ const PostWrapper = styled.div`
 `;
 // { image, title, like, tag, user }
 function Post({ post }) {
+  console.log(post);
   return (
     <PostWrapper className="post">
       <div className="post__container">
@@ -151,16 +143,17 @@ function Post({ post }) {
           <Link to={`/postDetail/${post.boardId}`}>
             <img className="post__img" src={post.thumbnail} alt="게시글" />
           </Link>
+          <CommentLike
+            view={post.views}
+            like={post.likeCount}
+            comment={post.commentCount}
+          />
         </div>
         <div className="post__card">
           <div className="post__tl">
             {/* title && like */}
             <p className="post__title">
               <Link to={`/postDetail/${post.boardId}`}>{post.title}</Link>
-            </p>
-            <p className="post__heart">
-              <GoHeart className="heart__icon" />
-              <span className="heart__count">{post.likeCount}</span>
             </p>
           </div>
           <div className="post__tw">

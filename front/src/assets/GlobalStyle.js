@@ -5,7 +5,7 @@ const global = createGlobalStyle`
         box-sizing: border-box;
         padding: 0px;
         margin: 0px;
-        font-family: 'Roboto', 'Noto Sans KR', sans-serif;
+        font-family: 'Raleway', 'Pretendard', 'Roboto', 'Noto Sans KR', sans-serif;
 
     }
     html, body {
