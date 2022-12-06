@@ -40,6 +40,12 @@ const MoreWrapper = styled.div`
     margin-bottom: 1rem;
     > p {
       cursor: pointer;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      word-break: break-all;
     }
   }
   .comment__modify {

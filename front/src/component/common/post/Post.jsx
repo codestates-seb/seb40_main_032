@@ -141,7 +141,11 @@ function Post({ post }) {
         <div className="post__thumb">
           {/* post Image */}
           <Link to={`/postDetail/${post.boardId}`}>
-            <img className="post__img" src={post.thumbnail} alt="게시글" />
+            <img
+              className="post__img"
+              src={post.thumbnail}
+              alt="스토리썸네일이미지"
+            />
           </Link>
           <CommentLike
             view={post.views}

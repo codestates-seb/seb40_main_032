@@ -9,6 +9,7 @@ import YesNoModal from '../common/modal/YesNoModal';
 import publishApi from '../../api/publishApi';
 import postEditApi from '../../api/postEditApi';
 import { loginModalActions } from '../../redux/loginModalSlice';
+import LoadingSpinner from '../common/LoadingSpinner';
 
 function PublishModalButton({ boardId, mandatory, formData, isPublishPage }) {
   const navigate = useNavigate();
@@ -162,7 +163,11 @@ function PublishModalButton({ boardId, mandatory, formData, isPublishPage }) {
           fontWeight="var(--font-bold)"
           onClick={isPublishPage ? publishRequest : editRequest}
         >
-          <span>{isPublishPage ? '등록' : '수정'}</span>
+          {isLoading ? (
+            <LoadingSpinner width={25} />
+          ) : (
+            <span>{isPublishPage ? '등록' : '수정'}</span>
+          )}
         </PublishButton>
         <CancelButton
           width="10rem"
@@ -177,8 +182,8 @@ function PublishModalButton({ boardId, mandatory, formData, isPublishPage }) {
         <ConfirmModal
           modalMessage={
             isPublishPage
-              ? '게시글 등록이 완료되었습니다.'
-              : '게시글 수정이 완료되었습니다.'
+              ? '스토리 등록이 완료되었습니다.'
+              : '스토리 수정이 완료되었습니다.'
           }
           modalCloser={confirmModalCloser}
         />
@@ -187,8 +192,8 @@ function PublishModalButton({ boardId, mandatory, formData, isPublishPage }) {
         <YesNoModal
           modalMessage={
             isPublishPage
-              ? '게시글 작성을 취소할까요?'
-              : '게시글 수정을 취소할까요?'
+              ? '스토리 등록을 취소할까요?'
+              : '스토리 수정을 취소할까요?'
           }
           modalActioner={yesNoModalActioner}
           modalCloser={yesNoModalCloser}

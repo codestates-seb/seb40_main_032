@@ -64,7 +64,7 @@ function MainSort({ sort, sortHandler }) {
               }
             }}
           >
-            최신글
+            최신순
           </button>
         </li>
         <li>
@@ -76,7 +76,7 @@ function MainSort({ sort, sortHandler }) {
               }
             }}
           >
-            추천수
+            추천순
           </button>
         </li>
         <li>
@@ -88,7 +88,7 @@ function MainSort({ sort, sortHandler }) {
               }
             }}
           >
-            조회수
+            관심순
           </button>
         </li>
       </ul>
