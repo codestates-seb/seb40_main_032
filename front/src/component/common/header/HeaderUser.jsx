@@ -114,7 +114,7 @@ function HeaderUser() {
         height="4.3rem"
         fontWeight="500"
       >
-        게시물 작성
+        스토리 공유
       </DefaultButton>
       <div className="header__box">
         {!isLogin ? (

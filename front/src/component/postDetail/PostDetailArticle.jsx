@@ -54,6 +54,10 @@ const Header = styled.div`
     font-size: var(--font-20);
     overflow: hidden;
     text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    word-break: break-all;
     margin-left: ${props => (props.justify ? '-1.5rem' : '1rem')};
   }
   .follow__button {
@@ -304,7 +308,7 @@ function PostDetailArticle({ post, userLike, userFollow, self, board }) {
     <Container>
       {deleteModal && (
         <YesNoModal
-          modalMessage="게시글을 정말 삭제하시겠습니까?"
+          modalMessage="스토리를 정말 삭제하시겠습니까?"
           modalActioner={postDeleteHandler}
           modalCloser={closeDeleteModal}
         />
@@ -335,7 +339,7 @@ function PostDetailArticle({ post, userLike, userFollow, self, board }) {
             }`}
             onClick={followHandler}
           >
-            {follow ? '팔로잉중' : '팔로우'}
+            {follow ? '팔로잉' : '팔로우'}
           </button>
         )}
       </Header>

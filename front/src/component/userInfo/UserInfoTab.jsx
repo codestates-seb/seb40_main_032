@@ -160,7 +160,7 @@ function UserInfoTab({ userdata }) {
           <button>
             <Link to={`/mypage/mypost/${accountId}`}>
               <PostIcon />
-              <span>게시글</span>
+              <span>스토리</span>
             </Link>
           </button>
         </li>

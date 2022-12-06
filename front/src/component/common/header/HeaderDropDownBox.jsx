@@ -105,7 +105,7 @@ function HeaderDropDownBox({ active, activeHandler, closeFocus }) {
           {isLogin ? (
             <>
               <HeaderDropDownItem
-                linkText="게시물 작성"
+                linkText="스토리 공유"
                 link="/publish"
                 activeHandler={activeHandler}
               />

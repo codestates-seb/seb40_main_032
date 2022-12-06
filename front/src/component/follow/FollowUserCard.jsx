@@ -154,7 +154,7 @@ function FollowUserCard({ myFollowing }) {
             </DefaultButton>
           ) : (
             <NegativeButton width="9rem" height="3rem" onClick={followHandler}>
-              팔로잉중
+              팔로잉
             </NegativeButton>
           )}
         </li>
