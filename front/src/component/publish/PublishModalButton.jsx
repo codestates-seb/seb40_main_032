@@ -128,17 +128,20 @@ function PublishModalButton({ boardId, mandatory, formData, isPublishPage }) {
   // 게시글 수정 요청
   const editRequest = async event => {
     event.preventDefault();
-    if (mandatory) {
+    if (!isLoading && mandatory) {
+      setIsLoading(true);
       await postEditApi(boardId, formData)
         .then(res => {
           if (res.status === 200) {
             setResBoardId(res.data.id);
             setConfirmModalOpened(true);
+            setIsLoading(false);
           }
         })
         .catch(error => {
           networkAlert();
           console.log(error.response.data.message);
+          setIsLoading(false);
         });
     } else showAlert();
   };
