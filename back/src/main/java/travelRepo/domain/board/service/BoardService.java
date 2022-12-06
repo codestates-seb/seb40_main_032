@@ -196,17 +196,11 @@ public class BoardService {
                 .map(BoardSummaryRes::getBoardId)
                 .collect(Collectors.toList());
 
-        Set<String> keys = redisTemplate.keys("boardView*");
+        for (int i = 0; i < boardIds.size(); i++) {
+            String value = redisTemplate.opsForValue().get("boardView::" + boardIds.get(i));
 
-        if (keys != null) {
-            for (String key : keys) {
-                long boardId = Long.parseLong(key.split("::")[1]);
-                int views = Integer.parseInt(redisTemplate.opsForValue().get(key));
-                int index = boardIds.indexOf(boardId);
-
-                if (index >= 0) {
-                    response.getContent().get(index).setViews(views);
-                }
+            if (value != null) {
+                response.getContent().get(i).setViews(Integer.parseInt(value));
             }
         }
     }
@@ -217,17 +211,11 @@ public class BoardService {
                 .map(BoardSummaryResWithLikeId::getBoardId)
                 .collect(Collectors.toList());
 
-        Set<String> keys = redisTemplate.keys("boardView*");
+        for (int i = 0; i < boardIds.size(); i++) {
+            String value = redisTemplate.opsForValue().get("boardView::" + boardIds.get(i));
 
-        if (keys != null) {
-            for (String key : keys) {
-                long boardId = Long.parseLong(key.split("::")[1]);
-                int views = Integer.parseInt(redisTemplate.opsForValue().get(key));
-                int index = boardIds.indexOf(boardId);
-
-                if (index >= 0) {
-                    response.getContent().get(index).setViews(views);
-                }
+            if (value != null) {
+                response.getContent().get(i).setViews(Integer.parseInt(value));
             }
         }
     }
