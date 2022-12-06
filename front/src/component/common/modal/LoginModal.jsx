@@ -65,9 +65,18 @@ const LoginModalStyle = styled.div`
   }
 `;
 
+const LoginButton = styled(DefaultButton)`
+  &:disabled {
+    background: var(--button-font-color);
+    color: var(--font-base-grey);
+    cursor: not-allowed;
+  }
+`;
+
 function LoginModal() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const [loginError, setLoginError] = useState(false);
   const [validationCorrect, setValidationCorrect] = useState({
     emailCorrect: true,
@@ -102,11 +111,13 @@ function LoginModal() {
   // 로그인 요청, 모달은 로그인 요청이 성공했을 때에만 닫힘.
   async function login() {
     const data = { email, password };
+    setIsLoading(true);
     try {
       // unwrap()을 해줘야만 비동기 처리가 제대로 작동함.
       await dispatch(loginAsync(data)).unwrap();
       setLoginError(false);
       await loginUserApi();
+      setIsLoading(false);
       loginModalCloser();
       window.location.reload();
     } catch (err) {
@@ -115,6 +126,7 @@ function LoginModal() {
       if (err.response.data.code === '002') {
         setLoginError(true);
       }
+      setIsLoading(false);
     }
   }
 
@@ -150,6 +162,7 @@ function LoginModal() {
     setValidationCorrect(prev => {
       return { ...prev, passwordCorrect: true };
     });
+    console.log('로그인전', isLoading);
     login();
   };
 
@@ -195,16 +208,17 @@ function LoginModal() {
                 아이디 혹은 비밀번호가 잘못되었습니다.
               </div>
             )}
-            <DefaultButton
+            <LoginButton
               width="100%"
               height="4rem"
               fontSize="1.7rem"
               onClick={onSubmitHandler}
               type="submit"
               margin="1.5rem 0 0 0"
+              disabled={isLoading}
             >
-              로그인
-            </DefaultButton>
+              {isLoading ? '로그인중' : '로그인'}
+            </LoginButton>
           </form>
           <footer className="footer">
             <div className="footer__content">

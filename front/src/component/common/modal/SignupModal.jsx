@@ -81,6 +81,7 @@ function SignupModal() {
   const [password, setPassword] = useState('');
   const [checkbox, setCheckbox] = useState(false);
   const [successSignup, setSuccessSignup] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [confirmTerms, setConfirmTerms] = useState(false);
   const [signupError, setSignupError] = useState({
     nicknameError: false,
@@ -142,10 +143,12 @@ function SignupModal() {
     formData.append('email', email);
     formData.append('password', password);
     formData.append('nickname', nickname);
+    setIsLoading(true);
     await signupApi(formData)
       .then(res => {
         setSignupError('');
         setSuccessSignup(true);
+        setIsLoading(false);
         console.log(res);
       })
       .catch(err => {
@@ -162,6 +165,7 @@ function SignupModal() {
             return { ...prev, emailError: false, nicknameError: true };
           });
         }
+        setIsLoading(false);
       });
   }
 
@@ -301,9 +305,9 @@ function SignupModal() {
                 onClick={onSubmitHandler}
                 type="submit"
                 margin="1.5rem 0"
-                disabled={!checkbox}
+                disabled={!checkbox || isLoading}
               >
-                회원가입
+                {isLoading ? '회원가입중' : '회원가입'}
               </SignupButton>
             </form>
           </SignupModalStyle>
