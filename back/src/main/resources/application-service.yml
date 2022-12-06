@@ -1,0 +1,72 @@
+server:
+  port: 8080
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
+spring:
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:test
+    username: sa
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: create
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    properties:
+      hibernate:
+        default_batch_fetch_size: 100
+    defer-datasource-initialization: true
+  sql:
+    init:
+      data-locations: classpath:static/db/data.sql
+      mode: always
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 100MB
+  data:
+    web:
+      pageable:
+        default-page-size: 10
+        one-indexed-parameters: true
+  redis:
+    host: localhost
+    port: 6379
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            clientId: 505644841365-ki0tcn8m7409ml629u9cgvhu7coli217.apps.googleusercontent.com
+            clientSecret: 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
+
+jwt:
+  secret-key: 28d93268-a80b-4594-918b-5926a79a49ed
+  expiration: 36000000
+  prefix: Bearer
+  header: Authorization
+
+cloud:
+  aws:
+    credentials:
+      accessKey: local
+      secretKey: local
+    s3:
+      bucket: local
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
+
+dir: ./testImg/
+
+domain:
+  front: localhost:3000/
+  back: localhost:8080/
+
+mod: local
