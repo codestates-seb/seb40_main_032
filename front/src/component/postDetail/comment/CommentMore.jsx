@@ -98,18 +98,15 @@ function CommentMore({
   const [modifyComment, setModifyComment] = useState(comment);
   const [modifyFlag, setModifyFlag] = useState(false);
   const navigate = useNavigate();
-  // 댓글 삭제 핸들러
   const commentDeleteHandler = () => {
     postDetaulCommentDeleteApi(commentId)
       .then(() => {
         watcher();
       })
       .catch(err => {
-        console.log('delete err!');
         console.log(err);
       });
   };
-  // 댓글 수정 핸들러
   const commentModifyHandler = () => {
     postDetailCommentModifyApi(commentId, modifyComment)
       .then(() => {
@@ -117,7 +114,6 @@ function CommentMore({
         watcher();
       })
       .catch(err => {
-        console.log('modify err!');
         console.log(err);
       });
   };
@@ -129,7 +125,6 @@ function CommentMore({
   return (
     <MoreWrapper>
       <div className="comment__avatar">
-        {/* user avatar */}
         <div
           onClick={userMovePageHandler}
           onKeyUp={e => {
@@ -145,7 +140,6 @@ function CommentMore({
       </div>
       <div className="comment__user">
         <div className="comment__info">
-          {/* delte and modify and nickname */}
           <p>{nickName}</p>
           <div className="comment__modify">
             {userId === accountId && (

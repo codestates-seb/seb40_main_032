@@ -18,7 +18,6 @@ function SpotPage() {
     pathname === path ? memorySort : 'createdAt,desc',
   );
 
-  console.log(`search ${search} SPOT! 변경 감지!!`);
   const [target, hasNext, setLastData] = useIntersect(
     '/boards?category=SPOT&',
     search,
@@ -30,7 +29,6 @@ function SpotPage() {
   );
 
   const sortHandler = sorted => {
-    console.log(sorted);
     if (sort !== sorted) {
       setSort(sorted);
     }

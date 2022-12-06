@@ -13,7 +13,6 @@ function PublishLocCat({
   const [displayText, setDisplayText] = useState('');
   const [displayColor, setDisplayColor] = useState('');
 
-  // 테마 선택 함수
   const onClick = index => {
     setIsSelected(index);
     const { category } = categoryData[index];
@@ -23,14 +22,13 @@ function PublishLocCat({
     setFormData({ ...formData, category });
   };
 
-  // 수정창에서 선택한 테마 보여주기
   useEffect(() => {
     if (!isPublishPage) {
       for (let i = 0; i < categoryData.length; i += 1) {
         if (loc.post.category === categoryData[i].text) {
           setDisplayText(loc.post.category);
           setDisplayColor(categoryData[i].theme);
-          setIsSelected(i); // Category 컴포넌트에 'isSelected' 클래스 부착해줄 index
+          setIsSelected(i);
         }
       }
     }
@@ -83,7 +81,6 @@ function PublishLocCat({
 
 export default PublishLocCat;
 
-// 위치 & 테마 열
 const LocationCategoryRow = styled.section`
   display: flex;
   justify-content: space-between;
@@ -94,12 +91,10 @@ const LocationCategoryRow = styled.section`
   }
 `;
 
-// 위치 - 입력(선택)
 const LocationContainer = styled.div`
   width: 100%;
 `;
 
-// 테마 - 선택(필수:택1)
 const CategoryContainer = styled.div`
   width: 100%;
   #categories {

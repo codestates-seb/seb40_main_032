@@ -20,7 +20,6 @@ function PublishModalButton({ boardId, mandatory, formData, isPublishPage }) {
   const [resBoardId, setResBoardId] = useState();
   const [isLoading, setIsLoading] = useState(false);
 
-  // 모달 닫는 함수
   const confirmModalCloser = () => {
     setConfirmModalOpened(false);
     navigate(`/postDetail/${resBoardId}`);
@@ -103,7 +102,6 @@ function PublishModalButton({ boardId, mandatory, formData, isPublishPage }) {
     } else mandatoryAlert();
   };
 
-  // 게시글 등록 요청
   const publishRequest = event => {
     event.preventDefault();
     if (!mandatory) showAlert();
@@ -125,7 +123,6 @@ function PublishModalButton({ boardId, mandatory, formData, isPublishPage }) {
     }
   };
 
-  // 게시글 수정 요청
   const editRequest = async event => {
     event.preventDefault();
     if (!isLoading && mandatory) {
@@ -146,7 +143,6 @@ function PublishModalButton({ boardId, mandatory, formData, isPublishPage }) {
     } else showAlert();
   };
 
-  // (비로그인) url입력 접근시 로그인창으로 redirect
   useEffect(() => {
     if (!login) {
       alert('로그인 해주세요');
@@ -208,13 +204,11 @@ function PublishModalButton({ boardId, mandatory, formData, isPublishPage }) {
 
 export default PublishModalButton;
 
-// 버튼 - 등록, 취소
 const ButtonContainer = styled.form`
   display: flex;
   justify-content: end;
 `;
 
-// 등록 버튼 스타일링
 const PublishButton = styled(DefaultButton)`
   @media screen and (max-width: 549px) {
     width: 6rem;
@@ -227,7 +221,6 @@ const PublishButton = styled(DefaultButton)`
   }
 `;
 
-// 취소 버튼 스타일링
 const CancelButton = styled(TransparentButton)`
   &:hover {
     color: red;

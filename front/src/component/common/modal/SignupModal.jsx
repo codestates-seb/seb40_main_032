@@ -94,7 +94,6 @@ function SignupModal() {
   });
   const dispatch = useDispatch();
 
-  // 인풋값 상태 저장 함수
   const onChangeNickname = e => {
     setNickname(e.target.value);
   };
@@ -106,15 +105,10 @@ function SignupModal() {
   };
   const onChangerCheckbox = e => {
     setCheckbox(e.target.checked);
-    console.log(e.target.checked);
-    console.log(e.target);
   };
-  console.log(checkbox);
 
-  // 랜덤 숫자 생성 함수 - 랜덤이미지 선택에 사용
   const ramdomNumber = Math.floor(Math.random() * 10);
 
-  // 이미지 포멧
   const dataURLtoFile = (dataurl, fileName) => {
     const arr = dataurl.split(',');
     const mime = arr[0].match(/:(.*?);/)[1];
@@ -135,7 +129,6 @@ function SignupModal() {
     return imagefile;
   };
 
-  // 회원가입 axios 요청
   async function postSingup() {
     const formData = new FormData();
     const profileImg = await getImage();
@@ -145,21 +138,17 @@ function SignupModal() {
     formData.append('nickname', nickname);
     setIsLoading(true);
     await signupApi(formData)
-      .then(res => {
+      .then(() => {
         setSignupError('');
         setSuccessSignup(true);
         setIsLoading(false);
-        console.log(res);
       })
       .catch(err => {
-        console.log(err);
-        // 백엔드에서 받은 중복이메일 유효성 검사 표시
         if (err.response.data.code === '005') {
           setSignupError(prev => {
             return { ...prev, emailError: true, nicknameError: false };
           });
         }
-        // 백엔드에서 받은 중복닉네임 유효성 검사 표시
         if (err.response.data.code === '014') {
           setSignupError(prev => {
             return { ...prev, emailError: false, nicknameError: true };
@@ -171,7 +160,6 @@ function SignupModal() {
 
   const onSubmitHandler = e => {
     e.preventDefault();
-    // 닉네임 유효성 검사
     if (nickname.trim().length < 2 || nickname.trim().length > 20) {
       setValidationCorrect(prev => {
         return { ...prev, nicknameCorrect: false };
@@ -181,7 +169,6 @@ function SignupModal() {
     setValidationCorrect(prev => {
       return { ...prev, nicknameCorrect: true };
     });
-    // 이메일 유효성 검사
     if (email.trim().length === 0 || !email.includes('@')) {
       setValidationCorrect(prev => {
         return { ...prev, emailCorrect: false };
@@ -191,7 +178,6 @@ function SignupModal() {
     setValidationCorrect(prev => {
       return { ...prev, emailCorrect: true };
     });
-    // 비밀번호 유효성 검사
     if (password.length < 8) {
       setValidationCorrect(prev => {
         return { ...prev, passwordCorrect: false };
@@ -207,14 +193,11 @@ function SignupModal() {
   const signupModalCloser = () => {
     dispatch(loginModalActions.closeSignupModal());
   };
-  // 컨펌 모달 닫기 함수
-  // UX를 위해 회원가입 모달도 같이 닫힌다.
   const onConfirmModalCloser = () => {
     setSuccessSignup(false);
     signupModalCloser();
   };
 
-  // 약관 모달 오프너 클로저
   const termsOpener = e => {
     e.preventDefault();
     setConfirmTerms(true);

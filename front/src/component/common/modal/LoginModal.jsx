@@ -88,7 +88,6 @@ function LoginModal() {
     dispatch(loginModalActions.closeLoginModal());
   };
 
-  // 인풋값 상태 저장 함수
   const onChangeEmail = e => {
     setEmail(e.target.value);
   };
@@ -96,24 +95,20 @@ function LoginModal() {
     setPassword(e.target.value);
   };
 
-  // 회원가입 모달
   const signupModalOpener = () => {
     dispatch(loginModalActions.openSignupModal());
     loginModalCloser();
   };
 
-  // 비밀번호 찾기 모달
   const findPasswordModalOpener = () => {
     dispatch(loginModalActions.openFindPasswordModal());
     loginModalCloser();
   };
 
-  // 로그인 요청, 모달은 로그인 요청이 성공했을 때에만 닫힘.
   async function login() {
     const data = { email, password };
     setIsLoading(true);
     try {
-      // unwrap()을 해줘야만 비동기 처리가 제대로 작동함.
       await dispatch(loginAsync(data)).unwrap();
       setLoginError(false);
       await loginUserApi();
@@ -121,8 +116,6 @@ function LoginModal() {
       loginModalCloser();
       window.location.reload();
     } catch (err) {
-      console.log(err.response.data.code);
-      // 유효성 검사
       if (err.response.data.code === '002') {
         setLoginError(true);
       }
@@ -130,17 +123,14 @@ function LoginModal() {
     }
   }
 
-  // 구글 소셜 로그인
   const oauthHandler = () => {
     window.location.replace(
-      'http://ec2-13-125-238-70.ap-northeast-2.compute.amazonaws.com:8080/oauth2/authorization/google',
+      'http://ec2-43-201-25-87.ap-northeast-2.compute.amazonaws.com:8080/login/oauth2/code/google',
     );
   };
 
-  // submit 버튼 클릭시 작동 함수
   const onSubmitHandler = e => {
     e.preventDefault();
-    // 이메일 유효성 검사
     if (email.trim().length === 0 || !email.includes('@')) {
       setValidationCorrect(prev => {
         return { ...prev, emailCorrect: false, passwordCorrect: true };
@@ -151,7 +141,6 @@ function LoginModal() {
     setValidationCorrect(prev => {
       return { ...prev, emailCorrect: true };
     });
-    // 비밀번호 유효성 검사
     if (password.trim().length === 0) {
       setValidationCorrect(prev => {
         return { ...prev, passwordCorrect: false };
@@ -162,7 +151,6 @@ function LoginModal() {
     setValidationCorrect(prev => {
       return { ...prev, passwordCorrect: true };
     });
-    console.log('로그인전', isLoading);
     login();
   };
 

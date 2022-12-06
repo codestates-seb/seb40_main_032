@@ -46,7 +46,6 @@ const SearchIcon = styled(BiSearchAlt)`
 `;
 
 function Search() {
-  // useParams 를통해서 해당 위치로 이동시킨다.
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const sliceSearch = useSelector(state => state.search.search);

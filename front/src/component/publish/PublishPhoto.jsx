@@ -137,23 +137,22 @@ const PublishPhoto = forwardRef(({ setPhotoUrl, deleteImages }, ref) => {
 
   const [errorMessage, setErrorMessage] = useState('');
 
-  // 미리보기 사진 띄우기 - 클라이언트 메모리로 처리
   const uploadPhotos = async event => {
     const uploaded = [...photos];
     setBlobPhotos(...event.target.files);
-    const targetFiles = [...event.target.files]; // 등록 사진
+    const targetFiles = [...event.target.files];
     targetFiles.map(obj => {
-      return uploaded.push(URL.createObjectURL(obj)); // Blob 객체를 임시 URL로 바꾸어 img src로 mapping
+      return uploaded.push(URL.createObjectURL(obj));
     });
     setPhotos(uploaded);
   };
 
   const validatePhotos = event => {
-    const targetFileSize = event.target.files[0].size; // 업로드 사진 크기 (단위:bytes)
-    const targetFileSizeToMb = targetFileSize / (1024 * 1024); // bytes=>megabyte 변환
-    const targetFileSizeToKb = targetFileSize / 1024; // b=>kilobyte 변환
-    const MAX_SIZE_MB = 10; // 최대 10mb <= 이 부분을 설정하시면 됩니다.
-    const MIN_SIZE_KB = 0; // 최소 0kb
+    const targetFileSize = event.target.files[0].size;
+    const targetFileSizeToMb = targetFileSize / (1024 * 1024);
+    const targetFileSizeToKb = targetFileSize / 1024;
+    const MAX_SIZE_MB = 10;
+    const MIN_SIZE_KB = 0;
 
     if (targetFileSizeToMb > MAX_SIZE_MB) {
       setErrorMessage(`사진 1장당 최대 ${MAX_SIZE_MB}MB까지 등록 가능합니다.`);
@@ -161,42 +160,39 @@ const PublishPhoto = forwardRef(({ setPhotoUrl, deleteImages }, ref) => {
       setErrorMessage(`최소 업로드 크기는 ${MIN_SIZE_KB}KB 입니다.`);
     } else {
       setErrorMessage('');
-      uploadPhotos(event); // 조건 통과시 상단의 미리보기 업로드 함수 실행
+      uploadPhotos(event);
     }
   };
 
   const typeCheck = event => {
-    const targetFileType = event.target.files[0].type; // 업로드 파일 유형
+    const targetFileType = event.target.files[0].type;
     const targetFileTypeShort = targetFileType.slice(
       targetFileType.indexOf('/') + 1,
       targetFileType.length,
-    ); // 확장자명 text추출
-    const onlyAccept = ['image/jpeg', 'image/png', 'image/jpg']; // 허용할 확장자명 설정
+    );
+    const onlyAccept = ['image/jpeg', 'image/png', 'image/jpg'];
     if (onlyAccept.indexOf(targetFileType) === -1) {
       setErrorMessage(`${targetFileTypeShort} 형식은 업로드할 수 없습니다.`);
     } else validatePhotos(event);
   };
 
-  // 수정페이지 진입시 미리보기 불러오는 함수
   const preview = data => {
     return data.map(el => photos.push(el));
   };
   useImperativeHandle(ref, () => ({ preview }));
 
-  // 사진 개별 삭제
   const removePhotos = indexRemove => {
     URL.revokeObjectURL(photos[indexRemove]);
-    setPhotos([...photos.filter((_, index) => index !== indexRemove)]); // 미리보기에서 삭제
-    deleteImages(indexRemove); // Formdata에서 삭제
+    setPhotos([...photos.filter((_, index) => index !== indexRemove)]);
+    deleteImages(indexRemove);
     setErrorMessage('');
   };
 
   /* eslint-disable */
   const handleClick = event => {
-    event.target.value = ''; // 동일한 사진을 여러번 올릴수 있게 해줌
+    event.target.value = '';
   };
 
-  // blob에 사진 추가 시 사진 post 요청
   useEffect(() => {
     const formData = new FormData();
     if (blobPhotos) {
@@ -211,11 +207,9 @@ const PublishPhoto = forwardRef(({ setPhotoUrl, deleteImages }, ref) => {
     }
   }, [blobPhotos]);
 
-  // 메모리 누수 방지
   useEffect(() => {
     return () => {
       return URL.revokeObjectURL(photos);
-      // 페이지 전환시 URL이 메모리에 남지 않도록 전부 폐기
     };
   }, []);
 

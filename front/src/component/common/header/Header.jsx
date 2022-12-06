@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-// import { Link } from 'react-router-dom';
 import Search from './Search';
 import HeaderUser from './HeaderUser';
 import TripaLogo from '../../../assets/favicon.png';
@@ -69,12 +68,10 @@ const HeaderWrapper = styled.header`
     }
   }
 `;
-// { loginModalOpener }
 function Header() {
   return (
     <HeaderWrapper className="header">
       <section className="header__container">
-        {/* main Logo */}
         <div>
           <a href="/">
             <img src={TripaLogo} alt="responsive logo" />
@@ -82,17 +79,14 @@ function Header() {
         </div>
         <div className="header__logo">
           <h1>
-            {/* <Link to="/">Tripagram</Link> */}
             <a href="/">Tripagram</a>
           </h1>
         </div>
-        {/* Header Search */}
         <div className="header__search">
           <Search />
         </div>
-        {/* post write / user login & user join / user info & user logout */}
         <div className="header__info">
-          <HeaderUser /> {/* loginModalOpener={loginModalOpener} */}
+          <HeaderUser />
         </div>
       </section>
     </HeaderWrapper>
