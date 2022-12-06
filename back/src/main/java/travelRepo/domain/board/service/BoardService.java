@@ -129,7 +129,11 @@ public class BoardService {
 
         Slice<Board> boards = boardRepository.findAllByAccountIdWithBoardTagsAndAccount(accountId, lastBoardId, lastBoardCreatedAt, pageable);
 
-        return new SliceDto<>(boards.map(BoardSummaryRes::of));
+        SliceDto<BoardSummaryRes> response = new SliceDto<>(boards.map(BoardSummaryRes::of));
+
+        setRedisBoardViewsToRes(response);
+
+        return response;
     }
 
     public SliceDto<BoardSummaryResWithLikeId> findBoardsByLikes(Long accountId, Long lastLikeId, LocalDateTime lastLikeCreatedAt, Pageable pageable) {
