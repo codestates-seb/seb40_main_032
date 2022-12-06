@@ -25,6 +25,9 @@ const WriteWrapper = styled.article`
     width: 100%;
     padding-bottom: 5px;
   }
+  .comment__max {
+    color: red;
+  }
   .comment__sticky {
     display: flex;
     flex-direction: column;
@@ -126,10 +129,11 @@ function CommentWrite() {
   // 무한 스크롤 데이터 요청 핸들러
   const commentListGetHandler = useCallback(
     board => {
+      setCommentLoading(true);
       postDetailCommentApi(board, lastData)
         .then(res => {
           const lastContent = res.content[res.content.length - 1];
-          setCommentLoading(true);
+
           setCommentList(prev => {
             return [...prev, ...res.content];
           });
@@ -139,11 +143,11 @@ function CommentWrite() {
               `lastCommentId=${lastContent.commentId}&lastCommentCreatedAt=${lastContent.createdAt}`,
             );
           }
-          setCommentLoading(false);
         })
         .catch(err => {
           console.log(err);
         });
+      setCommentLoading(false);
     },
     [lastData],
   );
@@ -194,9 +198,9 @@ function CommentWrite() {
   // 댓글 작성 핸들러
   const commentSendHandler = () => {
     if (modalOpenHandler() && comment !== '') {
+      setCommentLoading(true);
       postDetailCommentSubmitApi(boardId.id, comment)
         .then(() => {
-          setCommentLoading(true);
           setHasNext(true);
           setPage(0);
           setLastData('');
@@ -216,12 +220,12 @@ function CommentWrite() {
             progress: undefined,
             theme: 'light',
           });
-          setCommentLoading(false);
         })
         .catch(err => {
           // toast
           console.log(err);
         });
+      setCommentLoading(false);
     }
   };
   // 디바운스 적용 댓글 등록 핸들러
@@ -232,7 +236,13 @@ function CommentWrite() {
   return (
     <WriteWrapper className="comment__write">
       <div className="comment__sticky">
-        <div className="comment__couunt">{comment.length}/250</div>
+        <div
+          className={`comment__couunt ${
+            comment.length === 250 ? 'comment__max' : ''
+          }`}
+        >
+          {comment.length}/250
+        </div>
         <div className="comment__form">
           <input
             className="comment__input"
@@ -241,7 +251,7 @@ function CommentWrite() {
             value={comment}
             onChange={setComment}
             onKeyUp={e => {
-              if (e.code === 'Enter') {
+              if (e.code === 'Enter' && !commentLoading) {
                 debounceSendHandler();
               }
             }}
@@ -249,7 +259,9 @@ function CommentWrite() {
           <button
             className="comment__button"
             onClick={() => {
-              commentSendHandler();
+              if (!commentLoading) {
+                commentSendHandler();
+              }
             }}
           >
             등록

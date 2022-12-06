@@ -27,22 +27,7 @@ const Container = styled.div`
     left: calc(${props => props.count}* -100%);
 
     transition: all 500ms linear;
-    ${props => props.container}/* > img:nth-child(1) {
-      // first-child
-      left: 0%;
-    }
-    > img:nth-child(2) {
-      left: 100%;
-    }
-    > img:nth-child(3) {
-      left: 200%;
-    }
-    > img:nth-child(4) {
-      left: 300%;
-    }
-    > img:nth-child(5) {
-      left: 400%;
-    } */
+    ${props => props.container}
   }
   .dot__list {
     display: flex;
