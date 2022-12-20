@@ -184,8 +184,8 @@ const PublishPhoto = forwardRef(({ setPhotoUrl, deleteImages }, ref) => {
 
   // 사진 개별 삭제하는 함수
   const removePhotos = indexRemove => {
-    URL.revokeObjectURL(photos[indexRemove]);
     // 미리보기에서 삭제
+    URL.revokeObjectURL(photos[indexRemove]);
     setPhotos([...photos.filter((_, index) => index !== indexRemove)]);
     // Formdata에서 삭제
     deleteImages(indexRemove);
