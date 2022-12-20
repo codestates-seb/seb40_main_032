@@ -1,7 +1,7 @@
 import { useEffect, useState, forwardRef, useImperativeHandle } from 'react';
 import styled from 'styled-components';
 import { BsCamera } from 'react-icons/bs';
-import uuid from 'react-uuid';
+
 import { MdRemoveCircleOutline } from 'react-icons/md';
 import postPhotoApi from '../../api/postPhotoApi';
 
@@ -239,7 +239,7 @@ const PublishPhoto = forwardRef(({ setPhotoUrl, deleteImages }, ref) => {
         {photos.length === 0 ? null : (
           <>
             {photos.map((url, index) => (
-              <div id="uploader__preview" key={uuid()}>
+              <div id="uploader__preview" key={url.slice(-10).replace('.', '')}>
                 <img src={url} alt="photos" className="uploader__preview" />
                 <div id="uploader__thumbnail">대표</div>
                 <RemoveIcon
