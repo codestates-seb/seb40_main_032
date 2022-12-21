@@ -10,7 +10,6 @@ import {
 import CommentMore from './CommentMore';
 import { loginModalActions } from '../../../redux/loginModalSlice';
 import useInput from '../../../hooks/useInput';
-import debounce from '../../../util/debounce';
 import LoadingSpinner from '../../common/LoadingSpinner';
 
 const WriteWrapper = styled.article`
@@ -110,47 +109,47 @@ const LoadingWrapper = styled.div`
 function CommentWrite() {
   const [commentList, setCommentList] = useState([]);
   const [comment, setComment, resetComment] = useInput('');
-  const [page, setPage] = useState(1);
-  const [hasNext, setHasNext] = useState(false);
+  const [hasNext, setHasNext] = useState(true);
   const [commentLoading, setCommentLoading] = useState(false);
   const login = useSelector(state => state.login.isLogin);
   const dispatch = useDispatch();
   const boardId = useParams();
   const endPointRef = useRef(null);
   const [lastData, setLastData] = useState('');
+
+  // 무한 스크롤 데이터 요청 핸들러
+  const commentListGetHandler = useCallback(async (board, last) => {
+    await postDetailCommentApi(board, last)
+      .then(res => {
+        console.log(`In : ${last}`);
+        const lastContent = res.content[res.content.length - 1];
+
+        setCommentList(prev => {
+          return [...prev, ...res.content];
+        });
+        setHasNext(res.hasNext);
+        if (res.hasNext) {
+          setLastData(
+            `lastCommentId=${lastContent.commentId}&lastCommentCreatedAt=${lastContent.createdAt}`,
+          );
+        }
+        setCommentLoading(false);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }, []);
+
   // 무한 스크롤 옵저버
   const obsHandler = entries => {
     const target = entries[0];
-
+    console.log(commentList);
     if (target.isIntersecting && hasNext) {
-      setPage(prev => prev + 1);
+      console.log(`lastData :${lastData}`);
+      commentListGetHandler(boardId.id, lastData);
     }
   };
-  // 무한 스크롤 데이터 요청 핸들러
-  const commentListGetHandler = useCallback(
-    board => {
-      setCommentLoading(true);
-      postDetailCommentApi(board, lastData)
-        .then(res => {
-          const lastContent = res.content[res.content.length - 1];
 
-          setCommentList(prev => {
-            return [...prev, ...res.content];
-          });
-          setHasNext(res.hasNext);
-          if (res.hasNext) {
-            setLastData(
-              `lastCommentId=${lastContent.commentId}&lastCommentCreatedAt=${lastContent.createdAt}`,
-            );
-          }
-        })
-        .catch(err => {
-          console.log(err);
-        });
-      setCommentLoading(false);
-    },
-    [lastData],
-  );
   // 무한 스크롤 useEffect
   useEffect(() => {
     const observer = new IntersectionObserver(obsHandler, {
@@ -162,14 +161,7 @@ function CommentWrite() {
     return () => {
       observer.disconnect();
     };
-  }, [hasNext]);
-
-  // 페이지 증가에 따른 데이터 요청
-  useEffect(() => {
-    if (page !== 0) {
-      commentListGetHandler(boardId.id);
-    }
-  }, [page]);
+  }, [hasNext, lastData]);
 
   // 댓글 삭제 및 수정 wather핸들러
   const deleteModifyWatcherHandler = () => {
@@ -177,9 +169,12 @@ function CommentWrite() {
       .then(res => {
         const lastContent = res.content[res.content.length - 1];
         setCommentList(res.content);
-        setLastData(
-          `lastCommentId=${lastContent.commentId}&lastCommentCreatedAt=${lastContent.createdAt}`,
-        );
+        setLastData(() => {
+          if (lastContent) {
+            return `lastCommentId=${lastContent.commentId}&lastCommentCreatedAt=${lastContent.createdAt}`;
+          }
+          return '';
+        });
       })
       .catch(err => {
         console.log(err);
@@ -196,18 +191,16 @@ function CommentWrite() {
   };
 
   // 댓글 작성 핸들러
-  const commentSendHandler = () => {
+  const commentSendHandler = e => {
+    e.preventDefault();
     if (modalOpenHandler() && comment !== '') {
       setCommentLoading(true);
+      setHasNext(false);
       postDetailCommentSubmitApi(boardId.id, comment)
         .then(() => {
           setHasNext(true);
-          setPage(0);
+          setCommentList([]);
           setLastData('');
-          setCommentList(prev => {
-            console.log(prev);
-            return [];
-          });
           resetComment('');
 
           toast('댓글 입력 성공!', {
@@ -222,16 +215,10 @@ function CommentWrite() {
           });
         })
         .catch(err => {
-          // toast
           console.log(err);
         });
-      setCommentLoading(false);
     }
   };
-  // 디바운스 적용 댓글 등록 핸들러
-  const debounceSendHandler = debounce(() => {
-    commentSendHandler();
-  }, 200);
 
   return (
     <WriteWrapper className="comment__write">
@@ -243,30 +230,22 @@ function CommentWrite() {
         >
           {comment.length}/250
         </div>
-        <div className="comment__form">
+        <form className="comment__form" onSubmit={commentSendHandler}>
           <input
             className="comment__input"
             placeholder="댓글을 입력 해주세요"
             maxLength="250"
             value={comment}
             onChange={setComment}
-            onKeyUp={e => {
-              if (e.code === 'Enter' && !commentLoading) {
-                debounceSendHandler();
-              }
-            }}
           />
           <button
+            type="submit"
             className="comment__button"
-            onClick={() => {
-              if (!commentLoading) {
-                commentSendHandler();
-              }
-            }}
+            disabled={commentLoading}
           >
             등록
           </button>
-        </div>
+        </form>
       </div>
       {commentLoading ? (
         <LoadingWrapper>
