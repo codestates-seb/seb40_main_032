@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
@@ -118,6 +118,7 @@ const FollowListLeftSide = styled.div`
 `;
 
 function FollowUserCard({ myFollowing }) {
+  const [isFollow, setIsFollow] = useState(!!myFollowing.follow);
   const dispatch = useDispatch();
   const isLogin = useSelector(state => state.login.isLogin);
   const cookieAccountId = Number(localStorage.getItem('accountId'));
@@ -125,8 +126,17 @@ function FollowUserCard({ myFollowing }) {
 
   const followHandler = () => {
     if (isLogin) {
-      postDetailFollowApi(myFollowing.id);
-      window.location.reload();
+      postDetailFollowApi(myFollowing.id)
+        .then(res => {
+          if (res === 'SUCCESS') {
+            setIsFollow(true);
+          } else {
+            setIsFollow(false);
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
     } else {
       dispatch(loginModalActions.openLoginModal());
     }
@@ -148,7 +158,7 @@ function FollowUserCard({ myFollowing }) {
         <li className="followList__button">
           {cookieAccountId === myFollowing.id ? (
             <div />
-          ) : !myFollowing.follow ? (
+          ) : !isFollow ? (
             <DefaultButton width="9rem" height="3rem" onClick={followHandler}>
               팔로우
             </DefaultButton>
