@@ -8,9 +8,10 @@ import PublishModalButton from './PublishModalButton';
 
 function PublishForm() {
   const loc = useLocation().state;
-  const isPublishPage = loc === null; // 작성/수정페이지 구분
-  const ref = useRef(); // 자식 컴포넌트 ref 설정
-  const [boardId, setBoardId] = useState(); // 수정 post보낼 board id
+  const isPublishPage = loc === null;
+  const ref = useRef();
+
+  const [boardId, setBoardId] = useState();
   const [formData, setFormData] = useState({
     title: '',
     content: '',
@@ -20,8 +21,7 @@ function PublishForm() {
     images: [],
   });
 
-  const [photoUrl, setPhotoUrl] = useState(); // S3에서 가져온 URL정보
-  const [images, setImages] = useState([]); // URL정보 보관
+  const [images, setImages] = useState([]);
   const [tags, setTags] = useState([]);
 
   // 유효성검사
@@ -35,6 +35,7 @@ function PublishForm() {
     const InputName = event.target.name;
     const InputValue = event.target.value;
     const InputLength = InputValue.length;
+
     if (InputName === 'title') {
       if (InputLength < 5) {
         setTitleMessage('5글자 이상 입력하세요');
@@ -46,6 +47,7 @@ function PublishForm() {
         setTitleValid(false);
       }
     }
+
     if (InputName === 'content')
       if (InputLength < 5) {
         setContentMessage('5글자 이상 입력하세요');
@@ -56,10 +58,13 @@ function PublishForm() {
         setContentMessage('2000자 이하로 입력해주세요');
         setContentValid(false);
       }
+
     setFormData({ ...formData, [event.target.name]: event.target.value });
   };
 
-  // 사진정보 formData에 담아주기
+  const [photoUrl, setPhotoUrl] = useState();
+
+  // S3 URL formData에 담아주기
   useEffect(() => {
     if (photoUrl) {
       setImages([...images, photoUrl]);
@@ -83,15 +88,12 @@ function PublishForm() {
     });
   }, [images]);
 
-  // 상세 페이지에서 수정 클릭시 정보 받아오기
+  // (수정페이지) 상세 페이지에서 post data 전달받기
   useEffect(() => {
-    // 게시글 수정에서 게시글 작성 클릭시 리로딩 되는 분기점
-    if (boardId && isPublishPage) {
-      window.location.reload();
-    }
     if (!isPublishPage) {
       const data = loc.post;
-      // 카테고리 변경없이 수정 등록할 경우 formData에 영문을 담아주기 위해 변환
+
+      // 한글로 전달 받은 카테고리 값 영문 변환
       const originalCategory = data.category;
       let translatedCategory;
       if (originalCategory === '맛집') {
@@ -103,6 +105,7 @@ function PublishForm() {
       if (originalCategory === '여행지') {
         translatedCategory = 'SPOT';
       }
+
       setFormData({
         title: data.title,
         content: data.content,
@@ -113,7 +116,14 @@ function PublishForm() {
       setImages([...data.photos]);
       setTags([...data.tags]);
       setBoardId(data.boardId);
-      ref.current.preview([...data.photos]); // 장착시 미리보기 실행 코드
+
+      // 수정페이지 진입시 미리보기 불러오는 함수 실행
+      ref.current.preview([...data.photos]);
+    }
+
+    // 수정페이지에서 스토리공유 클릭시 리로딩 되는 분기점
+    if (boardId && isPublishPage) {
+      window.location.reload();
     }
   }, [loc]);
 

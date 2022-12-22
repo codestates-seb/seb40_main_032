@@ -30,7 +30,7 @@ function PublishLocCat({
         if (loc.post.category === categoryData[i].text) {
           setDisplayText(loc.post.category);
           setDisplayColor(categoryData[i].theme);
-          setIsSelected(i); // Category 컴포넌트에 'isSelected' 클래스 부착해줄 index
+          setIsSelected(i);
         }
       }
     }
