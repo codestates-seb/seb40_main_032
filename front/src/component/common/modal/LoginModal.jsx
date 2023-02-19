@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { loginModalActions } from '../../../redux/loginModalSlice';
 import ModalCard from './ModalCard';
 import Backdrop from './Backdrop';
 import { DefaultButton, TransparentButton } from '../button/ButtonStyle';
-import loginAsync from '../../../redux/action/loginAsync';
-import loginUserApi from '../../../api/loginUserApi';
+// import loginAsync from '../../../redux/action/loginAsync';
+// import loginUserApi from '../../../api/loginUserApi';
+import { loginActions } from '../../../redux/loginSlice';
 
 const LoginModalStyle = styled.div`
   display: flex;
@@ -76,8 +77,7 @@ const LoginButton = styled(DefaultButton)`
 function LoginModal() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const [loginError, setLoginError] = useState(false);
+  const { isLoading, loginError } = useSelector(state => state.login);
   const [validationCorrect, setValidationCorrect] = useState({
     emailCorrect: true,
     passwordCorrect: true,
@@ -110,24 +110,7 @@ function LoginModal() {
 
   // 로그인 요청, 모달은 로그인 요청이 성공했을 때에만 닫힘.
   async function login() {
-    const data = { email, password };
-    setIsLoading(true);
-    try {
-      // unwrap()을 해줘야만 비동기 처리가 제대로 작동함.
-      await dispatch(loginAsync(data)).unwrap();
-      setLoginError(false);
-      await loginUserApi();
-      setIsLoading(false);
-      loginModalCloser();
-      window.location.reload();
-    } catch (err) {
-      console.log(err.response.data.code);
-      // 유효성 검사
-      if (err.response.data.code === '002') {
-        setLoginError(true);
-      }
-      setIsLoading(false);
-    }
+    dispatch(loginActions.loginWatcher({ email, password }));
   }
 
   // 구글 소셜 로그인
@@ -145,7 +128,8 @@ function LoginModal() {
       setValidationCorrect(prev => {
         return { ...prev, emailCorrect: false, passwordCorrect: true };
       });
-      setLoginError(false);
+      dispatch(loginActions.loginFail());
+      // setLoginError(false);
       return;
     }
     setValidationCorrect(prev => {
@@ -156,7 +140,9 @@ function LoginModal() {
       setValidationCorrect(prev => {
         return { ...prev, passwordCorrect: false };
       });
-      setLoginError(false);
+      dispatch(loginActions.loginFail());
+      // setLoginError(false);
+
       return;
     }
     setValidationCorrect(prev => {
