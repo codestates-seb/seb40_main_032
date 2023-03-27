@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import * as Sentry from '@sentry/react';
 
 const useIntersect = (
   api,
@@ -51,7 +50,6 @@ const useIntersect = (
           target.current.style.display = 'none';
         }
       } catch (err) {
-        Sentry.captureException(err);
         console.log('Error', err.message);
       }
     },
