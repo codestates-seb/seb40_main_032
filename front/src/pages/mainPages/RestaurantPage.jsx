@@ -32,16 +32,17 @@ function RestaurantPage() {
     sort,
   );
 
+  const resethandler = () => {
+    setPosts([]);
+    setLastData('');
+    target.current.style.display = 'flex';
+  };
+
   const sortHandler = sorted => {
-    console.log(sorted);
     if (sort !== sorted) {
       setSort(sorted);
     }
-    if (posts.length !== 0) {
-      setPosts([]);
-    }
-    setLastData('');
-    target.current.style.display = 'flex';
+    resethandler();
   };
 
   useEffect(() => {
@@ -49,7 +50,7 @@ function RestaurantPage() {
   }, [sort, search]);
 
   useEffect(() => {
-    sortHandler(sort);
+    resethandler();
   }, [search]);
 
   useEffect(() => {
