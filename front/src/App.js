@@ -20,7 +20,6 @@ import MyFollower from './pages/myPages/MyFollower';
 import MyFollowing from './pages/myPages/MyFollowing';
 import MainPage from './pages/mainPages/MainPage';
 import MyInfoEdit from './pages/myPages/MyInfoEdit';
-import PageTracking from './util/PageGaTracking';
 import NotFound from './pages/NotFound';
 import MetaTag from './util/MetaTag';
 import TopButton from './component/common/button/TopButton';
@@ -29,7 +28,6 @@ const PublishPage = React.lazy(() => import('./pages/PublishPage'));
 const PostDetailPage = React.lazy(() => import('./pages/PostDetailPage'));
 
 function App() {
-  PageTracking();
   const loginModalOpened = useSelector(
     state => state.loginModal.loginModalOpened,
   );
