@@ -1,4 +1,5 @@
-![tripagram](https://user-images.githubusercontent.com/107591946/205430822-b084ce02-bf22-48f2-ab99-98c9d3a41e9a.png)
+![tripagram]~~(https://user-images.githubusercontent.com/107591946/205430822-b084ce02-bf22-48f2-ab99-98c9d3a41e9a.png)~~
+현재 AWS 프리티어 중단 및 비용문제로 배포 중단되었습니다.
 # HIPO(High Potential)(seb40_main_032)
 
 안녕하세요
