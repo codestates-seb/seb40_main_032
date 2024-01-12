@@ -1,5 +1,5 @@
-![tripagram]~~(https://user-images.githubusercontent.com/107591946/205430822-b084ce02-bf22-48f2-ab99-98c9d3a41e9a.png)~~
-현재 AWS 프리티어 중단 및 비용문제로 배포 중단되었습니다.
+![tripagram](https://user-images.githubusercontent.com/107591946/205430822-b084ce02-bf22-48f2-ab99-98c9d3a41e9a.png)
+
 # HIPO(High Potential)(seb40_main_032)
 
 안녕하세요
@@ -9,7 +9,9 @@
 같이 모여 여행사진 공유 페이지 Tripagram 제작을 진행하게 되었습니다.
 
 
-배포 주소 : http://seb40-mainproject.s3-website.ap-northeast-2.amazonaws.com/
+~~배포 주소 : http://seb40-mainproject.s3-website.ap-northeast-2.amazonaws.com/~~
+<br/>
+현재 AWS 프리티어 중단 및 비용문제로 배포 중단되었습니다.
 
 <br/>
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
